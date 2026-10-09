@@ -1,0 +1,25 @@
+# Rule đã học — thiết kế test (AI đọc ở bước 3 của luồng thiết kế)
+
+## Thiết kế test (viewpoint / test case bị sót)
+- D01 Mọi nút submit / save: có case double-click, Enter nhiều lần khi đang loading → không tạo trùng.
+- D02 Field số tiền / số lượng: có boundary MIN, MAX, 0, số âm — không chỉ giá trị thường.
+- D03 Upload / chat / text dài: có case vượt giới hạn (số ký tự, số ảnh, dung lượng) phải báo lỗi.
+- D04 Hai bên thao tác cùng lúc (worker submit vs store complete…): có case race condition.
+- D05 Đổi trạng thái: kiểm status cũ được clear, status mới đúng, kể cả luồng tiếp tục / làm lại.
+- D06 Nút theo role: tra permission matrix trong basic design, không suy từ UI giống nhau; test từng role.
+- D07 Trạng thái UI phải giữ / đóng đúng: pagination khi Back, dialog sau khi lưu, read/unread, badge.
+- D08 Dữ liệu đúng ngữ cảnh: không mở / tạo cho cửa hàng, trouble, user khác.
+- D09 Happy path của push/notification/tích hợp ngoài → luôn thêm case gửi lỗi, nghiệp vụ không bị rollback sai.
+- D10 Cùng loại impact thì assertion phải đồng nhất giữa các nhóm TC; nâng cấp nhiều bước → test permission ở từng bước trung gian.
+- D11 Trước khi đưa ticket vào scope: check role scope của ticket, release phase, ticket cha/con.
+- D12 Check duplicate theo nội dung (không chỉ theo ID) và trace 2 chiều VP ↔ TC (không VP rỗng, không TC trỏ VP không tồn tại).
+- D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
+
+## Excel / công cụ
+- T01 Tên tab Google Sheets > 31 ký tự bị đổi tên khi export xlsx → công thức INDIRECT theo tên mới.
+- T02 FILTER / MAP / LAMBDA không chạy trong LibreOffice / openpyxl → #REF!/#NAME? có sẵn, không phải do mình sửa.
+- T03 Header không cố định hàng → dò literal header (vd "TC ID"), không hard-code row.
+- T04 Merged cells → bỏ merge vùng định ghi trước khi ghi bằng openpyxl.
+- T05 Text bắt đầu bằng "=" hoặc "=+" bị hiểu là công thức → ghi dạng text.
+- T06 "Total TCs" ở đầu sheet = số ô kết quả (TC × role/platform), không phải số TC.
+- T07 Deliverable cho người review: xuất file mới, không sửa file gốc.

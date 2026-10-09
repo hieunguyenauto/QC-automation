@@ -1,3 +1,3 @@
 #!/bin/sh
-# Chặn commit khi GUIDE.md chưa khớp với file nguồn.
-python3 scripts/build_guide.py --check || exit 1
+# Chặn commit khi manager/GUIDE.md chưa khớp với file nguồn.
+python3 manager/scripts/build_guide.py --check || exit 1

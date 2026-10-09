@@ -1,0 +1,13 @@
+node_modules/
+.env
+.env.*
+!.env.example
+test-results/
+playwright-report/
+reports/
+.auth/
+.claude/settings.local.json
+projects/*/automation/web/tests/spike/
+projects/**/raw/*.pdf
+projects/**/raw/*.xlsx
+projects/**/raw/*.csv

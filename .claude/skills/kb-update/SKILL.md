@@ -11,15 +11,15 @@ description: Cập nhật knowledge của repo (luật, skill, template, bài h�
 | Bài học | lessons/<design\|web\|mobile>/*.md + lessons/INDEX.md |
 | Knowledge dự án | docs/spec/, docs/glossary.md, docs/bug-history.md, screens/ |
 | Hướng dẫn cho người (tường thuật) | docs/guide/guide.md |
-| Lý do của quyết định | docs/decisions/NNNN-<slug>.md |
+| Lý do của quyết định | docs/decisions.md (1 dòng / quyết định) |
 | Tài liệu tổng hợp | GUIDE.md — TỰ SINH, không sửa tay |
 
 # Quy trình
 1. Xác định thay đổi thuộc loại nào → chọn đúng file nguồn. Không chép nội dung skill/template sang file khác.
 2. Draft thay đổi (trước/sau) trong chat → chờ duyệt.
 3. Sửa file nguồn.
-4. Thay đổi luật hoặc cách làm → tạo docs/decisions/NNNN-<slug>.md theo templates/decision.md.
-5. Thêm 1 dòng vào CHANGELOG.md, mục [Unreleased], nhóm Thêm / Sửa / Bỏ, kèm link decision nếu có.
+4. Thay đổi luật hoặc cách làm → thêm 1 dòng lên đầu bảng docs/decisions.md (ID Dnn tiếp theo).
+5. Thêm 1 dòng vào CHANGELOG.md, mục [Unreleased], nhóm Thêm / Sửa / Bỏ, kèm ID Dnn nếu có.
 6. Thay đổi ảnh hưởng quy trình đọc của người → sửa phần tường thuật trong docs/guide/guide.md.
 7. Chạy: python3 scripts/build_guide.py
 8. Báo lại: danh sách file đã đổi + commit message gợi ý "[kb] <tóm tắt>".

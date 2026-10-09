@@ -1253,11 +1253,18 @@ Skill/CLAUDE.md làm AI tệ đi → `git revert` commit `[skill]`/`[rule]` đó
 - Sản phẩm thị trường Nhật. UI tiếng Nhật, team làm việc bằng tiếng Việt.
 - Trả lời bằng tiếng Việt. Giữ nguyên text tiếng Nhật của UI trong locator và assert.
 
-## Thứ tự đọc (bắt buộc)
-1. lessons/INDEX.md
-2. docs/spec/ — nguồn duy nhất để thiết kế viewpoint/test case
-3. qc/test-viewpoints/ → qc/test-cases/ (bản LOCKED)
-4. screens/<web|mobile>/_flow.md + file màn hình liên quan
+## Thứ tự đọc khi thiết kế test (bắt buộc)
+1. Spec: docs/spec/<scope-key>.md (đường dẫn người dùng đưa)
+2. Knowledge: docs/glossary.md, screens/<web|mobile>/_flow.md + màn hình liên quan, qc/ của function liên quan (bản LOCKED)
+3. Bài học: lessons/INDEX.md (mục Thiết kế test), docs/bug-history.md (chỉ dòng cùng function / pattern)
+4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions
+5. Viewpoint: skill test-viewpoint (đọc Context pack, không đọc lại bước 2–3)
+6. Test case: skill test-case (đọc viewpoint LOCKED + Context pack)
+Khi viết / sửa code test: đọc lessons/INDEX.md (mục Web / Mobile) trước.
+
+## Tiết kiệm token
+- KHÔNG đọc GUIDE.md, docs/guide/, docs/decisions.md, CHANGELOG.md trừ khi người dùng hỏi.
+- Chỉ đọc phần file liên quan (grep theo function / ID), không đọc cả thư mục.
 
 ## Luật QC chung
 - Chỉ đọc spec mà người dùng đưa đường dẫn chính xác. Thiếu input → dừng, trả BLOCKED_INPUT và hỏi. Không tự đi tìm file.
@@ -1290,15 +1297,15 @@ description: Cập nhật knowledge của repo (luật, skill, template, bài h�
 | Bài học | lessons/<design\|web\|mobile>/*.md + lessons/INDEX.md |
 | Knowledge dự án | docs/spec/, docs/glossary.md, docs/bug-history.md, screens/ |
 | Hướng dẫn cho người (tường thuật) | docs/guide/guide.md |
-| Lý do của quyết định | docs/decisions/NNNN-<slug>.md |
+| Lý do của quyết định | docs/decisions.md (1 dòng / quyết định) |
 | Tài liệu tổng hợp | GUIDE.md — TỰ SINH, không sửa tay |
 
 # Quy trình
 1. Xác định thay đổi thuộc loại nào → chọn đúng file nguồn. Không chép nội dung skill/template sang file khác.
 2. Draft thay đổi (trước/sau) trong chat → chờ duyệt.
 3. Sửa file nguồn.
-4. Thay đổi luật hoặc cách làm → tạo docs/decisions/NNNN-<slug>.md theo templates/decision.md.
-5. Thêm 1 dòng vào CHANGELOG.md, mục [Unreleased], nhóm Thêm / Sửa / Bỏ, kèm link decision nếu có.
+4. Thay đổi luật hoặc cách làm → thêm 1 dòng lên đầu bảng docs/decisions.md (ID Dnn tiếp theo).
+5. Thêm 1 dòng vào CHANGELOG.md, mục [Unreleased], nhóm Thêm / Sửa / Bỏ, kèm ID Dnn nếu có.
 6. Thay đổi ảnh hưởng quy trình đọc của người → sửa phần tường thuật trong docs/guide/guide.md.
 7. Chạy: python3 scripts/build_guide.py
 8. Báo lại: danh sách file đã đổi + commit message gợi ý "[kb] <tóm tắt>".
@@ -1315,22 +1322,28 @@ description: Cập nhật knowledge của repo (luật, skill, template, bài h�
 ~~~~markdown
 ---
 name: spec-review
-description: Review spec đã duyệt trong docs/spec/, tìm chỗ thiếu, mơ hồ, mâu thuẫn; ghi Open Question và kết luận Design Gate. Dùng khi người dùng nói "review spec", "tìm gap", "/spec-review".
+description: Bước Q&A trước khi thiết kế test - đọc spec, đọc knowledge, đọc bài học, rồi tìm gap, ghi Open Question, kết luận Design Gate và ghi Context pack cho bước viewpoint/test case. Dùng khi người dùng nói "review spec", "tìm gap", "Q&A spec", "/spec-review".
 ---
 # Input
 - Đường dẫn spec chính xác + trạng thái duyệt / revision. Thiếu → dừng, trả BLOCKED_INPUT.
 
-# Quy trình
-1. Đề xuất scope-key (= tên file spec) và scope-code. Chờ xác nhận.
-2. Liệt kê test item: chức năng, input, trigger, kết quả quan sát được, rule/data liên quan.
-3. Đọc lessons/INDEX.md (mục Thiết kế test) + docs/bug-history.md: chỗ spec lặp lại pattern từng gây bug → ghi FND.
-4. Mỗi item kiểm: thiếu · mơ hồ · mâu thuẫn · không kiểm chứng được. Mỗi phát hiện = FND-<CODE>-NNN.
-5. Chỗ cần người quyết → OQ-<CODE>-NNN trong qc/open-questions.md (Status: OPEN).
-6. Kết luận Design Gate: READY (đủ để thiết kế) · PARTIAL (ghi rõ phần bị chặn) · STOP.
+# Quy trình (đúng thứ tự)
+1. Đọc spec. Đề xuất scope-key (= tên file spec) + scope-code. Chờ xác nhận.
+2. Đọc knowledge (chỉ phần liên quan, grep theo function / màn hình):
+   - docs/glossary.md
+   - screens/<web|mobile>/_flow.md + file màn hình liên quan
+   - qc/test-viewpoints/, qc/test-cases/ bản LOCKED của function liên quan
+3. Đọc bài học:
+   - lessons/INDEX.md mục "Thiết kế test"
+   - docs/bug-history.md: chỉ dòng cùng function / loại field / pattern
+4. Q&A: liệt kê test item (chức năng, input, trigger, kết quả quan sát được, rule/data). Mỗi item kiểm: thiếu · mơ hồ · mâu thuẫn · không kiểm chứng được · lặp pattern từng gây bug → FND-<CODE>-NNN. Chỗ cần người quyết → OQ-<CODE>-NNN trong qc/open-questions.md (Status: OPEN).
+5. Kết luận Design Gate: READY · PARTIAL (ghi rõ phần bị chặn) · STOP.
+6. Ghi Context pack ở cuối Gap Report — tóm tắt mọi thứ bước 2–3 tìm được, mỗi dòng ≤ 1 câu, có nguồn:
+   | Loại (Thuật ngữ / Màn hình / VP-TC cũ / Lesson / Bug) | Nguồn (file#mục hoặc ID) | Nội dung rút gọn |
 7. Draft trong chat → chờ duyệt → ghi qc/gap-reports/<scope-key>-gap-report.md.
 
 # Cấm
-- Sửa spec · tự trả lời OQ · coi im lặng là đồng ý.
+- Sửa spec · tự trả lời OQ · coi im lặng là đồng ý · đọc cả thư mục thay vì phần liên quan.
 ~~~~
 
 #### `.claude/skills/test-case/SKILL.md`
@@ -1342,10 +1355,11 @@ description: Sinh test case từ viewpoint đã LOCKED theo format team (No., VP
 ---
 # Input
 - qc/test-viewpoints/<scope-key>-viewpoints.md có State = LOCKED. Chưa LOCKED → dừng.
+- Context pack trong qc/gap-reports/<scope-key>-gap-report.md (thuật ngữ, màn hình, bài học).
 - templates/testcase.md, templates/data-test.md, references/test-design-techniques.md, references/automation-eligibility.md.
 
 # Quy trình
-1. Mỗi VP: chọn kỹ thuật (EP, BVA, Decision Table…), khai triển theo trục biến thiên: mỗi giá trị data / trạng thái / nhánh điều kiện → 1 TC. Nhiều TC cùng 1 VP_ID là đúng.
+1. Mỗi VP: đọc "Trục" ở cột Note; mỗi giá trị trên trục → 1 TC. Chọn kỹ thuật (EP, BVA, Decision Table…), khai triển theo trục biến thiên: mỗi giá trị data / trạng thái / nhánh điều kiện → 1 TC. Nhiều TC cùng 1 VP_ID là đúng.
 2. No. = TC-<FUNC>-NNN. Priority: High (happy case cho UAT/regression) / Normal.
 3. Objective: "Verify that + <expectation> + in case/when + <condition>". Có chữ "và" nối 2 ý độc lập → tách 2 TC.
 4. Pre-condition không có ghi "-". Data test: data cụ thể hoặc trỏ No. trong data-test.md.
@@ -1399,21 +1413,38 @@ description: Sinh test case từ viewpoint đã LOCKED theo format team (No., VP
 ~~~~markdown
 ---
 name: test-viewpoint
-description: Thiết kế Test Viewpoint theo format team (VP_ID, Category, Test Level, Function, View Point, Expected Results, Site, Note), trace về spec rồi Lock. Dùng khi người dùng nói "làm viewpoint", "góc kiểm thử", "/test-viewpoint".
+description: Thiết kế Test Viewpoint theo format team (VP_ID, Category, Test Level, Function, View Point, Expected Results, Site, Note). Mỗi viewpoint là 1 góc kiểm thử có trục biến thiên để sinh nhiều test case, trace về spec rồi Lock. Dùng khi người dùng nói "làm viewpoint", "góc kiểm thử", "/test-viewpoint".
 ---
 # Input
-- Spec đã duyệt + Gap Report có Design Gate READY/PARTIAL (hoặc người dùng nói rõ bỏ qua review).
-- lessons/INDEX.md, docs/bug-history.md (nếu có).
-- references/viewpoint-groups.md, templates/viewpoint.md, templates/data-test.md, docs/glossary.md.
+- Spec đã duyệt + qc/gap-reports/<scope-key>-gap-report.md có Design Gate READY/PARTIAL và Context pack.
+- Không đọc lại glossary / lessons / bug-history: dùng Context pack. Thiếu thông tin → hỏi, không tự đi đọc cả thư mục.
+- references/viewpoint-groups.md, templates/viewpoint.md, templates/data-test.md.
+
+# Viewpoint là gì (đọc kỹ trước khi viết)
+- Viewpoint = 1 ĐỐI TƯỢNG × 1 KHÍA CẠNH cần verify, có 1 TRỤC BIẾN THIÊN. Test case = 1 giá trị trên trục đó.
+- 3 loại trục: data (các dòng data-test, các giá trị input) · trạng thái (status, có/không data, role) · tổ hợp điều kiện (đúng/sai × đúng/sai).
+- View Point: "Verify that <đối tượng> <khía cạnh> + in case/when <NHÓM điều kiện>". Điều kiện là một nhóm, không phải 1 giá trị.
+
+| Sai (case-by-case) | Đúng (viewpoint) |
+|---|---|
+| Verify that error is shown when ユーザーID is blank | Verify that ユーザーID input is validated in case of invalid data (Note: Trục data — D01–D14) |
+| Verify that error is shown when ユーザーID exceeds 20 chars | (gộp vào dòng trên) |
+| Verify that 1 row is displayed when ユーザーID exists | Verify that search result matches the search condition (Note: Trục — khớp 1 / nhiều / không khớp / khớp một phần) |
+| Verify that 削除 button is hidden for staff | Verify that action buttons are displayed by role (Note: Trục role — admin / staff / viewer) |
 
 # Quy trình
 1. Liệt kê function / màn hình trong spec. Mỗi function 1 Function code (ví dụ USRL).
-2. Mỗi function quét đủ 8 nhóm trong viewpoint-groups.md; mỗi input field soi qua data-test.md.
-3. Mỗi viewpoint 1 dòng: VP_ID = VP-<FUNC>-NNN; View Point theo mẫu "Verify that … in case/when …"; Note ghi mục spec hoặc OQ.
-4. Kiểm: mọi acceptance criteria có ≥1 VP; VP không chứa steps hay data cụ thể.
-5. Draft → duyệt → ghi qc/test-viewpoints/<scope-key>-viewpoints.md theo templates/viewpoint.md → State = LOCKED khi được duyệt.
+2. Mỗi function đi qua 8 nhóm trong viewpoint-groups.md; nhóm 8 lấy từ dòng Lesson / Bug trong Context pack.
+3. Trong mỗi nhóm, gom theo đối tượng (field / vùng màn hình / nút / API / rule): mỗi đối tượng × khía cạnh = 1 VP. Mỗi input field = 1 VP validation duy nhất, data-test là trục của nó.
+4. Mỗi VP 1 dòng: VP_ID = VP-<FUNC>-NNN · Expected Results ở mức tổng quát (kỳ vọng chung của cả nhóm điều kiện) · Note ghi "Trục: <loại> — <các giá trị dự kiến>" + mục spec / OQ.
+5. Tự kiểm trước khi đưa người duyệt — in bảng VP_ID | Trục | Số TC dự kiến:
+   - VP dự kiến < 3 TC → gộp vào VP cùng đối tượng / khía cạnh (ngoại lệ: rule nghiệp vụ chỉ có 1 trường hợp, ghi lý do ở Note).
+   - Hai VP chỉ khác nhau 1 giá trị điều kiện → gộp.
+   - Mọi acceptance criteria có ≥1 VP; VP không chứa steps hay data cụ thể.
+6. Draft → duyệt → ghi qc/test-viewpoints/<scope-key>-viewpoints.md theo templates/viewpoint.md → State = LOCKED khi được duyệt.
 
 # Cấm
+- Viết VP cho từng giá trị / từng điều kiện (đó là test case) · tách VP theo từng dòng data-test.
 - Đổi tên / thứ tự cột · viết test case ở bước này · dịch text tiếng Nhật.
 - Bịa function/field/message ngoài spec → ghi [cần confirm] và tạo OQ.
 ~~~~
@@ -1432,10 +1463,11 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 | 5. Data / Business rule | Data | Trạng thái dữ liệu, trùng lặp, ràng buộc quan hệ, tính toán |
 | 6. Cross-cutting | Transition / Security | Chuyển màn hình, permission/role, message tiếng Nhật, session/timeout, SQL injection, trim |
 | 7. Performance | Performance | Thời gian phản hồi màn hình/API, load nhiều data (list 1.000+ dòng, export, upload file lớn), nhiều user thao tác cùng lúc, double submit. Chỉ đặt ngưỡng khi spec có số; không có → tạo OQ hỏi ngưỡng |
-| 8. Bài học / bug cũ | Regression | Đọc lessons/INDEX.md (mục Thiết kế test) + docs/bug-history.md. Bug/lesson nào cùng function, cùng loại field hoặc cùng pattern → ≥1 VP; Note ghi ID bug hoặc file lesson |
+| 8. Bài học / bug cũ | Regression | Lấy từ dòng Lesson / Bug trong Context pack của Gap Report. Bug/lesson nào cùng function, cùng loại field hoặc cùng pattern → ≥1 VP; Note ghi ID bug hoặc file lesson |
 
-- Mọi input field: soi qua templates/data-test.md → nguồn viewpoint Negative / Boundary.
-- Mẫu câu View Point: "Verify that + <expectation> + in case/when + <condition>".
+- Mỗi nhóm thường ra 1–vài VP cho 1 function, KHÔNG phải 1 VP cho mỗi câu hỏi trong cột "Hỏi gì" — các câu hỏi đó là giá trị trên trục, thành test case.
+- Mỗi input field = 1 VP validation; các dòng templates/data-test.md là trục data của VP đó.
+- Mẫu câu View Point: "Verify that <đối tượng> <khía cạnh> + in case/when <nhóm điều kiện>".
 ~~~~
 
 ### Templates
@@ -1459,23 +1491,6 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 | D12 | Max length | max / max+1 | 255 / 256 ký tự | 1 break line = 1 char |
 | D13 | Date | Năm nhuận / không nhuận / sai format | 2020/02/29 · 2022/02/29 · 2022-20-20 | |
 | D14 | int32 | min / max | -2147483648 / 2147483647 | |
-~~~~
-
-#### `templates/decision.md`
-
-~~~~markdown
-# NNNN — <tiêu đề quyết định>
-- Ngày: YYYY-MM-DD · Trạng thái: Đã áp dụng | Thay thế bởi NNNN
-- Ảnh hưởng file: <danh sách file nguồn>
-
-## Bối cảnh
-<vấn đề / lý do phải quyết định>
-
-## Quyết định
-<làm gì>
-
-## Hệ quả
-<được gì, mất gì, cần làm thêm gì>
 ~~~~
 
 #### `templates/lesson.md`
@@ -1546,7 +1561,8 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 | VP_ID | Category | Test Level | Function | View Point | Expected Results | Site | Note |
 |---|---|---|---|---|---|---|---|
-| VP-USRL-001 | Function | System | ユーザー一覧 | Verify that matching users are displayed in case ユーザーID exists | Hiển thị đúng các dòng khớp điều kiện | Common | spec §2.1 |
+| VP-USRL-001 | Function | System | ユーザー一覧 | Verify that search result matches the search condition in case of searching by ユーザーID | Chỉ hiển thị các dòng khớp điều kiện; không khớp thì hiển thị message theo spec | Common | Trục: khớp 1 / nhiều / không khớp / khớp một phần · spec §2.1 |
+| VP-USRL-002 | Validation | System | ユーザー一覧 | Verify that ユーザーID input is validated in case of invalid data | Data không hợp lệ hiển thị message lỗi theo spec, không thực hiện search | Common | Trục data: D01–D14 trong data-test.md · spec §2.2 |
 
 <!-- Category: UI / Function / Validation / Transition / Data / API / Security / Performance -->
 <!-- Test Level: Unit / Integration / System / UAT / Regression -->
@@ -1570,125 +1586,25 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 <!-- M01 <rule> (mobile/<file>.md) -->
 ~~~~
 
-### Quyết định (decisions)
+### Quyết định
 
-#### `docs/decisions/0001-kien-truc-truoc-cai-sau.md`
-
-~~~~markdown
-# 0001 — Dựng kiến trúc trước, chạy thử từng khối, rồi mới cài đầy đủ
-- Ngày: 2026-10-09 · Trạng thái: Đã áp dụng
-- Ảnh hưởng file: docs/guide/guide.md
-
-## Bối cảnh
-Bản hướng dẫn đầu tiên bắt cài hết công cụ rồi mới dựng repo, khi lỗi không biết lỗi ở khối nào.
-
-## Quyết định
-5 giai đoạn có cổng: Kiến trúc → Viewpoint & Test case → Chạy thử automation → Cài đặt đầy đủ → Vận hành. Chưa qua cổng thì không sang giai đoạn sau.
-
-## Hệ quả
-Lỗi được khoanh trong từng khối. Mỗi khối có bảng "Lỗi hay gặp" riêng.
-~~~~
-
-#### `docs/decisions/0002-viewpoint-testcase-truoc-automation.md`
+#### `docs/decisions.md`
 
 ~~~~markdown
-# 0002 — Viewpoint và test case phải chạy được trước automation
-- Ngày: 2026-10-09 · Trạng thái: Đã áp dụng
-- Ảnh hưởng file: docs/guide/guide.md, .claude/skills/test-viewpoint, .claude/skills/test-case
+# Decisions — mới nhất ở trên
+<!-- Mỗi quyết định 1 dòng. Chỉ người đọc khi cần biết "vì sao"; AI không đọc file này khi làm task thường. -->
 
-## Bối cảnh
-Automation chỉ là bước chuyển TC thành code; chưa có TC thì không có gì để automate.
-
-## Quyết định
-GĐ1 là thiết kế viewpoint/test case (chưa cần Node). Spike automation ở GĐ2 dùng TC UI-AUTO lấy từ GĐ1.
-
-## Hệ quả
-TC không automate được thì quay lại GĐ1 tạo revision, đổi Automation Eligibility.
-~~~~
-
-#### `docs/decisions/0003-skill-dung-chung-khong-phu-thuoc-du-an.md`
-
-~~~~markdown
-# 0003 — Skill dùng chung, không phụ thuộc dự án hay package ngoài
-- Ngày: 2026-10-09 · Trạng thái: Đã áp dụng
-- Ảnh hưởng file: .claude/skills/*, CLAUDE.md
-
-## Bối cảnh
-Thử dùng package Tanizy QC Agent nhưng không hợp với dự án khác. Repo phải dùng chung, không dính dự án cụ thể.
-
-## Quyết định
-Tự viết 3 skill spec-review → test-viewpoint → test-case. Chỉ mượn ý tưởng: SKILL.md + references/, Open Questions, Design Gate READY/PARTIAL/STOP, Automation Eligibility, duyệt trước khi ghi, LOCKED, BLOCKED_INPUT. Knowledge riêng dự án chỉ nằm ở docs/.
-
-## Hệ quả
-Sang dự án khác: copy .claude/skills/ + templates/, chỉ thay docs/.
-~~~~
-
-#### `docs/decisions/0004-template-theo-format-excel-team.md`
-
-~~~~markdown
-# 0004 — Template theo format file Excel test case của team
-- Ngày: 2026-10-09 · Trạng thái: Đã áp dụng
-- Ảnh hưởng file: templates/viewpoint.md, templates/testcase.md, templates/data-test.md
-
-## Bối cảnh
-Output phải export sang file Excel của team (sheet Test Viewpoint, Data test, Testcase) không phải đổi cột.
-
-## Quyết định
-Giữ đúng tên và thứ tự cột. Thêm 2 quy ước: No. ghi TC-<FUNC>-NNN (dùng làm tag automation); thêm cột Automation Eligibility. Khối Implementation 1st/2nd chỉ có trong Excel.
-
-## Hệ quả
-Cột Site cần giá trị thật của sản phẩm (đang để ví dụ).
-~~~~
-
-#### `docs/decisions/0005-mot-test-case-mot-expected.md`
-
-~~~~markdown
-# 0005 — Mỗi test case chỉ 1 expected result
-- Ngày: 2026-10-09 · Trạng thái: Đã áp dụng
-- Ảnh hưởng file: .claude/skills/test-case/SKILL.md
-
-## Bối cảnh
-TC gộp nhiều kết quả khó xác định chỗ fail, khó automate thành 1 assert.
-
-## Quyết định
-Mỗi TC 1 Expectation result. Cần kiểm nhiều thứ → tách TC, cùng VP_ID, Test Steps giống nhau.
-
-## Hệ quả
-Số TC tăng, nhưng mỗi test() có 1 assert chính, fail là biết ngay sai ở đâu.
-~~~~
-
-#### `docs/decisions/0006-viewpoint-performance-va-bai-hoc.md`
-
-~~~~markdown
-# 0006 — Thêm nhóm viewpoint Performance và Bài học / bug cũ
-- Ngày: 2026-10-09 · Trạng thái: Đã áp dụng
-- Ảnh hưởng file: .claude/skills/test-viewpoint/references/viewpoint-groups.md, test-viewpoint/SKILL.md, spec-review/SKILL.md, test-case/SKILL.md, templates/lesson.md, lessons/INDEX.md, docs/bug-history.md
-
-## Bối cảnh
-6 nhóm ban đầu thiếu performance; bug lọt lưới lần trước không được dùng cho lần sau.
-
-## Quyết định
-Nhóm 7 Performance (chỉ đặt ngưỡng khi spec có số, không có → OQ). Nhóm 8 Bài học / bug cũ: đọc lessons/INDEX.md mục Thiết kế test + docs/bug-history.md. Thêm loại lesson DESIGN_GAP.
-
-## Hệ quả
-Cần export bug đã đóng từ Backlog vào docs/bug-history.md.
-~~~~
-
-#### `docs/decisions/0007-knowledge-hub.md`
-
-~~~~markdown
-# 0007 — Repo là nơi duy nhất chứa knowledge, tài liệu tự sinh
-- Ngày: 2026-10-09 · Trạng thái: Đã áp dụng
-- Ảnh hưởng file: .claude/skills/kb-update, scripts/build_guide.py, GUIDE.md, CHANGELOG.md, docs/decisions/, .githooks/pre-commit, CLAUDE.md
-
-## Bối cảnh
-Knowledge nằm ở 5 nơi (repo, Claude Docs, file trong Project, memory, lịch sử chat); 3 nơi lặp nhau và dễ lệch.
-
-## Quyết định
-Repo là nguồn duy nhất. Mọi thay đổi đi qua skill kb-update: sửa đúng 1 file nguồn → ghi decision + CHANGELOG → chạy build_guide.py sinh GUIDE.md. Pre-commit hook chặn commit khi GUIDE.md lệch. Claude Docs và file trong Project chỉ là bản đọc, đồng bộ từ GUIDE.md khi cần.
-
-## Hệ quả
-Không sửa GUIDE.md hay Claude Docs bằng tay. Khi có dự án thứ 2: tách skill + template thành plugin dùng chung.
+| ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
+|---|---|---|---|---|
+| D09 | 2026-10-09 | Viewpoint = 1 đối tượng × 1 khía cạnh + 1 trục biến thiên; giá trị trên trục là test case. Note ghi "Trục"; VP dự kiến < 3 TC thì gộp | Lần chạy QNAVI-1614 ra viewpoint case-by-case: skill cũ bắt "mỗi viewpoint 1 dòng" theo mẫu câu có điều kiện cụ thể, không có luật về độ thô | test-viewpoint/SKILL.md, viewpoint-groups.md, templates/viewpoint.md, test-case/SKILL.md |
+| D08 | 2026-10-09 | Luồng thiết kế: đọc spec → đọc knowledge → đọc bài học → Q&A → viewpoint → test case. spec-review ghi "Context pack" để bước sau không đọc lại toàn bộ | Đúng thứ tự tư duy QA, giảm token | spec-review, test-viewpoint, test-case, CLAUDE.md |
+| D07 | 2026-10-09 | Repo là nguồn knowledge duy nhất; sửa qua skill kb-update; GUIDE.md tự sinh; decisions gộp 1 file | Tránh 3 bản sao lệch nhau, giảm token | kb-update, build_guide.py, GUIDE.md, CHANGELOG.md, docs/decisions.md |
+| D06 | 2026-10-09 | Thêm nhóm viewpoint 7 Performance (chỉ đặt ngưỡng khi spec có số) và 8 Bài học / bug cũ; lesson DESIGN_GAP | 6 nhóm cũ thiếu performance; bug lọt lưới không được dùng lại | viewpoint-groups.md, lesson.md, lessons/INDEX.md, docs/bug-history.md |
+| D05 | 2026-10-09 | Mỗi TC chỉ 1 expected result; nhiều thứ cần kiểm → tách TC cùng VP_ID | Dễ biết chỗ fail, 1 test() = 1 assert chính | test-case/SKILL.md |
+| D04 | 2026-10-09 | Template giữ đúng cột file Excel của team; No. = TC-<FUNC>-NNN; thêm cột Automation Eligibility | Export Excel không phải đổi cột | templates/viewpoint.md, testcase.md, data-test.md |
+| D03 | 2026-10-09 | Tự viết skill dùng chung, chỉ mượn ý tưởng (SKILL.md + references, OQ, Design Gate, LOCKED, BLOCKED_INPUT) | Package ngoài không hợp dự án khác | .claude/skills/*, CLAUDE.md |
+| D02 | 2026-10-09 | Viewpoint/test case phải chạy được trước automation | Chưa có TC thì không có gì để automate | guide, test-viewpoint, test-case |
+| D01 | 2026-10-09 | 5 giai đoạn có cổng: kiến trúc → thiết kế → chạy thử → cài đầy đủ → vận hành | Lỗi khoanh trong từng khối | guide |
 ~~~~
 
 ## Phụ lục B — Thay đổi gần đây
@@ -1696,12 +1612,15 @@ Không sửa GUIDE.md hay Claude Docs bằng tay. Khi có dự án thứ 2: tác
 # Changelog
 
 ## [Unreleased]
+### Sửa
+- test-viewpoint: viewpoint có trục biến thiên, 1 VP → nhiều TC; gộp VP case-by-case (D09)
+- Luồng thiết kế 6 bước + Context pack; gộp decisions thành 1 file docs/decisions.md (D08, D07)
 
 ## [0.1.0] - 2026-10-09
 ### Thêm
-- Kiến trúc 5 giai đoạn có cổng ([0001](docs/decisions/0001-kien-truc-truoc-cai-sau.md), [0002](docs/decisions/0002-viewpoint-testcase-truoc-automation.md))
-- 3 skill thiết kế dùng chung: spec-review, test-viewpoint, test-case ([0003](docs/decisions/0003-skill-dung-chung-khong-phu-thuoc-du-an.md))
-- 6 template theo format Excel của team ([0004](docs/decisions/0004-template-theo-format-excel-team.md))
-- Luật mỗi TC 1 expected result ([0005](docs/decisions/0005-mot-test-case-mot-expected.md))
-- Nhóm viewpoint 7 Performance, 8 Bài học / bug cũ; lesson DESIGN_GAP ([0006](docs/decisions/0006-viewpoint-performance-va-bai-hoc.md))
-- Knowledge hub: skill kb-update, build_guide.py, decisions, pre-commit hook ([0007](docs/decisions/0007-knowledge-hub.md))
+- Kiến trúc 5 giai đoạn có cổng (D01, D02)
+- 3 skill thiết kế dùng chung: spec-review, test-viewpoint, test-case (D03)
+- 6 template theo format Excel của team (D04)
+- Luật mỗi TC 1 expected result (D05)
+- Nhóm viewpoint 7 Performance, 8 Bài học / bug cũ; lesson DESIGN_GAP (D06)
+- Knowledge hub: skill kb-update, build_guide.py, decisions, pre-commit hook (D07)

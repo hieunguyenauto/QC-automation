@@ -4,10 +4,11 @@ description: Sinh test case từ viewpoint đã LOCKED theo format team (No., VP
 ---
 # Input
 - qc/test-viewpoints/<scope-key>-viewpoints.md có State = LOCKED. Chưa LOCKED → dừng.
+- Context pack trong qc/gap-reports/<scope-key>-gap-report.md (thuật ngữ, màn hình, bài học).
 - templates/testcase.md, templates/data-test.md, references/test-design-techniques.md, references/automation-eligibility.md.
 
 # Quy trình
-1. Mỗi VP: chọn kỹ thuật (EP, BVA, Decision Table…), khai triển theo trục biến thiên: mỗi giá trị data / trạng thái / nhánh điều kiện → 1 TC. Nhiều TC cùng 1 VP_ID là đúng.
+1. Mỗi VP: đọc "Trục" ở cột Note; mỗi giá trị trên trục → 1 TC. Chọn kỹ thuật (EP, BVA, Decision Table…), khai triển theo trục biến thiên: mỗi giá trị data / trạng thái / nhánh điều kiện → 1 TC. Nhiều TC cùng 1 VP_ID là đúng.
 2. No. = TC-<FUNC>-NNN. Priority: High (happy case cho UAT/regression) / Normal.
 3. Objective: "Verify that + <expectation> + in case/when + <condition>". Có chữ "và" nối 2 ý độc lập → tách 2 TC.
 4. Pre-condition không có ghi "-". Data test: data cụ thể hoặc trỏ No. trong data-test.md.

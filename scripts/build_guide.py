@@ -11,7 +11,7 @@ SOURCES = [
     ("Skills", sorted(str(p.relative_to(ROOT)) for p in (ROOT / ".claude/skills").rglob("*.md"))),
     ("Templates", sorted(str(p.relative_to(ROOT)) for p in (ROOT / "templates").glob("*.md"))),
     ("Bài học đã nâng thành rule", ["lessons/INDEX.md"]),
-    ("Quyết định (decisions)", sorted(str(p.relative_to(ROOT)) for p in (ROOT / "docs/decisions").glob("*.md"))),
+    ("Quyết định", ["docs/decisions.md"]),
 ]
 
 def read(rel):

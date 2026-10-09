@@ -4,11 +4,18 @@
 - Sản phẩm thị trường Nhật. UI tiếng Nhật, team làm việc bằng tiếng Việt.
 - Trả lời bằng tiếng Việt. Giữ nguyên text tiếng Nhật của UI trong locator và assert.
 
-## Thứ tự đọc (bắt buộc)
-1. lessons/INDEX.md
-2. docs/spec/ — nguồn duy nhất để thiết kế viewpoint/test case
-3. qc/test-viewpoints/ → qc/test-cases/ (bản LOCKED)
-4. screens/<web|mobile>/_flow.md + file màn hình liên quan
+## Thứ tự đọc khi thiết kế test (bắt buộc)
+1. Spec: docs/spec/<scope-key>.md (đường dẫn người dùng đưa)
+2. Knowledge: docs/glossary.md, screens/<web|mobile>/_flow.md + màn hình liên quan, qc/ của function liên quan (bản LOCKED)
+3. Bài học: lessons/INDEX.md (mục Thiết kế test), docs/bug-history.md (chỉ dòng cùng function / pattern)
+4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions
+5. Viewpoint: skill test-viewpoint (đọc Context pack, không đọc lại bước 2–3)
+6. Test case: skill test-case (đọc viewpoint LOCKED + Context pack)
+Khi viết / sửa code test: đọc lessons/INDEX.md (mục Web / Mobile) trước.
+
+## Tiết kiệm token
+- KHÔNG đọc GUIDE.md, docs/guide/, docs/decisions.md, CHANGELOG.md trừ khi người dùng hỏi.
+- Chỉ đọc phần file liên quan (grep theo function / ID), không đọc cả thư mục.
 
 ## Luật QC chung
 - Chỉ đọc spec mà người dùng đưa đường dẫn chính xác. Thiếu input → dừng, trả BLOCKED_INPUT và hỏi. Không tự đi tìm file.

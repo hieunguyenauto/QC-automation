@@ -904,7 +904,7 @@ Skill/CLAUDE.md làm AI tệ đi → `git revert` commit `[skill]`/`[rule]` đó
 - Sản phẩm thị trường Nhật. UI tiếng Nhật, team làm việc bằng tiếng Việt.
 - Trả lời / chat bằng tiếng Việt. Viewpoint và test case viết bằng TIẾNG ANH; label / message tiếng Nhật giữ nguyên trong '' (không dịch).
 - Dự án đang làm: qnavi → <P> = projects/qnavi. Hồ sơ dự án: <P>/README.md, thứ tự ưu tiên nguồn: <P>/sources.md.
-- Câu hỏi về dự án (role, màn hình, thuật ngữ, luồng, bug…): tự đọc / grep trong <P>/ (README.md, glossary.md, screens/_flow.md, bug-history.md, spec/) rồi trả lời kèm nguồn — không cần xin phép. Chỉ nói "không biết" khi đã tìm trong <P>/ mà không có.
+- Câu hỏi về dự án (role, màn hình, thuật ngữ, luồng, bug…): tự đọc / grep trong <P>/ (README.md, glossary.md, screens/_flow.md, screens/catalog/, bug-history.md, spec/) rồi trả lời kèm nguồn — không cần xin phép. Chỉ nói "không biết" khi đã tìm trong <P>/ mà không có.
 
 ## Thứ tự đọc khi thiết kế test (bắt buộc)
 0. Spec là xlsx / pdf / docx → skill source-import (gốc ở <P>/raw/, md ở <P>/spec/)
@@ -918,7 +918,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 
 ## Automation (luồng riêng: Spec → Test case → Automation)
 - Input duy nhất: test case LOCKED <P>/qc/test-cases/ có Automation Eligibility UI-AUTO / BOTH. Không đọc spec, Gap Report, viewpoint, qc/lessons, bug-history.
-- Đọc thêm: automation/lessons/INDEX.md, <P>/automation/README.md, <P>/automation/screens/ của màn hình liên quan.
+- Đọc thêm: automation/lessons/INDEX.md, <P>/automation/README.md, <P>/automation/web/README.md (quy ước TC → code), <P>/automation/web/screens/ của màn hình liên quan; mô tả màn hình tra <P>/screens/catalog/.
 - TC thiếu / mâu thuẫn với app → dừng, báo người dùng; không tự sửa TC, không sửa expect cho khớp app.
 - Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 
@@ -998,14 +998,16 @@ description: Cập nhật knowledge của phần AUTOMATION (bài học locator 
 | Rule đã học (dùng chung) | automation/lessons/INDEX.md (Web R.., Mobile M..) |
 | Bài học chi tiết | automation/lessons/<web\|mobile>/<YYYY-MM-DD>-<slug>.md theo manager/templates/lesson.md |
 | Template automation | automation/templates/*.md |
-| Màn hình cho automation (route, Page Object, element, chờ gì) | <P>/automation/screens/<screen>.md theo automation/templates/screen.md |
+| Màn hình cho automation (mã màn hình, route, role, locator, thao tác) | <P>/automation/web/screens/<app>/<screen>.screen.ts theo automation/templates/screen.md. Mô tả màn hình KHÔNG chép lại: tra <P>/screens/catalog/ |
+| Môi trường, role ↔ tài khoản, data test | <P>/automation/web/env/*.json · data/roles.ts · data/<scope-key>.json (mật khẩu chỉ ở .env) |
+| Code dùng chung (login, chờ, assert) | <P>/automation/web/common/ |
 | Ghi chú môi trường / data / tài khoản test (không ghi mật khẩu) | <P>/automation/README.md |
 | Luật viết code test | CLAUDE.md mục Automation |
 
 # Phân loại khi có lỗi
 | Loại lesson | Ai xử lý | File |
 |---|---|---|
-| LOCATOR · TIMING · DATA | Skill này | lesson + Page Object / <P>/automation/screens/ |
+| LOCATOR · TIMING · DATA | Skill này | lesson + <P>/automation/web/screens/ hoặc common/ |
 | ENV | Skill này (chỉ ghi chú, không sửa code) | <P>/automation/README.md |
 | PRODUCT_BUG | KHÔNG sửa test. Soạn bug → chuyển cho kb-update (QC) ghi <P>/bug-history.md | — |
 | TC sai / thiếu / mâu thuẫn với app | KHÔNG tự sửa TC. Báo người dùng → QC sửa TC (revision mới) qua test-case / kb-update | — |
@@ -1274,18 +1276,30 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 #### `automation/templates/screen.md`
 
 ~~~~markdown
-# ユーザー一覧 (user-list)
-- Route: /users
-- Page Object: web/pages/UserListPage.ts
-- Đi tới: login → dashboard → menu ユーザー管理
-- Quyền: admin, staff (staff không thấy 削除)
+# Template màn hình cho automation (web, Playwright)
+1 file = 1 màn hình: `<P>/automation/web/screens/<app>/<screen>.screen.ts`. Mô tả đầy đủ màn hình nằm ở `<P>/screens/catalog/` — chỉ ghi mã màn hình để tra ngược, không chép mô tả.
 
-| Element | Ý nghĩa | Dẫn tới |
-|---|---|---|
-| createBtn | 新規作成 | user-create |
+```ts
+import { BaseScreen } from '../base.screen';
 
-## Lưu ý
-- Table load async → chờ API /users trước khi assert
+/**
+ * <Tên màn hình tiếng Nhật> — catalog: <file>.md › "<mục>"
+ * Role: <theo permission matrix / catalog>. Chờ: <API cần chờ trước khi assert>.
+ * [cần kiểm trên app thật] <locator nào chưa xác minh>
+ */
+export class XxxScreen extends BaseScreen {
+  readonly id = '<mã màn hình, vd CMS0050>';
+  readonly path = '<route>';
+  readonly roles = ['99'] as const;
+
+  // Locator: getByRole / getByLabel / getByText (label JP) → #id / data-testid → CSS
+  readonly saveButton = this.page.getByRole('button', { name: '保存' });
+
+  async save(): Promise<void> { await this.saveButton.click(); }
+}
+```
+
+Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ngắn, không chứa assert.
 ~~~~
 
 #### `manager/templates/lesson.md`
@@ -1475,6 +1489,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D20 | 2026-10-09 | Dựng khung Playwright CMS ở projects/qnavi/automation/web: env/ + .env (tài khoản theo role), data/, common/ (login 1 lần / role, forRoles), screens/<app>/*.screen.ts là knowledge locator (ghi mã màn hình, không chép mô tả), tests/<app>/<scope-key>.spec.ts, reports/<run>/ (html, json, junit, artifacts). 1 TC × 1 role = 1 test. Catalog màn hình 5 app lưu ở projects/qnavi/screens/catalog/ dùng chung QC + automation. Native app (repair, shop) và web nhúng làm sau | Khớp cột kết quả theo role; locator 1 chỗ; report theo lần chạy | projects/qnavi/automation/, kb-update-automation, automation/templates/screen.md, CLAUDE.md |
 | D19 | 2026-10-09 | Automation là luồng riêng Spec → Test case → Automation: chỉ dựa vào TC LOCKED (UI-AUTO/BOTH); knowledge automation (automation/, <P>/automation/screens, README) do skill kb-update-automation quản lý, tách khỏi kb-update (QC). PRODUCT_BUG / TC sai thì bàn giao sang QC | TC đã chứa đủ thông tin; tách 2 vòng knowledge cho gọn, ít token | CLAUDE.md, kb-update, kb-update-automation, projects/<p>/automation/ |
 | D18 | 2026-10-09 | test-viewpoint và test-case đọc thêm knowledge + bài học (lessons INDEX, bug-history, screens, glossary, VP/TC LOCKED cũ) — chỉ phần cùng function / màn hình; Context pack vẫn đọc trước. test-viewpoint yêu cầu Gap Report LOCKED. Sửa một phần D08 | Context pack tóm tắt có thể thiếu chi tiết (permission, label, bug cũ) → VP/TC kém | test-viewpoint, test-case, CLAUDE.md |
 | D17 | 2026-10-09 | Gap Report có 3 trạng thái DRAFT → LOCKED → DONE. DONE khi Gap Report LOCKED + không còn OQ OPEN + người dùng xác nhận; khi DONE gọi kb-update ghi knowledge đã chắc chắn vào projects/<p>/ (glossary, screens, README, sources), OQ → RESOLVED | Knowledge dự án lớn dần theo ticket, chỉ ghi điều đã được trả lời nên không sai | spec-review, gap-report.md, kb-update, open-questions.md, CLAUDE.md |
@@ -1502,6 +1517,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 ## [Unreleased]
 ### Thêm
+- Khung Playwright CMS projects/qnavi/automation/web (README cách chạy, env, data, common, screens, report theo lần chạy); catalog màn hình 5 app ở projects/qnavi/screens/catalog/ (D20)
 - Skill kb-update-automation; projects/qnavi/automation/README.md + screens/ (D19)
 - spec-review: trạng thái [Done] → cập nhật knowledge dự án qua kb-update; Gap Report mục 7 (D17)
 - Skill source-import (xlsx/pdf → md) (D14), skill export-excel (chỉ khi được đồng ý) (D15)

@@ -4,7 +4,7 @@
 - Sản phẩm thị trường Nhật. UI tiếng Nhật, team làm việc bằng tiếng Việt.
 - Trả lời / chat bằng tiếng Việt. Viewpoint và test case viết bằng TIẾNG ANH; label / message tiếng Nhật giữ nguyên trong '' (không dịch).
 - Dự án đang làm: qnavi → <P> = projects/qnavi. Hồ sơ dự án: <P>/README.md, thứ tự ưu tiên nguồn: <P>/sources.md.
-- Câu hỏi về dự án (role, màn hình, thuật ngữ, luồng, bug…): tự đọc / grep trong <P>/ (README.md, glossary.md, screens/_flow.md, bug-history.md, spec/) rồi trả lời kèm nguồn — không cần xin phép. Chỉ nói "không biết" khi đã tìm trong <P>/ mà không có.
+- Câu hỏi về dự án (role, màn hình, thuật ngữ, luồng, bug…): tự đọc / grep trong <P>/ (README.md, glossary.md, screens/_flow.md, screens/catalog/, bug-history.md, spec/) rồi trả lời kèm nguồn — không cần xin phép. Chỉ nói "không biết" khi đã tìm trong <P>/ mà không có.
 
 ## Thứ tự đọc khi thiết kế test (bắt buộc)
 0. Spec là xlsx / pdf / docx → skill source-import (gốc ở <P>/raw/, md ở <P>/spec/)
@@ -18,7 +18,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 
 ## Automation (luồng riêng: Spec → Test case → Automation)
 - Input duy nhất: test case LOCKED <P>/qc/test-cases/ có Automation Eligibility UI-AUTO / BOTH. Không đọc spec, Gap Report, viewpoint, qc/lessons, bug-history.
-- Đọc thêm: automation/lessons/INDEX.md, <P>/automation/README.md, <P>/automation/screens/ của màn hình liên quan.
+- Đọc thêm: automation/lessons/INDEX.md, <P>/automation/README.md, <P>/automation/web/README.md (quy ước TC → code), <P>/automation/web/screens/ của màn hình liên quan; mô tả màn hình tra <P>/screens/catalog/.
 - TC thiếu / mâu thuẫn với app → dừng, báo người dùng; không tự sửa TC, không sửa expect cho khớp app.
 - Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 

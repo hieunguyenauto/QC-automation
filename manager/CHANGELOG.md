@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- Khung Playwright CMS projects/qnavi/automation/web (README cách chạy, env, data, common, screens, report theo lần chạy); catalog màn hình 5 app ở projects/qnavi/screens/catalog/ (D20)
 - Skill kb-update-automation; projects/qnavi/automation/README.md + screens/ (D19)
 - spec-review: trạng thái [Done] → cập nhật knowledge dự án qua kb-update; Gap Report mục 7 (D17)
 - Skill source-import (xlsx/pdf → md) (D14), skill export-excel (chỉ khi được đồng ý) (D15)

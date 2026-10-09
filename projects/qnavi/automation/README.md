@@ -1,11 +1,14 @@
 # Automation — Qnavi
 Input duy nhất: test case LOCKED trong ../qc/test-cases/ (Automation Eligibility = UI-AUTO / BOTH). Knowledge ở đây do skill kb-update-automation cập nhật.
 
-| Thư mục / file | Nội dung |
-|---|---|
-| screens/ | Màn hình cho automation: route, Page Object, element, chờ API nào (automation/templates/screen.md) |
-| web/ | Playwright (GĐ2–3) |
-| mobile/ | Appium / WebdriverIO (GĐ2–3) |
+| Thư mục | Nội dung | Trạng thái |
+|---|---|---|
+| web/ | Playwright cho CMS (qnavi-cms-frontend). Cách chạy: web/README.md | Khung đã dựng |
+| web/screens/cms/ | Knowledge màn hình: mã màn hình, route, role, locator | Login, Trouble list (locator chưa xác minh) |
+| mobile/ | Appium cho Repair app, Shop app (native) | Làm sau |
+
+Mô tả màn hình (route, role, API): ../screens/catalog/ (cms-frontend, estimation-frontend, trouble-frontend, repair-app, shop-app).
+Estimation PWA và Trouble NAVI là web nhúng trong app, cần token đặt sẵn vào cookie → làm sau, dùng chung khung web/.
 
 ## Môi trường / tài khoản test
-<!-- Ghi URL môi trường, tên tài khoản test theo role. KHÔNG ghi mật khẩu / token (để trong .env). -->
+- URL theo môi trường: web/env/<ENV>.json. Tài khoản theo role: web/.env (không commit), mẫu ở web/.env.example.

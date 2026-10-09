@@ -1,0 +1,20 @@
+{
+  "name": "qnavi-automation-web",
+  "private": true,
+  "description": "Playwright automation cho Qnavi CMS. Input duy nhất: test case LOCKED.",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui",
+    "setup": "playwright test --project=setup",
+    "list": "playwright test --list",
+    "report": "node scripts/open-report.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.0",
+    "@types/node": "^22.0.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.6.3"
+  }
+}

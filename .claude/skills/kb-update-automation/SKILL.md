@@ -11,14 +11,16 @@ description: Cập nhật knowledge của phần AUTOMATION (bài học locator 
 | Rule đã học (dùng chung) | automation/lessons/INDEX.md (Web R.., Mobile M..) |
 | Bài học chi tiết | automation/lessons/<web\|mobile>/<YYYY-MM-DD>-<slug>.md theo manager/templates/lesson.md |
 | Template automation | automation/templates/*.md |
-| Màn hình cho automation (route, Page Object, element, chờ gì) | <P>/automation/screens/<screen>.md theo automation/templates/screen.md |
+| Màn hình cho automation (mã màn hình, route, role, locator, thao tác) | <P>/automation/web/screens/<app>/<screen>.screen.ts theo automation/templates/screen.md. Mô tả màn hình KHÔNG chép lại: tra <P>/screens/catalog/ |
+| Môi trường, role ↔ tài khoản, data test | <P>/automation/web/env/*.json · data/roles.ts · data/<scope-key>.json (mật khẩu chỉ ở .env) |
+| Code dùng chung (login, chờ, assert) | <P>/automation/web/common/ |
 | Ghi chú môi trường / data / tài khoản test (không ghi mật khẩu) | <P>/automation/README.md |
 | Luật viết code test | CLAUDE.md mục Automation |
 
 # Phân loại khi có lỗi
 | Loại lesson | Ai xử lý | File |
 |---|---|---|
-| LOCATOR · TIMING · DATA | Skill này | lesson + Page Object / <P>/automation/screens/ |
+| LOCATOR · TIMING · DATA | Skill này | lesson + <P>/automation/web/screens/ hoặc common/ |
 | ENV | Skill này (chỉ ghi chú, không sửa code) | <P>/automation/README.md |
 | PRODUCT_BUG | KHÔNG sửa test. Soạn bug → chuyển cho kb-update (QC) ghi <P>/bug-history.md | — |
 | TC sai / thiếu / mâu thuẫn với app | KHÔNG tự sửa TC. Báo người dùng → QC sửa TC (revision mới) qua test-case / kb-update | — |

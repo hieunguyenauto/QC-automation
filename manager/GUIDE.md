@@ -910,8 +910,8 @@ Skill/CLAUDE.md làm AI tệ đi → `git revert` commit `[skill]`/`[rule]` đó
 2. Knowledge: <P>/README.md, <P>/sources.md, <P>/glossary.md, <P>/screens/_flow.md + màn hình liên quan, <P>/qc/ của function liên quan (bản LOCKED)
 3. Bài học: qc/lessons/INDEX.md (mục Thiết kế test), <P>/bug-history.md (chỉ dòng cùng function / pattern)
 4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions. Hết OQ OPEN + người dùng xác nhận → [Done] → kb-update ghi knowledge vào <P>/
-5. Viewpoint: skill test-viewpoint (đọc Context pack, không đọc lại bước 2–3)
-6. Test case: skill test-case (đọc viewpoint LOCKED + Context pack)
+5. Viewpoint: skill test-viewpoint (Context pack trước, rồi knowledge + bài học của đúng function / màn hình)
+6. Test case: skill test-case (viewpoint LOCKED + Context pack + knowledge + bài học của đúng function)
 Khi viết / sửa code test: đọc automation/lessons/INDEX.md trước. Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 
 ## Skill dùng trong repo
@@ -1083,7 +1083,16 @@ description: Sinh test case từ viewpoint đã LOCKED theo format sheet TC (TC 
 ---
 # Input
 - <P>/qc/test-viewpoints/<scope-key>-viewpoints.md có State = LOCKED. Chưa LOCKED → dừng.
-- Context pack trong <P>/qc/gap-reports/<scope-key>-gap-report.md.
+- Context pack trong <P>/qc/gap-reports/<scope-key>-gap-report.md (đọc trước).
+- Knowledge + bài học (đọc có chọn lọc, grep theo function / màn hình, không đọc cả thư mục):
+  | Đọc | Để làm gì |
+  |---|---|
+  | qc/lessons/INDEX.md mục Thiết kế test | Case hay sót (ngày cuối tháng, double-submit…) |
+  | <P>/bug-history.md — dòng cùng function | Mỗi bug "Không" bắt được → ít nhất 1 TC, Priority High |
+  | <P>/screens/ — màn hình liên quan | Steps đúng luồng, permission theo role, label tiếng Nhật chính xác |
+  | <P>/glossary.md | Đúng label / message '' |
+  | <P>/qc/test-cases/ bản LOCKED cùng function + TC cũ theo sources.md | Đối chiếu 3 nguồn, tránh trùng |
+  | <P>/README.md mục role / OS / quy ước ID | Role, OS, TC ID đúng dự án |
 - qc/templates/testcase.md, qc/templates/data-test.md, references/test-design-techniques.md, references/automation-eligibility.md.
 - Chỉ làm đúng 1 sheet được chỉ định.
 
@@ -1145,8 +1154,17 @@ name: test-viewpoint
 description: Thiết kế Test Viewpoint theo format sheet Viewpoint (ID, Screen, Test Level/Test Type, Function, Test Viewpoint, Expected Result, Role, Site, Note). Mỗi viewpoint là 1 góc kiểm thử có trục biến thiên để sinh nhiều test case, trace về spec rồi Lock. Dùng khi người dùng nói "làm viewpoint", "góc kiểm thử", "/test-viewpoint".
 ---
 # Input
-- <P>/spec/<scope-key>.md đã duyệt + <P>/qc/gap-reports/<scope-key>-gap-report.md có Design Gate READY/PARTIAL và Context pack.
-- Không đọc lại glossary / lessons / bug-history: dùng Context pack. Thiếu thông tin → hỏi, không tự đi đọc cả thư mục.
+- <P>/spec/<scope-key>.md đã duyệt + <P>/qc/gap-reports/<scope-key>-gap-report.md đã LOCKED, Design Gate READY/PARTIAL, có Context pack.
+- Knowledge + bài học (đọc có chọn lọc, grep theo function / màn hình của sheet, không đọc cả thư mục):
+  | Đọc | Để làm gì |
+  |---|---|
+  | Context pack (bắt buộc, đọc trước) | Tóm tắt đã lọc ở spec-review |
+  | qc/lessons/INDEX.md mục Thiết kế test | Rule VP hay bị sót (nhóm 8) |
+  | <P>/bug-history.md — dòng cùng function / pattern | VP nhóm 8; ưu tiên dòng "Có TC bắt được" = Không |
+  | <P>/screens/ — màn hình liên quan | Permission matrix, state transition → trục role / trạng thái |
+  | <P>/qc/test-viewpoints/ bản LOCKED cùng function | Không trùng / không sót VP cũ |
+  | <P>/glossary.md — chỉ khi gặp thuật ngữ lạ | Đúng tên đối tượng |
+- Thông tin mới tìm thấy mà Context pack chưa có → ghi thêm 1 dòng "Nguồn: <file#mục>" ở Note của VP liên quan.
 - references/viewpoint-groups.md, qc/templates/viewpoint.md, qc/templates/data-test.md.
 
 # Viewpoint là gì (đọc kỹ trước khi viết)
@@ -1163,7 +1181,7 @@ description: Thiết kế Test Viewpoint theo format sheet Viewpoint (ID, Screen
 
 # Quy trình
 1. Liệt kê screen / function trong spec, đúng sheet được chỉ định. Mỗi sheet 1 prefix (vd WB2).
-2. Mỗi function đi qua 8 nhóm trong viewpoint-groups.md; nhóm 8 lấy từ dòng Lesson / Bug trong Context pack.
+2. Mỗi function đi qua 8 nhóm trong viewpoint-groups.md; nhóm 8 lấy từ Context pack + qc/lessons/INDEX.md + bug-history (dòng cùng function).
 3. Trong mỗi nhóm, gom theo đối tượng (field / vùng màn hình / nút / API / rule): mỗi đối tượng × khía cạnh = 1 VP. Mỗi input field = 1 VP validation duy nhất, data-test là trục của nó. Nút theo role → trục là permission matrix của nguồn authoritative.
 4. Mỗi VP 1 dòng: ID = <PREFIX>-NN · Expected Result ở mức tổng quát · Role, Site theo spec · Note: "Axis: <loại> — <các giá trị dự kiến>" + nguồn (mã nguồn §mục) / OQ.
 5. Tự kiểm trước khi đưa người duyệt — in bảng ID | Axis | Số TC dự kiến:
@@ -1405,6 +1423,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D18 | 2026-10-09 | test-viewpoint và test-case đọc thêm knowledge + bài học (lessons INDEX, bug-history, screens, glossary, VP/TC LOCKED cũ) — chỉ phần cùng function / màn hình; Context pack vẫn đọc trước. test-viewpoint yêu cầu Gap Report LOCKED. Sửa một phần D08 | Context pack tóm tắt có thể thiếu chi tiết (permission, label, bug cũ) → VP/TC kém | test-viewpoint, test-case, CLAUDE.md |
 | D17 | 2026-10-09 | Gap Report có 3 trạng thái DRAFT → LOCKED → DONE. DONE khi Gap Report LOCKED + không còn OQ OPEN + người dùng xác nhận; khi DONE gọi kb-update ghi knowledge đã chắc chắn vào projects/<p>/ (glossary, screens, README, sources), OQ → RESOLVED | Knowledge dự án lớn dần theo ticket, chỉ ghi điều đã được trả lời nên không sai | spec-review, gap-report.md, kb-update, open-questions.md, CLAUDE.md |
 | D16 | 2026-10-09 | Giữ draft → duyệt → LOCKED ở mọi bước (Gap Report, VP, TC) là process; giữ quy ước 1 lần làm = 1 sheet / scope (đổi sau khi cần); không thêm bước Coverage / Execution Summary. Thêm template qc/templates/gap-report.md | Rà workflow 10 điểm; người dùng chốt | CLAUDE.md, spec-review, qc/templates/gap-report.md |
 | D15 | 2026-10-09 | Skill export-excel: chỉ chạy khi người dùng đồng ý (test-case hỏi 1 câu sau LOCKED); xuất file mới reports/<scope-key>-<ngày>.xlsx; sheet Viewpoint + sheet TC 12 cột (không có Automation Eligibility) + cột kết quả theo role/platform | Team / khách dùng Excel; không sửa workbook gốc (T07) | export-excel, test-case, handbook 4.4 |
@@ -1437,6 +1456,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 - Import knowledge Qnavi: projects/qnavi/ (README, sources, glossary 50 thuật ngữ, screens/_flow, bug-history 22 dòng) (D11)
 - lessons/INDEX.md: 13 rule Thiết kế test (D01–D13) + 7 rule Excel/công cụ (T01–T07)
 ### Sửa
+- test-viewpoint, test-case đọc thêm knowledge + bài học theo function; test-viewpoint đòi Gap Report LOCKED (D18)
 - CLAUDE.md: luật QC chỉ áp dụng cho task QC, tra cứu dự án tự tìm trong <P>/ (D13); không dùng qa-testcase-writing trong repo; mọi bước draft → duyệt → LOCKED (D14, D16)
 - handbook.md viết lại theo cấu trúc mới (luồng 6 bước + import + export); bug-history ghi nghĩa cột "Có TC bắt được"
 - Tổ chức lại thư mục: manager/ · qc/ · automation/ · projects/<p>/ (D12)

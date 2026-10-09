@@ -12,8 +12,8 @@
 2. Knowledge: <P>/README.md, <P>/sources.md, <P>/glossary.md, <P>/screens/_flow.md + màn hình liên quan, <P>/qc/ của function liên quan (bản LOCKED)
 3. Bài học: qc/lessons/INDEX.md (mục Thiết kế test), <P>/bug-history.md (chỉ dòng cùng function / pattern)
 4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions. Hết OQ OPEN + người dùng xác nhận → [Done] → kb-update ghi knowledge vào <P>/
-5. Viewpoint: skill test-viewpoint (đọc Context pack, không đọc lại bước 2–3)
-6. Test case: skill test-case (đọc viewpoint LOCKED + Context pack)
+5. Viewpoint: skill test-viewpoint (Context pack trước, rồi knowledge + bài học của đúng function / màn hình)
+6. Test case: skill test-case (viewpoint LOCKED + Context pack + knowledge + bài học của đúng function)
 Khi viết / sửa code test: đọc automation/lessons/INDEX.md trước. Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 
 ## Skill dùng trong repo

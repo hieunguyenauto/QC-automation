@@ -3,6 +3,7 @@
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D18 | 2026-10-09 | test-viewpoint và test-case đọc thêm knowledge + bài học (lessons INDEX, bug-history, screens, glossary, VP/TC LOCKED cũ) — chỉ phần cùng function / màn hình; Context pack vẫn đọc trước. test-viewpoint yêu cầu Gap Report LOCKED. Sửa một phần D08 | Context pack tóm tắt có thể thiếu chi tiết (permission, label, bug cũ) → VP/TC kém | test-viewpoint, test-case, CLAUDE.md |
 | D17 | 2026-10-09 | Gap Report có 3 trạng thái DRAFT → LOCKED → DONE. DONE khi Gap Report LOCKED + không còn OQ OPEN + người dùng xác nhận; khi DONE gọi kb-update ghi knowledge đã chắc chắn vào projects/<p>/ (glossary, screens, README, sources), OQ → RESOLVED | Knowledge dự án lớn dần theo ticket, chỉ ghi điều đã được trả lời nên không sai | spec-review, gap-report.md, kb-update, open-questions.md, CLAUDE.md |
 | D16 | 2026-10-09 | Giữ draft → duyệt → LOCKED ở mọi bước (Gap Report, VP, TC) là process; giữ quy ước 1 lần làm = 1 sheet / scope (đổi sau khi cần); không thêm bước Coverage / Execution Summary. Thêm template qc/templates/gap-report.md | Rà workflow 10 điểm; người dùng chốt | CLAUDE.md, spec-review, qc/templates/gap-report.md |
 | D15 | 2026-10-09 | Skill export-excel: chỉ chạy khi người dùng đồng ý (test-case hỏi 1 câu sau LOCKED); xuất file mới reports/<scope-key>-<ngày>.xlsx; sheet Viewpoint + sheet TC 12 cột (không có Automation Eligibility) + cột kết quả theo role/platform | Team / khách dùng Excel; không sửa workbook gốc (T07) | export-excel, test-case, handbook 4.4 |

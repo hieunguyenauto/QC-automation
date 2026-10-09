@@ -4,7 +4,16 @@ description: Sinh test case từ viewpoint đã LOCKED theo format sheet TC (TC 
 ---
 # Input
 - <P>/qc/test-viewpoints/<scope-key>-viewpoints.md có State = LOCKED. Chưa LOCKED → dừng.
-- Context pack trong <P>/qc/gap-reports/<scope-key>-gap-report.md.
+- Context pack trong <P>/qc/gap-reports/<scope-key>-gap-report.md (đọc trước).
+- Knowledge + bài học (đọc có chọn lọc, grep theo function / màn hình, không đọc cả thư mục):
+  | Đọc | Để làm gì |
+  |---|---|
+  | qc/lessons/INDEX.md mục Thiết kế test | Case hay sót (ngày cuối tháng, double-submit…) |
+  | <P>/bug-history.md — dòng cùng function | Mỗi bug "Không" bắt được → ít nhất 1 TC, Priority High |
+  | <P>/screens/ — màn hình liên quan | Steps đúng luồng, permission theo role, label tiếng Nhật chính xác |
+  | <P>/glossary.md | Đúng label / message '' |
+  | <P>/qc/test-cases/ bản LOCKED cùng function + TC cũ theo sources.md | Đối chiếu 3 nguồn, tránh trùng |
+  | <P>/README.md mục role / OS / quy ước ID | Role, OS, TC ID đúng dự án |
 - qc/templates/testcase.md, qc/templates/data-test.md, references/test-design-techniques.md, references/automation-eligibility.md.
 - Chỉ làm đúng 1 sheet được chỉ định.
 

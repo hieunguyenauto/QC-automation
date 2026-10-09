@@ -3,8 +3,17 @@ name: test-viewpoint
 description: Thiết kế Test Viewpoint theo format sheet Viewpoint (ID, Screen, Test Level/Test Type, Function, Test Viewpoint, Expected Result, Role, Site, Note). Mỗi viewpoint là 1 góc kiểm thử có trục biến thiên để sinh nhiều test case, trace về spec rồi Lock. Dùng khi người dùng nói "làm viewpoint", "góc kiểm thử", "/test-viewpoint".
 ---
 # Input
-- <P>/spec/<scope-key>.md đã duyệt + <P>/qc/gap-reports/<scope-key>-gap-report.md có Design Gate READY/PARTIAL và Context pack.
-- Không đọc lại glossary / lessons / bug-history: dùng Context pack. Thiếu thông tin → hỏi, không tự đi đọc cả thư mục.
+- <P>/spec/<scope-key>.md đã duyệt + <P>/qc/gap-reports/<scope-key>-gap-report.md đã LOCKED, Design Gate READY/PARTIAL, có Context pack.
+- Knowledge + bài học (đọc có chọn lọc, grep theo function / màn hình của sheet, không đọc cả thư mục):
+  | Đọc | Để làm gì |
+  |---|---|
+  | Context pack (bắt buộc, đọc trước) | Tóm tắt đã lọc ở spec-review |
+  | qc/lessons/INDEX.md mục Thiết kế test | Rule VP hay bị sót (nhóm 8) |
+  | <P>/bug-history.md — dòng cùng function / pattern | VP nhóm 8; ưu tiên dòng "Có TC bắt được" = Không |
+  | <P>/screens/ — màn hình liên quan | Permission matrix, state transition → trục role / trạng thái |
+  | <P>/qc/test-viewpoints/ bản LOCKED cùng function | Không trùng / không sót VP cũ |
+  | <P>/glossary.md — chỉ khi gặp thuật ngữ lạ | Đúng tên đối tượng |
+- Thông tin mới tìm thấy mà Context pack chưa có → ghi thêm 1 dòng "Nguồn: <file#mục>" ở Note của VP liên quan.
 - references/viewpoint-groups.md, qc/templates/viewpoint.md, qc/templates/data-test.md.
 
 # Viewpoint là gì (đọc kỹ trước khi viết)
@@ -21,7 +30,7 @@ description: Thiết kế Test Viewpoint theo format sheet Viewpoint (ID, Screen
 
 # Quy trình
 1. Liệt kê screen / function trong spec, đúng sheet được chỉ định. Mỗi sheet 1 prefix (vd WB2).
-2. Mỗi function đi qua 8 nhóm trong viewpoint-groups.md; nhóm 8 lấy từ dòng Lesson / Bug trong Context pack.
+2. Mỗi function đi qua 8 nhóm trong viewpoint-groups.md; nhóm 8 lấy từ Context pack + qc/lessons/INDEX.md + bug-history (dòng cùng function).
 3. Trong mỗi nhóm, gom theo đối tượng (field / vùng màn hình / nút / API / rule): mỗi đối tượng × khía cạnh = 1 VP. Mỗi input field = 1 VP validation duy nhất, data-test là trục của nó. Nút theo role → trục là permission matrix của nguồn authoritative.
 4. Mỗi VP 1 dòng: ID = <PREFIX>-NN · Expected Result ở mức tổng quát · Role, Site theo spec · Note: "Axis: <loại> — <các giá trị dự kiến>" + nguồn (mã nguồn §mục) / OQ.
 5. Tự kiểm trước khi đưa người duyệt — in bảng ID | Axis | Số TC dự kiến:

@@ -1,6 +1,6 @@
 ---
 name: kb-update
-description: Cập nhật knowledge của repo (luật, skill, template, bài học, quy trình) và tự ghi tài liệu (decision, CHANGELOG, GUIDE.md). Dùng khi người dùng nói "thêm luật", "sửa skill", "cập nhật template", "ghi lại bài học", "từ giờ phải…", "/kb-update".
+description: Cập nhật knowledge phần QC + quản lý của repo (luật, skill, template, bài học thiết kế test, knowledge dự án, quy trình); phần automation dùng kb-update-automation và tự ghi tài liệu (decision, CHANGELOG, GUIDE.md). Dùng khi người dùng nói "thêm luật", "sửa skill", "cập nhật template", "ghi lại bài học", "từ giờ phải…", "/kb-update".
 ---
 # Bản đồ knowledge — mỗi loại chỉ có 1 file nguồn
 | Loại | File nguồn |
@@ -13,6 +13,10 @@ description: Cập nhật knowledge của repo (luật, skill, template, bài h�
 | Hướng dẫn cho người (tường thuật) | manager/handbook.md |
 | Lý do của quyết định | manager/decisions.md (1 dòng / quyết định) |
 | Tài liệu tổng hợp | manager/GUIDE.md — TỰ SINH, không sửa tay |
+
+# Phạm vi
+- Không sửa knowledge automation (automation/, <P>/automation/, luật code test) → dùng kb-update-automation.
+- Nhận bàn giao từ kb-update-automation: PRODUCT_BUG → <P>/bug-history.md; TC sai → đề xuất revision TC.
 
 # Quy trình
 0. Nguồn kích hoạt thường gặp: Gap Report chuyển [Done] (spec-review bước 10) → chỉ sửa knowledge trong projects/<project>/, không cần decision / handbook.

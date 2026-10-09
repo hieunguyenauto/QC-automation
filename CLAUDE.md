@@ -14,7 +14,13 @@
 4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions. Hết OQ OPEN + người dùng xác nhận → [Done] → kb-update ghi knowledge vào <P>/
 5. Viewpoint: skill test-viewpoint (Context pack trước, rồi knowledge + bài học của đúng function / màn hình)
 6. Test case: skill test-case (viewpoint LOCKED + Context pack + knowledge + bài học của đúng function)
-Khi viết / sửa code test: đọc automation/lessons/INDEX.md trước. Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
+Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
+
+## Automation (luồng riêng: Spec → Test case → Automation)
+- Input duy nhất: test case LOCKED <P>/qc/test-cases/ có Automation Eligibility UI-AUTO / BOTH. Không đọc spec, Gap Report, viewpoint, qc/lessons, bug-history.
+- Đọc thêm: automation/lessons/INDEX.md, <P>/automation/README.md, <P>/automation/screens/ của màn hình liên quan.
+- TC thiếu / mâu thuẫn với app → dừng, báo người dùng; không tự sửa TC, không sửa expect cho khớp app.
+- Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 
 ## Skill dùng trong repo
 - Thiết kế test dùng skill của repo: source-import, spec-review, test-viewpoint, test-case, export-excel (chỉ khi người dùng đồng ý); sửa knowledge: kb-update.

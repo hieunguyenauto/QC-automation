@@ -784,6 +784,8 @@ Nhánh PRODUCT\_BUG không bao giờ quay lại sửa test.
 
 ### 4.2 Vòng lặp lessons
 
+Hai vòng knowledge tách nhau (D19): **QC** (spec, VP, TC, bug-history) → `kb-update`; **Automation** (locator, timing, data, env, screens cho automation) → `kb-update-automation`. Automation chỉ dựa vào TC LOCKED; PRODUCT_BUG hoặc TC sai thì chuyển sang QC.
+
 | Loại | Ví dụ | AI được làm | Ghi lesson |
 | --- | --- | --- | --- |
 | LOCATOR | Nút đổi 登録 → 保存 | Sửa Page Object + screens/\*.md | Có |

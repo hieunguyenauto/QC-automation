@@ -785,6 +785,8 @@ Nhánh PRODUCT\_BUG không bao giờ quay lại sửa test.
 
 ### 4.2 Vòng lặp lessons
 
+Hai vòng knowledge tách nhau (D19): **QC** (spec, VP, TC, bug-history) → `kb-update`; **Automation** (locator, timing, data, env, screens cho automation) → `kb-update-automation`. Automation chỉ dựa vào TC LOCKED; PRODUCT_BUG hoặc TC sai thì chuyển sang QC.
+
 | Loại | Ví dụ | AI được làm | Ghi lesson |
 | --- | --- | --- | --- |
 | LOCATOR | Nút đổi 登録 → 保存 | Sửa Page Object + screens/\*.md | Có |
@@ -912,7 +914,13 @@ Skill/CLAUDE.md làm AI tệ đi → `git revert` commit `[skill]`/`[rule]` đó
 4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions. Hết OQ OPEN + người dùng xác nhận → [Done] → kb-update ghi knowledge vào <P>/
 5. Viewpoint: skill test-viewpoint (Context pack trước, rồi knowledge + bài học của đúng function / màn hình)
 6. Test case: skill test-case (viewpoint LOCKED + Context pack + knowledge + bài học của đúng function)
-Khi viết / sửa code test: đọc automation/lessons/INDEX.md trước. Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
+Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
+
+## Automation (luồng riêng: Spec → Test case → Automation)
+- Input duy nhất: test case LOCKED <P>/qc/test-cases/ có Automation Eligibility UI-AUTO / BOTH. Không đọc spec, Gap Report, viewpoint, qc/lessons, bug-history.
+- Đọc thêm: automation/lessons/INDEX.md, <P>/automation/README.md, <P>/automation/screens/ của màn hình liên quan.
+- TC thiếu / mâu thuẫn với app → dừng, báo người dùng; không tự sửa TC, không sửa expect cho khớp app.
+- Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 
 ## Skill dùng trong repo
 - Thiết kế test dùng skill của repo: source-import, spec-review, test-viewpoint, test-case, export-excel (chỉ khi người dùng đồng ý); sửa knowledge: kb-update.
@@ -974,12 +982,52 @@ description: Xuất viewpoint + test case đã LOCKED ra file Excel mới trong 
 - Sửa file md / workbook gốc · thêm hoặc đổi thứ tự cột · điền sẵn kết quả test.
 ~~~~
 
+#### `.claude/skills/kb-update-automation/SKILL.md`
+
+~~~~markdown
+---
+name: kb-update-automation
+description: Cập nhật knowledge của phần AUTOMATION (bài học locator / timing / data / env, mô tả màn hình cho automation, template automation, luật viết code test). Dùng khi test automation fail đã tìm ra nguyên nhân, khi đổi locator / Page Object, hoặc người dùng nói "ghi lesson automation", "cập nhật knowledge automation", "/kb-update-automation".
+---
+# Nguyên tắc
+- Automation chỉ dựa vào test case LOCKED. Knowledge automation tách riêng knowledge QC: skill này không sửa spec, Gap Report, viewpoint, test case, qc/lessons, glossary, <P>/screens/ (nghiệp vụ).
+
+# Bản đồ knowledge automation — mỗi loại 1 file nguồn
+| Loại | File nguồn |
+|---|---|
+| Rule đã học (dùng chung) | automation/lessons/INDEX.md (Web R.., Mobile M..) |
+| Bài học chi tiết | automation/lessons/<web\|mobile>/<YYYY-MM-DD>-<slug>.md theo manager/templates/lesson.md |
+| Template automation | automation/templates/*.md |
+| Màn hình cho automation (route, Page Object, element, chờ gì) | <P>/automation/screens/<screen>.md theo automation/templates/screen.md |
+| Ghi chú môi trường / data / tài khoản test (không ghi mật khẩu) | <P>/automation/README.md |
+| Luật viết code test | CLAUDE.md mục Automation |
+
+# Phân loại khi có lỗi
+| Loại lesson | Ai xử lý | File |
+|---|---|---|
+| LOCATOR · TIMING · DATA | Skill này | lesson + Page Object / <P>/automation/screens/ |
+| ENV | Skill này (chỉ ghi chú, không sửa code) | <P>/automation/README.md |
+| PRODUCT_BUG | KHÔNG sửa test. Soạn bug → chuyển cho kb-update (QC) ghi <P>/bug-history.md | — |
+| TC sai / thiếu / mâu thuẫn với app | KHÔNG tự sửa TC. Báo người dùng → QC sửa TC (revision mới) qua test-case / kb-update | — |
+
+# Quy trình
+1. Xác định loại theo bảng trên. Không thuộc automation → dừng, chỉ ra skill đúng.
+2. Draft thay đổi (trước / sau) trong chat → chờ duyệt.
+3. Sửa file nguồn. Ghi lesson nếu loại LOCATOR / TIMING / DATA.
+4. Lesson cùng loại lặp từ 2 lần → đề xuất 1 rule cho automation/lessons/INDEX.md.
+5. Đổi luật / cách làm automation → thêm 1 dòng vào manager/decisions.md; luôn thêm 1 dòng manager/CHANGELOG.md (ghi [auto]).
+6. Chạy python3 manager/scripts/build_guide.py. Báo file đã đổi + commit "[auto] <tóm tắt>".
+
+# Cấm
+- Sửa expect cho khớp app khi TC nói khác · sửa file trong <P>/qc/ · ghi mật khẩu / token vào repo · sửa manager/GUIDE.md bằng tay.
+~~~~
+
 #### `.claude/skills/kb-update/SKILL.md`
 
 ~~~~markdown
 ---
 name: kb-update
-description: Cập nhật knowledge của repo (luật, skill, template, bài học, quy trình) và tự ghi tài liệu (decision, CHANGELOG, GUIDE.md). Dùng khi người dùng nói "thêm luật", "sửa skill", "cập nhật template", "ghi lại bài học", "từ giờ phải…", "/kb-update".
+description: Cập nhật knowledge phần QC + quản lý của repo (luật, skill, template, bài học thiết kế test, knowledge dự án, quy trình); phần automation dùng kb-update-automation và tự ghi tài liệu (decision, CHANGELOG, GUIDE.md). Dùng khi người dùng nói "thêm luật", "sửa skill", "cập nhật template", "ghi lại bài học", "từ giờ phải…", "/kb-update".
 ---
 # Bản đồ knowledge — mỗi loại chỉ có 1 file nguồn
 | Loại | File nguồn |
@@ -992,6 +1040,10 @@ description: Cập nhật knowledge của repo (luật, skill, template, bài h�
 | Hướng dẫn cho người (tường thuật) | manager/handbook.md |
 | Lý do của quyết định | manager/decisions.md (1 dòng / quyết định) |
 | Tài liệu tổng hợp | manager/GUIDE.md — TỰ SINH, không sửa tay |
+
+# Phạm vi
+- Không sửa knowledge automation (automation/, <P>/automation/, luật code test) → dùng kb-update-automation.
+- Nhận bàn giao từ kb-update-automation: PRODUCT_BUG → <P>/bug-history.md; TC sai → đề xuất revision TC.
 
 # Quy trình
 0. Nguồn kích hoạt thường gặp: Gap Report chuyển [Done] (spec-review bước 10) → chỉ sửa knowledge trong projects/<project>/, không cần decision / handbook.
@@ -1423,6 +1475,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D19 | 2026-10-09 | Automation là luồng riêng Spec → Test case → Automation: chỉ dựa vào TC LOCKED (UI-AUTO/BOTH); knowledge automation (automation/, <P>/automation/screens, README) do skill kb-update-automation quản lý, tách khỏi kb-update (QC). PRODUCT_BUG / TC sai thì bàn giao sang QC | TC đã chứa đủ thông tin; tách 2 vòng knowledge cho gọn, ít token | CLAUDE.md, kb-update, kb-update-automation, projects/<p>/automation/ |
 | D18 | 2026-10-09 | test-viewpoint và test-case đọc thêm knowledge + bài học (lessons INDEX, bug-history, screens, glossary, VP/TC LOCKED cũ) — chỉ phần cùng function / màn hình; Context pack vẫn đọc trước. test-viewpoint yêu cầu Gap Report LOCKED. Sửa một phần D08 | Context pack tóm tắt có thể thiếu chi tiết (permission, label, bug cũ) → VP/TC kém | test-viewpoint, test-case, CLAUDE.md |
 | D17 | 2026-10-09 | Gap Report có 3 trạng thái DRAFT → LOCKED → DONE. DONE khi Gap Report LOCKED + không còn OQ OPEN + người dùng xác nhận; khi DONE gọi kb-update ghi knowledge đã chắc chắn vào projects/<p>/ (glossary, screens, README, sources), OQ → RESOLVED | Knowledge dự án lớn dần theo ticket, chỉ ghi điều đã được trả lời nên không sai | spec-review, gap-report.md, kb-update, open-questions.md, CLAUDE.md |
 | D16 | 2026-10-09 | Giữ draft → duyệt → LOCKED ở mọi bước (Gap Report, VP, TC) là process; giữ quy ước 1 lần làm = 1 sheet / scope (đổi sau khi cần); không thêm bước Coverage / Execution Summary. Thêm template qc/templates/gap-report.md | Rà workflow 10 điểm; người dùng chốt | CLAUDE.md, spec-review, qc/templates/gap-report.md |
@@ -1449,6 +1502,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 ## [Unreleased]
 ### Thêm
+- Skill kb-update-automation; projects/qnavi/automation/README.md + screens/ (D19)
 - spec-review: trạng thái [Done] → cập nhật knowledge dự án qua kb-update; Gap Report mục 7 (D17)
 - Skill source-import (xlsx/pdf → md) (D14), skill export-excel (chỉ khi được đồng ý) (D15)
 - Template qc/templates/gap-report.md; qc/README.md, automation/README.md (D16)

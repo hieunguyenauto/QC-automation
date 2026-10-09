@@ -1,5 +1,5 @@
 # Gap Report — <scope-key>
-<!-- State: DRAFT | LOCKED · Spec: <P>/spec/<scope-key>.md (revision …) · Ngày: YYYY-MM-DD · Người duyệt: … -->
+<!-- State: DRAFT | LOCKED | DONE · Spec: <P>/spec/<scope-key>.md (revision …) · Ngày: YYYY-MM-DD · Người duyệt: … -->
 
 ## 1. Scope
 | Mục | Giá trị |
@@ -31,4 +31,9 @@
 ## 6. Context pack
 <!-- Ngày: YYYY-MM-DD · qc/lessons/INDEX.md revision: <git short hash> -->
 | Loại (Thuật ngữ / Màn hình / Permission / VP-TC cũ / Lesson / Bug / Scope) | Nguồn (file#mục hoặc ID) | Nội dung rút gọn (≤ 1 câu) |
+|---|---|---|
+
+## 7. Cập nhật knowledge (khi DONE)
+<!-- DONE = Gap Report LOCKED + không còn OQ OPEN + người dùng xác nhận. Chưa DONE thì để trống. -->
+| File | Thay đổi | Từ (spec#mục / OQ ID) |
 |---|---|---|

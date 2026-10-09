@@ -173,7 +173,7 @@ Mở repo trong VS Code → bấm icon Spark (Claude) → Sign in. Sửa CLAUDE.
 | Skill | Khi nào | Output |
 | --- | --- | --- |
 | source-import | Spec là xlsx / pdf / docx | <P>/spec/<scope-key>.md, bảng đối chiếu số dòng, danh sách phần bị mất (ảnh, màu, comment) |
-| spec-review | Luôn chạy trước | Gap Report theo qc/templates/gap-report.md: Scope, Test item, FND, OQ, Design Gate, Context pack |
+| spec-review | Luôn chạy trước | Gap Report theo qc/templates/gap-report.md: Scope, Test item, FND, OQ, Design Gate, Context pack. DRAFT → LOCKED → [Done] (hết OQ OPEN + bạn xác nhận) → kb-update ghi knowledge vào projects/<p>/ (D17) |
 | test-viewpoint | Gap Report READY / PARTIAL | Viewpoint = đối tượng × khía cạnh × trục; 1 VP sinh nhiều TC; dưới 3 TC thì gộp (D09) |
 | test-case | Viewpoint LOCKED | 1 TC = 1 expected (D05); mỗi giá trị trên trục → 1 TC; đối chiếu 3 nguồn; cuối cùng hỏi "Xuất Excel không?" |
 | export-excel | Bạn trả lời Có / tự yêu cầu | reports/<scope-key>-<ngày>.xlsx: sheet Viewpoint + sheet TC 12 cột + cột kết quả theo role/platform (D15) |

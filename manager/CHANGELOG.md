@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- spec-review: trạng thái [Done] → cập nhật knowledge dự án qua kb-update; Gap Report mục 7 (D17)
 - Skill source-import (xlsx/pdf → md) (D14), skill export-excel (chỉ khi được đồng ý) (D15)
 - Template qc/templates/gap-report.md; qc/README.md, automation/README.md (D16)
 - Bản đồ repo manager/README.md

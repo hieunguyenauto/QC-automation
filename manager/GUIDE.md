@@ -174,7 +174,7 @@ Mở repo trong VS Code → bấm icon Spark (Claude) → Sign in. Sửa CLAUDE.
 | Skill | Khi nào | Output |
 | --- | --- | --- |
 | source-import | Spec là xlsx / pdf / docx | <P>/spec/<scope-key>.md, bảng đối chiếu số dòng, danh sách phần bị mất (ảnh, màu, comment) |
-| spec-review | Luôn chạy trước | Gap Report theo qc/templates/gap-report.md: Scope, Test item, FND, OQ, Design Gate, Context pack |
+| spec-review | Luôn chạy trước | Gap Report theo qc/templates/gap-report.md: Scope, Test item, FND, OQ, Design Gate, Context pack. DRAFT → LOCKED → [Done] (hết OQ OPEN + bạn xác nhận) → kb-update ghi knowledge vào projects/<p>/ (D17) |
 | test-viewpoint | Gap Report READY / PARTIAL | Viewpoint = đối tượng × khía cạnh × trục; 1 VP sinh nhiều TC; dưới 3 TC thì gộp (D09) |
 | test-case | Viewpoint LOCKED | 1 TC = 1 expected (D05); mỗi giá trị trên trục → 1 TC; đối chiếu 3 nguồn; cuối cùng hỏi "Xuất Excel không?" |
 | export-excel | Bạn trả lời Có / tự yêu cầu | reports/<scope-key>-<ngày>.xlsx: sheet Viewpoint + sheet TC 12 cột + cột kết quả theo role/platform (D15) |
@@ -909,7 +909,7 @@ Skill/CLAUDE.md làm AI tệ đi → `git revert` commit `[skill]`/`[rule]` đó
 1. Spec: <P>/spec/<scope-key>.md (đường dẫn người dùng đưa)
 2. Knowledge: <P>/README.md, <P>/sources.md, <P>/glossary.md, <P>/screens/_flow.md + màn hình liên quan, <P>/qc/ của function liên quan (bản LOCKED)
 3. Bài học: qc/lessons/INDEX.md (mục Thiết kế test), <P>/bug-history.md (chỉ dòng cùng function / pattern)
-4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions
+4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions. Hết OQ OPEN + người dùng xác nhận → [Done] → kb-update ghi knowledge vào <P>/
 5. Viewpoint: skill test-viewpoint (đọc Context pack, không đọc lại bước 2–3)
 6. Test case: skill test-case (đọc viewpoint LOCKED + Context pack)
 Khi viết / sửa code test: đọc automation/lessons/INDEX.md trước. Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
@@ -994,6 +994,7 @@ description: Cập nhật knowledge của repo (luật, skill, template, bài h�
 | Tài liệu tổng hợp | manager/GUIDE.md — TỰ SINH, không sửa tay |
 
 # Quy trình
+0. Nguồn kích hoạt thường gặp: Gap Report chuyển [Done] (spec-review bước 10) → chỉ sửa knowledge trong projects/<project>/, không cần decision / handbook.
 1. Xác định thay đổi thuộc loại nào → chọn đúng file nguồn. Không chép nội dung skill/template sang file khác.
 2. Draft thay đổi (trước/sau) trong chat → chờ duyệt.
 3. Sửa file nguồn.
@@ -1058,8 +1059,18 @@ description: Bước Q&A trước khi thiết kế test - đọc spec, đọc kn
 7. Ghi Context pack ở cuối Gap Report (ngày + revision của qc/lessons/INDEX.md), mỗi dòng ≤ 1 câu, có nguồn:
    | Loại (Thuật ngữ / Màn hình / Permission / VP-TC cũ / Lesson / Bug / Scope) | Nguồn (file#mục hoặc ID) | Nội dung rút gọn |
 8. Viết đúng qc/templates/gap-report.md. Draft trong chat → chờ duyệt → ghi <P>/qc/gap-reports/<scope-key>-gap-report.md (State: DRAFT); người dùng duyệt → LOCKED.
+9. Chuyển [Done] khi đủ 3 điều kiện: Gap Report đã LOCKED · mọi OQ của scope trong <P>/qc/open-questions.md là ANSWERED / RESOLVED (không còn OPEN) · người dùng xác nhận "Done". Thiếu 1 điều kiện → giữ LOCKED, liệt kê OQ còn OPEN.
+10. Khi [Done]: gọi kb-update để cập nhật knowledge dự án — chỉ điều đã chắc chắn (spec đã duyệt + câu trả lời OQ):
+    | Loại | File đích |
+    |---|---|
+    | Thuật ngữ mới | <P>/glossary.md |
+    | Màn hình, permission, state transition | <P>/screens/ |
+    | Rule nghiệp vụ, quy ước dùng chung nhiều ticket | <P>/README.md |
+    | Nguồn tài liệu mới | <P>/sources.md |
+    Draft bảng trước/sau → người dùng duyệt → ghi. Xong: OQ đã đưa vào knowledge → RESOLVED; ghi danh sách file đã cập nhật vào mục 7 của Gap Report.
 
 # Cấm
+- Cập nhật knowledge dự án khi Gap Report chưa [Done] · ghi điều chỉ đúng cho 1 ticket vào knowledge chung của dự án.
 - Sửa spec · tự trả lời OQ · coi im lặng là đồng ý · đọc cả thư mục thay vì phần liên quan.
 ~~~~
 
@@ -1246,7 +1257,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 ~~~~markdown
 # Gap Report — <scope-key>
-<!-- State: DRAFT | LOCKED · Spec: <P>/spec/<scope-key>.md (revision …) · Ngày: YYYY-MM-DD · Người duyệt: … -->
+<!-- State: DRAFT | LOCKED | DONE · Spec: <P>/spec/<scope-key>.md (revision …) · Ngày: YYYY-MM-DD · Người duyệt: … -->
 
 ## 1. Scope
 | Mục | Giá trị |
@@ -1278,6 +1289,11 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 ## 6. Context pack
 <!-- Ngày: YYYY-MM-DD · qc/lessons/INDEX.md revision: <git short hash> -->
 | Loại (Thuật ngữ / Màn hình / Permission / VP-TC cũ / Lesson / Bug / Scope) | Nguồn (file#mục hoặc ID) | Nội dung rút gọn (≤ 1 câu) |
+|---|---|---|
+
+## 7. Cập nhật knowledge (khi DONE)
+<!-- DONE = Gap Report LOCKED + không còn OQ OPEN + người dùng xác nhận. Chưa DONE thì để trống. -->
+| File | Thay đổi | Từ (spec#mục / OQ ID) |
 |---|---|---|
 ~~~~
 
@@ -1389,6 +1405,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D17 | 2026-10-09 | Gap Report có 3 trạng thái DRAFT → LOCKED → DONE. DONE khi Gap Report LOCKED + không còn OQ OPEN + người dùng xác nhận; khi DONE gọi kb-update ghi knowledge đã chắc chắn vào projects/<p>/ (glossary, screens, README, sources), OQ → RESOLVED | Knowledge dự án lớn dần theo ticket, chỉ ghi điều đã được trả lời nên không sai | spec-review, gap-report.md, kb-update, open-questions.md, CLAUDE.md |
 | D16 | 2026-10-09 | Giữ draft → duyệt → LOCKED ở mọi bước (Gap Report, VP, TC) là process; giữ quy ước 1 lần làm = 1 sheet / scope (đổi sau khi cần); không thêm bước Coverage / Execution Summary. Thêm template qc/templates/gap-report.md | Rà workflow 10 điểm; người dùng chốt | CLAUDE.md, spec-review, qc/templates/gap-report.md |
 | D15 | 2026-10-09 | Skill export-excel: chỉ chạy khi người dùng đồng ý (test-case hỏi 1 câu sau LOCKED); xuất file mới reports/<scope-key>-<ngày>.xlsx; sheet Viewpoint + sheet TC 12 cột (không có Automation Eligibility) + cột kết quả theo role/platform | Team / khách dùng Excel; không sửa workbook gốc (T07) | export-excel, test-case, handbook 4.4 |
 | D14 | 2026-10-09 | Skill repo ưu tiên: trong repo không dùng skill tài khoản qa-testcase-writing (format cũ) trừ khi gọi đúng tên. Thêm skill source-import: xlsx/pdf/docx ở <P>/raw/ → md ở <P>/spec/, đối chiếu số dòng, báo phần bị mất | Spec sẽ có thêm file Excel; tránh 2 skill cùng kích hoạt cho "viết testcase" | CLAUDE.md, source-import, spec-review |
@@ -1413,6 +1430,7 @@ Quét đủ 8 nhóm cho mỗi function, không bỏ sót:
 
 ## [Unreleased]
 ### Thêm
+- spec-review: trạng thái [Done] → cập nhật knowledge dự án qua kb-update; Gap Report mục 7 (D17)
 - Skill source-import (xlsx/pdf → md) (D14), skill export-excel (chỉ khi được đồng ý) (D15)
 - Template qc/templates/gap-report.md; qc/README.md, automation/README.md (D16)
 - Bản đồ repo manager/README.md

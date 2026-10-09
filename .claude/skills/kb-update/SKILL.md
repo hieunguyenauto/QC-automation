@@ -15,6 +15,7 @@ description: Cập nhật knowledge của repo (luật, skill, template, bài h�
 | Tài liệu tổng hợp | manager/GUIDE.md — TỰ SINH, không sửa tay |
 
 # Quy trình
+0. Nguồn kích hoạt thường gặp: Gap Report chuyển [Done] (spec-review bước 10) → chỉ sửa knowledge trong projects/<project>/, không cần decision / handbook.
 1. Xác định thay đổi thuộc loại nào → chọn đúng file nguồn. Không chép nội dung skill/template sang file khác.
 2. Draft thay đổi (trước/sau) trong chat → chờ duyệt.
 3. Sửa file nguồn.

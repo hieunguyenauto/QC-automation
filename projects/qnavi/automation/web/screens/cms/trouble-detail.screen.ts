@@ -3,7 +3,7 @@ import path from 'path';
 import { BaseScreen } from '../base.screen';
 import {
   acknowledgeOk, choose, click, clickable, clickables, closeModal, confirmDecide, expectRow, field, fill, modal,
-  rowOf, saveDecideOk, tableRow, uploadVia,
+  rowOf, saveDecideOk, tableRow, uploadVia, valueOf,
 } from '../../common/ui';
 import { AssetSelectDialog } from './asset-select.dialog';
 
@@ -12,6 +12,8 @@ const FILES = path.resolve(__dirname, '../../data/files');
 /**
  * 作業依頼詳細 — catalog: cms-frontend.md › "Trouble Detail: /admin/troubles/:id/detail" + "Trouble modals".
  * クイック操作 (99/98/05) mở modal 状態変更. Nút header: 履歴, 立候補, 見積もり, 報告書, 作業完了確認…
+ * Recon 2026-10-12: header = <p>店舗名:</p>, <p>業者:</p>…; nút có icon (' 編集', ' クイック操作'); bảng chi tiết <td>label</td><td>value</td>;
+ *   modal 状態変更 = dialog có heading '状態変更', nút '閉じる', select ở dòng '状態', nút 'キャンセル' / '保存'.
  * [cần kiểm trên app thật] icon edit trong 状態変更, menu メニュー展開▼, date picker của 報告書 → npm run recon.
  */
 export class TroubleDetailScreen extends BaseScreen {
@@ -22,8 +24,14 @@ export class TroubleDetailScreen extends BaseScreen {
   readonly content = this.page.locator('.content-wrapper').first();
   readonly assets = new AssetSelectDialog(this.page);
 
+  /** Đã vào màn chi tiết VÀ dữ liệu đã tải (ô 番号 có số; trước đó các ô trống, クイック操作 bị disable). */
   async expectOpened(id?: string): Promise<void> {
     await expect(this.page).toHaveURL(id ? new RegExp(`/admin/troubles/${id}/detail`) : /\/admin\/troubles\/\d+\/detail/);
+    await expect(valueOf(this.content, '番号')).toHaveText(/\d+/, { timeout: 20_000 });
+  }
+  /** 番号 (= 依頼番号 trong danh sách) đang hiển thị. */
+  async number(): Promise<string | undefined> {
+    return (await valueOf(this.content, '番号').innerText()).match(/\d+/)?.[0];
   }
   /** Badge trạng thái: vd ('対応中', '受注'). */
   async expectBadges(...badges: string[]): Promise<void> {

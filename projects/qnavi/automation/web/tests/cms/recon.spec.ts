@@ -70,9 +70,15 @@ test('recon CMS screens (read-only)', async ({ browser }) => {
 
   // ---- 作業依頼登録 (không bấm 決定して問合わせ)
   await snap(page, 'create-step0', () => layout.menu('作業依頼登録'));
-  await snap(page, 'create-store-step', async () => {
+  await snap(page, 'create-mode-step', async () => {
     await page.getByRole('radio', { name: '新規依頼' }).check();
     await clickables(content, '次へ').first().click();
+  });
+  await snap(page, 'create-store-step', async () => {
+    if (await page.getByRole('radio', { name: /操作可能モード/ }).first().isVisible().catch(() => false)) {
+      await clickables(content, '次へ').first().click();
+    }
+    await clickables(content, /チェーン店舗?選択/).first().waitFor();
   });
   await snap(page, 'create-store-search-modal', () => clickables(content, /チェーン店舗?選択/).first().click());
   await snap(page, 'create-store-search-expanded', () => modal(page, '検索条件').getByText('検索条件', { exact: true }).first().click());
@@ -87,7 +93,10 @@ test('recon CMS screens (read-only)', async ({ browser }) => {
   await snap(page, 'create-staff-modal', () => clickables(content, '担当者選択').first().click());
   await snap(page, 'create-staff-picked', () =>
     clickables(modal(page, '担当者選択').locator('tbody tr').first(), '選択').first().click());
-  await snap(page, 'create-category-step', () => clickables(content, '次へ').first().click());
+  await snap(page, 'create-category-step', async () => {
+    await clickables(content, '次へ').first().click();
+    await content.getByText('故障内容').first().waitFor();
+  });
   await snap(page, 'create-category-modal', () => clickables(content, '選択').nth(0).click());
   await snap(page, 'create-category-large', () => modal(page).getByText(data.categories.large, { exact: true }).first().click());
   await snap(page, 'create-category-medium', async () => {
@@ -112,29 +121,52 @@ test('recon CMS screens (read-only)', async ({ browser }) => {
   await snap(page, 'create-fault-expected-date', () =>
     page.getByRole('radio', { name: data.expectedDate.option }).or(content.getByText(data.expectedDate.option, { exact: true })).first().click());
 
-  // ---- Danh sách + chi tiết (chỉ mở / đóng modal)
-  await snap(page, 'trouble-list', () => page.goto('/admin/troubles'));
-  await snap(page, 'trouble-detail', async () => {
-    if (process.env.E2E_TROUBLE_ID) await page.goto(`/admin/troubles/${process.env.E2E_TROUBLE_ID}/detail`);
-    else await page.locator('tbody tr').first().locator('a').first().click();
+  // ---- Danh sách + chi tiết (chỉ mở / đóng modal, KHÔNG 保存)
+  const loaded = async () => {
     await page.waitForURL(/\/detail/);
+    await page.locator('xpath=//td[normalize-space()="番号"]/following-sibling::td[1]').filter({ hasText: /\d/ }).first().waitFor({ timeout: 20_000 });
+  };
+  const openRow = async (status: string) => {
+    await page.goto('/admin/troubles');
+    const row = page.locator('tbody tr').filter({ hasText: status }).first();
+    await row.getByRole('link').first().click();
+    await loaded();
+  };
+  await snap(page, 'trouble-list', async () => {
+    await page.goto('/admin/troubles');
+    await page.locator('tbody tr a').first().waitFor();
   });
-  await snap(page, 'detail-quick-action-modal', () => clickables(content, 'クイック操作').first().click());
-  await snap(page, 'detail-status-dropdown', () => field(modal(page, '状態変更'), '対応中の状態（新規）').click());
-  await snap(page, 'detail-worker-search-modal', async () => {
-    await esc(page);
-    const row = modal(page, '状態変更').locator('xpath=.//*[normalize-space(text())="作業者"]/ancestor::*[self::tr or contains(@class,"row") or contains(@class,"form-group")][1]').first();
-    await row.locator('button, a, i, svg').filter({ visible: true }).last().click();
-  });
-  await snap(page, 'detail-status-closed', async () => { await closeTop(page); await closeTop(page); });
-  for (const b of ['見積もり', '報告書', '資産一覧', '履歴', '立候補']) {
-    await snap(page, `detail-header-${b}`, () => clickables(content, b).first().click());
-    await snap(page, `detail-header-${b}-closed`, () => closeTop(page));
-  }
+
+  // (a) trouble 問い合わせ中: 状態変更 → chọn 対応中 (không lưu) để thấy dòng 作業者
+  await snap(page, 'detail-new', () => process.env.E2E_TROUBLE_ID
+    ? page.goto(`/admin/troubles/${process.env.E2E_TROUBLE_ID}/detail`).then(loaded) : openRow('問い合わせ中'));
+  await snap(page, 'detail-new-quick-action', () => clickables(content, 'クイック操作').first().click());
+  await snap(page, 'detail-new-status-taiouchu', () => field(modal(page, '状態変更'), '状態').selectOption({ label: '対応中' }));
+  await snap(page, 'detail-new-worker-search', () =>
+    modal(page, '状態変更').locator('xpath=.//td[normalize-space()="作業者"]/following-sibling::td[1]')
+      .locator('button, a, i, svg').filter({ visible: true }).last().click());
+  await snap(page, 'detail-new-worker-search-expanded', () => modal(page, '検索条件').getByText('検索条件', { exact: true }).first().click());
+  await snap(page, 'detail-new-closed', async () => { await closeTop(page); await closeTop(page); });
   await snap(page, 'edit-page', () => clickables(content, '編集').first().click());
   await snap(page, 'edit-change-modal', () =>
-    clickables(page.locator('xpath=//*[normalize-space(text())="作業項目（大）"]/ancestor::*[self::tr or contains(@class,"row") or contains(@class,"form-group")][1]').first(), '変更').first().click());
+    clickables(page.locator('xpath=//*[self::td or self::th][normalize-space()="作業項目（大）"]/..').first(), '変更').first().click());
   await snap(page, 'edit-closed', async () => { await closeTop(page); await clickables(content, '戻る').first().click(); });
+
+  // (b) trouble 報告済: các modal header + 状態変更 (見積もり / 報告書)
+  await snap(page, 'detail-reported', () => openRow('報告済'));
+  for (const b of ['見積もり', '報告書', '資産一覧', '履歴', '立候補', '見積稟議進捗']) {
+    await snap(page, `detail-reported-${b}`, () => clickables(content, b).first().click());
+    await snap(page, `detail-reported-${b}-closed`, () => closeTop(page));
+  }
+  await snap(page, 'detail-reported-quick-action', () => clickables(content, 'クイック操作').first().click());
+  await snap(page, 'detail-reported-estimate-from-status', () =>
+    modal(page, '状態変更').locator('xpath=.//td[normalize-space()="見積もり"]/following-sibling::td[1]')
+      .locator('button, a, i, svg').filter({ visible: true }).last().click());
+  await snap(page, 'detail-reported-estimate-closed', () => closeTop(page));
+  await snap(page, 'detail-reported-report-from-status', () =>
+    modal(page, '状態変更').locator('xpath=.//td[normalize-space()="報告書"]/following-sibling::td[1]')
+      .locator('button, a, i, svg').filter({ visible: true }).last().click());
+  await snap(page, 'detail-reported-all-closed', async () => { await closeTop(page); await closeTop(page); });
 
   // ---- Manager (01)
   const mgr = credentials('01');
@@ -144,8 +176,9 @@ test('recon CMS screens (read-only)', async ({ browser }) => {
     await snap(page, 'manager-dashboard', () => login.login(mgr.loginId, mgr.password));
     await snap(page, 'manager-trouble-list', () => layout.menu('進行中のトラブル一覧'));
     await snap(page, 'manager-trouble-detail', async () => {
-      if (process.env.E2E_TROUBLE_ID) await page.goto(`/admin/troubles/${process.env.E2E_TROUBLE_ID}/detail`);
-      else await page.locator('tbody tr').first().locator('a').first().click();
+      const row = page.locator('tbody tr').filter({ hasText: '報告済' }).first();
+      await (await row.isVisible().catch(() => false) ? row : page.locator('tbody tr').first()).getByRole('link').first().click();
+      await loaded();
     });
     for (const b of ['見積もり', '作業完了確認']) {
       await snap(page, `manager-header-${b}`, () => clickables(content, b).first().click());

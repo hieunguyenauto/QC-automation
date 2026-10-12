@@ -99,9 +99,12 @@ async function ensureRole(role: Role): Promise<void> {
 /** Pre-condition: đang ở màn chi tiết của trouble của kịch bản. */
 async function ensureTroubleOpened(): Promise<void> {
   test.skip(!trouble.id && !trouble.number, 'Chưa có trouble: chạy từ E2E-TC-002 hoặc đặt E2E_TROUBLE_ID');
-  if (trouble.id && page.url().includes(`/troubles/${trouble.id}/detail`)) return;
-  await s.list.open();
-  await s.list.openByNumber(trouble);
+  if (!(trouble.id && page.url().includes(`/troubles/${trouble.id}/detail`))) {
+    await s.list.open();
+    await s.list.openByNumber(trouble);
+  }
+  await s.detail.expectOpened();
+  trouble.id ??= page.url().match(/troubles\/(\d+)\/detail/)?.[1];
 }
 const pre = (fn: () => Promise<void>) => test.step('Pre-condition', fn);
 
@@ -196,7 +199,8 @@ test('E2E-TC-002 Create trouble', { tag: ['@E2E-TC-002', '@role-99'] }, async ()
     await minimizeChat(page);
     Object.assign(trouble, created);
     if (!trouble.number && /\/detail/.test(page.url())) {
-      trouble.number = (await rowOf(page.locator('.content-wrapper'), '依頼番号').innerText().catch(() => '')).match(/\d{3,}/)?.[0];
+      await s.detail.expectOpened();
+      trouble.number = await s.detail.number();
       trouble.id ??= page.url().match(/troubles\/(\d+)\/detail/)?.[1];
     }
   });

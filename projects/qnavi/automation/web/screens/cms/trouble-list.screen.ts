@@ -5,7 +5,8 @@ import { tableRow, waitForApiSafe } from '../../common/ui-wait';
 /**
  * 作業依頼一覧 — catalog: cms-frontend.md › "Trouble List: /admin/troubles" (không có route guard, mọi role).
  * Nút 新規 chỉ role 01/02/03; cột / filter đổi theo role (xem catalog).
- * [cần kiểm trên app thật] các locator dưới đây.
+ * Recon 2026-10-12: cột 1 = link 依頼番号 (/admin/troubles/<id>/detail), cột 詳細 = mô tả (故障詳細).
+ * [cần kiểm trên app thật] các locator còn lại.
  */
 export class TroubleListScreen extends BaseScreen {
   readonly id = 'CMS-TROUBLE-LIST';
@@ -24,12 +25,15 @@ export class TroubleListScreen extends BaseScreen {
     await list;
   }
 
-  /** Mở trouble theo 依頼番号 (ưu tiên) hoặc id; không thấy trong list thì mở thẳng URL chi tiết. */
+  /**
+   * Mở trouble theo 依頼番号 (link ở cột đầu, recon 2026-10-12) hoặc id; không thấy trong list thì mở thẳng URL chi tiết.
+   */
   async openByNumber(t: { id?: string; number?: string }): Promise<void> {
     if (t.number) {
-      const row = tableRow(this.page, new RegExp(`(^|\\D)${t.number}(\\D|$)`));
-      if (await row.isVisible().catch(() => false)) {
-        await this.openTrouble(new RegExp(`(^|\\D)${t.number}(\\D|$)`));
+      const link = this.page.getByRole('link', { name: t.number, exact: true }).first();
+      if (await link.isVisible().catch(() => false)) {
+        await link.click();
+        await expect(this.page).toHaveURL(/\/admin\/troubles\/\d+\/detail/);
         return;
       }
     }

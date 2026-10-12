@@ -96,8 +96,19 @@ export function rowOf(scope: Scope, label: string): Locator {
     `/ancestor::*[self::tr or self::li or self::dl or contains(concat(' ', @class, ' '), ' row ') or contains(@class, 'form-group')][1]`,
   ).filter({ visible: true }).first();
 }
+/**
+ * Ô giá trị của label. Hỗ trợ 3 kiểu bố cục thấy trên CMS (recon 2026-10-12):
+ *  - bảng: <td>label</td><td>giá trị</td> (có dòng chứa 2 cặp, vd 開始 | … | 終了 | …)
+ *  - header chi tiết: <p>業者:</p> giá trị (nhãn có dấu ':')
+ *  - còn lại: khối chứa label (rowOf)
+ */
+export function valueOf(scope: Scope, label: string): Locator {
+  const cell = scope.locator(`xpath=.//*[self::td or self::th][normalize-space()=${xq(label)}]/following-sibling::*[1]`);
+  const header = scope.locator(`xpath=.//p[normalize-space()=${xq(label + ':')} or normalize-space()=${xq(label + '：')}]/..`);
+  return cell.or(header).filter({ visible: true }).first();
+}
 export async function expectRow(scope: Scope, label: string, value: string | RegExp): Promise<void> {
-  await expect(rowOf(scope, label)).toContainText(value);
+  await expect(valueOf(scope, label)).toContainText(value);
 }
 
 /** Dòng bảng chứa toàn bộ các chữ trong texts. */

@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
+export type Account = { loginId: string; displayName?: string; chainSystem?: string; storeName?: string; note?: string };
+
 export type EnvConfig = {
   name: string;
   cmsBaseUrl: string;
@@ -11,7 +13,7 @@ export type EnvConfig = {
   navigationTimeoutMs: number;
   testTimeoutMs: number;
   /** Tài khoản test theo role (không có mật khẩu). Mật khẩu: .env CMS_<role>_PASSWORD. */
-  accounts?: Record<string, { loginId: string; displayName?: string; chainSystem?: string; note?: string }>;
+  accounts?: Record<string, Account & { variants?: Record<string, Account & { storeName?: string }> }>;
 };
 
 function loadEnv(): EnvConfig {

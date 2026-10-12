@@ -23,14 +23,60 @@
       "note": "ChainStore Manager, dùng ở E2E-TC-011..013"
     },
     "02": {
-      "loginId": "",
-      "displayName": "",
-      "note": "ChainStore — chưa có"
+      "loginId": "linksysstore00001",
+      "note": "ChainStore (cửa hàng). Mặc định = store00001. Chọn tài khoản khác bằng variant: credentials('02', '<variant>'). Mật khẩu: CMS_02_PASSWORD (dùng chung) hoặc CMS_02_<VARIANT>_PASSWORD để ghi đè.",
+      "variants": {
+        "toridoll": {
+          "loginId": "linksysstore00001",
+          "storeName": "LINKSYS STORE00001 (TORIDOLL)",
+          "note": "Account Toridoll — CÓ encrypt"
+        },
+        "qnavi": {
+          "loginId": "linksysstore00002",
+          "storeName": "LINKSYS STORE00002 (QNAVI)",
+          "note": "Account Qnavi — KHÔNG encrypt"
+        },
+        "urgent": {
+          "loginId": "linksysstore00003",
+          "storeName": "LINKSYS STORE00003 (URGENT)",
+          "note": "Trouble tạo ra luôn là Urgent"
+        },
+        "ringi": {
+          "loginId": "linksysstore00004",
+          "storeName": "LINKSYS STORE00004 (RINGI)",
+          "note": "Có setting Ringi"
+        },
+        "autoApprove": {
+          "loginId": "linksysstore00005",
+          "storeName": "LINKSYS STORE00005 (AUTO APPROVE)",
+          "note": "Có auto approve"
+        },
+        "approveType1": {
+          "loginId": "linksysstore00006",
+          "storeName": "",
+          "note": "APPROVE TYPE 1"
+        },
+        "approveType2": {
+          "loginId": "linksysstore00007",
+          "storeName": "",
+          "note": "APPROVE TYPE 2"
+        },
+        "approveType3": {
+          "loginId": "linksysstore00008",
+          "storeName": "",
+          "note": "APPROVE TYPE 3"
+        },
+        "ringi0_99": {
+          "loginId": "linksysstore00009",
+          "storeName": "",
+          "note": "Ringi sử dụng với [0] [99]"
+        }
+      }
     },
     "05": {
-      "loginId": "",
+      "loginId": "linksysworkercompany",
       "displayName": "",
-      "note": "ManagementCompany — chưa có"
+      "note": "Worker Company (ManagementCompany)"
     }
   }
 }

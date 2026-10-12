@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] Tài khoản store (role 02, 9 loại: toridoll, qnavi, urgent, ringi, autoApprove, approveType1-3, ringi0_99) và worker company (05) trong env/dev.json › accounts; chọn bằng credentials('02', '<variant>')
 - [auto] Tài khoản test theo role đưa vào env/<ENV>.json › accounts (loginId, tên hiển thị); mật khẩu vẫn chỉ ở .env
 - [auto] E2E trouble flow (13 TC) pass 13/13 trên CMS dev; locator TC-002→013 xác minh bằng browser thật
 - [auto] Lesson automation R05–R14 (list tải chậm, nhãn th/badge, option:checked, nút 閉じる trùng tên, modal lồng nhau, toggle, click lệch do ảnh, overlay chặn click, trace theo chunk, ghi dữ liệu then chốt trước)

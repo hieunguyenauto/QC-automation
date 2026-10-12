@@ -15,17 +15,25 @@ export const CMS_ROLES = {
 
 export type CmsRole = keyof typeof CMS_ROLES;
 
-/** Thông tin tài khoản (không mật khẩu) của role trong môi trường đang chạy: env/<ENV>.json › accounts. */
-export function account(role: CmsRole) {
-  return env.accounts?.[role];
+/**
+ * Thông tin tài khoản (không mật khẩu) của role trong môi trường đang chạy: env/<ENV>.json › accounts.
+ * variant: chọn tài khoản cụ thể trong accounts.<role>.variants (vd role 02: 'urgent', 'ringi', 'approveType1'…).
+ */
+export function account(role: CmsRole, variant?: string) {
+  const a = env.accounts?.[role];
+  if (!variant) return a;
+  const v = a?.variants?.[variant];
+  if (!v) throw new Error(`Không có tài khoản ${role}/${variant} trong env/${env.name}.json › accounts.${role}.variants`);
+  return v;
 }
 
 /**
- * loginId: .env CMS_<role>_ID (nếu có, để ghi đè) → env/<ENV>.json › accounts.<role>.loginId.
- * password: CHỈ lấy từ .env CMS_<role>_PASSWORD (không commit).
+ * loginId: .env CMS_<role>[_<VARIANT>]_ID (ghi đè) → env/<ENV>.json › accounts.
+ * password: CHỈ từ .env — CMS_<role>_<VARIANT>_PASSWORD (nếu có) → CMS_<role>_PASSWORD (dùng chung cho role).
  */
-export function credentials(role: CmsRole): { loginId: string; password: string } | null {
-  const loginId = (process.env[`CMS_${role}_ID`] || account(role)?.loginId || '').trim();
-  const password = (process.env[`CMS_${role}_PASSWORD`] || '').trim();
+export function credentials(role: CmsRole, variant?: string): { loginId: string; password: string } | null {
+  const key = variant ? `CMS_${role}_${variant.toUpperCase()}` : `CMS_${role}`;
+  const loginId = (process.env[`${key}_ID`] || (!variant && process.env[`CMS_${role}_ID`]) || account(role, variant)?.loginId || '').trim();
+  const password = (process.env[`${key}_PASSWORD`] || process.env[`CMS_${role}_PASSWORD`] || '').trim();
   return loginId && password ? { loginId, password } : null;
 }

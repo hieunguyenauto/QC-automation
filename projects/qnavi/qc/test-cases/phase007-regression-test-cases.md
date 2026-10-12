@@ -1,7 +1,7 @@
 # Test case — Phase 007 Regression (CMS)
 - Project: qnavi · Scope Key: phase007-regression · Sheet prefix: P007
 - Source: projects/qnavi/raw/Automation Test AI - Phase 007 Regression.csv (2026-10-12, file của anh Hiếu; 66 case, ~360 step). Viewpoint: không có (kịch bản regression nhập trực tiếp)
-- State: DRAFT · Revision: 2 (đã áp câu trả lời Q1–Q14, 12/10/2026) · Approved by / at:
+- State: LOCKED · Revision: 2 (đã áp câu trả lời Q1–Q14) · Approved by / at: Hieu / 2026-10-12
 - Môi trường chạy: est-test (https://cms-test.estimation.qnavi.picontechnology.com, có Basic Auth)
 - Ngoại lệ D05 (giống e2e-trouble-flow): mỗi TC = 1 case của file gốc, chạy nối tiếp. Expected Results = kết quả cuối; điểm kiểm tra giữa chừng ghi 'Verify:' trong Steps.
 - Function bắt đầu bằng mã ticket của file gốc (vd 2296, 1388-03, 605-28) + số thứ tự gốc (#N) để tra ngược.

@@ -58,6 +58,12 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1000 }, trace: 'off', video: 'off' },
     },
     {
+      // npm run open: mở trình duyệt đã qua Basic Auth (+ đăng nhập ACCOUNT nếu có) để xem / lấy locator.
+      name: 'open',
+      testMatch: /tests\/tools\/open\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1000 } },
+    },
+    {
       // Đi qua màn hình, không lưu dữ liệu, ghi aria snapshot → reports/recon-<run>/ (lấy locator thật).
       name: 'recon',
       testMatch: /tests\/cms\/recon\.spec\.ts/,

@@ -41,6 +41,7 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 | Kịch bản E2E trouble (13 TC, nối tiếp, tạo trouble mới) | `npm run e2e:headed` |
 | Chạy tiếp E2E trên trouble có sẵn (đúng trạng thái) | `E2E_TROUBLE_ID=1234 npm run e2e -- --grep "TC-00[5-9]\|TC-01"` |
 | Lấy locator thật: đi qua các màn hình, **không lưu dữ liệu**, ghi aria snapshot + ảnh | `npm run recon` → `reports/recon-<lần chạy>/` (`_summary.txt` liệt kê bước lỗi) |
+| Mở trình duyệt **đã qua Basic Auth**, đăng nhập sẵn, để xem / lấy locator (Inspector: Record, Pick locator) | `ACCOUNT=99 npm run open` · `ENV=est-test ACCOUNT=02:urgent URL=/admin/troubles npm run open` |
 
 Mỗi lần chạy, project `setup` login từng role có tài khoản trong `.env` và lưu phiên vào `.auth/` (không commit). Role không có tài khoản → test của role đó **skip**, không fail.
 

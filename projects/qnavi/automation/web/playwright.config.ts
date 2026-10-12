@@ -44,8 +44,15 @@ export default defineConfig({
     {
       name: 'cms',
       testMatch: /tests\/cms\/.*\.spec\.ts/,
+      testIgnore: /tests\/cms\/e2e-.*\.spec\.ts/,
       dependencies: ['setup'],
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      // Kịch bản E2E nối tiếp: tự login bằng UI, không cần project setup.
+      name: 'e2e',
+      testMatch: /tests\/cms\/e2e-.*\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1000 } },
     },
   ],
 });

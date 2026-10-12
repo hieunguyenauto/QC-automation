@@ -16,7 +16,9 @@ export class LoginScreen extends BaseScreen {
   readonly formError = this.page.locator('.invalid-feedback, .alert-danger');
 
   async login(loginId: string, password: string): Promise<void> {
+    await this.loginId.click();
     await this.loginId.fill(loginId);
+    await this.password.click();
     await this.password.fill(password);
     await this.submit.click();
   }

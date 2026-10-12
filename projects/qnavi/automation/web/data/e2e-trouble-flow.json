@@ -1,0 +1,25 @@
+{
+  "_note": "Data cho kịch bản E2E (projects/qnavi/qc/test-cases/e2e-trouble-flow-test-cases.md). Không ghi mật khẩu ở đây: tài khoản lấy từ .env (CMS_99_* admin, CMS_01_* chain store manager).",
+  "store": {
+    "companyQuery": "Linksys",
+    "storeQuery": "00001 (TORIDOLL)",
+    "chainSystemName": "Linksys Chain System",
+    "storeName": "LINKSYS STORE00001 (TORIDOLL)",
+    "storeShort": "LINKSYS STORE00001"
+  },
+  "categories": { "large": "操作テスト", "medium": "トイレ（テスト）", "small": "つまり：大便器（テスト）" },
+  "asset": {
+    "existingName": "TEST AUTOMATION",
+    "name": "Automation Asset",
+    "model": "TVB005",
+    "serial": "100014914",
+    "note": "Verify automation is working well!",
+    "image": "hieu5.jpg"
+  },
+  "faultDetail": { "text": "AUTOMATION", "image": "hieu6.jpg" },
+  "worker": { "companyQuery": "linksys", "loginId": "linksysworker", "companyName": "LINKSYS WORKER", "staffName": "linksys worker" },
+  "estimate": { "name": "Test", "itemName": "Autotest", "unitPrice": "99999", "unitPriceShown": "99,999", "total": "￥148,855", "totalTax": "￥163,740", "cancelReason": "Request cancel" },
+  "report": { "cause": "automation", "beforeImage": "hieu4.jpg", "afterImage": "hieu3.jpg", "assetName": "TEST AUTOMATION", "assetImage": "hieu6.jpg" },
+  "manager": { "dashboardName": "LINKSYS MANAGER00001" },
+  "payment": { "comment": "Automation test" }
+}

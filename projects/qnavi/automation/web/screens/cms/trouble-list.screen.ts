@@ -1,5 +1,6 @@
+import { expect } from '@playwright/test';
 import { BaseScreen } from '../base.screen';
-import { waitForApi } from '../../common/wait';
+import { tableRow, waitForApiSafe } from '../../common/ui-wait';
 
 /**
  * 作業依頼一覧 — catalog: cms-frontend.md › "Trouble List: /admin/troubles" (không có route guard, mọi role).
@@ -18,8 +19,18 @@ export class TroubleListScreen extends BaseScreen {
   readonly rows = this.table.locator('tbody tr');
 
   async open(): Promise<void> {
-    const list = waitForApi(this.page, 'troubles');
+    const list = waitForApiSafe(this.page, 'troubles');
     await this.goto();
     await list;
+  }
+
+  /** Mở trouble đầu tiên (mới nhất) có đủ các chữ trong texts → màn hình chi tiết. */
+  async openTrouble(...texts: (string | RegExp)[]): Promise<void> {
+    const row = tableRow(this.page, ...texts);
+    await expect(row).toBeVisible();
+    const link = row.locator('a[href*="/detail"]').first();
+    if (await link.count()) await link.click();
+    else await row.locator('td').nth(1).click();
+    await expect(this.page).toHaveURL(/\/admin\/troubles\/\d+\/detail/);
   }
 }

@@ -9,7 +9,9 @@
     "setup": "playwright test --project=setup",
     "list": "playwright test --list",
     "report": "node scripts/open-report.mjs",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "e2e": "playwright test --project=e2e",
+    "e2e:headed": "playwright test --project=e2e --headed"
   },
   "devDependencies": {
     "@playwright/test": "1.56.0",

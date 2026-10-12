@@ -8,6 +8,9 @@
 - R05 List / bảng / badge trạng thái tải sau: lúc đầu có thể hiện '0件' hoặc trạng thái cũ → chờ dấu hiệu đã tải ('全 N 件中', badge đúng giá trị, timeout ~15s) rồi mới kết luận. (web/2026-10-12-cms-list-zero-before-load.md)
 - R06 Nhãn trong th có thêm badge (必須/任意) hoặc bọc span: khớp nhãn ở text node con, không so cả th. (web/2026-10-12-cms-th-span-badge-label.md)
 - R07 Giá trị dropdown native kiểm bằng option:checked, không kiểm text dòng. (web/2026-10-12-cms-select-option-checked.md)
+- R08 Nút × của modal có aria-label '閉じる' → không tìm nút 閉じる bằng role+name; dùng text hiển thị trong vùng cụ thể, × thì closeModal(). (web/2026-10-12-cms-close-button-name.md)
+- R09 Modal lồng nhau: lọc modal bằng chữ / phần tử chỉ modal đó có (vd '施工業者', input[name=title]), không lọc bằng chữ tiêu đề. (web/2026-10-12-cms-modal-unique-text.md)
+- R10 Nút bật/tắt (メニュー展開, accordion): kiểm trạng thái đang mở chưa rồi mới bấm, sau đó expect trạng thái. (web/2026-10-12-cms-toggle-expand.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

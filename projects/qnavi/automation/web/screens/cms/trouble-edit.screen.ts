@@ -19,24 +19,30 @@ export class TroubleEditScreen extends BaseScreen {
     await expect(this.content).toContainText('作業依頼編集');
   }
 
-  /** 変更 ở dòng 作業項目（大）→ chọn ngẫu nhiên 対応区分 cho mọi tài sản → 保存 → OK. */
-  async randomizeAssetResponseType(): Promise<void> {
+  /** 変更 ở dòng 作業項目（大）→ 対応区分 = giá trị đầu tiên cho mọi tài sản → 保存 → OK. Trả về các giá trị đã chọn. */
+  async setFirstAssetResponseType(): Promise<string[]> {
     await click(rowOf(this.content, '作業項目（大）'), '変更');
     const box = modal(this.page, '店舗・担当者編集');
     await expect(box).toBeVisible();
     await expect(box).toContainText('対応区分');
     const selects = box.locator('select').filter({ visible: true });
     const n = await selects.count();
+    const chosen: string[] = [];
     for (let i = 0; i < n; i++) {
       const sel = selects.nth(i);
-      const values = (await sel.locator('option').evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value)))
-        .filter((v) => v !== '');
-      if (values.length) await sel.selectOption(values[Math.floor(Math.random() * values.length)]);
+      const opts = await sel.locator('option').evaluateAll((os) =>
+        os.map((o) => ({ value: (o as HTMLOptionElement).value, label: (o.textContent || '').trim() })));
+      const first = opts.find((o) => o.value !== '');
+      if (first) {
+        await sel.selectOption(first.value);
+        chosen.push(first.label);
+      }
     }
     await click(box, '保存');
     const confirm = modalWithButton(this.page, '決定');
     if (await confirm.waitFor({ state: 'visible', timeout: 2000 }).then(() => true).catch(() => false)) await click(confirm, '決定');
     await acknowledgeOk(this.page, '作業依頼の保存が完了しました');
+    return chosen;
   }
 
   async back(): Promise<void> {

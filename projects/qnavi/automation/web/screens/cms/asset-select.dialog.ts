@@ -1,7 +1,7 @@
 import { expect, type Page } from '@playwright/test';
 import path from 'path';
 import {
-  acknowledgeOk, click, clickable, clickables, confirmDecide, field, fill, modal, pickRandom, today, uploadVia,
+  acknowledgeOk, click, clickable, clickables, confirmDecide, field, fill, modal, today, uploadVia,
 } from '../../common/ui';
 
 const FILES = path.resolve(__dirname, '../../data/files');
@@ -32,16 +32,6 @@ export class AssetSelectDialog {
       await expect(clickable(row, '削除')).toBeVisible();
     }
     return count;
-  }
-
-  /** Chọn ngẫu nhiên 1 dòng còn nút 選択. */
-  async selectRandomOther(): Promise<void> {
-    const rows = this.box.locator('tbody tr').filter({ has: clickables(this.page, '選択') });
-    const total = await rows.count();
-    if (total === 0) return;
-    const row = rows.nth(pickRandom(total));
-    await click(row, '選択');
-    await expect(clickable(row, '削除')).toBeVisible();
   }
 
   /** 新しい機器を登録する → nhập 資産登録 → 保存 → 決定 → OK. */

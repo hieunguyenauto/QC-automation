@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import path from 'path';
 import { BaseScreen } from '../base.screen';
 import {
-  acknowledgeOk, click, clickable, clickables, confirmDecide, exact, field, fill, modal, modalWithButton, tableRow, uploadVia,
+  acknowledgeOk, click, clickable, clickables, confirmDecide, exact, field, fill, modal, tableRow, uploadVia,
 } from '../../common/ui';
 import { AssetSelectDialog } from './asset-select.dialog';
 
@@ -96,25 +96,44 @@ export class TroubleCreateScreen extends BaseScreen {
     await expect(f).toHaveValue(text);
   }
 
-  /** 決定して問い合わせる → 決定; lỗi ngày giờ thì chọn 明日以降 / 開始 4 giờ rồi gửi lại. */
-  async submit(): Promise<void> {
+  /**
+   * 希望日時: chọn option (vd 明日以降) rồi nhập giờ 開始 / 終了.
+   * [cần kiểm trên app thật] option là radio hay button; 開始/終了 là select hay input.
+   */
+  async chooseExpectedDate(option: string, startTime: string, endTime: string): Promise<void> {
+    await this.content.getByText(option, { exact: true }).first().click();
+    for (const [label, value] of [['開始', startTime], ['終了', endTime]] as const) {
+      const f = field(this.content, label);
+      if (!(await f.isVisible().catch(() => false))) continue;
+      const tag = await f.evaluate((e) => e.tagName.toLowerCase());
+      if (tag === 'select') {
+        const opts = await f.locator('option').allInnerTexts();
+        const hit = opts.find((o) => o.trim().startsWith(value) || o.trim() === value.split(':')[0] || o.trim() === String(Number(value.split(':')[0])));
+        if (hit) await f.selectOption({ label: hit });
+      } else {
+        await f.fill(value);
+      }
+    }
+  }
+
+  /** 決定して問い合わせる → 決定 → OK. Trả về id / 依頼番号 của trouble vừa tạo (lấy từ response POST /troubles). */
+  async submit(): Promise<{ id?: string; number?: string }> {
+    const created = this.page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/troubles(\?|$)/.test(new URL(r.url()).pathname + '?'),
+      { timeout: 60_000 },
+    ).catch(() => null);
     await click(this.content, /^\s*決定して問い?合わせ(る)?\s*$/);
     await confirmDecide(this.page, 'この新規依頼を保存します');
-    const ok = modalWithButton(this.page, 'OK');
-    await expect(ok).toBeVisible({ timeout: 30_000 });
-    if (!(await ok.innerText()).includes('保存が完了しました')) {
-      // Lỗi ngày giờ → đóng, chọn lại thời gian rồi gửi lại
-      await click(ok, 'OK');
-      await this.content.getByText('明日以降', { exact: false }).first().click();
-      const start = field(this.content, '開始');
-      if (await start.isVisible().catch(() => false)) {
-        const tag = await start.evaluate((e) => e.tagName.toLowerCase());
-        if (tag === 'select') await start.selectOption({ index: 4 });
-        else await start.fill('04:00');
-      }
-      await click(this.content, /^\s*決定して問い?合わせ(る)?\s*$/);
-      await confirmDecide(this.page, 'この新規依頼を保存します');
-    }
+    const res = await created;
     await acknowledgeOk(this.page, '保存が完了しました');
+    let id: string | undefined;
+    let number: string | undefined;
+    try {
+      const body = await res?.json();
+      const d = body?.data ?? body;
+      id = d?.id != null ? String(d.id) : undefined;
+      number = d?.number != null ? String(d.number) : undefined;
+    } catch { /* response không phải JSON */ }
+    return { id, number };
   }
 }

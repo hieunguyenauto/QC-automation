@@ -24,6 +24,20 @@ export class TroubleListScreen extends BaseScreen {
     await list;
   }
 
+  /** Mở trouble theo 依頼番号 (ưu tiên) hoặc id; không thấy trong list thì mở thẳng URL chi tiết. */
+  async openByNumber(t: { id?: string; number?: string }): Promise<void> {
+    if (t.number) {
+      const row = tableRow(this.page, new RegExp(`(^|\\D)${t.number}(\\D|$)`));
+      if (await row.isVisible().catch(() => false)) {
+        await this.openTrouble(new RegExp(`(^|\\D)${t.number}(\\D|$)`));
+        return;
+      }
+    }
+    if (!t.id) throw new Error('Không có 依頼番号 / id của trouble tạo ở E2E-TC-002');
+    await this.page.goto(`/admin/troubles/${t.id}/detail`);
+    await expect(this.page).toHaveURL(/\/admin\/troubles\/\d+\/detail/);
+  }
+
   /** Mở trouble đầu tiên (mới nhất) có đủ các chữ trong texts → màn hình chi tiết. */
   async openTrouble(...texts: (string | RegExp)[]): Promise<void> {
     const row = tableRow(this.page, ...texts);

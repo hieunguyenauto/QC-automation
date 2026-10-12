@@ -7,7 +7,11 @@
     "storeName": "LINKSYS STORE00001 (TORIDOLL)",
     "storeShort": "LINKSYS STORE00001"
   },
-  "categories": { "large": "操作テスト", "medium": "トイレ（テスト）", "small": "つまり：大便器（テスト）" },
+  "categories": {
+    "large": "操作テスト",
+    "medium": "トイレ（テスト）",
+    "small": "つまり：大便器（テスト）"
+  },
   "asset": {
     "existingName": "TEST AUTOMATION",
     "name": "Automation Asset",
@@ -16,10 +20,42 @@
     "note": "Verify automation is working well!",
     "image": "hieu5.jpg"
   },
-  "faultDetail": { "text": "AUTOMATION", "image": "hieu6.jpg" },
-  "worker": { "companyQuery": "linksys", "loginId": "linksysworker", "companyName": "LINKSYS WORKER", "staffName": "linksys worker" },
-  "estimate": { "name": "Test", "itemName": "Autotest", "unitPrice": "99999", "unitPriceShown": "99,999", "total": "￥148,855", "totalTax": "￥163,740", "cancelReason": "Request cancel" },
-  "report": { "cause": "automation", "beforeImage": "hieu4.jpg", "afterImage": "hieu3.jpg", "assetName": "TEST AUTOMATION", "assetImage": "hieu6.jpg" },
-  "manager": { "dashboardName": "LINKSYS MANAGER00001" },
-  "payment": { "comment": "Automation test" }
+  "faultDetail": {
+    "textPrefix": "AUTOMATION",
+    "image": "hieu6.jpg"
+  },
+  "worker": {
+    "companyQuery": "linksys",
+    "loginId": "linksysworker",
+    "companyName": "LINKSYS WORKER",
+    "staffName": "linksys worker"
+  },
+  "estimate": {
+    "name": "Test",
+    "itemName": "Autotest",
+    "unitPrice": "99999",
+    "unitPriceShown": "99,999",
+    "total": "￥148,855",
+    "totalTax": "￥163,740",
+    "cancelReason": "Request cancel",
+    "_note": "[cần confirm] total/totalTax: chờ công thức từ anh Hiếu (TC P7)"
+  },
+  "report": {
+    "cause": "automation",
+    "beforeImage": "hieu4.jpg",
+    "afterImage": "hieu3.jpg",
+    "assetName": "TEST AUTOMATION",
+    "assetImage": "hieu6.jpg"
+  },
+  "manager": {
+    "dashboardName": "LINKSYS MANAGER00001"
+  },
+  "payment": {
+    "comment": "Automation test"
+  },
+  "expectedDate": {
+    "option": "明日以降",
+    "start": "10:00",
+    "end": "12:00"
+  }
 }

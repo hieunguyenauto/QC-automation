@@ -2,7 +2,7 @@ import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 import data from '../../data/e2e-trouble-flow.json';
 import { credentials } from '../../data/roles';
 import { env } from '../../common/env';
-import { click, clickable, closeModal, expectRow, fill, minimizeChat, modal, today } from '../../common/ui';
+import { click, clickable, closeModal, expectRow, fill, minimizeChat, modal, rowOf, today } from '../../common/ui';
 import { LoginScreen } from '../../screens/cms/login.screen';
 import { CmsLayout } from '../../screens/cms/layout.screen';
 import { TroubleCreateScreen } from '../../screens/cms/trouble-create.screen';
@@ -19,6 +19,13 @@ import { TroubleEditScreen } from '../../screens/cms/trouble-edit.screen';
 test.describe.configure({ mode: 'serial' });
 
 let context: BrowserContext;
+/** Trouble tạo ở E2E-TC-002 (id lấy từ response, 依頼番号 hiển thị trên màn hình). */
+const trouble: { id?: string; number?: string } = {};
+const RUN = (() => {
+  const d = new Date(); const p = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`;
+})();
+const FAULT_TEXT = `${data.faultDetail.textPrefix}-${RUN}`;
 let page: Page;
 let s: {
   login: LoginScreen; layout: CmsLayout; create: TroubleCreateScreen;
@@ -96,9 +103,8 @@ test('E2E-TC-002 Create trouble', { tag: ['@E2E-TC-002', '@role-99'] }, async ()
       name: data.asset.name, model: data.asset.model, serial: data.asset.serial, note: data.asset.note,
       images: [data.asset.image, data.asset.image], withDates: true,
     }));
-  await test.step('24. Select Automation Asset + 1 random asset', async () => {
-    await c.assets.selectRows(data.asset.name, 1);
-    await c.assets.selectRandomOther();
+  await test.step('24. Select the first Automation Asset', async () => {
+    expect(await c.assets.selectRows(data.asset.name, 1)).toBe(1);
   });
   await test.step('25. 決定する → form lists Automation Asset', async () => {
     await c.assets.decide();
@@ -106,18 +112,28 @@ test('E2E-TC-002 Create trouble', { tag: ['@E2E-TC-002', '@role-99'] }, async ()
   });
   await test.step('26. 次へ → step 故障詳細', () => c.next('故障詳細'));
   await test.step('27. Upload fault images', () => c.uploadFaultImages(data.faultDetail.image, 2));
-  await test.step('28. Input 故障詳細記入欄', () => c.fillFaultDetail(data.faultDetail.text));
-  await test.step('29-31. 決定して問合わせ → 決定 → OK', () => c.submit());
-  await minimizeChat(page);
-  await expect(page).toHaveURL(/\/admin\/troubles/);
+  await test.step(`28. Input 故障詳細記入欄 = ${FAULT_TEXT}`, () => c.fillFaultDetail(FAULT_TEXT));
+  await test.step('29. 希望日時 = 明日以降 10:00–12:00', () =>
+    c.chooseExpectedDate(data.expectedDate.option, data.expectedDate.start, data.expectedDate.end));
+  await test.step('30-32. 決定して問合わせ → 決定 → OK, record 依頼番号', async () => {
+    Object.assign(trouble, await c.submit());
+    await minimizeChat(page);
+    if (!trouble.number && /\/detail/.test(page.url())) {
+      trouble.number = (await rowOf(page.locator('.content-wrapper'), '依頼番号').innerText()).match(/\d{3,}/)?.[0];
+      trouble.id ??= page.url().match(/troubles\/(\d+)\/detail/)?.[1];
+    }
+  });
+  test.info().annotations.push({ type: '依頼番号', description: `${trouble.number ?? '?'} (id ${trouble.id ?? '?'})` });
+  expect(trouble.id ?? trouble.number, 'Không lấy được id / 依頼番号 của trouble vừa tạo').toBeTruthy();
 });
 
 test('E2E-TC-003 Trouble detail and edit 対応区分', { tag: ['@E2E-TC-003', '@role-99'] }, async () => {
   const d = s.detail;
   await test.step('1. Open the trouble from Trouble List', async () => {
-    if (!/\/admin\/troubles\/\d+\/detail/.test(page.url())) {
+    const onIt = trouble.id ? page.url().includes(`/troubles/${trouble.id}/detail`) : false;
+    if (!onIt) {
       await s.list.open();
-      await s.list.openTrouble(data.store.storeName, '問い合わせ中');
+      await s.list.openByNumber(trouble);
     }
     await d.expectOpened();
   });
@@ -142,7 +158,10 @@ test('E2E-TC-003 Trouble detail and edit 対応区分', { tag: ['@E2E-TC-003', '
     await d.headerButton('編集');
     await s.edit.expectOpened();
   });
-  await test.step('6-7. 変更 → random 対応区分 → 保存 → OK', () => s.edit.randomizeAssetResponseType());
+  await test.step('6-7. 変更 → 対応区分 = first value → 保存 → OK', async () => {
+    const chosen = await s.edit.setFirstAssetResponseType();
+    test.info().annotations.push({ type: '対応区分', description: chosen.join(', ') || '(không có select)' });
+  });
   await test.step('8. 戻る', () => s.edit.back());
   await d.expectOpened();
 });
@@ -311,7 +330,7 @@ test('E2E-TC-012 Manager views estimate and history', { tag: ['@E2E-TC-012', '@r
   const d = s.detail;
   await test.step('1. Menu 進行中のトラブル一覧', () => s.layout.menu('進行中のトラブル一覧'));
   await test.step('2. Open the trouble', async () => {
-    await s.list.openTrouble(data.store.storeShort, '報告済');
+    await s.list.openByNumber(trouble);
     await d.expectBadges('対応中', '報告済');
   });
   await test.step('3. Minimize chat', () => minimizeChat(page));

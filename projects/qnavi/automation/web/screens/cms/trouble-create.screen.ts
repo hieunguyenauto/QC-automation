@@ -113,30 +113,24 @@ export class TroubleCreateScreen extends BaseScreen {
     await uploadVia(this.page, clickables(this.content, '写真を選択').nth(index), path.join(FILES, file));
   }
   async fillFaultDetail(text: string): Promise<void> {
-    const f = field(this.content, '故障詳細記入欄').or(this.content.locator('textarea').first()).first();
+    const f = this.content.locator('textarea[name="description"]');
     await f.fill(text);
     await expect(f).toHaveValue(text);
   }
 
   /**
-   * 希望日時: chọn option (vd 明日以降) rồi nhập giờ 開始 / 終了.
-   * [cần kiểm trên app thật] option là radio hay button; 開始/終了 là select hay input.
+   * 訪問希望日時 (browser thật 2026-10-12, store tự động matching): nút 至急 / 本日中 / 明日以降;
+   * 明日以降 → radio 希望時間指定 (mặc định) / 希望日付＆希望時間指定 + 4 ô text: hour, minute (開始) rồi hour, minute (終了).
    */
   async chooseExpectedDate(option: string, startTime: string, endTime: string): Promise<void> {
-    await this.page.getByRole('radio', { name: option }).or(this.content.getByText(option, { exact: true })).first().click();
-    for (const [label, value] of [['開始', startTime], ['終了', endTime]] as const) {
-      const f = field(this.content, label);
-      if (!(await f.isVisible().catch(() => false))) continue;
-      const tag = await f.evaluate((e) => e.tagName.toLowerCase());
-      if (tag === 'select') {
-        const hour = String(Number(value.split(':')[0]));
-        const opts = await f.locator('option').allInnerTexts();
-        const hit = opts.find((o) => o.trim() === value || o.trim().startsWith(value) || o.trim() === hour || o.trim() === hour.padStart(2, '0'));
-        if (hit) await f.selectOption({ label: hit });
-      } else {
-        await f.fill(value);
-      }
-    }
+    await click(this.content, option);
+    const hours = this.content.locator('input[name="hour"]');
+    const minutes = this.content.locator('input[name="minute"]');
+    await expect(hours).toHaveCount(2);
+    const [sh, sm] = startTime.split(':');
+    const [eh, em] = endTime.split(':');
+    await hours.nth(0).fill(sh); await minutes.nth(0).fill(sm);
+    await hours.nth(1).fill(eh); await minutes.nth(1).fill(em);
   }
 
   async clickSubmit(): Promise<void> {

@@ -104,7 +104,7 @@ export function rowOf(scope: Scope, label: string): Locator {
  */
 export function valueOf(scope: Scope, label: string): Locator {
   // Ô nhãn có thể kèm badge (vd '作業者 必須', '名称 ※') → so khớp text node đầu tiên.
-  const cell = scope.locator(`xpath=.//*[self::td or self::th][normalize-space(text())=${xq(label)} or normalize-space()=${xq(label)}]/following-sibling::*[1]`);
+  const cell = scope.locator(`xpath=.//*[self::td or self::th][not(.//td or .//th)][normalize-space(text())=${xq(label)} or normalize-space()=${xq(label)} or .//*[normalize-space(text())=${xq(label)}]]/following-sibling::*[1]`);
   const header = scope.locator(`xpath=.//p[normalize-space()=${xq(label + ':')} or normalize-space()=${xq(label + '：')}]/..`);
   return cell.or(header).filter({ visible: true }).first();
 }
@@ -136,8 +136,9 @@ export async function uploadVia(page: Page, button: Locator, filePath: string): 
       fc = await chooser;
     }
   }
+  // Browser thật 2026-10-12: hộp con có <input type=file id=uploadName> hiển thị sẵn.
   if (fc) await fc.setFiles(filePath);
-  else await page.locator('input[type="file"]').last().setInputFiles(filePath);
+  else await page.locator('input[type="file"]').filter({ visible: true }).last().setInputFiles(filePath);
   const done = page.getByRole('button', { name: '完了', exact: true }).filter({ visible: true }).last();
   if (await done.isVisible().catch(() => false)) {
     await expect(done).toBeEnabled();
@@ -146,12 +147,13 @@ export async function uploadVia(page: Page, button: Locator, filePath: string): 
   }
 }
 
-/** Thu nhỏ khung chat nổi (nếu có). [cần kiểm trên app thật] nút thu nhỏ của chat. */
+/** Thu nhỏ khung chat nổi: popover '.chat-popover' — bấm '.popover-trigger' khi nội dung đang mở (browser thật 2026-10-12). */
 export async function minimizeChat(page: Page): Promise<void> {
-  const box = page.locator('[class*="chat"]').filter({ visible: true }).first();
-  if (!(await box.isVisible().catch(() => false))) return;
-  const btn = box.locator('[class*="minus"], [class*="minimize"], [title*="最小"], [aria-label*="inimize"], button:has(i.fa-minus)').first();
-  if (await btn.isVisible().catch(() => false)) await btn.click().catch(() => undefined);
+  const open = page.locator('.chat-popover__content.open');
+  if (await open.isVisible().catch(() => false)) {
+    await page.locator('.chat-popover .popover-trigger').click();
+    await expect(open).toBeHidden();
+  }
 }
 
 /** Đóng modal bằng nút × / 閉じる. */

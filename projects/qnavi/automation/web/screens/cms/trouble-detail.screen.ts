@@ -90,7 +90,9 @@ export class TroubleDetailScreen extends BaseScreen {
     await click(this.searchModal, '検索');
   }
   async pickWorker(loginId: string): Promise<void> {
-    await click(tableRow(this.searchModal, loginId), '選択');
+    // Có 'linksysworkerqnavi' và 'linksysworker' → khớp ô đúng nguyên văn.
+    const row = this.searchModal.locator('tbody tr').filter({ has: this.page.locator('td', { hasText: new RegExp(`^\\s*${loginId}\\s*$`) }) }).first();
+    await click(row, '選択');
     await expect(this.searchModal).toBeHidden();
   }
 

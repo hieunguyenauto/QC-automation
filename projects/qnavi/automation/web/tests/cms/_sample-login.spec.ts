@@ -1,5 +1,6 @@
 import { test, expect } from '../../common/fixtures';
 import { forRoles } from '../../common/roles';
+import { parseWho } from '../../common/session';
 import { CMS_ROLES } from '../../data/roles';
 
 /**
@@ -13,7 +14,7 @@ forRoles(['99', '98', '01', '02', '05'], (role) => {
       await page.goto('/');
     });
     await test.step('2. Verify redirect to role home', async () => {
-      await expect(page).toHaveURL(new RegExp(`${CMS_ROLES[role].home}(/|$|\\?)`));
+      await expect(page).toHaveURL(new RegExp(`${CMS_ROLES[parseWho(role).role].home}(/|$|\\?)`));
     });
   });
 });

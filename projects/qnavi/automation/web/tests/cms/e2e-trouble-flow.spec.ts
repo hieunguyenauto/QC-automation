@@ -1,6 +1,7 @@
 import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 import data from '../../data/e2e-trouble-flow.json';
-import { credentials, account as roleAccount } from '../../data/roles';
+import { account as roleAccount } from '../../data/roles';
+import { credentialsOf, loginAs, markLoggedIn } from '../../common/session';
 import { env } from '../../common/env';
 import { click, clickable, closeModal, expectRow, fill, minimizeChat, modal, rowOf, today } from '../../common/ui';
 import { LoginScreen } from '../../screens/cms/login.screen';
@@ -28,7 +29,6 @@ test.describe.configure({ mode: 'serial' });
 type Role = '99' | '01';
 let context: BrowserContext;
 let page: Page;
-let currentRole: Role | null = null;
 let s: {
   login: LoginScreen; layout: CmsLayout; create: TroubleCreateScreen;
   list: TroubleListScreen; detail: TroubleDetailScreen; edit: TroubleEditScreen;
@@ -96,23 +96,9 @@ test.afterAll(async () => {
 });
 
 // ---------------- helper của kịch bản ----------------
-function account(role: Role) {
-  const c = credentials(role);
-  if (!c) throw new Error(`Thiếu CMS_${role}_ID / CMS_${role}_PASSWORD trong .env`);
-  return c;
-}
-async function loginAs(role: Role): Promise<void> {
-  const c = account(role);
-  await s.login.goto();
-  await s.login.login(c.loginId, c.password);
-  await expect(page).not.toHaveURL(/\/login/);
-  currentRole = role;
-}
-/** Pre-condition: đang đăng nhập đúng role (khi chạy tiếp từ giữa kịch bản). */
+/** Pre-condition: đang đăng nhập đúng tài khoản (dùng common/session.ts — tự logout nếu đang là tài khoản khác). */
 async function ensureRole(role: Role): Promise<void> {
-  if (currentRole === role) return;
-  if (currentRole) await s.layout.logout();
-  await loginAs(role);
+  await loginAs(page, role);
 }
 /** Pre-condition: đang ở màn chi tiết của trouble của kịch bản. */
 async function ensureTroubleOpened(): Promise<void> {
@@ -128,7 +114,7 @@ const pre = (fn: () => Promise<void>) => test.step('Pre-condition', fn);
 
 // ---------------- TC ----------------
 test('E2E-TC-001 Login as admin', { tag: ['@E2E-TC-001', '@role-99'] }, async () => {
-  const c = account('99');
+  const c = credentialsOf('99');
   await test.step('1. Open /login', () => s.login.goto());
   await test.step('2. Click the login ID field', () => s.login.loginId.click());
   await test.step('3. Input admin login ID', () => s.login.loginId.fill(c.loginId));
@@ -138,7 +124,7 @@ test('E2E-TC-001 Login as admin', { tag: ['@E2E-TC-001', '@role-99'] }, async ()
   await test.step('7. Click ログイン', () => s.login.submit.click());
   await test.step('Expected: dashboard /admin is displayed', async () => {
     await expect(page).toHaveURL(/\/admin(\/|$|\?)/);
-    currentRole = '99';
+    markLoggedIn(page, '99');
   });
 });
 
@@ -489,11 +475,11 @@ test('E2E-TC-010 Admin views 報告書 and downloads', { tag: ['@E2E-TC-010', '@
 });
 
 test('E2E-TC-011 Logout, login as chain store manager', { tag: ['@E2E-TC-011', '@role-01'] }, async () => {
-  const c = account('01');
+  const c = credentialsOf('01');
   await pre(() => ensureRole('99'));
   await test.step('1-2. ログアウト → 決定 → login screen', async () => {
     await s.layout.logout();
-    currentRole = null;
+    markLoggedIn(page, null);
   });
   await test.step('3. Input manager login ID / password', async () => {
     await s.login.loginId.fill(c.loginId);
@@ -502,7 +488,7 @@ test('E2E-TC-011 Logout, login as chain store manager', { tag: ['@E2E-TC-011', '
   await test.step('4. Click ログイン', async () => {
     await s.login.submit.click();
     await expect(page).not.toHaveURL(/\/login/);
-    currentRole = '01';
+    markLoggedIn(page, '01');
   });
   // Browser thật 2026-10-12: tên user ở sidebar '.account p'.
   const name = roleAccount('01')?.displayName || data.manager.dashboardName;

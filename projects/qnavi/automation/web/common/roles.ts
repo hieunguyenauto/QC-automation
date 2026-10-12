@@ -1,23 +1,22 @@
 import { test } from './fixtures';
-import { CMS_ROLES, CmsRole } from '../data/roles';
-import { authFile, hasAuth } from './auth';
+import { CMS_ROLES } from '../data/roles';
+import { ensureAuthFile, parseWho, type Who } from './session';
 
 /**
- * 1 TC × 1 role = 1 test. Dùng trong spec:
- *   forRoles(['99', '98'], (role) => { test('WB2-TC-001 ...', async ({ page }) => { ... }) });
- * Tên test có [<cột Excel>] và tag @role-<mã>. Role chưa login được (thiếu tài khoản trong .env) → skip.
+ * 1 TC × 1 tài khoản = 1 test, mỗi test mở sẵn phiên đăng nhập (không đi qua màn ログイン).
+ *   forAccounts(['99', '98', '02:urgent'], (who) => { test('P007-TC-001 ...', async ({ page }) => { ... }) });
+ * Phiên lấy từ .auth/<ENV>/ (còn hạn 8h thì dùng lại, không thì tự đăng nhập 1 lần — common/session.ts).
+ * Tên test có [<cột Excel>(:variant)] và tag @role-<mã>.
  */
-export function forRoles(roles: CmsRole[], body: (role: CmsRole) => void): void {
-  for (const role of roles) {
-    test.describe(`[${CMS_ROLES[role].label}]`, { tag: `@role-${role}` }, () => {
-      // Kiểm lúc chạy (sau project setup), không kiểm lúc nạp file.
-      test.use({
-        storageState: async ({}, use) => use(hasAuth(role) ? authFile(role) : undefined),
-      });
-      test.beforeEach(() => {
-        test.skip(!hasAuth(role), `Chưa login được role ${role}: thiếu CMS_${role}_ID / PASSWORD trong .env`);
-      });
-      body(role);
+export function forAccounts(accounts: Who[], body: (who: Who) => void): void {
+  for (const who of accounts) {
+    const { role, variant } = parseWho(who);
+    test.describe(`[${CMS_ROLES[role].label}${variant ? `:${variant}` : ''}]`, { tag: `@role-${role}` }, () => {
+      test.use({ storageState: async ({ browser }, use) => use(await ensureAuthFile(browser, who)) });
+      body(who);
     });
   }
 }
+
+/** Giữ tên cũ: forRoles(['99', '01'], ...) = forAccounts. */
+export const forRoles = forAccounts;

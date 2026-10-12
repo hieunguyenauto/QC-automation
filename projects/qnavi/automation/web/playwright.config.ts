@@ -52,7 +52,8 @@ export default defineConfig({
       // Kịch bản E2E nối tiếp: tự login bằng UI, không cần project setup.
       name: 'e2e',
       testMatch: /tests\/cms\/e2e-.*\.spec\.ts/,
-      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1000 } },
+      // trace/video off: spec tự ghi trace theo từng TC trên context dùng chung (xem e2e-trouble-flow.spec.ts, lesson R13).
+      use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1000 }, trace: 'off', video: 'off' },
     },
     {
       // Đi qua màn hình, không lưu dữ liệu, ghi aria snapshot → reports/recon-<run>/ (lấy locator thật).

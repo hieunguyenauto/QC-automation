@@ -45,6 +45,10 @@ const RUN = (() => {
 })();
 const FAULT_TEXT = `${data.faultDetail.textPrefix}-${RUN}`;
 
+/** Chờ tối đa ms rồi bỏ qua (hook không được treo — lesson R02/R13). */
+const within = (p: Promise<unknown> | undefined, ms: number) =>
+  Promise.race([(p ?? Promise.resolve()).catch(() => {}), new Promise((r) => setTimeout(r, ms))]);
+
 test.beforeAll(async ({ browser }) => {
   context = await browser.newContext({
     baseURL: env.cmsBaseUrl, locale: 'ja-JP', timezoneId: 'Asia/Tokyo', viewport: { width: 1600, height: 1000 },
@@ -52,11 +56,18 @@ test.beforeAll(async ({ browser }) => {
   });
   context.setDefaultTimeout(env.actionTimeoutMs);
   context.setDefaultNavigationTimeout(env.navigationTimeoutMs);
+  // Trace tự ghi (config e2e: trace off). Run 2026-10-12: trace tự động của Playwright cho context dùng chung
+  // lưu quá lâu khi fail → hết 120s, trace.zip hỏng. Ghi từng chunk / TC, chỉ giữ khi fail (lesson R13).
+  await context.tracing.start({ screenshots: true, snapshots: true });
   page = await context.newPage();
   s = {
     login: new LoginScreen(page), layout: new CmsLayout(page), create: new TroubleCreateScreen(page),
     list: new TroubleListScreen(page), detail: new TroubleDetailScreen(page), edit: new TroubleEditScreen(page),
   };
+});
+
+test.beforeEach(async ({}, testInfo) => {
+  await within(context.tracing.startChunk({ title: testInfo.title }), 10_000);
 });
 
 test.afterEach(async ({}, testInfo) => {
@@ -69,13 +80,18 @@ test.afterEach(async ({}, testInfo) => {
     if (shot) await testInfo.attach('screenshot', { body: shot, contentType: 'image/png' });
     const aria = await page.locator('body').ariaSnapshot({ timeout: 10_000 }).catch(() => null);
     if (aria) await testInfo.attach('aria-snapshot', { body: aria, contentType: 'text/yaml' });
+    const tracePath = testInfo.outputPath('trace.zip');
+    await within(context.tracing.stopChunk({ path: tracePath }), 30_000);
+    await testInfo.attach('trace', { path: tracePath, contentType: 'application/zip' }).catch(() => {});
+  } else {
+    await within(context.tracing.stopChunk(), 10_000);
   }
 });
 
-// Trace: Playwright tự ghi cho context tạo từ browser (trace: retain-on-failure trong config).
 test.afterAll(async () => {
-  // Run 2026-10-12: sau khi fail, context.close() treo tới hết 120s → giới hạn 15s (lesson R02).
-  await Promise.race([context?.close().catch(() => {}), new Promise((r) => setTimeout(r, 15_000))]);
+  test.setTimeout(60_000);
+  await within(context?.tracing.stop(), 15_000);
+  await within(context?.close(), 15_000);
 });
 
 // ---------------- helper của kịch bản ----------------
@@ -197,13 +213,14 @@ test('E2E-TC-002 Create trouble', { tag: ['@E2E-TC-002', '@role-99'] }, async ()
   let created: { id?: string; number?: string } = {};
   await test.step('31. Click 決定 (+ OK)', async () => { created = await c.confirmSubmit(); });
   await test.step('32. Minimize chat, record 依頼番号', async () => {
-    await minimizeChat(page);
+    // Ghi 依頼番号 trước (để resume bằng E2E_TROUBLE_ID nếu bước sau lỗi), thu nhỏ chat sau.
     Object.assign(trouble, created);
     if (!trouble.number && /\/detail/.test(page.url())) {
       await s.detail.expectOpened();
       trouble.number = await s.detail.number();
       trouble.id ??= page.url().match(/troubles\/(\d+)\/detail/)?.[1];
     }
+    await minimizeChat(page);
   });
   await test.step('Expected: trouble created with 依頼番号', async () => {
     expect(trouble.id ?? trouble.number, 'Không lấy được id / 依頼番号 của trouble vừa tạo').toBeTruthy();

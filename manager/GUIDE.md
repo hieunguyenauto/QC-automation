@@ -1485,6 +1485,10 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - R08 Nút × của modal có aria-label '閉じる' → không tìm nút 閉じる bằng role+name; dùng text hiển thị trong vùng cụ thể, × thì closeModal(). (web/2026-10-12-cms-close-button-name.md)
 - R09 Modal lồng nhau: lọc modal bằng chữ / phần tử chỉ modal đó có (vd '施工業者', input[name=title]), không lọc bằng chữ tiêu đề. (web/2026-10-12-cms-modal-unique-text.md)
 - R10 Nút bật/tắt (メニュー展開, accordion): kiểm trạng thái đang mở chưa rồi mới bấm, sau đó expect trạng thái. (web/2026-10-12-cms-toggle-expand.md)
+- R11 Danh sách / lưới thẻ có ảnh: chờ ảnh tải xong, click bằng dispatchEvent (không theo toạ độ), rồi KIỂM giá trị đã chọn; sai thì chọn lại. (web/2026-10-12-cms-click-layout-shift.md)
+- R12 Log có "intercepts pointer events" (popover/chat/overlay đè nút): dùng dispatchEvent('click') + kiểm trạng thái sau đó; không dùng force:true. (web/2026-10-12-cms-chat-overlay-intercepts.md)
+- R13 Kịch bản serial dùng chung context: tắt trace/video tự động trong config, tự ghi trace theo chunk từng TC; mọi lệnh trong hook có giới hạn thời gian. (web/2026-10-12-e2e-shared-context-trace-hang.md)
+- R14 Dữ liệu tạo ra cho TC sau (依頼番号, id…) phải ghi lại NGAY sau khi tạo, trước mọi thao tác phụ. (web/2026-10-12-e2e-record-key-data-first.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

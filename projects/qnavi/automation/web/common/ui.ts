@@ -151,7 +151,9 @@ export async function uploadVia(page: Page, button: Locator, filePath: string): 
 export async function minimizeChat(page: Page): Promise<void> {
   const open = page.locator('.chat-popover__content.open');
   if (await open.isVisible().catch(() => false)) {
-    await page.locator('.chat-popover .popover-trigger').click();
+    // Run 2026-10-12: khi chat mở, form '.cf-chat-input' đè lên nút trigger → click thường bị chặn (intercepts pointer events).
+    // Bắn event click thẳng vào trigger (không theo toạ độ), rồi kiểm đã đóng (lesson R12).
+    await page.locator('.chat-popover .popover-trigger').dispatchEvent('click');
     await expect(open).toBeHidden();
   }
 }

@@ -2,8 +2,8 @@ import { expect, type Locator } from '@playwright/test';
 import path from 'path';
 import { BaseScreen } from '../base.screen';
 import {
-  acknowledgeOk, choose, click, clickable, clickables, closeModal, confirmDecide, expectRow, field, fill, modal,
-  rowOf, saveDecideOk, tableRow, uploadVia, valueOf,
+  acknowledgeOk, choose, click, exact, clickable, clickables, closeModal, confirmDecide, expectRow, field, fill, modal,
+  saveDecideOk, valueOf,
 } from '../../common/ui';
 import { AssetSelectDialog } from './asset-select.dialog';
 
@@ -14,7 +14,8 @@ const FILES = path.resolve(__dirname, '../../data/files');
  * クイック操作 (99/98/05) mở modal 状態変更. Nút header: 履歴, 立候補, 見積もり, 報告書, 作業完了確認…
  * Recon 2026-10-12: header = <p>店舗名:</p>, <p>業者:</p>…; nút có icon (' 編集', ' クイック操作'); bảng chi tiết <td>label</td><td>value</td>;
  *   modal 状態変更 = dialog có heading '状態変更', nút '閉じる', select ở dòng '状態', nút 'キャンセル' / '保存'.
- * [cần kiểm trên app thật] icon edit trong 状態変更, menu メニュー展開▼, date picker của 報告書 → npm run recon.
+ * Browser thật 2026-10-12: đã chạy tay TC-005 → TC-010 trên trouble 43803 (xem ghi chú từng phần).
+ * Sau 保存 → 決定 → OK 'この情報の保存が完了しました。' thì modal 状態変更 tự đóng.
  */
 export class TroubleDetailScreen extends BaseScreen {
   readonly id = 'CMS-TROUBLE-DETAIL';
@@ -52,10 +53,10 @@ export class TroubleDetailScreen extends BaseScreen {
     await expect(this.statusModal).toBeVisible();
     return this.statusModal;
   }
-  /** Icon edit trên dòng label trong modal 状態変更 (作業者, 見積もり, 報告書). */
+  /** Icon edit trên dòng label trong modal 状態変更 (作業者, 見積もり, 報告書).
+   *  Browser thật 2026-10-12: <td><div class="card">…<div class="icon …"><i class="far fa-edit"></i></div></td>. */
   async editRow(label: string): Promise<void> {
-    // Recon 2026-10-12: nhãn '作業者 必須' / '見積もり 必須' / '報告書 任意'; icon sửa () là phần tử cuối của ô giá trị.
-    await valueOf(this.statusModal, label).locator('i, svg, [class*="fa-"], button').filter({ visible: true }).last().click();
+    await valueOf(this.statusModal, label).locator('.icon, i.fa-edit').filter({ visible: true }).first().click();
   }
   async setStatus(value: string): Promise<void> {
     await choose(this.page, this.statusModal, '状態', value);
@@ -97,9 +98,24 @@ export class TroubleDetailScreen extends BaseScreen {
   }
 
   // ---------- 見積もり ----------
+  // Browser thật 2026-10-12 (trouble 43803):
+  //  - Modal '見積もり' (có '見積一覧', nút 閉じる / 登録 / 提示する). Dòng = tr.estimation-row, badge trạng thái, ô 'メニュー展開▼'.
+  //  - 登録 → modal form (input[name=title|companyName|expiredTime], textarea[name=notices]); có sẵn dòng 現場調査費/出張費.
+  //  - 追加 → modal '作業項目追加': nút 作業/部材/諸経費; input[name=label|workerAmount] bị disable tới khi chọn loại.
+  //  - Dòng item trong form: 項目名 nằm trong textarea[name="items.N.label"] (không phải text).
+  //  - 決定 form: lưu ngay, không có confirm. 提示する → '以下1件の見積を店舗へ提出しますか?' → 決定; trạng thái đổi sau ~3–5s.
+  //  - Nút × có aria-label="閉じる" → không dùng getByRole name '閉じる' (trùng).
   get estimateModal(): Locator { return modal(this.page, '見積一覧'); }
+  get estimateForm(): Locator {
+    return this.page.locator('.modal.show').filter({ visible: true }).filter({ has: this.page.locator('input[name="title"]') }).last();
+  }
   get itemModal(): Locator { return modal(this.page, '作業項目追加'); }
-  estimateRow(name: string): Locator { return tableRow(this.estimateModal, name); }
+  estimateRow(name: string): Locator {
+    return this.estimateModal.locator('tr.estimation-row').filter({ has: this.page.locator('td', { hasText: exact(name) }) }).first();
+  }
+  async expectEstimateStatus(name: string, status: string): Promise<void> {
+    await expect(this.estimateRow(name).locator('.badge')).toHaveText(status, { timeout: 15_000 });
+  }
 
   async openEstimateFromStatus(): Promise<void> {
     await this.editRow('見積もり');
@@ -107,14 +123,25 @@ export class TroubleDetailScreen extends BaseScreen {
   }
   async startNewEstimate(): Promise<void> {
     await click(this.estimateModal, '登録');
-    for (const f of ['見積名', '見積書宛名', '見積有効期限']) await expect(this.estimateModal).toContainText(f);
+    const f = this.estimateForm;
+    for (const n of ['title', 'companyName', 'expiredTime']) await expect(f.locator(`input[name="${n}"]`)).toBeVisible();
+  }
+  async fillEstimateName(name: string): Promise<void> {
+    await this.estimateForm.locator('input[name="title"]').fill(name);
   }
   async openAddItem(): Promise<void> {
-    await click(this.estimateModal, '追加');
+    await click(this.estimateForm, '追加');
     await expect(this.itemModal).toBeVisible();
   }
+  async chooseItemType(type: '作業' | '部材' | '諸経費'): Promise<void> {
+    await this.itemModal.locator('.btn-group button', { hasText: exact(type) }).click();
+    await expect(this.itemModal.locator('input[name="label"]')).toBeEnabled();
+  }
+  async fillItemName(name: string): Promise<void> {
+    await this.itemModal.locator('input[name="label"]').fill(name);
+  }
   async fillUnitPrice(value: string, shown: string): Promise<void> {
-    const price = field(this.itemModal, '単価');
+    const price = this.itemModal.locator('input[name="workerAmount"]');
     await price.fill(value);
     await price.blur();
     await expect(price).toHaveValue(new RegExp(`^(${value}|${shown})$`));
@@ -122,11 +149,12 @@ export class TroubleDetailScreen extends BaseScreen {
   async decideItem(itemName: string): Promise<void> {
     await click(this.itemModal, '決定');
     await expect(this.itemModal).toBeHidden();
-    await expect(this.estimateModal).toContainText(itemName);
+    await expect(this.estimateForm.locator('textarea[name$=".label"]').last()).toHaveValue(itemName);
   }
   async decideEstimate(name: string): Promise<void> {
-    await clickables(this.estimateModal, '決定').first().click();
-    await expect(this.estimateRow(name)).toBeVisible();
+    await click(this.estimateForm, '決定');
+    await expect(this.estimateForm).toBeHidden();
+    await expect(this.estimateRow(name)).toBeVisible({ timeout: 15_000 });
   }
   /** Tick dòng → 提示する → 決定 → trạng thái 承認待ち. */
   async submitEstimate(name: string): Promise<void> {
@@ -135,11 +163,18 @@ export class TroubleDetailScreen extends BaseScreen {
     const d = modal(this.page, '以下1件の見積を店舗へ提出しますか');
     await expect(d).toContainText(name);
     await click(d, '決定');
-    await expect(this.estimateRow(name)).toContainText('承認待ち');
+    await expect(d).toBeHidden();
+    await this.expectEstimateStatus(name, '承認待ち');
   }
+  /** Mở phần mở rộng của dòng (nếu đang đóng). Bấm khi đã mở sẽ ĐÓNG lại → kiểm class is-expanded trước. */
   async openEstimateMenu(name: string): Promise<void> {
-    // Recon 2026-10-12: 'メニュー展開 ▼' là ô (không phải button).
-    await this.estimateRow(name).getByText(/メニュー展開/).first().click();
+    const row = this.estimateRow(name);
+    if (!/is-expanded/.test((await row.getAttribute('class')) ?? '')) await row.getByText(/メニュー展開/).first().click();
+    await expect(row).toHaveClass(/is-expanded/);
+  }
+  /** Nút trong phần mở rộng: card 店舗 (.group-manager) hoặc 作業員 (.group-worker). */
+  estimateAction(group: 'manager' | 'worker', name: string): Locator {
+    return clickable(this.estimateModal.locator(`.group-${group}`), name);
   }
   async closeEstimateModal(): Promise<void> {
     await click(this.estimateModal, '閉じる');
@@ -147,19 +182,28 @@ export class TroubleDetailScreen extends BaseScreen {
   }
 
   // ---------- 報告書 ----------
-  get reportModal(): Locator { return modal(this.page, '報告書'); }
+  // Browser thật 2026-10-12: modal 報告書 (xem) có nút 編集 → modal sửa (input[name=start|end] react-datepicker,
+  //  select[name=status] 未提出/提出済, textarea[name=symptom|reason|content|notice], dropzone ảnh, 修理対象資産選択, キャンセル/完了).
+  //  Lọc theo '施工業者' vì modal 状態変更 cũng có chữ '報告書'.
+  get reportModal(): Locator { return modal(this.page, '施工業者'); }
 
-  /** Chọn ngày (1, 2…) của tháng hiện tại trong date picker rồi 閉じる. [cần kiểm trên app thật] */
-  async pickDay(label: string, day: number): Promise<void> {
-    // react-datepicker (recon 2026-10-12): option "Choose 2026年10月1日木曜日", nhóm nút 現在 / クリア / 閉じる.
-    await valueOf(this.reportModal, label).locator('input').filter({ visible: true }).first().click();
-    await this.page.getByRole('option', { name: new RegExp(`^Choose \\d+年\\d+月${day}日`) }).filter({ visible: true }).first().click();
-    const close = this.page.getByRole('group').getByRole('button', { name: '閉じる', exact: true }).filter({ visible: true }).first();
+  /** react-datepicker: option "Choose 2026年10月1日木曜日"; nút 現在 / クリア / 閉じる; giá trị input 'YYYY/MM/DD 00:00'. */
+  async pickDay(name: 'start' | 'end', day: number): Promise<void> {
+    await this.reportModal.locator(`input[name="${name}"]`).click();
+    const picker = this.page.locator('.react-datepicker').filter({ visible: true }).last();
+    await picker.getByRole('option', { name: new RegExp(`^Choose \\d+年\\d+月${day}日`) }).first().click();
+    const close = picker.locator('button', { hasText: exact('閉じる') });
     if (await close.isVisible().catch(() => false)) await close.click();
+    await expect(picker).toBeHidden();
   }
+  /** Ảnh: input[type=file] ẩn trong .dropzone của dòng → mở hộp con 'N / 20' → 完了. */
   async uploadReportPhoto(label: string, file: string): Promise<void> {
-    await uploadVia(this.page, clickables(rowOf(this.reportModal, label), '写真を選択').first(), path.join(FILES, file));
-    await expect(rowOf(this.reportModal, label).locator('img').first()).toBeVisible();
+    await valueOf(this.reportModal, label).locator('.dropzone input[type="file"]').first().setInputFiles(path.join(FILES, file));
+    const box = modal(this.page, /\d+\s*\/\s*20/);
+    await expect(box).toContainText(file);
+    await click(box, '完了');
+    await expect(box).toBeHidden();
+    await expect(valueOf(this.reportModal, label).locator('img').first()).toBeVisible();
   }
   async downloadFrom(button: string): Promise<string> {
     const dl = this.page.waitForEvent('download');

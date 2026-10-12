@@ -308,12 +308,12 @@ test('E2E-TC-006 Create estimate Test and submit', { tag: ['@E2E-TC-006', '@role
   });
   await test.step('2. Edit icon on 見積もり → 見積一覧', () => d.openEstimateFromStatus());
   await test.step('3. Click 登録 → form fields', () => d.startNewEstimate());
-  await test.step(`4. Input 見積名: ${e.name}`, () => fill(d.estimateModal, '見積名', e.name));
+  await test.step(`4. Input 見積名: ${e.name}`, () => d.fillEstimateName(e.name));
   await test.step(`5. 追加 → 作業 → ${e.itemName}, 単価 ${e.unitPrice}`, async () => {
     await d.openAddItem();
     for (const t of ['作業', '部材', '諸経費']) await expect(clickable(d.itemModal, t)).toBeVisible();
-    await click(d.itemModal, '作業');
-    await fill(d.itemModal, '作業項目', e.itemName);
+    await d.chooseItemType('作業');
+    await d.fillItemName(e.itemName);
     await d.fillUnitPrice(e.unitPrice, e.unitPriceShown);
   });
   await test.step('6. 決定 in 作業項目追加', () => d.decideItem(e.itemName));
@@ -323,9 +323,10 @@ test('E2E-TC-006 Create estimate Test and submit', { tag: ['@E2E-TC-006', '@role
     await d.closeEstimateModal();
     await d.saveStatus();
   });
-  await test.step('10. Header 見積もり → 見積もり管理 amounts [cần confirm công thức]', async () => {
+  await test.step('10. Header 見積もり → 見積もり管理 amounts', async () => {
+    // Browser thật 2026-10-12: 店舗向け 作業 = floor(単価 / 0.7) (99,999 → 142,855) + 出張費 6,000 = 148,855; 税込 ×1.1 = 163,740. [cần confirm P7]
     await d.headerButton('見積もり');
-    const box = modal(page, '見積もり');
+    const box = modal(page, '見積もり管理');
     for (const t of [e.name, e.total, e.totalTax]) await expect(box).toContainText(t);
     await click(box, '閉じる');
   });
@@ -343,31 +344,33 @@ test('E2E-TC-007 取り下げ申請 → 取り下げ承認 → 承認', { tag: [
   await test.step('1. クイック操作 → edit 見積もり → Test = 承認待ち', async () => {
     await d.openQuickAction();
     await d.openEstimateFromStatus();
-    await expect(d.estimateRow(name)).toContainText('承認待ち');
+    await d.expectEstimateStatus(name, '承認待ち');
   });
   await test.step('2. メニュー展開▼ → buttons', async () => {
     await d.openEstimateMenu(name);
-    for (const b of ['差し戻し', '承認する', '取り下げ申請', 'コピー']) await expect(clickable(d.estimateModal, b)).toBeVisible();
+    for (const b of ['差し戻し', '承認する']) await expect(d.estimateAction('manager', b)).toBeVisible();
+    for (const b of ['取り下げ申請', 'コピー']) await expect(d.estimateAction('worker', b)).toBeVisible();
   });
   await test.step('3. 取り下げ申請 → reason → 申請を送信 → 決定 → 取り下げ申請中', async () => {
-    await click(d.estimateModal, '取り下げ申請');
+    await d.estimateAction('worker', '取り下げ申請').click();
     const req = modal(page, '申請を送信');
-    await req.locator('textarea').first().fill(data.estimate.cancelReason);
+    await req.locator('textarea[name="reason"]').fill(data.estimate.cancelReason);
     await click(req, '申請を送信');
     await d.decide(data.estimate.cancelReason);
-    await expect(d.estimateRow(name)).toContainText('取り下げ申請中');
+    await d.expectEstimateStatus(name, '取り下げ申請中');
   });
   await test.step('4. 取り下げ承認 → 決定 → 下書き', async () => {
-    await click(d.estimateModal, '取り下げ承認');
+    await d.openEstimateMenu(name);
+    await d.estimateAction('manager', '取り下げ承認').click();
     await d.decide('承認状態を保存します');
-    await expect(d.estimateRow(name)).toContainText('下書き');
+    await d.expectEstimateStatus(name, '下書き');
   });
   await test.step('5. Tick → 提示する → 決定 → 承認待ち', () => d.submitEstimate(name));
   await test.step('6. メニュー展開▼ → 承認する → 決定 → 承認済み', async () => {
     await d.openEstimateMenu(name);
-    await click(d.estimateModal, '承認する');
+    await d.estimateAction('manager', '承認する').click();
     await d.decide(/この見積を承認しますか|承認後は取り消すことができません/);
-    await expect(d.estimateRow(name)).toContainText('承認済み');
+    await d.expectEstimateStatus(name, '承認済み');
   });
   await test.step('7. 閉じる 見積もり → × 状態変更', async () => {
     await d.closeEstimateModal();
@@ -392,9 +395,10 @@ test('E2E-TC-009 報告済 and input 報告書', { tag: ['@E2E-TC-009', '@role-9
   test.setTimeout(300_000);
   const d = s.detail;
   const r = data.report;
-  // Ngày hiển thị dạng 'YYYY年MM月DD日 00:00' (recon 2026-10-12, dòng 報告書 trong 状態変更).
+  // Browser thật 2026-10-12: input = 'YYYY/MM/DD 00:00'; dòng 報告書 trong 状態変更 = 'YYYY年MM月DD日 00:00'.
   const [Y, M] = today('ym').split('/');
   const day = (dd: string) => `${Y}年${M}月${dd}日 00:00`;
+  const input = (dd: string) => `${Y}/${M}/${dd} 00:00`;
   await pre(async () => { await ensureRole('99'); await ensureTroubleOpened(); });
   await test.step('1. クイック操作 → 報告済', async () => {
     await d.openQuickAction();
@@ -403,14 +407,15 @@ test('E2E-TC-009 報告済 and input 報告書', { tag: ['@E2E-TC-009', '@role-9
   await test.step('2. Edit icon on 報告書 → 編集', async () => {
     await d.editRow('報告書');
     await click(d.reportModal, '編集');
+    await expect(d.reportModal.locator('input[name="start"]')).toBeVisible();
   });
   await test.step('3. 開始 = day 1, 終了 = day 2', async () => {
-    await d.pickDay('開始', 1);
-    await d.pickDay('終了', 2);
-    await expect(d.reportModal).toContainText(day('01'));
-    await expect(d.reportModal).toContainText(day('02'));
+    await d.pickDay('start', 1);
+    await d.pickDay('end', 2);
+    await expect(d.reportModal.locator('input[name="start"]')).toHaveValue(input('01'));
+    await expect(d.reportModal.locator('input[name="end"]')).toHaveValue(input('02'));
   });
-  await test.step(`4. 原因と発生起因: ${r.cause}`, () => fill(d.reportModal, '原因と発生起因', r.cause));
+  await test.step(`4. 原因と発生起因: ${r.cause}`, () => d.reportModal.locator('textarea[name="reason"]').fill(r.cause));
   await test.step('5. Upload 作業前 / 作業後 photos', async () => {
     await d.uploadReportPhoto('作業前の写真', r.beforeImage);
     await d.uploadReportPhoto('作業後の写真', r.afterImage);

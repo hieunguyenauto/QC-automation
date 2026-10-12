@@ -12,3 +12,4 @@ Estimation PWA và Trouble NAVI là web nhúng trong app, cần token đặt s�
 
 ## Môi trường / tài khoản test
 - URL theo môi trường: web/env/<ENV>.json. Tài khoản theo role: web/.env (không commit), mẫu ở web/.env.example.
+- est-test (2026-10-12): `trouble-be-test …/qa_data/get_qa_category` không phản hồi (OPTIONS 200, GET treo) → app hiện dialog '表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。' ở 故障内容 / 作業者; E2E không chạy được tới khi backend ổn định. Lỗi ENV — không sửa test để bỏ qua dialog.

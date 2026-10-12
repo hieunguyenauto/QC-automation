@@ -86,15 +86,33 @@ export class TroubleCreateScreen extends BaseScreen {
 
   // ----- 作業項目選択 -----
   /** Card thứ index (0-based) → 選択 → modal 故障内容. */
+  private lastCategory = 0;
   async openCategory(index: number): Promise<void> {
+    this.lastCategory = index;
     await clickables(this.content, '選択').nth(index).click();
     await expect(modal(this.page)).toBeVisible();
   }
+  /**
+   * Run 2026-10-12: bấm chữ 'つまり：大便器（テスト）' nhưng app nhận 'ウォシュレット不具合（テスト）'.
+   * Nguyên nhân: ảnh trong danh sách thẻ tải muộn → layout xô lệch giữa lúc Playwright tính toạ độ và lúc click.
+   * Fix: chờ ảnh tải xong, click bằng dispatchEvent (không theo toạ độ), kiểm giá trị đã chọn; sai thì mở lại thẻ và chọn lại (tối đa 3 lần).
+   */
   async chooseCategory(item: string): Promise<void> {
-    const box = modal(this.page);
-    await box.getByText(exact(item)).first().click();
-    await expect(box).toBeHidden();
-    await expect(this.content).toContainText(item);
+    for (let attempt = 1; ; attempt++) {
+      const box = modal(this.page);
+      const target = box.getByText(exact(item)).first();
+      await expect(target).toBeVisible();
+      await box.evaluate(async (el) => {
+        const imgs = Array.from(el.querySelectorAll('img'));
+        await Promise.all(imgs.map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
+      });
+      await target.dispatchEvent('click');
+      await expect(box).toBeHidden();
+      const ok = await expect(this.content).toContainText(item, { timeout: 5_000 }).then(() => true, () => false);
+      if (ok) return;
+      if (attempt >= 3) await expect(this.content).toContainText(item); // ném lỗi rõ ràng
+      await this.openCategory(this.lastCategory);
+    }
   }
 
   async tickHasAsset(): Promise<void> {

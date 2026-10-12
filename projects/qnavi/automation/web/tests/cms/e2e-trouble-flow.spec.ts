@@ -74,7 +74,8 @@ test.afterEach(async ({}, testInfo) => {
 
 // Trace: Playwright tự ghi cho context tạo từ browser (trace: retain-on-failure trong config).
 test.afterAll(async () => {
-  await context?.close();
+  // Run 2026-10-12: sau khi fail, context.close() treo tới hết 120s → giới hạn 15s (lesson R02).
+  await Promise.race([context?.close().catch(() => {}), new Promise((r) => setTimeout(r, 15_000))]);
 });
 
 // ---------------- helper của kịch bản ----------------

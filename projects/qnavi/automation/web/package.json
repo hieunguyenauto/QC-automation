@@ -11,7 +11,8 @@
     "report": "node scripts/open-report.mjs",
     "typecheck": "tsc --noEmit",
     "e2e": "playwright test --project=e2e",
-    "e2e:headed": "playwright test --project=e2e --headed"
+    "e2e:headed": "playwright test --project=e2e --headed",
+    "recon": "playwright test --project=recon --headed"
   },
   "devDependencies": {
     "@playwright/test": "1.56.0",

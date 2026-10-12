@@ -38,6 +38,9 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 | Chỉ login lại các role | `npm run setup` |
 | Liệt kê test | `npm run list` |
 | Kiểm tra code TypeScript | `npm run typecheck` |
+| Kịch bản E2E trouble (13 TC, nối tiếp, tạo trouble mới) | `npm run e2e:headed` |
+| Chạy tiếp E2E trên trouble có sẵn (đúng trạng thái) | `E2E_TROUBLE_ID=1234 npm run e2e -- --grep "TC-00[5-9]\|TC-01"` |
+| Lấy locator thật: đi qua các màn hình, **không lưu dữ liệu**, ghi aria snapshot + ảnh | `npm run recon` → `reports/recon-<lần chạy>/` (`_summary.txt` liệt kê bước lỗi) |
 
 Mỗi lần chạy, project `setup` login từng role có tài khoản trong `.env` và lưu phiên vào `.auth/` (không commit). Role không có tài khoản → test của role đó **skip**, không fail.
 
@@ -80,6 +83,7 @@ Mô tả đầy đủ màn hình (route, role, API, modal): `projects/qnavi/scre
 | MANUAL / NEEDS_SPEC | Không viết code |
 
 Luật:
+- Màn hình mới / chưa chạy qua: chạy `npm run recon` (hoặc đọc `error-context.md` của lần fail) để lấy cây phần tử thật rồi mới viết locator (automation/lessons R01).
 - Locator chỉ khai báo trong `screens/`. Spec không viết selector.
 - Ưu tiên locator: `getByRole` / `getByLabel` / `getByText` (label tiếng Nhật) → `#id` / `data-testid` → CSS (cuối cùng).
 - Không `waitForTimeout`, không `test.only`. Chờ bằng `waitForApi` hoặc `expect(...)`.

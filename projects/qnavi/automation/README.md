@@ -12,4 +12,4 @@ Estimation PWA và Trouble NAVI là web nhúng trong app, cần token đặt s�
 
 ## Môi trường / tài khoản test
 - URL theo môi trường: web/env/<ENV>.json. Tài khoản theo role: web/.env (không commit), mẫu ở web/.env.example.
-- est-test (2026-10-12): `trouble-be-test …/qa_data/get_qa_category` không phản hồi (OPTIONS 200, GET treo) → app hiện dialog '表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。' ở 故障内容 / 作業者; E2E không chạy được tới khi backend ổn định. Lỗi ENV — không sửa test để bỏ qua dialog.
+- est-test (2026-10-12): E2E chập chờn ở TC-002 bước 12 (modal 故障内容 quay spinner không hiện card, có lúc kèm dialog '表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。'), cũng gặp ở TC-004 (作業者). Backend có phản hồi (curl OK; trace có lần API trả 200 mà vẫn treo). Nguyên nhân CHƯA xác định — đã thử bỏ httpCredentials (Basic Auth qua URL): không hết lỗi, lại lộ mật khẩu trong trace → không dùng. Không sửa test để bỏ qua dialog.

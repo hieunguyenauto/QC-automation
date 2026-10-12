@@ -2,7 +2,8 @@ import { defineConfig, devices } from '@playwright/test';
 import { env } from './common/env';
 
 /**
- * Mỗi lần chạy ghi vào reports/<ngày-giờ>-<ENV>/ : html/, results.json, junit.xml, artifacts/ (trace, ảnh, video khi fail).
+ * Mỗi lần chạy ghi vào reports/<ngày-giờ>-<ENV>/ : SUMMARY.md, passed/, failed/<TC>_<tên>_<dd-mm-yyyy>/, skipped/ (common/qc-reporter.ts)
+ * + html/, results.json, junit.xml, artifacts/ (report gốc Playwright).
  * RUN_ID đặt 1 lần ở process chính, worker kế thừa qua biến môi trường.
  */
 if (!process.env.RUN_ID) {
@@ -25,6 +26,8 @@ export default defineConfig({
     ['html', { outputFolder: `${runDir}/html`, open: 'never' }],
     ['json', { outputFile: `${runDir}/results.json` }],
     ['junit', { outputFile: `${runDir}/junit.xml` }],
+    // Report cho QC: SUMMARY.md, passed/, failed/<TC ID>_<tên>_<dd-mm-yyyy>/FAIL.md, reports/HISTORY.md
+    ['./common/qc-reporter.ts', { outputFolder: runDir, envName: env.name, baseUrl: env.cmsBaseUrl }],
   ],
   use: {
     // Trình duyệt: mặc định Google Chrome cài sẵn trên máy (BROWSER_CHANNEL=chrome).

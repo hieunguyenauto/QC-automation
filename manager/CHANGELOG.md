@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] Report QC (common/qc-reporter.ts): SUMMARY.md, passed/, failed/<TC ID>_<tên>_<dd-mm-yyyy>/FAIL.md (mỗi trường 1 dòng + ảnh, trace), skipped/, reports/HISTORY.md
 - [auto] Ghi chú ENV est-test: E2E chập chờn ở modal 故障内容 / 作業者 (spinner treo, dialog 表示に時間がかかっております), nguyên nhân chưa xác định — sửa ghi chú sai trước đó (get_qa_category vẫn phản hồi)
 - [auto] Lesson automation R17 (hộp OK sau lưu chờ ~30s) từ E2E-TC-002 trên est-test; acknowledgeOk chờ 30s
 - [auto] npm run open: mở trình duyệt đã qua Basic Auth + đăng nhập ACCOUNT để xem / lấy locator

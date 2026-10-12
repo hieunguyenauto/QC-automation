@@ -46,15 +46,17 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 Mỗi lần chạy, project `setup` login từng role có tài khoản trong `.env` và lưu phiên vào `.auth/` (không commit). Role không có tài khoản → test của role đó **skip**, không fail.
 
 ## 4. Report
+Mỗi lần chạy: `reports/<ngày-giờ>-<ENV>/` (`common/qc-reporter.ts`).
 
-Mỗi lần chạy ghi 1 thư mục `reports/<YYYYMMDD-HHmmss>-<ENV>/` (không commit):
-
-| File | Dùng để |
+| File / thư mục | Nội dung |
 |---|---|
-| `html/` | Xem kết quả: `npm run report` (mở lần chạy mới nhất) hoặc `npm run report -- reports/<thư mục>` |
-| `results.json` | Máy đọc: tổng hợp kết quả theo TC ID × role (export Excel sau này) |
-| `junit.xml` | CI |
-| `artifacts/` | Trace, ảnh, video của test fail. Mở trace: `npx playwright show-trace <file>.zip` |
+| `SUMMARY.md` | Đọc đầu tiên: tổng / pass / fail / skip, bảng fail (TC, bước fail, lỗi, link chi tiết) |
+| `failed/<TC ID>_<tên TC>_<dd-mm-yyyy>/FAIL.md` | Mỗi trường 1 dòng: test case, ngày chạy, môi trường, tài khoản, bước fail, lỗi, locator, expected / received, vị trí code, URL lúc fail, trouble |
+| `failed/…/` | `screenshot.png`, `aria-snapshot.yml`, `error-context.md`, `trace.zip` (mở: `npx playwright show-trace <file>`) |
+| `passed/PASSED.md` | Bảng TC pass: TC ID, tên, tài khoản, thời gian |
+| `skipped/SKIPPED.md` | TC không chạy và lý do |
+| `html/` · `results.json` · `junit.xml` · `artifacts/` | Report gốc của Playwright (`npm run report`) |
+| `reports/HISTORY.md` | Mỗi lần chạy 1 dòng: ngày, môi trường, tổng / pass / fail / skip |
 
 ## 5. Cấu trúc
 

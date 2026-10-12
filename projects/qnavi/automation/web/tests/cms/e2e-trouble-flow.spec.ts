@@ -76,6 +76,7 @@ test.afterEach(async ({}, testInfo) => {
     testInfo.annotations.push({ type: 'trouble', description: `依頼番号 ${trouble.number ?? '?'} / id ${trouble.id ?? '?'}` });
   }
   if (testInfo.status !== testInfo.expectedStatus) {
+    await testInfo.attach('url', { body: page.url(), contentType: 'text/plain' }).catch(() => {});
     // Ảnh + cây phần tử (aria) để sửa locator; có timeout để hook không treo (automation/lessons R02).
     const shot = await page.screenshot({ timeout: 10_000 }).catch(() => null);
     if (shot) await testInfo.attach('screenshot', { body: shot, contentType: 'image/png' });

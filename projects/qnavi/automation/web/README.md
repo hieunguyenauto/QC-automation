@@ -8,7 +8,8 @@ Chạy test tự động cho **CMS web** (`qnavi-cms-frontend`).
 
 | Cần | Kiểm tra | Ghi chú |
 |---|---|---|
-| macOS + Node.js 20 LTS trở lên | `node -v` | `brew install node@22` |
+| macOS + Node.js 22 LTS (khuyên dùng) | `node -v` | `brew install node@22`. Node quá mới (vd 26) có thể làm `playwright install` treo |
+| Google Chrome | Mở được Chrome | Mặc định test chạy bằng Chrome cài sẵn |
 | Mạng vào được CMS môi trường test | Mở URL CMS trên trình duyệt | VPN / IP whitelist nếu có |
 | Tài khoản loginId + password cho từng role | — | Không dùng tài khoản Microsoft (SSO không tự động hoá được) |
 | URL CMS trong `env/<ENV>.json` | — | Sửa `cmsBaseUrl` |
@@ -18,7 +19,8 @@ Chạy test tự động cho **CMS web** (`qnavi-cms-frontend`).
 ```bash
 cd ~/work/qc-automation/projects/qnavi/automation/web
 npm ci
-npx playwright install chromium
+# Mặc định chạy bằng Google Chrome cài sẵn trên Mac, không cần tải browser.
+# Muốn dùng Chromium của Playwright: npx playwright install chromium + BROWSER_CHANNEL=chromium trong .env
 cp .env.example .env           # điền ENV và tài khoản theo role
 ```
 
@@ -92,4 +94,6 @@ Luật:
 | Mọi test **skipped** | `.env` chưa có tài khoản, hoặc login trong setup fail | Điền `.env`, chạy `npm run setup -- --headed` xem login |
 | Setup fail ở `toHaveURL` | Sai mật khẩu, hoặc trang chủ của role khác `data/roles.ts` | Kiểm tài khoản; sửa `home` trong `data/roles.ts` |
 | `locator ... not found` ở login | Locator input chưa đúng | Sửa `screens/cms/login.screen.ts` (dùng codegen) |
-| `Executable doesn't exist` | Chưa cài browser | `npx playwright install chromium` |
+| `Executable doesn't exist` / `Chromium Framework (no such file)` | Chromium của Playwright chưa cài hoặc giải nén dở | Dùng `BROWSER_CHANNEL=chrome` (mặc định); hoặc xoá `~/Library/Caches/ms-playwright/chromium-*` rồi cài lại |
+| `npx playwright install` treo sau 100% | Giải nén bị chặn (Node quá mới / phần mềm bảo mật) | Ctrl+C, dùng Chrome có sẵn; nên dùng Node 22 LTS |
+| Lệnh `npx playwright` báo cần build khác (vd 1248) | Chạy ngoài thư mục `web/` nên npx tải bản mới nhất | `cd projects/qnavi/automation/web` rồi chạy lại |

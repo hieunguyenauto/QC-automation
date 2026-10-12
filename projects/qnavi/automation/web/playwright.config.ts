@@ -27,6 +27,9 @@ export default defineConfig({
     ['junit', { outputFile: `${runDir}/junit.xml` }],
   ],
   use: {
+    // Trình duyệt: mặc định Google Chrome cài sẵn trên máy (BROWSER_CHANNEL=chrome).
+    // Đặt BROWSER_CHANNEL=chromium trong .env để dùng Chromium của Playwright (cần npx playwright install chromium).
+    channel: process.env.BROWSER_CHANNEL === 'chromium' ? undefined : process.env.BROWSER_CHANNEL || 'chrome',
     baseURL: env.cmsBaseUrl,
     locale: 'ja-JP',
     timezoneId: 'Asia/Tokyo',
@@ -37,7 +40,7 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   projects: [
-    { name: 'setup', testMatch: /common\/auth\.setup\.ts/ },
+    { name: 'setup', testMatch: /common\/auth\.setup\.ts/, use: { ...devices['Desktop Chrome'] } },
     {
       name: 'cms',
       testMatch: /tests\/cms\/.*\.spec\.ts/,

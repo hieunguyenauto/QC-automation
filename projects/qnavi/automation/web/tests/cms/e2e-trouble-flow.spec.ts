@@ -48,7 +48,11 @@ test.beforeAll(async ({ browser }) => {
 
 test.afterEach(async ({}, testInfo) => {
   if (testInfo.status !== testInfo.expectedStatus) {
-    await testInfo.attach('screenshot', { body: await page.screenshot({ fullPage: true }), contentType: 'image/png' });
+    // Chụp màn hình + cây phần tử (aria) để sửa locator; giới hạn thời gian để không treo hook.
+    const shot = await page.screenshot({ timeout: 10_000 }).catch(() => null);
+    if (shot) await testInfo.attach('screenshot', { body: shot, contentType: 'image/png' });
+    const aria = await page.locator('body').ariaSnapshot({ timeout: 10_000 }).catch(() => null);
+    if (aria) await testInfo.attach('aria-snapshot', { body: aria, contentType: 'text/yaml' });
   }
 });
 
@@ -80,9 +84,9 @@ test('E2E-TC-001 Login as admin', { tag: ['@E2E-TC-001', '@role-99'] }, async ()
 test('E2E-TC-002 Create trouble', { tag: ['@E2E-TC-002', '@role-99'] }, async () => {
   test.setTimeout(480_000);
   const c = s.create;
-  await test.step('1. Menu 作業依頼登録 → step 店舗', async () => {
+  await test.step('1. Menu 作業依頼登録 → 新規依頼 → 次へ → step 店舗', async () => {
     await s.layout.menu('作業依頼登録');
-    await c.expectStep('店舗');
+    await c.startNew();
   });
   await test.step('2-7. チェーン店舗選択 → 検索 → 選択', () =>
     c.selectChainStore(data.store.companyQuery, data.store.storeQuery, data.store.storeName, data.store.chainSystemName));

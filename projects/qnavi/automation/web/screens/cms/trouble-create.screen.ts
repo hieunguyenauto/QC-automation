@@ -25,6 +25,23 @@ export class TroubleCreateScreen extends BaseScreen {
     await expect(this.content).toContainText(name);
   }
 
+  /**
+   * Bước đầu của 99/98: chọn 新規依頼 → 次へ; nếu có bước 操作モード設定 thì giữ mặc định → 次へ.
+   * (Snapshot thật 2026-10-12: radio '新規依頼' [checked] / '継続依頼' + nút '次へ'.)
+   */
+  async startNew(): Promise<void> {
+    const radio = this.page.getByRole('radio', { name: '新規依頼' });
+    if (await radio.isVisible().catch(() => false)) {
+      await radio.check();
+      await click(this.content, '次へ');
+    }
+    const store = this.content.getByText(/チェーン店舗?選択/).first();
+    const mode = this.content.getByText('操作モード').first();
+    await expect(store.or(mode)).toBeVisible();
+    if (!(await store.isVisible()) && (await mode.isVisible())) await click(this.content, '次へ');
+    await expect(store).toBeVisible();
+  }
+
   /** Mở vùng 検索条件 thu gọn trong modal (bấm vào tiêu đề). */
   async expandSearch(box = modal(this.page, '検索条件')): Promise<void> {
     const header = box.getByText('検索条件', { exact: true }).first();

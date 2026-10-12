@@ -83,6 +83,15 @@ export default class QcReporter implements Reporter {
     const stamp = this.opts.stamp ?? stampOf(this.start);
     const nameOf = (t: TestCase) => `${tcId(t)}_${slug(tcName(t))}_${stamp}_${env}`;
     const rel = (p: string) => path.relative(out, p).split(path.sep).join('/');
+    // Video cả kịch bản (e2e): reports/Runs/<lần chạy>/video/*.webm + start.txt (mốc 00:00).
+    const videoDir = path.join(out, 'video');
+    const video = fs.existsSync(videoDir) ? fs.readdirSync(videoDir).find((f) => f.endsWith('.webm')) : undefined;
+    const videoStart = video && fs.existsSync(path.join(videoDir, 'start.txt')) ? Number(fs.readFileSync(path.join(videoDir, 'start.txt'), 'utf8')) : undefined;
+    const at = (d: Date) => {
+      if (!videoStart) return '';
+      const s = Math.max(0, Math.round((d.getTime() - videoStart) / 1000));
+      return `${pad(Math.floor(s / 60))}:${pad(s % 60)}`;
+    };
     const when = dmyhm(this.start);
     const sortById = (a: Row, b: Row) => tcId(a.test).localeCompare(tcId(b.test), 'en', { numeric: true });
 
@@ -127,6 +136,8 @@ export default class QcReporter implements Reporter {
         ['Vị trí code', loc],
         ['URL lúc fail', url ?? '-'],
         ['Dữ liệu (trouble)', trouble ?? '-'],
+        ['Video', video ? `${path.relative(dir, path.join(videoDir, video)).split(path.sep).join('/')} — tua tới ${at(result.startTime)} (TC bắt đầu) → ${at(new Date(result.startTime.getTime() + result.duration))} (fail)` : '- (chỉ có ở kịch bản e2e; tắt bằng E2E_VIDEO=off)'],
+        ['Trace (xem từng bước)', files.includes('trace.zip') ? 'trace.zip — mở: npx playwright show-trace trace.zip (hoặc kéo file vào https://trace.playwright.dev)' : '-'],
         ['File đính kèm', files.length ? files.join(', ') : '-'],
         ['File spec', `${path.relative(process.cwd(), test.location.file)}:${test.location.line}`],
       ];
@@ -187,8 +198,14 @@ export default class QcReporter implements Reporter {
       '## Failed', '', ...(failLinks.length ? ['| TC ID | Test case | Bước fail | Lỗi | Chi tiết |', '|---|---|---|---|---|', ...failLinks] : ['Không có.']), '',
       '## Passed', '', ...(passLinks.length ? ['| TC ID | Test case | Tài khoản / role | Thời gian | Chi tiết |', '|---|---|---|---|---|', ...passLinks] : ['Không có.']), '',
       '## Skipped', '', ...(skipLinks.length ? ['| TC ID | Test case | Lý do | Chi tiết |', '|---|---|---|---|', ...skipLinks] : ['Không có.']), '',
-      'Report gốc của Playwright: `npm run report` (thư mục `html/` cạnh file này).', '',
+      video && failed.length ? `Video cả lần chạy: \`video/${video}\` (mốc thời gian từng fail ghi trong FAIL.md).\n` : '',
+      'Report gốc của Playwright: `npm run report` (thư mục `html/` cạnh file này) — bấm vào TC fail để xem trace / ảnh.', '',
     ].join('\n'));
+
+    // Không có fail → xoá video cho nhẹ (video chỉ để xem lại lỗi).
+    if (video && !failed.length) {
+      try { fs.rmSync(videoDir, { recursive: true, force: true }); } catch { /* bỏ qua */ }
+    }
 
     // ---------- reports/HISTORY.md ----------
     const hist = path.join(root, 'HISTORY.md');

@@ -56,6 +56,14 @@ Mỗi lần chạy, project `setup` login từng role có tài khoản trong `.e
 | `reports/Runs/<tên bộ test>_<ngày giờ>_<ENV>/` | `SUMMARY.md` (tổng + link tới từng file trên) và report gốc Playwright: `html/` (`npm run report`), `results.json`, `junit.xml`, `artifacts/` |
 | `reports/HISTORY.md` | Mỗi lần chạy 1 dòng: ngày, môi trường, tổng / pass / fail / skip |
 
+**Xem lại lỗi (đầy đủ hơn ảnh):**
+
+| Cách | Xem được gì | Mở bằng |
+|---|---|---|
+| Trace `Failed/<TC>/trace.zip` | Từng bước theo thời gian, ảnh trước/sau mỗi thao tác, DOM, network, console | `npx playwright show-trace "reports/Failed/<TC>/trace.zip"` hoặc kéo file vào https://trace.playwright.dev |
+| Video `Runs/<lần chạy>/video/*.webm` (kịch bản e2e) | Quay cả lần chạy; `FAIL.md` ghi mốc phút:giây của TC fail | Mở bằng trình duyệt / QuickTime (VLC nếu QuickTime không mở được .webm). Chỉ giữ khi có fail; tắt: `E2E_VIDEO=off` |
+| Report HTML `npm run report` | Danh sách test, bấm TC fail → ảnh, trace, lỗi | Trình duyệt |
+
 ## 5. Cấu trúc
 
 | Thư mục | Chứa gì | Ai sửa |

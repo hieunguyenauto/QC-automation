@@ -1,3 +1,4 @@
+import fs from 'fs';
 import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 import data from '../../data/e2e-trouble-flow.json';
 import { account as roleAccount } from '../../data/roles';
@@ -49,8 +50,17 @@ const FAULT_TEXT = `${data.faultDetail.textPrefix}-${RUN}`;
 const within = (p: Promise<unknown> | undefined, ms: number) =>
   Promise.race([(p ?? Promise.resolve()).catch(() => {}), new Promise((r) => setTimeout(r, ms))]);
 
+// Video cả kịch bản (1 file / lần chạy) → reports/Runs/<lần chạy>/video/. Tắt: E2E_VIDEO=off.
+// Reporter (common/qc-reporter.ts) ghi link + mốc thời gian vào FAIL.md; lần chạy không có fail thì xoá video.
+const VIDEO_DIR = process.env.E2E_VIDEO === 'off' || !process.env.RUN_ID ? undefined : `reports/Runs/${process.env.RUN_ID}/video`;
+
 test.beforeAll(async ({ browser }) => {
+  if (VIDEO_DIR) {
+    fs.mkdirSync(VIDEO_DIR, { recursive: true });
+    fs.writeFileSync(`${VIDEO_DIR}/start.txt`, String(Date.now())); // mốc 00:00 của video
+  }
   context = await browser.newContext({
+    ...(VIDEO_DIR ? { recordVideo: { dir: VIDEO_DIR, size: { width: 1280, height: 800 } } } : {}),
     httpCredentials: env.httpCredentials, // Basic Auth nếu môi trường có
     baseURL: env.cmsBaseUrl, locale: 'ja-JP', timezoneId: 'Asia/Tokyo', viewport: { width: 1600, height: 1000 },
     acceptDownloads: true,
@@ -93,7 +103,7 @@ test.afterEach(async ({}, testInfo) => {
 test.afterAll(async () => {
   test.setTimeout(60_000);
   await within(context?.tracing.stop(), 15_000);
-  await within(context?.close(), 15_000);
+  await within(context?.close(), 30_000); // video được ghi xong khi context đóng
 });
 
 // ---------------- helper của kịch bản ----------------

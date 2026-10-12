@@ -1,17 +1,39 @@
+import fs from 'fs';
 import { defineConfig, devices } from '@playwright/test';
 import { env } from './common/env';
 
 /**
- * Mỗi lần chạy ghi vào reports/<ngày-giờ>-<ENV>/ : SUMMARY.md, passed/, failed/<TC>_<tên>_<dd-mm-yyyy>/, skipped/ (common/qc-reporter.ts)
- * + html/, results.json, junit.xml, artifacts/ (report gốc Playwright).
+ * Report (common/qc-reporter.ts) — 3 thư mục tổng, tên = [tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]:
+ *   reports/Passed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md
+ *   reports/Failed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>/   (FAIL.md + ảnh, trace…)
+ *   reports/Skipped/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md
+ *   reports/Runs/<tên bộ test>_<ngày giờ>_<ENV>/        (SUMMARY.md + report gốc Playwright: html, results.json, junit, artifacts)
+ *   reports/HISTORY.md
  * RUN_ID đặt 1 lần ở process chính, worker kế thừa qua biến môi trường.
  */
+function suiteName(): string {
+  const args = process.argv.slice(2);
+  const specs = args.filter((a) => /\.spec\.ts$/.test(a)).map((a) => a.split('/').pop()!.replace(/\.spec\.ts$/, ''));
+  if (specs.length) return specs.join('+');
+  const project = args.find((a) => a.startsWith('--project='))?.split('=')[1]
+    ?? (args.includes('--project') ? args[args.indexOf('--project') + 1] : undefined);
+  if (project === 'e2e') {
+    // Tên file kịch bản E2E (vd e2e-trouble-flow).
+    try {
+      return fs.readdirSync('tests/cms').filter((f) => /^e2e-.*\.spec\.ts$/.test(f))
+        .map((f) => f.replace(/\.spec\.ts$/, '')).join('+') || 'e2e';
+    } catch { return 'e2e'; }
+  }
+  return project ?? 'all';
+}
 if (!process.env.RUN_ID) {
   const d = new Date();
   const p = (n: number) => String(n).padStart(2, '0');
-  process.env.RUN_ID = `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}-${env.name}`;
+  const stamp = `${p(d.getDate())}-${p(d.getMonth() + 1)}-${d.getFullYear()}_${p(d.getHours())}-${p(d.getMinutes())}-${p(d.getSeconds())}`;
+  process.env.RUN_STAMP = stamp;
+  process.env.RUN_ID = `${suiteName()}_${stamp}_${env.name}`;
 }
-const runDir = `reports/${process.env.RUN_ID}`;
+const runDir = `reports/Runs/${process.env.RUN_ID}`;
 
 export default defineConfig({
   testDir: '.',
@@ -27,7 +49,7 @@ export default defineConfig({
     ['json', { outputFile: `${runDir}/results.json` }],
     ['junit', { outputFile: `${runDir}/junit.xml` }],
     // Report cho QC: SUMMARY.md, passed/, failed/<TC ID>_<tên>_<dd-mm-yyyy>/FAIL.md, reports/HISTORY.md
-    ['./common/qc-reporter.ts', { outputFolder: runDir, envName: env.name, baseUrl: env.cmsBaseUrl }],
+    ['./common/qc-reporter.ts', { reportsRoot: 'reports', runDir, stamp: process.env.RUN_STAMP, envName: env.name, baseUrl: env.cmsBaseUrl }],
   ],
   use: {
     // Trình duyệt: mặc định Google Chrome cài sẵn trên máy (BROWSER_CHANNEL=chrome).

@@ -3,22 +3,24 @@ import path from 'path';
 import type { FullResult, Reporter, Suite, TestCase, TestResult, TestStep } from '@playwright/test/reporter';
 
 /**
- * Report dễ đọc cho QC, ghi cạnh report HTML của Playwright:
+ * Report cho QC — 3 thư mục tổng, mọi tên theo [tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]:
  *
- * reports/<lần chạy>/
- *   SUMMARY.md                         ← tổng quan: số pass / fail / skip, link tới từng fail
- *   passed/PASSED.md                   ← bảng các TC pass
- *   failed/<TC ID>_<tên TC>_<dd-mm-yyyy>/
- *       FAIL.md                        ← mỗi trường 1 dòng: TC, ngày, môi trường, tài khoản, bước fail, lỗi, URL…
+ * reports/
+ *   Passed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md
+ *   Failed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>/
+ *       FAIL.md                     ← mỗi trường 1 dòng: TC, ngày, môi trường, tài khoản, bước fail, lỗi, URL…
  *       screenshot.png · aria-snapshot.yml · error-context.md · trace.zip
- *   skipped/SKIPPED.md                 ← TC không chạy (vd TC trước fail ở kịch bản nối tiếp)
- *   html/ · results.json · junit.xml   ← report gốc của Playwright (giữ nguyên)
- * reports/HISTORY.md                   ← mỗi lần chạy thêm 1 dòng (ngày, môi trường, pass / fail)
+ *   Skipped/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md
+ *   Runs/<tên bộ test>_<ngày giờ>_<ENV>/
+ *       SUMMARY.md                  ← tổng quan lần chạy, link tới từng file Passed / Failed / Skipped
+ *       html/ · results.json · junit.xml · artifacts/   ← report gốc Playwright
+ *   HISTORY.md                      ← mỗi lần chạy 1 dòng
  */
 type Row = { test: TestCase; result: TestResult };
 
 const pad = (n: number) => String(n).padStart(2, '0');
 const dmy = (d: Date) => `${pad(d.getDate())}-${pad(d.getMonth() + 1)}-${d.getFullYear()}`;
+const stampOf = (d: Date) => `${dmy(d)}_${pad(d.getHours())}-${pad(d.getMinutes())}-${pad(d.getSeconds())}`;
 const dmyhm = (d: Date) => `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
 const secs = (ms: number) => `${(ms / 1000).toFixed(1)}s`;
 const strip = (s: string) => s.replace(/\u001b\[[0-9;]*m/g, '');
@@ -58,7 +60,7 @@ function grab(msg: string, label: string): string | undefined {
 export default class QcReporter implements Reporter {
   private rows: Row[] = [];
   private start = new Date();
-  constructor(private opts: { outputFolder: string; envName?: string; baseUrl?: string }) {}
+  constructor(private opts: { reportsRoot: string; runDir: string; stamp?: string; envName?: string; baseUrl?: string }) {}
 
   onBegin(_config: unknown, _suite: Suite) {
     this.start = new Date();
@@ -70,19 +72,24 @@ export default class QcReporter implements Reporter {
   }
 
   async onEnd(full: FullResult) {
-    const out = path.resolve(this.opts.outputFolder);
+    const root = path.resolve(this.opts.reportsRoot);
+    const out = path.resolve(this.opts.runDir);
     fs.mkdirSync(out, { recursive: true });
+    for (const d of ['Passed', 'Failed', 'Skipped']) fs.mkdirSync(path.join(root, d), { recursive: true });
     const passed = this.rows.filter((r) => r.result.status === 'passed');
     const failed = this.rows.filter((r) => r.result.status === 'failed' || r.result.status === 'timedOut' || r.result.status === 'interrupted');
     const skipped = this.rows.filter((r) => r.result.status === 'skipped');
     const env = this.opts.envName ?? process.env.ENV ?? '-';
+    const stamp = this.opts.stamp ?? stampOf(this.start);
+    const nameOf = (t: TestCase) => `${tcId(t)}_${slug(tcName(t))}_${stamp}_${env}`;
+    const rel = (p: string) => path.relative(out, p).split(path.sep).join('/');
     const when = dmyhm(this.start);
     const sortById = (a: Row, b: Row) => tcId(a.test).localeCompare(tcId(b.test), 'en', { numeric: true });
 
     // ---------- failed/ ----------
     const failLinks: string[] = [];
     for (const { test, result } of failed.sort(sortById)) {
-      const dir = path.join(out, 'failed', `${tcId(test)}_${slug(tcName(test))}_${dmy(result.startTime)}`);
+      const dir = path.join(root, 'Failed', nameOf(test));
       fs.mkdirSync(dir, { recursive: true });
       const files: string[] = [];
       let n = 0;
@@ -124,7 +131,7 @@ export default class QcReporter implements Reporter {
         ['File spec', `${path.relative(process.cwd(), test.location.file)}:${test.location.line}`],
       ];
       const md = [
-        `# FAIL · ${tcId(test)} · ${dmy(result.startTime)}`,
+        `# FAIL · ${tcId(test)} · ${dmyhm(result.startTime)} · ${env}`,
         '',
         '| Trường | Giá trị |',
         '|---|---|',
@@ -139,50 +146,56 @@ export default class QcReporter implements Reporter {
         '',
       ].join('\n');
       fs.writeFileSync(path.join(dir, 'FAIL.md'), md);
-      failLinks.push(`| ${tcId(test)} | ${cell(tcName(test))} | ${cell(failedStep(result.steps) ?? '-')} | ${cell(firstLine(msg).slice(0, 120))} | [FAIL.md](failed/${path.basename(dir)}/FAIL.md) |`);
+      failLinks.push(`| ${tcId(test)} | ${cell(tcName(test))} | ${cell(failedStep(result.steps) ?? '-')} | ${cell(firstLine(msg).slice(0, 120))} | [FAIL.md](${rel(path.join(dir, 'FAIL.md'))}) |`);
     }
 
-    // Luôn có đủ 3 thư mục để dễ tìm; thư mục trống có file ghi "Không có".
-    for (const d of ['passed', 'failed', 'skipped']) fs.mkdirSync(path.join(out, d), { recursive: true });
-    if (!failed.length) fs.writeFileSync(path.join(out, 'failed', 'KHONG-CO-FAIL.md'), `# Không có TC fail · ${when} · ${env}\n`);
-    if (!skipped.length) fs.writeFileSync(path.join(out, 'skipped', 'SKIPPED.md'), `# Không có TC skip · ${when} · ${env}\n`);
-    // ---------- passed/ ----------
-    if (passed.length) {
-      fs.writeFileSync(path.join(out, 'passed', 'PASSED.md'), [
-        `# PASSED · ${when} · ${env}`, '',
-        '| TC ID | Test case | Tài khoản / role | Thời gian |', '|---|---|---|---|',
-        ...passed.sort(sortById).map(({ test, result }) => `| ${tcId(test)} | ${cell(tcName(test))} | ${role(test)} | ${secs(result.duration)} |`), '',
+    // ---------- Passed/ ----------
+    const passLinks = passed.sort(sortById).map(({ test, result }) => {
+      const f = path.join(root, 'Passed', nameOf(test) + '.md');
+      fs.writeFileSync(f, [
+        `# PASS · ${tcId(test)} · ${dmyhm(result.startTime)} · ${env}`, '',
+        '| Trường | Giá trị |', '|---|---|',
+        `| Test case | ${cell(`${tcId(test)} — ${tcName(test)}`)} |`,
+        `| Ngày chạy | ${dmyhm(result.startTime)} |`,
+        `| Môi trường | ${env}${this.opts.baseUrl ? ` (${this.opts.baseUrl})` : ''} |`,
+        `| Tài khoản / role | ${role(test)} |`,
+        `| Thời gian chạy | ${secs(result.duration)} |`,
+        `| Lần chạy | ${path.basename(out)} |`, '',
       ].join('\n'));
-    }
-    // ---------- skipped/ ----------
-    if (skipped.length) {
-      fs.writeFileSync(path.join(out, 'skipped', 'SKIPPED.md'), [
-        `# SKIPPED · ${when} · ${env}`, '',
-        '| TC ID | Test case | Lý do |', '|---|---|---|',
-        ...skipped.sort(sortById).map(({ test }) => {
-          const why = test.annotations.find((a) => a.type === 'skip')?.description ?? 'Không chạy (TC trước fail trong kịch bản nối tiếp, hoặc thiếu điều kiện)';
-          return `| ${tcId(test)} | ${cell(tcName(test))} | ${cell(why)} |`;
-        }), '',
+      return `| ${tcId(test)} | ${cell(tcName(test))} | ${role(test)} | ${secs(result.duration)} | [PASS](${rel(f)}) |`;
+    });
+    // ---------- Skipped/ ----------
+    const skipLinks = skipped.sort(sortById).map(({ test }) => {
+      const why = test.annotations.find((a) => a.type === 'skip')?.description ?? 'Không chạy (TC trước fail trong kịch bản nối tiếp, hoặc thiếu điều kiện)';
+      const f = path.join(root, 'Skipped', nameOf(test) + '.md');
+      fs.writeFileSync(f, [
+        `# SKIP · ${tcId(test)} · ${when} · ${env}`, '',
+        '| Trường | Giá trị |', '|---|---|',
+        `| Test case | ${cell(`${tcId(test)} — ${tcName(test)}`)} |`,
+        `| Lý do | ${cell(why)} |`,
+        `| Lần chạy | ${path.basename(out)} |`, '',
       ].join('\n'));
-    }
+      return `| ${tcId(test)} | ${cell(tcName(test))} | ${cell(why)} | [SKIP](${rel(f)}) |`;
+    });
     // ---------- SUMMARY.md ----------
     const total = this.rows.length;
     fs.writeFileSync(path.join(out, 'SUMMARY.md'), [
-      `# Kết quả chạy · ${when} · ${env}`, '',
+      `# ${path.basename(out)}`, '',
+      `Chạy lúc ${when} · môi trường ${env}${this.opts.baseUrl ? ` (${this.opts.baseUrl})` : ''}`, '',
       '| Tổng | Pass | Fail | Skip | Thời gian | Trạng thái |', '|---|---|---|---|---|---|',
       `| ${total} | ${passed.length} | ${failed.length} | ${skipped.length} | ${secs(full.duration)} | ${full.status.toUpperCase()} |`, '',
-      ...(failLinks.length ? ['## Fail', '', '| TC ID | Test case | Bước fail | Lỗi | Chi tiết |', '|---|---|---|---|---|', ...failLinks, ''] : ['## Fail', '', 'Không có.', '']),
-      passed.length ? '## Pass\n\nXem `passed/PASSED.md`.\n' : '',
-      skipped.length ? '## Skip\n\nXem `skipped/SKIPPED.md`.\n' : '',
-      'Report gốc của Playwright: `npm run report` (thư mục `html/`).', '',
+      '## Failed', '', ...(failLinks.length ? ['| TC ID | Test case | Bước fail | Lỗi | Chi tiết |', '|---|---|---|---|---|', ...failLinks] : ['Không có.']), '',
+      '## Passed', '', ...(passLinks.length ? ['| TC ID | Test case | Tài khoản / role | Thời gian | Chi tiết |', '|---|---|---|---|---|', ...passLinks] : ['Không có.']), '',
+      '## Skipped', '', ...(skipLinks.length ? ['| TC ID | Test case | Lý do | Chi tiết |', '|---|---|---|---|', ...skipLinks] : ['Không có.']), '',
+      'Report gốc của Playwright: `npm run report` (thư mục `html/` cạnh file này).', '',
     ].join('\n'));
 
     // ---------- reports/HISTORY.md ----------
-    const hist = path.join(path.dirname(out), 'HISTORY.md');
-    if (!fs.existsSync(hist)) fs.writeFileSync(hist, '# Lịch sử chạy\n\n| Ngày | Môi trường | Tổng | Pass | Fail | Skip | Thư mục |\n|---|---|---|---|---|---|---|\n');
+    const hist = path.join(root, 'HISTORY.md');
+    if (!fs.existsSync(hist)) fs.writeFileSync(hist, '# Lịch sử chạy\n\n| Ngày | Môi trường | Tổng | Pass | Fail | Skip | Lần chạy (reports/Runs/) |\n|---|---|---|---|---|---|---|\n');
     fs.appendFileSync(hist, `| ${when} | ${env} | ${total} | ${passed.length} | ${failed.length} | ${skipped.length} | ${path.basename(out)} |\n`);
 
-    console.log(`\n[QC report] Pass ${passed.length} · Fail ${failed.length} · Skip ${skipped.length} → ${path.relative(process.cwd(), path.join(out, 'SUMMARY.md'))}`);
+    console.log(`\n[QC report] Pass ${passed.length} · Fail ${failed.length} · Skip ${skipped.length}\n  → reports/Passed · reports/Failed · reports/Skipped\n  → ${path.relative(process.cwd(), path.join(out, 'SUMMARY.md'))}`);
   }
 
   printsToStdio() {

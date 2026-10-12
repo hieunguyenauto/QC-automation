@@ -3,7 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 
-const root = path.resolve(process.cwd(), 'reports');
+const root = path.resolve(process.cwd(), 'reports', 'Runs');
 let dir = process.argv[2];
 if (!dir) {
   const runs = fs.existsSync(root)

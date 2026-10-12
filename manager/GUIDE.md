@@ -1538,6 +1538,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] Report: thư mục tổng reports/Passed, Failed, Skipped, Runs; tên theo [tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]
 - [auto] Report QC (common/qc-reporter.ts): SUMMARY.md, passed/, failed/<TC ID>_<tên>_<dd-mm-yyyy>/FAIL.md (mỗi trường 1 dòng + ảnh, trace), skipped/, reports/HISTORY.md
 - [auto] Ghi chú ENV est-test: E2E chập chờn ở modal 故障内容 / 作業者 (spinner treo, dialog 表示に時間がかかっております), nguyên nhân chưa xác định — sửa ghi chú sai trước đó (get_qa_category vẫn phản hồi)
 - [auto] Lesson automation R17 (hộp OK sau lưu chờ ~30s) từ E2E-TC-002 trên est-test; acknowledgeOk chờ 30s

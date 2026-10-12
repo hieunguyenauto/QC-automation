@@ -46,16 +46,14 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 Mỗi lần chạy, project `setup` login từng role có tài khoản trong `.env` và lưu phiên vào `.auth/` (không commit). Role không có tài khoản → test của role đó **skip**, không fail.
 
 ## 4. Report
-Mỗi lần chạy: `reports/<ngày-giờ>-<ENV>/` (`common/qc-reporter.ts`). Xem nhanh lần mới nhất: `npm run summary`. Report HTML của Playwright (`npm run report`) không tách pass / fail — xem thư mục `passed/`, `failed/`.
+3 thư mục tổng trong `reports/`, mọi tên theo **[tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]** (`common/qc-reporter.ts`). Xem nhanh lần mới nhất: `npm run summary`.
 
-| File / thư mục | Nội dung |
+| Thư mục / file | Nội dung |
 |---|---|
-| `SUMMARY.md` | Đọc đầu tiên: tổng / pass / fail / skip, bảng fail (TC, bước fail, lỗi, link chi tiết) |
-| `failed/<TC ID>_<tên TC>_<dd-mm-yyyy>/FAIL.md` | Mỗi trường 1 dòng: test case, ngày chạy, môi trường, tài khoản, bước fail, lỗi, locator, expected / received, vị trí code, URL lúc fail, trouble |
-| `failed/…/` | `screenshot.png`, `aria-snapshot.yml`, `error-context.md`, `trace.zip` (mở: `npx playwright show-trace <file>`) |
-| `passed/PASSED.md` | Bảng TC pass: TC ID, tên, tài khoản, thời gian |
-| `skipped/SKIPPED.md` | TC không chạy và lý do |
-| `html/` · `results.json` · `junit.xml` · `artifacts/` | Report gốc của Playwright (`npm run report`) |
+| `reports/Failed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>/` | `FAIL.md` (mỗi trường 1 dòng: test case, ngày chạy, môi trường, tài khoản, bước fail, lỗi, locator, expected / received, vị trí code, URL lúc fail, trouble) + `screenshot.png`, `aria-snapshot.yml`, `error-context.md`, `trace.zip` |
+| `reports/Passed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md` | TC pass: ngày chạy, môi trường, tài khoản, thời gian |
+| `reports/Skipped/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md` | TC không chạy + lý do |
+| `reports/Runs/<tên bộ test>_<ngày giờ>_<ENV>/` | `SUMMARY.md` (tổng + link tới từng file trên) và report gốc Playwright: `html/` (`npm run report`), `results.json`, `junit.xml`, `artifacts/` |
 | `reports/HISTORY.md` | Mỗi lần chạy 1 dòng: ngày, môi trường, tổng / pass / fail / skip |
 
 ## 5. Cấu trúc

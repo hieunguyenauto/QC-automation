@@ -142,9 +142,12 @@ export default class QcReporter implements Reporter {
       failLinks.push(`| ${tcId(test)} | ${cell(tcName(test))} | ${cell(failedStep(result.steps) ?? '-')} | ${cell(firstLine(msg).slice(0, 120))} | [FAIL.md](failed/${path.basename(dir)}/FAIL.md) |`);
     }
 
+    // Luôn có đủ 3 thư mục để dễ tìm; thư mục trống có file ghi "Không có".
+    for (const d of ['passed', 'failed', 'skipped']) fs.mkdirSync(path.join(out, d), { recursive: true });
+    if (!failed.length) fs.writeFileSync(path.join(out, 'failed', 'KHONG-CO-FAIL.md'), `# Không có TC fail · ${when} · ${env}\n`);
+    if (!skipped.length) fs.writeFileSync(path.join(out, 'skipped', 'SKIPPED.md'), `# Không có TC skip · ${when} · ${env}\n`);
     // ---------- passed/ ----------
     if (passed.length) {
-      fs.mkdirSync(path.join(out, 'passed'), { recursive: true });
       fs.writeFileSync(path.join(out, 'passed', 'PASSED.md'), [
         `# PASSED · ${when} · ${env}`, '',
         '| TC ID | Test case | Tài khoản / role | Thời gian |', '|---|---|---|---|',
@@ -153,7 +156,6 @@ export default class QcReporter implements Reporter {
     }
     // ---------- skipped/ ----------
     if (skipped.length) {
-      fs.mkdirSync(path.join(out, 'skipped'), { recursive: true });
       fs.writeFileSync(path.join(out, 'skipped', 'SKIPPED.md'), [
         `# SKIPPED · ${when} · ${env}`, '',
         '| TC ID | Test case | Lý do |', '|---|---|---|',

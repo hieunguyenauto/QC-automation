@@ -921,6 +921,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 - Đọc thêm: automation/lessons/INDEX.md, <P>/automation/README.md, <P>/automation/web/README.md (quy ước TC → code), <P>/automation/web/screens/ của màn hình liên quan; mô tả màn hình tra <P>/screens/catalog/.
 - TC thiếu / mâu thuẫn với app → dừng, báo người dùng; không tự sửa TC, không sửa expect cho khớp app.
 - Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
+- Sinh / sửa code test: đọc automation/lessons/INDEX.md TRƯỚC; locator chỉ lấy / ghi ở screens/. Sửa xong 1 lỗi test fail → luôn đề xuất lesson (bản nháp: loại, nguyên nhân gốc, rule) cho người dùng duyệt rồi ghi vào automation/lessons/ + INDEX; lỗi do TC sai → lesson phía QC (qc/lessons).
 
 ## Skill dùng trong repo
 - Thiết kế test dùng skill của repo: source-import, spec-review, test-viewpoint, test-case, export-excel (chỉ khi người dùng đồng ý); sửa knowledge: kb-update.
@@ -1455,6 +1456,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - D10 Cùng loại impact thì assertion phải đồng nhất giữa các nhóm TC; nâng cấp nhiều bước → test permission ở từng bước trung gian.
 - D11 Trước khi đưa ticket vào scope: check role scope của ticket, release phase, ticket cha/con.
 - D12 Check duplicate theo nội dung (không chỉ theo ID) và trace 2 chiều VP ↔ TC (không VP rỗng, không TC trỏ VP không tồn tại).
+- D14 Nhập TC E2E từ file ngoài (CSV viết tay…): đối chiếu từng bước với catalog / màn hình thật, bổ sung bước bắt buộc bị bỏ. (design/2026-10-12-e2e-missing-ui-step.md)
 - D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
 
 ## Excel / công cụ
@@ -1473,7 +1475,8 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 # Rule đã học — automation (AI đọc trước khi viết / sửa code test)
 
 ## Web
-<!-- R01 <rule> (web/<file>.md) -->
+- R01 Màn hình chưa chạy qua lần nào: lấy cây phần tử thật (error-context.md / aria snapshot / codegen) rồi mới viết locator; không viết chỉ dựa vào CSV hay catalog. Wizard / màn theo role hay có bước ẩn. (web/2026-10-12-cms-create-wizard-step0.md)
+- R02 Hook chụp màn hình / snapshot luôn có timeout ≤ 10s và .catch(); context tự tạo (serial E2E) thì tự đính kèm ảnh + aria snapshot. (web/2026-10-12-afterEach-screenshot-hang.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->
@@ -1489,6 +1492,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D21 | 2026-10-12 | Mỗi lỗi khi chạy code test do AI sinh → sửa screens/ (locator) + ghi lesson automation (rule vào automation/lessons/INDEX.md) sau khi người dùng duyệt; lỗi do TC → lesson QC. AI đọc INDEX trước khi sinh code | Lỗi đã gặp không lặp lại khi sinh code mới | CLAUDE.md, automation/lessons/, qc/lessons/ |
 | D20 | 2026-10-09 | Dựng khung Playwright CMS ở projects/qnavi/automation/web: env/ + .env (tài khoản theo role), data/, common/ (login 1 lần / role, forRoles), screens/<app>/*.screen.ts là knowledge locator (ghi mã màn hình, không chép mô tả), tests/<app>/<scope-key>.spec.ts, reports/<run>/ (html, json, junit, artifacts). 1 TC × 1 role = 1 test. Catalog màn hình 5 app lưu ở projects/qnavi/screens/catalog/ dùng chung QC + automation. Native app (repair, shop) và web nhúng làm sau | Khớp cột kết quả theo role; locator 1 chỗ; report theo lần chạy | projects/qnavi/automation/, kb-update-automation, automation/templates/screen.md, CLAUDE.md |
 | D19 | 2026-10-09 | Automation là luồng riêng Spec → Test case → Automation: chỉ dựa vào TC LOCKED (UI-AUTO/BOTH); knowledge automation (automation/, <P>/automation/screens, README) do skill kb-update-automation quản lý, tách khỏi kb-update (QC). PRODUCT_BUG / TC sai thì bàn giao sang QC | TC đã chứa đủ thông tin; tách 2 vòng knowledge cho gọn, ít token | CLAUDE.md, kb-update, kb-update-automation, projects/<p>/automation/ |
 | D18 | 2026-10-09 | test-viewpoint và test-case đọc thêm knowledge + bài học (lessons INDEX, bug-history, screens, glossary, VP/TC LOCKED cũ) — chỉ phần cùng function / màn hình; Context pack vẫn đọc trước. test-viewpoint yêu cầu Gap Report LOCKED. Sửa một phần D08 | Context pack tóm tắt có thể thiếu chi tiết (permission, label, bug cũ) → VP/TC kém | test-viewpoint, test-case, CLAUDE.md |
@@ -1517,6 +1521,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- Lesson automation R01, R02; lesson QC D14; luật: sửa xong lỗi test → đề xuất lesson (D21)
 - Khung Playwright CMS projects/qnavi/automation/web (README cách chạy, env, data, common, screens, report theo lần chạy); catalog màn hình 5 app ở projects/qnavi/screens/catalog/ (D20)
 - Skill kb-update-automation; projects/qnavi/automation/README.md + screens/ (D19)
 - spec-review: trạng thái [Done] → cập nhật knowledge dự án qua kb-update; Gap Report mục 7 (D17)

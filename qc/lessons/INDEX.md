@@ -13,6 +13,7 @@
 - D10 Cùng loại impact thì assertion phải đồng nhất giữa các nhóm TC; nâng cấp nhiều bước → test permission ở từng bước trung gian.
 - D11 Trước khi đưa ticket vào scope: check role scope của ticket, release phase, ticket cha/con.
 - D12 Check duplicate theo nội dung (không chỉ theo ID) và trace 2 chiều VP ↔ TC (không VP rỗng, không TC trỏ VP không tồn tại).
+- D14 Nhập TC E2E từ file ngoài (CSV viết tay…): đối chiếu từng bước với catalog / màn hình thật, bổ sung bước bắt buộc bị bỏ. (design/2026-10-12-e2e-missing-ui-step.md)
 - D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
 
 ## Excel / công cụ

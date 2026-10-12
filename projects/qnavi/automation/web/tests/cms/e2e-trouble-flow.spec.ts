@@ -252,8 +252,8 @@ test('E2E-TC-004 状態 = 対応中 and assign worker', { tag: ['@E2E-TC-004', '
   const d = s.detail;
   await pre(async () => { await ensureRole('99'); await ensureTroubleOpened(); });
   await test.step('1. クイック操作 → 状態変更 (問い合わせ中)', async () => {
-    const m = await d.openQuickAction();
-    await expect(m).toContainText('問い合わせ中');
+    await d.openQuickAction();
+    await d.expectStatus('問い合わせ中');
   });
   await test.step('2. Select 状態: 対応中', () => d.setStatus('対応中'));
   await test.step('3. Edit icon on 作業者 → 検索条件', async () => {
@@ -392,7 +392,9 @@ test('E2E-TC-009 報告済 and input 報告書', { tag: ['@E2E-TC-009', '@role-9
   test.setTimeout(300_000);
   const d = s.detail;
   const r = data.report;
-  const ym = today('ym');
+  // Ngày hiển thị dạng 'YYYY年MM月DD日 00:00' (recon 2026-10-12, dòng 報告書 trong 状態変更).
+  const [Y, M] = today('ym').split('/');
+  const day = (dd: string) => `${Y}年${M}月${dd}日 00:00`;
   await pre(async () => { await ensureRole('99'); await ensureTroubleOpened(); });
   await test.step('1. クイック操作 → 報告済', async () => {
     await d.openQuickAction();
@@ -405,8 +407,8 @@ test('E2E-TC-009 報告済 and input 報告書', { tag: ['@E2E-TC-009', '@role-9
   await test.step('3. 開始 = day 1, 終了 = day 2', async () => {
     await d.pickDay('開始', 1);
     await d.pickDay('終了', 2);
-    await expect(d.reportModal).toContainText(`${ym}/01 00:00`);
-    await expect(d.reportModal).toContainText(`${ym}/02 00:00`);
+    await expect(d.reportModal).toContainText(day('01'));
+    await expect(d.reportModal).toContainText(day('02'));
   });
   await test.step(`4. 原因と発生起因: ${r.cause}`, () => fill(d.reportModal, '原因と発生起因', r.cause));
   await test.step('5. Upload 作業前 / 作業後 photos', async () => {
@@ -428,8 +430,8 @@ test('E2E-TC-009 報告済 and input 報告書', { tag: ['@E2E-TC-009', '@role-9
   });
   await test.step('8. 完了 → 状態変更 shows day 01 / 02', async () => {
     await click(d.reportModal, '完了');
-    await expect(d.statusModal).toContainText(`${ym}/01`);
-    await expect(d.statusModal).toContainText(`${ym}/02`);
+    await expect(d.statusModal).toContainText(day('01'));
+    await expect(d.statusModal).toContainText(day('02'));
   });
   await test.step('9. 保存 → 決定 → OK', () => d.saveStatus());
   await test.step('Expected: 対応中 / 報告済', () => d.expectBadges('対応中', '報告済'));

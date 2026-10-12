@@ -47,7 +47,7 @@ async function closeTop(page: Page) {
   const x = box.locator('button.close, .btn-close, [aria-label="Close"], [aria-label="閉じる"]').filter({ visible: true }).first();
   if (await x.isVisible().catch(() => false)) await x.click();
   else {
-    const btn = clickables(box, /^\s*(閉じる|キャンセル|戻る)\s*$/).first();
+    const btn = clickables(box, /^\s*(閉じる|キャンセル|戻る|決定する)\s*$/).first();
     if (await btn.isVisible().catch(() => false)) await btn.click(); else await esc(page);
   }
 }
@@ -124,7 +124,7 @@ test('recon CMS screens (read-only)', async ({ browser }) => {
   // ---- Danh sách + chi tiết (chỉ mở / đóng modal, KHÔNG 保存)
   const loaded = async () => {
     await page.waitForURL(/\/detail/);
-    await page.locator('xpath=//td[normalize-space()="番号"]/following-sibling::td[1]').filter({ hasText: /\d/ }).first().waitFor({ timeout: 20_000 });
+    await page.locator('xpath=//*[self::td or self::th][normalize-space(text())="番号"]/following-sibling::*[1]').filter({ hasText: /\d/ }).first().waitFor({ timeout: 20_000 });
   };
   const openRow = async (status: string) => {
     await page.goto('/admin/troubles');
@@ -143,8 +143,8 @@ test('recon CMS screens (read-only)', async ({ browser }) => {
   await snap(page, 'detail-new-quick-action', () => clickables(content, 'クイック操作').first().click());
   await snap(page, 'detail-new-status-taiouchu', () => field(modal(page, '状態変更'), '状態').selectOption({ label: '対応中' }));
   await snap(page, 'detail-new-worker-search', () =>
-    modal(page, '状態変更').locator('xpath=.//td[normalize-space()="作業者"]/following-sibling::td[1]')
-      .locator('button, a, i, svg').filter({ visible: true }).last().click());
+    modal(page, '状態変更').locator('xpath=.//*[self::td or self::th][normalize-space(text())="作業者"]/following-sibling::*[1]')
+      .locator('i, svg, [class*="fa-"], button').filter({ visible: true }).last().click());
   await snap(page, 'detail-new-worker-search-expanded', () => modal(page, '検索条件').getByText('検索条件', { exact: true }).first().click());
   await snap(page, 'detail-new-closed', async () => { await closeTop(page); await closeTop(page); });
   await snap(page, 'edit-page', () => clickables(content, '編集').first().click());
@@ -160,12 +160,12 @@ test('recon CMS screens (read-only)', async ({ browser }) => {
   }
   await snap(page, 'detail-reported-quick-action', () => clickables(content, 'クイック操作').first().click());
   await snap(page, 'detail-reported-estimate-from-status', () =>
-    modal(page, '状態変更').locator('xpath=.//td[normalize-space()="見積もり"]/following-sibling::td[1]')
-      .locator('button, a, i, svg').filter({ visible: true }).last().click());
+    modal(page, '状態変更').locator('xpath=.//*[self::td or self::th][normalize-space(text())="見積もり"]/following-sibling::*[1]')
+      .locator('i, svg, [class*="fa-"], button').filter({ visible: true }).last().click());
   await snap(page, 'detail-reported-estimate-closed', () => closeTop(page));
   await snap(page, 'detail-reported-report-from-status', () =>
-    modal(page, '状態変更').locator('xpath=.//td[normalize-space()="報告書"]/following-sibling::td[1]')
-      .locator('button, a, i, svg').filter({ visible: true }).last().click());
+    modal(page, '状態変更').locator('xpath=.//*[self::td or self::th][normalize-space(text())="報告書"]/following-sibling::*[1]')
+      .locator('i, svg, [class*="fa-"], button').filter({ visible: true }).last().click());
   await snap(page, 'detail-reported-all-closed', async () => { await closeTop(page); await closeTop(page); });
 
   // ---- Manager (01)

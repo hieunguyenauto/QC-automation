@@ -25,7 +25,9 @@ export class AssetSelectDialog {
 
   /** Chọn tối đa n dòng có tên name (bỏ qua nếu 該当データが0件でした). Trả về số dòng đã chọn. */
   async selectRows(name: string, n: number): Promise<number> {
-    if (await this.box.getByText('該当データが0件でした').isVisible().catch(() => false)) return 0;
+    // Danh sách tải sau (recon 2026-10-12: lúc đầu hiện '0件'). Chờ '全 N 件中' có số; quá 10s mới coi là 0 件.
+    const loaded = await this.box.getByText(/全\s*\d+\s*件中/).first().waitFor({ timeout: 10_000 }).then(() => true).catch(() => false);
+    if (!loaded || (await this.box.getByText('該当データが0件でした').isVisible().catch(() => false))) return 0;
     const named = this.box.locator('tbody tr').filter({ hasText: name });
     const selectable = named.filter({ has: clickables(this.page, '選択') });
     const selected = named.filter({ has: clickables(this.page, '削除') });

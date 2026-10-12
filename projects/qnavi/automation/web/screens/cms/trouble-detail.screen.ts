@@ -54,8 +54,8 @@ export class TroubleDetailScreen extends BaseScreen {
   }
   /** Icon edit trên dòng label trong modal 状態変更 (作業者, 見積もり, 報告書). */
   async editRow(label: string): Promise<void> {
-    await rowOf(this.statusModal, label)
-      .locator('button, a, [role="button"], i[class*="edit"], i[class*="pen"], svg').filter({ visible: true }).last().click();
+    // Recon 2026-10-12: nhãn '作業者 必須' / '見積もり 必須' / '報告書 任意'; icon sửa () là phần tử cuối của ô giá trị.
+    await valueOf(this.statusModal, label).locator('i, svg, [class*="fa-"], button').filter({ visible: true }).last().click();
   }
   async setStatus(value: string): Promise<void> {
     await choose(this.page, this.statusModal, '状態', value);
@@ -63,8 +63,12 @@ export class TroubleDetailScreen extends BaseScreen {
   async setFlow(value: string): Promise<void> {
     await choose(this.page, this.statusModal, '対応中の状態（新規）', value);
   }
+  /** Giá trị ĐANG CHỌN của dropdown 対応中の状態（新規） (dòng chứa cả danh sách option nên không kiểm theo text dòng). */
   async expectFlow(value: string): Promise<void> {
-    await expect(rowOf(this.statusModal, '対応中の状態（新規）')).toContainText(value);
+    await expect(field(this.statusModal, '対応中の状態（新規）').locator('option:checked')).toHaveText(value);
+  }
+  async expectStatus(value: string): Promise<void> {
+    await expect(field(this.statusModal, '状態').locator('option:checked')).toHaveText(value);
   }
   async saveStatus(): Promise<void> {
     await saveDecideOk(this.page, this.statusModal);
@@ -132,7 +136,8 @@ export class TroubleDetailScreen extends BaseScreen {
     await expect(this.estimateRow(name)).toContainText('承認待ち');
   }
   async openEstimateMenu(name: string): Promise<void> {
-    await click(this.estimateRow(name), /メニュー展開/);
+    // Recon 2026-10-12: 'メニュー展開 ▼' là ô (không phải button).
+    await this.estimateRow(name).getByText(/メニュー展開/).first().click();
   }
   async closeEstimateModal(): Promise<void> {
     await click(this.estimateModal, '閉じる');
@@ -144,11 +149,10 @@ export class TroubleDetailScreen extends BaseScreen {
 
   /** Chọn ngày (1, 2…) của tháng hiện tại trong date picker rồi 閉じる. [cần kiểm trên app thật] */
   async pickDay(label: string, day: number): Promise<void> {
-    await rowOf(this.reportModal, label).locator('input, button').filter({ visible: true }).first().click();
-    const picker = this.page.locator('.react-datepicker, .rdtPicker, .datepicker, .flatpickr-calendar, [class*="picker"]').filter({ visible: true }).last();
-    await picker.locator('td, div[role="option"], button, span').filter({ hasText: new RegExp(`^\\s*${day}\\s*$`) })
-      .filter({ visible: true }).first().click();
-    const close = clickable(this.page, '閉じる');
+    // react-datepicker (recon 2026-10-12): option "Choose 2026年10月1日木曜日", nhóm nút 現在 / クリア / 閉じる.
+    await valueOf(this.reportModal, label).locator('input').filter({ visible: true }).first().click();
+    await this.page.getByRole('option', { name: new RegExp(`^Choose \\d+年\\d+月${day}日`) }).filter({ visible: true }).first().click();
+    const close = this.page.getByRole('group').getByRole('button', { name: '閉じる', exact: true }).filter({ visible: true }).first();
     if (await close.isVisible().catch(() => false)) await close.click();
   }
   async uploadReportPhoto(label: string, file: string): Promise<void> {

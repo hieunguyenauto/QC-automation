@@ -92,8 +92,8 @@ export async function choose(page: Page, scope: Scope, label: string, option: st
 /** Khối chứa label (dòng bảng / form-group / dl) — dùng để kiểm "label = giá trị". */
 export function rowOf(scope: Scope, label: string): Locator {
   return scope.locator(
-    `xpath=.//*[not(self::script)][normalize-space(text())=${xq(label)}]` +
-    `/ancestor::*[self::tr or self::li or self::dl or contains(concat(' ', @class, ' '), ' row ') or contains(@class, 'form-group')][1]`,
+    `xpath=.//*[not(self::script)][normalize-space(text())=${xq(label)} or (self::td and normalize-space()=${xq(label)})]` +
+    `/ancestor-or-self::*[self::tr or self::li or self::dl or contains(concat(' ', @class, ' '), ' row ') or contains(@class, 'form-group')][1]`,
   ).filter({ visible: true }).first();
 }
 /**
@@ -103,7 +103,8 @@ export function rowOf(scope: Scope, label: string): Locator {
  *  - còn lại: khối chứa label (rowOf)
  */
 export function valueOf(scope: Scope, label: string): Locator {
-  const cell = scope.locator(`xpath=.//*[self::td or self::th][normalize-space()=${xq(label)}]/following-sibling::*[1]`);
+  // Ô nhãn có thể kèm badge (vd '作業者 必須', '名称 ※') → so khớp text node đầu tiên.
+  const cell = scope.locator(`xpath=.//*[self::td or self::th][normalize-space(text())=${xq(label)} or normalize-space()=${xq(label)}]/following-sibling::*[1]`);
   const header = scope.locator(`xpath=.//p[normalize-space()=${xq(label + ':')} or normalize-space()=${xq(label + '：')}]/..`);
   return cell.or(header).filter({ visible: true }).first();
 }
@@ -123,19 +124,26 @@ export function tableRow(scope: Scope, ...texts: (string | RegExp)[]): Locator {
  * button: Locator của nút cụ thể (vd clickables(card, '写真を選択').nth(1)).
  */
 export async function uploadVia(page: Page, button: Locator, filePath: string): Promise<void> {
-  const chooser = page.waitForEvent('filechooser', { timeout: 5000 }).catch(() => null);
+  // CMS (recon 2026-10-12): 写真を選択 mở hộp con có nút 'Choose File' + 'キャンセル' / '完了' (完了 disable tới khi chọn file).
+  let chooser = page.waitForEvent('filechooser', { timeout: 3000 }).catch(() => null);
   await button.click();
-  const fc = await chooser;
-  if (fc) {
-    await fc.setFiles(filePath);
-  } else {
-    // Nút chỉ mở hộp chọn ảnh có ô "Choose File"
-    const box = modal(page);
-    const input = box.locator('input[type="file"]').or(page.locator('input[type="file"]')).last();
-    await input.setInputFiles(filePath);
+  let fc = await chooser;
+  if (!fc) {
+    const choose = page.getByRole('button', { name: 'Choose File' }).filter({ visible: true }).last();
+    if (await choose.isVisible().catch(() => false)) {
+      chooser = page.waitForEvent('filechooser', { timeout: 5000 }).catch(() => null);
+      await choose.click();
+      fc = await chooser;
+    }
   }
-  const done = clickable(page, '完了');
-  if (await done.isVisible().catch(() => false)) await done.click();
+  if (fc) await fc.setFiles(filePath);
+  else await page.locator('input[type="file"]').last().setInputFiles(filePath);
+  const done = page.getByRole('button', { name: '完了', exact: true }).filter({ visible: true }).last();
+  if (await done.isVisible().catch(() => false)) {
+    await expect(done).toBeEnabled();
+    await done.click();
+    await expect(done).toBeHidden();
+  }
 }
 
 /** Thu nhỏ khung chat nổi (nếu có). [cần kiểm trên app thật] nút thu nhỏ của chat. */

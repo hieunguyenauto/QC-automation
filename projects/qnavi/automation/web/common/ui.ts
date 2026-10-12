@@ -142,8 +142,10 @@ export async function uploadVia(page: Page, button: Locator, filePath: string): 
   const done = page.getByRole('button', { name: '完了', exact: true }).filter({ visible: true }).last();
   if (await done.isVisible().catch(() => false)) {
     await expect(done).toBeEnabled();
+    // Giữ đúng nút vừa bấm: sau khi hộp con đóng, locator `done` sẽ trỏ sang 完了 khác (vd 完了 của modal 報告書).
+    const handle = await done.elementHandle();
     await done.click();
-    await expect(done).toBeHidden();
+    await expect.poll(() => handle!.isVisible()).toBe(false);
   }
 }
 

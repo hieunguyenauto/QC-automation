@@ -200,9 +200,15 @@ export class TroubleDetailScreen extends BaseScreen {
   /** Ảnh: input[type=file] ẩn trong .dropzone của dòng → mở hộp con 'N / 20' → 完了. */
   async uploadReportPhoto(label: string, file: string): Promise<void> {
     await valueOf(this.reportModal, label).locator('.dropzone input[type="file"]').first().setInputFiles(path.join(FILES, file));
-    const box = modal(this.page, /\d+\s*\/\s*20/);
+    // Hộp con là .modal lồng trong modal 報告書, đóng thì chỉ bỏ class show (vẫn ở DOM) → modal 報告書 cũng chứa chữ 'N / 20'
+    //  → loại modal có '施工業者' (R09).
+    const box = this.page.locator('.modal.show, [role="dialog"]').filter({ visible: true })
+      .filter({ hasText: /\d+\s*\/\s*20/ }).filter({ hasNotText: '施工業者' }).last();
     await expect(box).toContainText(file);
+    // 完了 → generate_presigned_url → PUT S3; app bỏ qua ảnh của dòng khác cho tới khi PUT xong → chờ response.
+    const uploaded = this.page.waitForResponse(r => r.request().method() === 'PUT' && r.url().includes('/modules/troubles/files/'));
     await click(box, '完了');
+    expect((await uploaded).ok()).toBe(true);
     await expect(box).toBeHidden();
     await expect(valueOf(this.reportModal, label).locator('img').first()).toBeVisible();
   }

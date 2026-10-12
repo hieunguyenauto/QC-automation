@@ -15,6 +15,8 @@
 - R12 Log có "intercepts pointer events" (popover/chat/overlay đè nút): dùng dispatchEvent('click') + kiểm trạng thái sau đó; không dùng force:true. (web/2026-10-12-cms-chat-overlay-intercepts.md)
 - R13 Kịch bản serial dùng chung context: tắt trace/video tự động trong config, tự ghi trace theo chunk từng TC; mọi lệnh trong hook có giới hạn thời gian. (web/2026-10-12-e2e-shared-context-trace-hang.md)
 - R14 Dữ liệu tạo ra cho TC sau (依頼番号, id…) phải ghi lại NGAY sau khi tạo, trước mọi thao tác phụ. (web/2026-10-12-e2e-record-key-data-first.md)
+- R15 Hộp con / modal lồng nhau đóng chỉ bỏ class show (vẫn ở DOM): kiểm "đã đóng" bằng đúng phần tử vừa thao tác (elementHandle) hoặc loại modal cha bằng chữ chỉ cha có; không tìm lại bằng locator .last() lọc theo chữ. (web/2026-10-12-cms-nested-modal-hidden-keep-dom.md)
+- R16 Upload file (S3) chạy bất đồng bộ sau 完了, app bỏ qua upload tiếp theo: chờ response upload (PUT S3) OK rồi mới thao tác tiếp; không dùng waitForTimeout. (web/2026-10-12-cms-s3-upload-async.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

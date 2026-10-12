@@ -6,7 +6,7 @@ import { tableRow, waitForApiSafe } from '../../common/ui-wait';
  * 作業依頼一覧 — catalog: cms-frontend.md › "Trouble List: /admin/troubles" (không có route guard, mọi role).
  * Nút 新規 chỉ role 01/02/03; cột / filter đổi theo role (xem catalog).
  * Recon 2026-10-12: cột 1 = link 依頼番号 (/admin/troubles/<id>/detail), cột 詳細 = mô tả (故障詳細).
- * [cần kiểm trên app thật] các locator còn lại.
+ * Đã xác minh: E2E 13/13 pass (reports/20261012-112231-dev, 20261012-112608-dev). Chỉ dùng openByNumber; các locator lọc/tìm kiếm khác CHƯA dùng → kiểm khi viết TC mới.
  */
 export class TroubleListScreen extends BaseScreen {
   readonly id = 'CMS-TROUBLE-LIST';

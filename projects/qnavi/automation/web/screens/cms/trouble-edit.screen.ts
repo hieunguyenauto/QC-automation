@@ -5,7 +5,7 @@ import { acknowledgeOk, click, clickable, modal, modalWithButton, rowOf } from '
 /**
  * 作業依頼編集 — catalog: cms-frontend.md › "Trouble Edit: /admin/troubles/:id/edit".
  * "変更" trên dòng 作業項目（大）mở 店舗・担当者編集 (StoreStaffCategoryEditModal, role 99).
- * [cần kiểm trên app thật] dropdown 対応区分 là <select> hay dropdown tự vẽ.
+ * Đã xác minh: E2E 13/13 pass (reports/20261012-112231-dev, 20261012-112608-dev). 対応区分 = <select name="types.<id>"> native (01 清掃…04 入れ替え).
  */
 export class TroubleEditScreen extends BaseScreen {
   readonly id = 'CMS-TROUBLE-EDIT';

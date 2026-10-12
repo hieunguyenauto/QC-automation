@@ -1535,6 +1535,8 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] E2E trouble flow (13 TC) pass 13/13 trên CMS dev; locator TC-002→013 xác minh bằng browser thật
+- [auto] Lesson automation R05–R14 (list tải chậm, nhãn th/badge, option:checked, nút 閉じる trùng tên, modal lồng nhau, toggle, click lệch do ảnh, overlay chặn click, trace theo chunk, ghi dữ liệu then chốt trước)
 - [auto] Lesson automation R15 (modal lồng nhau đóng vẫn ở DOM), R16 (chờ upload S3 xong) từ E2E-TC-009
 - Lesson automation R03 (chờ dữ liệu tải), R04 (nhãn = giá trị theo ô) từ recon CMS
 - Lesson automation R01, R02; lesson QC D14; luật: sửa xong lỗi test → đề xuất lesson (D21)

@@ -12,7 +12,7 @@ const FILES = path.resolve(__dirname, '../../data/files');
  * 作業依頼登録 (wizard) — catalog: cms-frontend.md › "Trouble Create (wizard)".
  * Role 99: [新規依頼/継続依頼] → (操作モード設定) → 店舗 → 作業項目選択 → 故障詳細.
  * Snapshot thật 2026-10-12: heading "作業依頼登録", radio "新規依頼" [checked] / "継続依頼", button "次へ".
- * [cần kiểm trên app thật] từ bước 店舗 trở đi → chạy npm run recon để lấy snapshot.
+ * Đã xác minh: E2E 13/13 pass (reports/20261012-112231-dev, 20261012-112608-dev).
  */
 export class TroubleCreateScreen extends BaseScreen {
   readonly id = 'CMS-TROUBLE-CREATE';

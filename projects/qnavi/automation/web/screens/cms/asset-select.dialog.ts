@@ -9,7 +9,7 @@ const FILES = path.resolve(__dirname, '../../data/files');
 /**
  * Hộp chọn tài sản (修理対象資産選択 → 検索条件) và hộp 資産登録.
  * Dùng ở 作業依頼登録 (bước 作業項目選択) và 報告書.
- * [cần kiểm trên app thật] cấu trúc bảng, nút 現在 của date picker. → chạy npm run recon để lấy snapshot.
+ * Đã xác minh: E2E 13/13 pass (reports/20261012-112231-dev, 20261012-112608-dev).
  */
 export class AssetSelectDialog {
   constructor(private readonly page: Page) {}

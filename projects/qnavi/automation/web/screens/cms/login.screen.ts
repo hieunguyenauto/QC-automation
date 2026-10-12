@@ -2,7 +2,7 @@ import { BaseScreen } from '../base.screen';
 
 /**
  * Login CMS — catalog: cms-frontend.md › "Login: /login" (PublicRoute, guest).
- * [cần kiểm trên app thật] name của 2 input: lấy bằng Pick locator rồi sửa ở đây.
+ * Đã xác minh: E2E 13/13 pass (reports/20261012-112231-dev, 20261012-112608-dev).
  */
 export class LoginScreen extends BaseScreen {
   readonly id = 'CMS-LOGIN';

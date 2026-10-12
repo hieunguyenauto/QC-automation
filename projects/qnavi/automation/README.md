@@ -3,8 +3,8 @@ Input duy nhất: test case LOCKED trong ../qc/test-cases/ (Automation Eligibili
 
 | Thư mục | Nội dung | Trạng thái |
 |---|---|---|
-| web/ | Playwright cho CMS (qnavi-cms-frontend). Cách chạy: web/README.md | Khung đã dựng |
-| web/screens/cms/ | Knowledge màn hình: mã màn hình, route, role, locator | Login, Trouble list (locator chưa xác minh) |
+| web/ | Playwright cho CMS (qnavi-cms-frontend). Cách chạy: web/README.md | Chạy được: tests/cms/e2e-trouble-flow.spec.ts |
+| web/screens/cms/ | Knowledge màn hình: mã màn hình, route, role, locator | Đã xác minh trên app thật (E2E 13/13 pass 2026-10-12): login, layout, trouble-create (+asset-select), trouble-list (openByNumber), trouble-detail (状態変更, 作業者, 見積もり, 報告書, 支払情報), trouble-edit. Role đã chạy: 99, 01 |
 | mobile/ | Appium cho Repair app, Shop app (native) | Làm sau |
 
 Mô tả màn hình (route, role, API): ../screens/catalog/ (cms-frontend, estimation-frontend, trouble-frontend, repair-app, shop-app).

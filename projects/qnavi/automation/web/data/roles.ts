@@ -3,7 +3,7 @@ import { env } from '../common/env';
 /**
  * Role CMS. Mã role theo RolePermission của Qnavi.
  * label = tên cột kết quả trong Excel (projects/qnavi/README.md).
- * [cần confirm] map 01 / 02 / 05 với tên cột Excel.
+ * Xác nhận 2026-10-12 (anh Hiếu): 02 = tài khoản store (linksysstore0000N), 05 = worker company (linksysworkercompany).
  */
 export const CMS_ROLES = {
   '99': { label: 'CMS Admin', code: 'SYSTEM_ADMIN', home: '/admin' },

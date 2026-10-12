@@ -12,9 +12,9 @@
       "note": "CMS Admin"
     },
     "98": {
-      "loginId": "",
+      "loginId": "linksyssubadmin",
       "displayName": "",
-      "note": "CMS SubAdmin — chưa có"
+      "note": "CMS SubAdmin"
     },
     "01": {
       "loginId": "linksysmanager00001",
@@ -53,22 +53,22 @@
         },
         "approveType1": {
           "loginId": "linksysstore00006",
-          "storeName": "",
+          "storeName": "LINKSYS STORE00006",
           "note": "APPROVE TYPE 1"
         },
         "approveType2": {
           "loginId": "linksysstore00007",
-          "storeName": "",
+          "storeName": "LINKSYS STORE00007",
           "note": "APPROVE TYPE 2"
         },
         "approveType3": {
           "loginId": "linksysstore00008",
-          "storeName": "",
+          "storeName": "LINKSYS STORE00008",
           "note": "APPROVE TYPE 3"
         },
         "ringi0_99": {
           "loginId": "linksysstore00009",
-          "storeName": "",
+          "storeName": "LINKSYS STORE00009",
           "note": "Ringi sử dụng với [0] [99]"
         }
       }

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] Tài khoản SubAdmin (98: linksyssubadmin); xác nhận role 02 = store, 05 = worker company; tên store 00006–00009
 - [auto] Tài khoản store (role 02, 9 loại: toridoll, qnavi, urgent, ringi, autoApprove, approveType1-3, ringi0_99) và worker company (05) trong env/dev.json › accounts; chọn bằng credentials('02', '<variant>')
 - [auto] Tài khoản test theo role đưa vào env/<ENV>.json › accounts (loginId, tên hiển thị); mật khẩu vẫn chỉ ở .env
 - [auto] E2E trouble flow (13 TC) pass 13/13 trên CMS dev; locator TC-002→013 xác minh bằng browser thật

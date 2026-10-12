@@ -17,6 +17,7 @@
 - R14 Dữ liệu tạo ra cho TC sau (依頼番号, id…) phải ghi lại NGAY sau khi tạo, trước mọi thao tác phụ. (web/2026-10-12-e2e-record-key-data-first.md)
 - R15 Hộp con / modal lồng nhau đóng chỉ bỏ class show (vẫn ở DOM): kiểm "đã đóng" bằng đúng phần tử vừa thao tác (elementHandle) hoặc loại modal cha bằng chữ chỉ cha có; không tìm lại bằng locator .last() lọc theo chữ. (web/2026-10-12-cms-nested-modal-hidden-keep-dom.md)
 - R16 Upload file (S3) chạy bất đồng bộ sau 完了, app bỏ qua upload tiếp theo: chờ response upload (PUT S3) OK rồi mới thao tác tiếp; không dùng waitForTimeout. (web/2026-10-12-cms-s3-upload-async.md)
+- R17 Hộp kết quả sau thao tác lưu (OK / 完了) hiện khi server xong: chờ với timeout dài (~30s), không dùng timeout mặc định 5s, không dùng waitForTimeout. (web/2026-10-12-cms-save-ok-dialog-slow.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

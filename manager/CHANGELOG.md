@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] Lesson automation R17 (hộp OK sau lưu chờ ~30s) từ E2E-TC-002 trên est-test; acknowledgeOk chờ 30s
 - [auto] npm run open: mở trình duyệt đã qua Basic Auth + đăng nhập ACCOUNT để xem / lấy locator
 - [auto] Đăng nhập dùng chung common/session.ts: loginAs(page, 'role[:variant]'), logout, forAccounts; phiên .auth/<ENV>/ dùng lại 8h (D22)
 - [auto] Môi trường est-test (CMS Qnavi Estimation, cms-test.estimation…) có Basic Auth: env/est-test.json › httpAuth + .env HTTP_AUTH_PASSWORD; Playwright dùng httpCredentials

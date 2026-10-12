@@ -44,10 +44,11 @@ export async function confirmDecide(page: Page, expectText?: string | RegExp): P
   if (expectText) await expect(d).toContainText(expectText);
   await click(d, '決定');
 }
-/** Bấm OK trong hộp thông báo (kiểm nội dung nếu truyền expectText). */
+/** Bấm OK trong hộp thông báo (kiểm nội dung nếu truyền expectText).
+ *  Hộp OK hiện SAU khi server lưu xong (lưu kèm ảnh trên est-test > 5s) → chờ tới 30s. */
 export async function acknowledgeOk(page: Page, expectText?: string | RegExp): Promise<void> {
   const d = modalWithButton(page, 'OK');
-  await expect(d).toBeVisible();
+  await expect(d).toBeVisible({ timeout: 30_000 });
   if (expectText) await expect(d).toContainText(expectText);
   await click(d, 'OK');
   await expect(d).toBeHidden();

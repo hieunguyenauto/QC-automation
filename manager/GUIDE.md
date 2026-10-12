@@ -1492,6 +1492,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - R14 Dữ liệu tạo ra cho TC sau (依頼番号, id…) phải ghi lại NGAY sau khi tạo, trước mọi thao tác phụ. (web/2026-10-12-e2e-record-key-data-first.md)
 - R15 Hộp con / modal lồng nhau đóng chỉ bỏ class show (vẫn ở DOM): kiểm "đã đóng" bằng đúng phần tử vừa thao tác (elementHandle) hoặc loại modal cha bằng chữ chỉ cha có; không tìm lại bằng locator .last() lọc theo chữ. (web/2026-10-12-cms-nested-modal-hidden-keep-dom.md)
 - R16 Upload file (S3) chạy bất đồng bộ sau 完了, app bỏ qua upload tiếp theo: chờ response upload (PUT S3) OK rồi mới thao tác tiếp; không dùng waitForTimeout. (web/2026-10-12-cms-s3-upload-async.md)
+- R17 Hộp kết quả sau thao tác lưu (OK / 完了) hiện khi server xong: chờ với timeout dài (~30s), không dùng timeout mặc định 5s, không dùng waitForTimeout. (web/2026-10-12-cms-save-ok-dialog-slow.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->
@@ -1537,6 +1538,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] Lesson automation R17 (hộp OK sau lưu chờ ~30s) từ E2E-TC-002 trên est-test; acknowledgeOk chờ 30s
 - [auto] npm run open: mở trình duyệt đã qua Basic Auth + đăng nhập ACCOUNT để xem / lấy locator
 - [auto] Đăng nhập dùng chung common/session.ts: loginAs(page, 'role[:variant]'), logout, forAccounts; phiên .auth/<ENV>/ dùng lại 8h (D22)
 - [auto] Môi trường est-test (CMS Qnavi Estimation, cms-test.estimation…) có Basic Auth: env/est-test.json › httpAuth + .env HTTP_AUTH_PASSWORD; Playwright dùng httpCredentials

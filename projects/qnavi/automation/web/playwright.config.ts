@@ -31,6 +31,8 @@ export default defineConfig({
     // Đặt BROWSER_CHANNEL=chromium trong .env để dùng Chromium của Playwright (cần npx playwright install chromium).
     channel: process.env.BROWSER_CHANNEL === 'chromium' ? undefined : process.env.BROWSER_CHANNEL || 'chrome',
     baseURL: env.cmsBaseUrl,
+    // Basic Auth theo môi trường (env/<ENV>.json › httpAuth + .env HTTP_AUTH_PASSWORD).
+    httpCredentials: env.httpCredentials,
     locale: 'ja-JP',
     timezoneId: 'Asia/Tokyo',
     actionTimeout: env.actionTimeoutMs,

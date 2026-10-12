@@ -1,0 +1,34 @@
+{
+  "name": "est-test",
+  "_note": "CMS của Qnavi Estimation (môi trường test). Có Basic Auth (hộp đăng nhập của trình duyệt): username ở httpAuth, mật khẩu ở .env HTTP_AUTH_PASSWORD.",
+  "cmsBaseUrl": "https://cms-test.estimation.qnavi.picontechnology.com",
+  "httpAuth": {
+    "username": "admin"
+  },
+  "actionTimeoutMs": 15000,
+  "navigationTimeoutMs": 30000,
+  "testTimeoutMs": 120000,
+  "accounts": {
+    "_note": "Tài khoản đăng nhập CMS (form ログイン) của môi trường này — chưa có, anh gửi thì điền.",
+    "99": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "98": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "01": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "02": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "05": {
+      "loginId": "",
+      "displayName": ""
+    }
+  }
+}

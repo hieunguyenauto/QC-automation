@@ -54,7 +54,7 @@ async function closeTop(page: Page) {
 
 test('recon CMS screens (read-only)', async ({ browser }) => {
   test.setTimeout(600_000);
-  const context = await browser.newContext({ baseURL: env.cmsBaseUrl, locale: 'ja-JP', timezoneId: 'Asia/Tokyo', viewport: { width: 1600, height: 1000 } });
+  const context = await browser.newContext({ baseURL: env.cmsBaseUrl, httpCredentials: env.httpCredentials, locale: 'ja-JP', timezoneId: 'Asia/Tokyo', viewport: { width: 1600, height: 1000 } });
   context.setDefaultTimeout(5_000);
   const page = await context.newPage();
   page.on('dialog', (d) => d.accept().catch(() => undefined)); // beforeunload khi rời form

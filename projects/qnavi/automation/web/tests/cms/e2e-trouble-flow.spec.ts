@@ -51,6 +51,7 @@ const within = (p: Promise<unknown> | undefined, ms: number) =>
 
 test.beforeAll(async ({ browser }) => {
   context = await browser.newContext({
+    httpCredentials: env.httpCredentials, // Basic Auth nếu môi trường có
     baseURL: env.cmsBaseUrl, locale: 'ja-JP', timezoneId: 'Asia/Tokyo', viewport: { width: 1600, height: 1000 },
     acceptDownloads: true,
   });

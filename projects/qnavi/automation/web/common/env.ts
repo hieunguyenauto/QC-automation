@@ -12,6 +12,10 @@ export type EnvConfig = {
   actionTimeoutMs: number;
   navigationTimeoutMs: number;
   testTimeoutMs: number;
+  /** Basic Auth của môi trường (hộp đăng nhập trình duyệt). Mật khẩu: .env HTTP_AUTH_PASSWORD. */
+  httpAuth?: { username: string };
+  /** Tính sẵn từ httpAuth + .env để truyền vào Playwright (undefined = môi trường không có Basic Auth). */
+  httpCredentials?: { username: string; password: string };
   /** Tài khoản test theo role (không có mật khẩu). Mật khẩu: .env CMS_<role>_PASSWORD. */
   accounts?: Record<string, Account & { variants?: Record<string, Account & { storeName?: string }> }>;
 };
@@ -24,6 +28,12 @@ function loadEnv(): EnvConfig {
   }
   const cfg = JSON.parse(fs.readFileSync(file, 'utf-8')) as EnvConfig;
   if (process.env.CMS_BASE_URL) cfg.cmsBaseUrl = process.env.CMS_BASE_URL;
+  if (cfg.httpAuth) {
+    const username = (process.env.HTTP_AUTH_USER || cfg.httpAuth.username || '').trim();
+    const password = (process.env.HTTP_AUTH_PASSWORD || '').trim();
+    if (!password) throw new Error(`env/${envName}.json có Basic Auth → cần HTTP_AUTH_PASSWORD trong .env`);
+    cfg.httpCredentials = { username, password };
+  }
   return cfg;
 }
 

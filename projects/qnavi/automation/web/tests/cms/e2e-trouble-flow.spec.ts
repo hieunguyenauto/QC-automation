@@ -485,8 +485,9 @@ test('E2E-TC-011 Logout, login as chain store manager', { tag: ['@E2E-TC-011', '
     await expect(page).not.toHaveURL(/\/login/);
     currentRole = '01';
   });
+  // Browser thật 2026-10-12: tên user ở sidebar '.account p'.
   await test.step(`Expected: dashboard shows ${data.manager.dashboardName}`, () =>
-    expect(page.locator('body')).toContainText(data.manager.dashboardName));
+    expect(page.locator('.account')).toContainText(data.manager.dashboardName));
 });
 
 test('E2E-TC-012 Manager views estimate and history', { tag: ['@E2E-TC-012', '@role-01'] }, async () => {
@@ -527,8 +528,14 @@ test('E2E-TC-013 Manager 作業完了確認', { tag: ['@E2E-TC-013', '@role-01']
       await expect(box).toContainText(t);
     }
   });
-  await test.step('2. Click 感動', () => box.getByText('感動', { exact: true }).first().click());
-  await test.step('3. Input comment', () => box.locator('textarea').first().fill(data.payment.comment));
+  // Browser thật 2026-10-12: 5 ô .rating-star (不満…感動), mỗi ô có <div data-index=N><img></div>; chọn → cả 5 ảnh đổi src.
+  await test.step('2. Click 感動 → 5 stars selected', async () => {
+    const stars = box.locator('.rating-star img');
+    const empty = await stars.first().getAttribute('src');
+    await box.locator('.rating-star', { hasText: '感動' }).locator('[data-index] img').click();
+    for (let i = 0; i < 5; i++) await expect(stars.nth(i)).not.toHaveAttribute('src', empty ?? '');
+  });
+  await test.step('3. Input comment', () => box.locator('textarea[name="description"]').fill(data.payment.comment));
   await test.step('4. Click 作業完了確認 → confirm', async () => {
     await click(box, '作業完了確認');
   });

@@ -36,7 +36,8 @@ export class TroubleDetailScreen extends BaseScreen {
   }
   /** Badge trạng thái: vd ('対応中', '受注'). */
   async expectBadges(...badges: string[]): Promise<void> {
-    for (const b of badges) await expect(this.content.getByText(b, { exact: true }).first()).toBeVisible();
+    // Badge (.trouble-action .badge) render rỗng trước, có chữ sau ~3s (nhất là role 01).
+    for (const b of badges) await expect(this.content.locator('.trouble-action .badge', { hasText: exact(b) })).toBeVisible({ timeout: 15_000 });
   }
   async expectInfo(label: string, value: string | RegExp): Promise<void> {
     await expectRow(this.content, label, value);

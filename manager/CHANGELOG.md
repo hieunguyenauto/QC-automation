@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- Lesson automation R03 (chờ dữ liệu tải), R04 (nhãn = giá trị theo ô) từ recon CMS
 - Lesson automation R01, R02; lesson QC D14; luật: sửa xong lỗi test → đề xuất lesson (D21)
 - Khung Playwright CMS projects/qnavi/automation/web (README cách chạy, env, data, common, screens, report theo lần chạy); catalog màn hình 5 app ở projects/qnavi/screens/catalog/ (D20)
 - Skill kb-update-automation; projects/qnavi/automation/README.md + screens/ (D19)

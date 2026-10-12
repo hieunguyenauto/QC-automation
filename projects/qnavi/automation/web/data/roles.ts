@@ -1,3 +1,5 @@
+import { env } from '../common/env';
+
 /**
  * Role CMS. Mã role theo RolePermission của Qnavi.
  * label = tên cột kết quả trong Excel (projects/qnavi/README.md).
@@ -13,8 +15,17 @@ export const CMS_ROLES = {
 
 export type CmsRole = keyof typeof CMS_ROLES;
 
+/** Thông tin tài khoản (không mật khẩu) của role trong môi trường đang chạy: env/<ENV>.json › accounts. */
+export function account(role: CmsRole) {
+  return env.accounts?.[role];
+}
+
+/**
+ * loginId: .env CMS_<role>_ID (nếu có, để ghi đè) → env/<ENV>.json › accounts.<role>.loginId.
+ * password: CHỈ lấy từ .env CMS_<role>_PASSWORD (không commit).
+ */
 export function credentials(role: CmsRole): { loginId: string; password: string } | null {
-  const loginId = process.env[`CMS_${role}_ID`];
-  const password = process.env[`CMS_${role}_PASSWORD`];
+  const loginId = (process.env[`CMS_${role}_ID`] || account(role)?.loginId || '').trim();
+  const password = (process.env[`CMS_${role}_PASSWORD`] || '').trim();
   return loginId && password ? { loginId, password } : null;
 }

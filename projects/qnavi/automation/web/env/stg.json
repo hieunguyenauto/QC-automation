@@ -3,5 +3,28 @@
   "cmsBaseUrl": "https://<điền-url-cms-stg>",
   "actionTimeoutMs": 15000,
   "navigationTimeoutMs": 30000,
-  "testTimeoutMs": 120000
+  "testTimeoutMs": 120000,
+  "accounts": {
+    "_note": "Tài khoản test theo role (chỉ loginId + tên hiển thị; mật khẩu ở .env). Chưa điền cho stg.",
+    "99": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "98": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "01": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "02": {
+      "loginId": "",
+      "displayName": ""
+    },
+    "05": {
+      "loginId": "",
+      "displayName": ""
+    }
+  }
 }

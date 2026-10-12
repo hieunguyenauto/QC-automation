@@ -3,5 +3,34 @@
   "cmsBaseUrl": "https://cms-toridoll-test.qnavi.picontechnology.com",
   "actionTimeoutMs": 15000,
   "navigationTimeoutMs": 30000,
-  "testTimeoutMs": 120000
+  "testTimeoutMs": 120000,
+  "accounts": {
+    "_note": "Tài khoản test theo role cho môi trường này. CHỈ loginId + thông tin hiển thị; mật khẩu ở .env (CMS_<role>_PASSWORD).",
+    "99": {
+      "loginId": "adminTest1",
+      "displayName": "",
+      "note": "CMS Admin"
+    },
+    "98": {
+      "loginId": "",
+      "displayName": "",
+      "note": "CMS SubAdmin — chưa có"
+    },
+    "01": {
+      "loginId": "linksysmanager00001",
+      "displayName": "LINKSYS MANAGER00001",
+      "chainSystem": "Linksys Chain System",
+      "note": "ChainStore Manager, dùng ở E2E-TC-011..013"
+    },
+    "02": {
+      "loginId": "",
+      "displayName": "",
+      "note": "ChainStore — chưa có"
+    },
+    "05": {
+      "loginId": "",
+      "displayName": "",
+      "note": "ManagementCompany — chưa có"
+    }
+  }
 }

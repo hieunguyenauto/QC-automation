@@ -10,6 +10,8 @@ export type EnvConfig = {
   actionTimeoutMs: number;
   navigationTimeoutMs: number;
   testTimeoutMs: number;
+  /** Tài khoản test theo role (không có mật khẩu). Mật khẩu: .env CMS_<role>_PASSWORD. */
+  accounts?: Record<string, { loginId: string; displayName?: string; chainSystem?: string; note?: string }>;
 };
 
 function loadEnv(): EnvConfig {

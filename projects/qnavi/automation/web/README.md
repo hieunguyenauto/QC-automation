@@ -59,8 +59,8 @@ Mỗi lần chạy ghi 1 thư mục `reports/<YYYYMMDD-HHmmss>-<ENV>/` (không c
 
 | Thư mục | Chứa gì | Ai sửa |
 |---|---|---|
-| `env/` | Cấu hình theo môi trường: `cmsBaseUrl`, timeout | Người chạy |
-| `.env` | ENV đang dùng + tài khoản theo role (không commit) | Người chạy |
+| `env/` | Cấu hình theo môi trường: `cmsBaseUrl`, timeout, **tài khoản test theo role** (`accounts`: loginId, tên hiển thị — không mật khẩu) | Lead |
+| `.env` | ENV đang dùng + **mật khẩu** theo role `CMS_<role>_PASSWORD` (không commit). `CMS_<role>_ID` chỉ để ghi đè loginId | Người chạy |
 | `data/roles.ts` | Mã role ↔ tên cột Excel ↔ trang chủ sau login | kb-update-automation |
 | `data/<scope-key>.json` | Data test theo TC ID | Khi automate TC |
 | `common/` | Dùng chung: env, login (`auth.setup.ts`), `forRoles`, chờ API, assert message | kb-update-automation |

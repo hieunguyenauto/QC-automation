@@ -1,6 +1,6 @@
 import { test, expect, type Page, type BrowserContext } from '@playwright/test';
 import data from '../../data/e2e-trouble-flow.json';
-import { credentials } from '../../data/roles';
+import { credentials, account as roleAccount } from '../../data/roles';
 import { env } from '../../common/env';
 import { click, clickable, closeModal, expectRow, fill, minimizeChat, modal, rowOf, today } from '../../common/ui';
 import { LoginScreen } from '../../screens/cms/login.screen';
@@ -504,8 +504,8 @@ test('E2E-TC-011 Logout, login as chain store manager', { tag: ['@E2E-TC-011', '
     currentRole = '01';
   });
   // Browser thật 2026-10-12: tên user ở sidebar '.account p'.
-  await test.step(`Expected: dashboard shows ${data.manager.dashboardName}`, () =>
-    expect(page.locator('.account')).toContainText(data.manager.dashboardName));
+  const name = roleAccount('01')?.displayName || data.manager.dashboardName;
+  await test.step(`Expected: dashboard shows ${name}`, () => expect(page.locator('.account')).toContainText(name));
 });
 
 test('E2E-TC-012 Manager views estimate and history', { tag: ['@E2E-TC-012', '@role-01'] }, async () => {

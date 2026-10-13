@@ -33,7 +33,9 @@ if (!process.env.RUN_ID) {
   process.env.RUN_STAMP = stamp;
   process.env.RUN_ID = `${suiteName()}_${stamp}_${env.name}`;
 }
-const runDir = `reports/Runs/${process.env.RUN_ID}`;
+// --list / chạy thử không ghi vào Runs/ (tránh thư mục rỗng 0 test)
+const LIST_ONLY = process.argv.includes('--list');
+const runDir = LIST_ONLY ? `reports/_tmp_chk/${process.env.RUN_ID}` : `reports/Runs/${process.env.RUN_ID}`;
 
 export default defineConfig({
   testDir: '.',

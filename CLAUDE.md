@@ -14,6 +14,7 @@
 4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions. Hết OQ OPEN + người dùng xác nhận → [Done] → kb-update ghi knowledge vào <P>/
 5. Viewpoint: skill test-viewpoint (Context pack trước, rồi knowledge + bài học của đúng function / màn hình)
 6. Test case: skill test-case (viewpoint LOCKED + Context pack + knowledge + bài học của đúng function)
+   Message trong '' ở Expected phải tra <P>/spec/messages.md (grep đúng chữ hoặc mã); không có / khác → ghi [cần confirm], không tự đoán.
 Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 
 ## Automation (luồng riêng: Spec → Test case → Automation)
@@ -22,6 +23,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 - TC thiếu / mâu thuẫn với app → dừng, báo người dùng; không tự sửa TC, không sửa expect cho khớp app.
 - Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 - Đăng nhập trong test: CHỈ dùng <P>/automation/web/common/session.ts (loginAs(page, '02:urgent'), logout, forAccounts([...]) ). Không tự viết hàm login, không ghi loginId / mật khẩu trong spec. Tài khoản: env/<ENV>.json › accounts + .env.
+- Message dùng để expect (data/<scope-key>.json › messages) phải khớp <P>/spec/messages.md; không có trong file → ghi chú nguồn (TC LOCKED / app thật) và báo người dùng.
 - Sinh / sửa code test: đọc automation/lessons/INDEX.md TRƯỚC; locator chỉ lấy / ghi ở screens/. Sửa xong 1 lỗi test fail → luôn đề xuất lesson (bản nháp: loại, nguyên nhân gốc, rule) cho người dùng duyệt rồi ghi vào automation/lessons/ + INDEX; lỗi do TC sai → lesson phía QC (qc/lessons).
 
 ## Skill dùng trong repo

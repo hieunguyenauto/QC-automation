@@ -10,4 +10,5 @@ reports/
 projects/*/automation/web/tests/spike/
 projects/**/raw/*.pdf
 projects/**/raw/*.xlsx
+!projects/qnavi/raw/List messages.xlsx
 projects/**/raw/*.csv

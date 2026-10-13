@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- Nguồn message Qnavi: raw/List messages.xlsx → spec/messages.md (6 sheet), sources.md mã MSG; luật đối chiếu message khi viết TC và automation (D23)
 - [auto] Automation Phase 007 Regression (65 TC): tests/cms/phase007-regression.spec.ts, screen mới chain-system, asset-column, subadmin, task/chat/asset-info; common/scenario.ts (khung chạy nối tiếp dùng chung); npm run p007
 - [auto] E2E quay video cả lần chạy (reports/Runs/<run>/video, chỉ giữ khi có fail); FAIL.md có link video + mốc thời gian + cách mở trace
 - [auto] Report: thư mục tổng reports/Passed, Failed, Skipped, Runs; tên theo [tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]

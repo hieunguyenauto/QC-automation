@@ -914,6 +914,7 @@ Skill/CLAUDE.md làm AI tệ đi → `git revert` commit `[skill]`/`[rule]` đó
 4. Q&A: skill spec-review → Gap Report + Context pack + Open Questions. Hết OQ OPEN + người dùng xác nhận → [Done] → kb-update ghi knowledge vào <P>/
 5. Viewpoint: skill test-viewpoint (Context pack trước, rồi knowledge + bài học của đúng function / màn hình)
 6. Test case: skill test-case (viewpoint LOCKED + Context pack + knowledge + bài học của đúng function)
+   Message trong '' ở Expected phải tra <P>/spec/messages.md (grep đúng chữ hoặc mã); không có / khác → ghi [cần confirm], không tự đoán.
 Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 
 ## Automation (luồng riêng: Spec → Test case → Automation)
@@ -922,6 +923,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 - TC thiếu / mâu thuẫn với app → dừng, báo người dùng; không tự sửa TC, không sửa expect cho khớp app.
 - Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 - Đăng nhập trong test: CHỈ dùng <P>/automation/web/common/session.ts (loginAs(page, '02:urgent'), logout, forAccounts([...]) ). Không tự viết hàm login, không ghi loginId / mật khẩu trong spec. Tài khoản: env/<ENV>.json › accounts + .env.
+- Message dùng để expect (data/<scope-key>.json › messages) phải khớp <P>/spec/messages.md; không có trong file → ghi chú nguồn (TC LOCKED / app thật) và báo người dùng.
 - Sinh / sửa code test: đọc automation/lessons/INDEX.md TRƯỚC; locator chỉ lấy / ghi ở screens/. Sửa xong 1 lỗi test fail → luôn đề xuất lesson (bản nháp: loại, nguyên nhân gốc, rule) cho người dùng duyệt rồi ghi vào automation/lessons/ + INDEX; lỗi do TC sai → lesson phía QC (qc/lessons).
 
 ## Skill dùng trong repo
@@ -1508,6 +1510,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D23 | 2026-10-13 | List messages.xlsx là nguồn ưu tiên cao nhất cho chữ message (MSG): gốc ở raw/ (được commit, không có mật khẩu), bản tra cứu spec/messages.md; TC và data automation phải đối chiếu | Message là chỗ hay sai chữ; cần 1 nguồn chuẩn để double check | projects/qnavi/sources.md, spec/messages.md, CLAUDE.md, .gitignore |
 | D22 | 2026-10-12 | Đăng nhập test dùng chung common/session.ts: tài khoản 'role[:variant]', phiên lưu .auth/<ENV>/ (dùng lại 8h), tự logout khi đổi tài khoản | Mỗi spec tự viết login, phiên dev/est-test đè nhau, chưa hỗ trợ 9 store | common/session.ts, common/roles.ts, CLAUDE.md |
 | D21 | 2026-10-12 | Mỗi lỗi khi chạy code test do AI sinh → sửa screens/ (locator) + ghi lesson automation (rule vào automation/lessons/INDEX.md) sau khi người dùng duyệt; lỗi do TC → lesson QC. AI đọc INDEX trước khi sinh code | Lỗi đã gặp không lặp lại khi sinh code mới | CLAUDE.md, automation/lessons/, qc/lessons/ |
 | D20 | 2026-10-09 | Dựng khung Playwright CMS ở projects/qnavi/automation/web: env/ + .env (tài khoản theo role), data/, common/ (login 1 lần / role, forRoles), screens/<app>/*.screen.ts là knowledge locator (ghi mã màn hình, không chép mô tả), tests/<app>/<scope-key>.spec.ts, reports/<run>/ (html, json, junit, artifacts). 1 TC × 1 role = 1 test. Catalog màn hình 5 app lưu ở projects/qnavi/screens/catalog/ dùng chung QC + automation. Native app (repair, shop) và web nhúng làm sau | Khớp cột kết quả theo role; locator 1 chỗ; report theo lần chạy | projects/qnavi/automation/, kb-update-automation, automation/templates/screen.md, CLAUDE.md |
@@ -1538,6 +1541,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- Nguồn message Qnavi: raw/List messages.xlsx → spec/messages.md (6 sheet), sources.md mã MSG; luật đối chiếu message khi viết TC và automation (D23)
 - [auto] Automation Phase 007 Regression (65 TC): tests/cms/phase007-regression.spec.ts, screen mới chain-system, asset-column, subadmin, task/chat/asset-info; common/scenario.ts (khung chạy nối tiếp dùng chung); npm run p007
 - [auto] E2E quay video cả lần chạy (reports/Runs/<run>/video, chỉ giữ khi có fail); FAIL.md có link video + mốc thời gian + cách mở trace
 - [auto] Report: thư mục tổng reports/Passed, Failed, Skipped, Runs; tên theo [tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]

@@ -45,6 +45,24 @@ export class TroubleEditScreen extends BaseScreen {
     return chosen;
   }
 
+  /** 案件区分: nút '営業停止案件' / '通常案件' (dò thật 2026-10-13 ở role 01; role 99 giả định giống). */
+  async setCaseType(type: '営業停止案件' | '通常案件'): Promise<void> {
+    await click(rowOf(this.content, '案件区分'), type);
+  }
+  /** 保存 trang 作業依頼編集 → 決定 (この作業依頼を保存します) → OK. */
+  async save(): Promise<void> {
+    await click(this.content, '保存');
+    const confirm = modalWithButton(this.page, '決定');
+    if (await confirm.waitFor({ state: 'visible', timeout: 3000 }).then(() => true).catch(() => false)) await click(confirm, '決定');
+    await acknowledgeOk(this.page, /保存が完了しました/);
+  }
+  /** Popup '対象資産' của dòng 資産 (nút 変更): xoá mọi tài sản (nút 削除). Dò thật 2026-10-13 (role 01). */
+  async openAssetPopup(): Promise<ReturnType<typeof modal>> {
+    await click(rowOf(this.content, '資産'), '変更');
+    const box = modal(this.page, '対象資産');
+    await expect(box).toBeVisible();
+    return box;
+  }
   async back(): Promise<void> {
     await clickable(this.content, '戻る').click();
     await expect(this.page).toHaveURL(/\/detail/);

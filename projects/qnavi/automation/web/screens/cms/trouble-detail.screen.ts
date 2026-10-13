@@ -157,6 +157,16 @@ export class TroubleDetailScreen extends BaseScreen {
     await expect(this.estimateForm).toBeHidden();
     await expect(this.estimateRow(name)).toBeVisible({ timeout: 15_000 });
   }
+  /** Tick dòng → 提示する → 決定 → trạng thái mong đợi (mặc định 承認待ち; dưới fix_amount → 承認済み). */
+  async submitEstimateExpect(name: string, status: string): Promise<void> {
+    await this.estimateRow(name).locator('input[type="checkbox"]').first().check();
+    await click(this.estimateModal, '提示する');
+    const d = modal(this.page, '以下1件の見積を店舗へ提出しますか');
+    await expect(d).toContainText(name);
+    await click(d, '決定');
+    await expect(d).toBeHidden();
+    await this.expectEstimateStatus(name, status);
+  }
   /** Tick dòng → 提示する → 決定 → trạng thái 承認待ち. */
   async submitEstimate(name: string): Promise<void> {
     await this.estimateRow(name).locator('input[type="checkbox"]').first().check();
@@ -180,6 +190,70 @@ export class TroubleDetailScreen extends BaseScreen {
   async closeEstimateModal(): Promise<void> {
     await click(this.estimateModal, '閉じる');
     await expect(this.estimateModal).toBeHidden();
+  }
+
+  // ----- Phase 007 (P007-TC-028~054) -----
+  /** Số dòng 見積 có tên name trong 見積一覧. */
+  estimateRows(name: string): Locator {
+    return this.estimateModal.locator('tr.estimation-row').filter({ has: this.page.locator('td', { hasText: exact(name) }) });
+  }
+  /** Nhấn Enter n lần ở ô 見積名 (form 見積もり). */
+  async pressEnterInEstimateName(n: number): Promise<void> {
+    const f = this.estimateForm.locator('input[name="title"]');
+    for (let i = 0; i < n; i++) await f.press('Enter');
+  }
+  /** Dòng hạng mục (trong form 見積もり) có 項目名 = label (項目名 nằm trong textarea[name="items.N.label"]). */
+  itemRow(label: string): Locator {
+    return this.estimateForm.locator('tbody tr').filter({ has: this.page.locator(`textarea[name$=".label"]`) })
+      .filter({ has: this.page.locator('textarea').filter({ hasText: label }) }).last();
+  }
+  /** Danh sách 作業項目選択 trong hộp 作業項目追加 (nút list-group-item). */
+  selectListItem(name: string): Locator {
+    return this.itemModal.locator('.workItemList button', { hasText: name }).first();
+  }
+  /** Xoá dòng mặc định (出張費 / 現場調査費) của form 見積もり. [chưa dò: nút 削除 ở dòng — thấy trong form 2026-10-12] */
+  async deleteDefaultRows(): Promise<void> {
+    const rows = this.estimateForm.locator('tbody tr').filter({ hasText: /出張費|現場調査費/ });
+    while (await rows.count()) {
+      await click(rows.first(), '削除');
+    }
+  }
+  /** Ô 店舗向け 単価 của dòng hạng mục cuối (input[name="items.N.amount"]). */
+  async setStoreUnitPrice(value: string): Promise<void> {
+    const f = this.estimateForm.locator('input[name$=".amount"]').last();
+    await f.fill(value);
+    await f.blur();
+  }
+  /** Chọn 対応中の状態（継続） (trouble 継続依頼: select name=continuationFlowStatus, dò thật 2026-10-13). */
+  async setContinuationFlow(label: string): Promise<void> {
+    await this.statusModal.locator('select[name="continuationFlowStatus"]').selectOption({ label });
+  }
+  /** Bấm 保存 trong 状態変更 mà không đi tiếp (dùng khi app chặn chuyển trạng thái). */
+  async clickSaveStatus(): Promise<void> {
+    await click(this.statusModal, '保存');
+  }
+  /** Không có hộp xác nhận '…保存します' hiện ra (chờ ngắn). */
+  async expectNoConfirm(): Promise<void> {
+    await expect(this.page.locator('.modal.show').filter({ hasText: 'この情報を保存します' })).toHaveCount(0, { timeout: 3_000 });
+  }
+
+  // ----- チャット (khung chat nổi, dò thật 2026-10-13) -----
+  // .chat-popover: .popover-trigger (icon nổi) · .chat-popover__content.open (khung mở) · header có i.fa-minus-square (thu nhỏ)
+  // · textarea[name=content] · button.cf-send (submit) · danh sách tin #chat.
+  get chatBox(): Locator { return this.page.locator('.chat-popover__content.open'); }
+  get chatInput(): Locator { return this.page.locator('.chat-popover textarea[name="content"]'); }
+  get chatMessages(): Locator { return this.page.locator('.chat-popover #chat'); }
+  async openChat(): Promise<void> {
+    if (!(await this.chatBox.isVisible().catch(() => false))) await this.page.locator('.chat-popover .popover-trigger').dispatchEvent('click');
+    await expect(this.chatBox).toBeVisible();
+  }
+  async sendChat(text: string): Promise<void> {
+    await this.chatInput.fill(text);
+    await this.page.locator('.chat-popover button.cf-send').click();
+  }
+  async minimizeChatByIcon(): Promise<void> {
+    await this.page.locator('.chat-popover i.fa-minus-square').dispatchEvent('click');
+    await expect(this.chatBox).toBeHidden();
   }
 
   // ---------- 報告書 ----------
@@ -211,6 +285,35 @@ export class TroubleDetailScreen extends BaseScreen {
     expect((await uploaded).ok()).toBe(true);
     await expect(box).toBeHidden();
     await expect(valueOf(this.reportModal, label).locator('img').first()).toBeVisible();
+  }
+  /** 状態 của 報告書 (select[name=status]: 01 未提出 / 02 提出済). */
+  async setReportStatus(label: '未提出' | '提出済'): Promise<void> {
+    await this.reportModal.locator('select[name="status"]').selectOption({ label });
+  }
+  /** Mỗi tài sản 1 dropdown 対応区分 (select name="types.<assetId>"). */
+  get assetTypeSelects(): Locator { return this.reportModal.locator('select[name^="types."]'); }
+  /**
+   * PDF 報告書: input[type=file accept=pdf] trong .dropzone của dòng 'PDFファイル' → hộp con 'N / 5' → 完了.
+   * [chưa dò thật: hộp con PDF — giả định giống hộp ảnh 'N / 20' (R15, R16)]. Trả về hộp con (đang mở) để kiểm message.
+   */
+  async choosePdf(files: string[]): Promise<Locator> {
+    await valueOf(this.reportModal, 'PDFファイル').locator('.dropzone input[type="file"]').first()
+      .setInputFiles(files.map((f) => path.join(FILES, f)));
+    return this.page.locator('.modal.show, [role="dialog"]').filter({ visible: true })
+      .filter({ hasText: /\d+\s*\/\s*5/ }).filter({ hasNotText: '施工業者' }).last();
+  }
+  async confirmPdf(box: Locator): Promise<void> {
+    const uploaded = this.page.waitForResponse((r) => r.request().method() === 'PUT' && r.url().includes('/modules/troubles/files/'), { timeout: 30_000 }).catch(() => null);
+    const handle = await clickable(box, '完了').elementHandle();
+    await click(box, '完了');
+    await uploaded;
+    await expect.poll(() => handle!.isVisible()).toBe(false);
+  }
+  async cancelBox(box: Locator): Promise<void> {
+    if (await box.isVisible().catch(() => false)) await click(box, 'キャンセル');
+  }
+  pdfCard(name: string): Locator {
+    return valueOf(this.reportModal, 'PDFファイル').getByText(name, { exact: false }).first();
   }
   async downloadFrom(button: string): Promise<string> {
     const dl = this.page.waitForEvent('download');

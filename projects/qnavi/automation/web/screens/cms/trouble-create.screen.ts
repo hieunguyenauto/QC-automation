@@ -43,6 +43,39 @@ export class TroubleCreateScreen extends BaseScreen {
     await expect(store).toBeVisible();
   }
 
+  /**
+   * Bước đầu với chọn rõ ràng (dò thật 2026-10-13): radio label.btn '新規依頼' / '継続依頼' → 次へ →
+   * 'Step 1 操作モード設定': label.btn '操作可能モード（ロックなし）' / '操作可能モード（ロック）' → 次へ.
+   */
+  async start(type: '新規依頼' | '継続依頼', mode = '操作可能モード（ロックなし）'): Promise<void> {
+    await expect(this.page.getByRole('heading', { name: '作業依頼登録' })).toBeVisible();
+    await this.content.locator('label.btn', { hasText: exact(type) }).click();
+    await click(this.content, '次へ');
+    await expect(this.content).toContainText('操作モード設定');
+    await this.content.locator('label.btn', { hasText: exact(mode) }).click();
+    await click(this.content, '次へ');
+  }
+  /** 継続依頼: 作業依頼選択 → hộp 検索条件 (input[name=number]) → 選択 dòng có 依頼番号. */
+  async pickContinuationSource(number: string): Promise<void> {
+    await click(this.content, '作業依頼選択');
+    const box = modal(this.page, '検索条件');
+    await expect(box).toBeVisible();
+    const num = box.locator('input[name="number"]');
+    if (!(await num.isVisible().catch(() => false))) await box.locator('h4', { hasText: '検索条件' }).first().click();
+    await num.fill(number);
+    await click(box, '検索');
+    const row = box.locator('tbody tr', { hasText: number }).first();
+    await expect(row).toBeVisible({ timeout: 15_000 });
+    await click(row, '選択');
+    await expect(box).toBeHidden();
+  }
+  /** 決定して問合わせ → 決定 (この継続依頼を保存します) → OK. */
+  async submitContinuation(): Promise<void> {
+    await this.clickSubmit();
+    await confirmDecide(this.page, 'この継続依頼を保存します');
+    await acknowledgeOk(this.page, '作業依頼の保存が完了しました');
+  }
+
   // ----- 店舗 -----
   async openChainStoreSearch(): Promise<void> {
     await click(this.content, /^\s*チェーン店舗?選択\s*$/);

@@ -45,6 +45,14 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 
 Mỗi lần chạy, project `setup` login từng role có tài khoản trong `.env` và lưu phiên vào `.auth/` (không commit). Role không có tài khoản → test của role đó **skip**, không fail.
 
+## 3b. Bộ regression theo phase
+| Bộ | TC | Lệnh |
+|---|---|---|
+| E2E trouble flow (13 TC) | qc/test-cases/e2e-trouble-flow-test-cases.md | `npm run e2e:headed` |
+| Phase 007 Regression (65 TC) | qc/test-cases/phase007-regression-test-cases.md | `ENV=est-test npm run p007:headed` · chạy 1 phần: `ENV=est-test npm run p007 -- -g "P007-TC-01[6-9]"` |
+
+Phase 007 chạy nối tiếp (common/scenario.ts): T1…T5 tạo trong lần chạy; TC cần trouble chưa tạo được → skip. TC-050 (至急) cần chạy trong giờ làm việc.
+
 ## 4. Report
 3 thư mục tổng trong `reports/`, mọi tên theo **[tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]** (`common/qc-reporter.ts`). Xem nhanh lần mới nhất: `npm run summary`.
 

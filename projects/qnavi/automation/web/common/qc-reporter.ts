@@ -72,6 +72,8 @@ export default class QcReporter implements Reporter {
   }
 
   async onEnd(full: FullResult) {
+    // --list / không có test nào chạy → không ghi report, không thêm HISTORY.
+    if (!this.rows.length) return;
     const root = path.resolve(this.opts.reportsRoot);
     const out = path.resolve(this.opts.runDir);
     fs.mkdirSync(out, { recursive: true });

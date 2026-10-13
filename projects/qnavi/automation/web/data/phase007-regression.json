@@ -1,0 +1,45 @@
+{
+  "_note": "Data cho projects/qnavi/qc/test-cases/phase007-regression-test-cases.md (rev 2, LOCKED). Tài khoản: env/<ENV>.json › accounts + .env.",
+  "chain": { "companyQuery": "Linksys", "name": "Linksys Chain System" },
+  "store": { "query": "LINKSYS STORE00001", "name": "LINKSYS STORE00001 (TORIDOLL)", "ringiQuery": "LINKSYS STORE00004 (RINGI)", "ringiName": "LINKSYS STORE00004 (RINGI)" },
+  "categories": { "large": "操作テスト", "medium": "トイレ（テスト）", "small": "つまり：大便器（テスト）" },
+  "timers": [
+    { "tc": "P007-TC-003", "name": "AT_Timer_YM", "format": "年月" },
+    { "tc": "P007-TC-004", "name": "AT_Timer_YMD", "format": "年月日" },
+    { "tc": "P007-TC-005", "name": "AT_Timer_YMDH", "format": "年月日時" }
+  ],
+  "subadmin": { "loginId": "linksyssubadmin", "displayName": "LINKSYS SUBADMIN", "description": "automation" },
+  "asset": { "name": "Automation Asset", "model": "TVB005", "serial": "100014914", "existingName": "TEST AUTOMATION", "image": "hieu5.jpg" },
+  "fault": { "text": "AUTOMATION", "image": "hieu6.jpg", "ringiText": "AUTOMATION 1786 RINGI" },
+  "expectedDate": { "option": "明日以降", "start": "10:00", "end": "12:00" },
+  "worker": { "companyQuery": "LINKSYS", "loginId": "linksysworker", "companyName": "LINKSYS WORKER", "staffName": "linksys worker" },
+  "chat": { "longText": "AUTOMATION LONG TEXT あいうえお12345 AUTOMATION LONG TEXT あいうえお12345 AUTOMATION LONG TEXT あいうえお12345" },
+  "estimate": {
+    "enterName": "EnterTest",
+    "part": { "name": "Test部材", "item": "AutoPart", "price": "1000", "shown": "￥1,000" },
+    "fee": { "name": "Test諸経費", "item": "AutoFee", "price": "500", "shown": "￥500" },
+    "select": { "name": "TestSelect", "typed": "Autotest", "price": "99999", "item": "AT_SelectItem" },
+    "main": { "name": "Test", "item": "Autotest", "price": "99999", "shown": "￥99,999", "total": "￥148,855", "totalTax": "￥163,740", "cancelReason": "Request cancel" },
+    "auto": { "name": "AutoApprove", "item": "Auto", "price": "3000", "total": "￥4,285", "header": "4,285" },
+    "edgeOver": { "name": "EdgeOver", "storePrice": "9500", "totalTax": "￥10,450" },
+    "edgeUnder": { "name": "EdgeUnder", "storePrice": "9090", "totalTax": "￥9,999" },
+    "ringi2": "RingiTest2", "ringi3": "RingiTest3", "cont": "ContTest"
+  },
+  "report": { "cause": "automation", "beforeImage": "hieu4.jpg", "afterImage": "hieu3.jpg", "pdf": "test1.pdf",
+    "pdfs": ["pdf1.pdf", "pdf2.pdf", "pdf3.pdf", "pdf4.pdf", "pdf5.pdf", "pdf6.pdf"], "notPdf": "test.jpg" },
+  "messages": {
+    "csvConfirm": "CSVファイルをダウンロードします。よろしいですか？",
+    "groupNameRequired": "症状グループ名を入力してください。",
+    "importOk": "ファイルが正常にアップロードされました",
+    "importError": "エラーが発生されました。一括登録できませんでした。",
+    "blockNewEstimateWait": "見積承認待ちに変更できません。変更したい場合は、到着へ変更してください。",
+    "blockNewReject": "見積拒否に変更できません。変更したい場合は、到着へ変更してください。",
+    "blockContEstimateWait": "見積承認待ちに変更できません。変更したい場合は、見積待ちへ変更してください。",
+    "pdfLimit": "アップロード可能なPDFファイルは最大5つまでです。6つ目以降のファイルは自動的に除外されました。",
+    "pdfType": "test.jpg: ファイルの形式は正しくありません。",
+    "assetRequired": "修理対象資産を選択してください。",
+    "assetOld": "デバイスを入力してください。",
+    "approvedCard": "この見積は承認済みです。現在実行できるアクションはありません。",
+    "payOk": "作業依頼の決済状態の保存が完了しました"
+  }
+}

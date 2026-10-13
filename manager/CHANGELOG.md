@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] Automation Phase 007 Regression (65 TC): tests/cms/phase007-regression.spec.ts, screen mới chain-system, asset-column, subadmin, task/chat/asset-info; common/scenario.ts (khung chạy nối tiếp dùng chung); npm run p007
 - [auto] E2E quay video cả lần chạy (reports/Runs/<run>/video, chỉ giữ khi có fail); FAIL.md có link video + mốc thời gian + cách mở trace
 - [auto] Report: thư mục tổng reports/Passed, Failed, Skipped, Runs; tên theo [tên testcase]_[dd-mm-yyyy_HH-mm-ss]_[ENV]
 - [auto] Report QC (common/qc-reporter.ts): SUMMARY.md, passed/, failed/<TC ID>_<tên>_<dd-mm-yyyy>/FAIL.md (mỗi trường 1 dòng + ảnh, trace), skipped/, reports/HISTORY.md

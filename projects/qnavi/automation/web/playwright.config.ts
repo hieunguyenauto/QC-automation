@@ -71,14 +71,15 @@ export default defineConfig({
     {
       name: 'cms',
       testMatch: /tests\/cms\/.*\.spec\.ts/,
-      testIgnore: [/tests\/cms\/e2e-.*\.spec\.ts/, /tests\/cms\/recon\.spec\.ts/],
+      testIgnore: [/tests\/cms\/e2e-.*\.spec\.ts/, /tests\/cms\/phase\d+-.*\.spec\.ts/, /tests\/cms\/recon\.spec\.ts/],
       dependencies: ['setup'],
       use: { ...devices['Desktop Chrome'] },
     },
     {
       // Kịch bản E2E nối tiếp: tự login bằng UI, không cần project setup.
       name: 'e2e',
-      testMatch: /tests\/cms\/e2e-.*\.spec\.ts/,
+      // Kịch bản nối tiếp: e2e-*.spec.ts và phase<NNN>-*.spec.ts (regression theo phase).
+      testMatch: /tests\/cms\/(e2e-|phase\d+-).*\.spec\.ts/,
       // trace/video off: spec tự ghi trace theo từng TC trên context dùng chung (xem e2e-trouble-flow.spec.ts, lesson R13).
       use: { ...devices['Desktop Chrome'], viewport: { width: 1600, height: 1000 }, trace: 'off', video: 'off' },
     },

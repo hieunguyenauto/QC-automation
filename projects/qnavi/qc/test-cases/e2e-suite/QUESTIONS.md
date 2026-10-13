@@ -1,56 +1,51 @@
-# Câu hỏi — E2E suite (39 kịch bản) · 13/10/2026
-Trả lời theo số Gx. Ô "Đề xuất" = em sẽ làm vậy nếu anh đồng ý (chỉ cần ghi "OK").
-Đã trả lời trước đó (áp vào cả 39 file): Q2 store đăng nhập CMS bằng role 02 · Q3 luồng トラブルナビ · Q4 xem 限度額 ở チェーンシステム情報 · Q5 ≤ 限度額 → tự duyệt · Q6 tạo 継続依頼 '_2' · Q7 báo cáo = đổi trạng thái CMS · Q8 bỏ 日程承認 · Q9 môi trường tuỳ biến.
+# Câu hỏi — E2E suite · cập nhật 13/10/2026 (lượt 2)
+Trả lời theo số. "Đề xuất" = em sẽ làm vậy nếu anh ghi "OK".
 
-## A. Tài khoản và cấu hình (chặn cả 39 file)
+## 1. Thông tin anh đã cung cấp (em hiểu như sau — anh kiểm lại)
+| Chủ đề | Em hiểu |
+|---|---|
+| Type 01 | LINKSYS STORE00006. Người duyệt: MANAGER00005 hoặc MANAGER00003 — 1 người duyệt là xong |
+| Type 02 | LINKSYS STORE00007. MANAGER00001 duyệt trước → MANAGER00002 phải duyệt tiếp. MANAGER00002 duyệt trực tiếp → xong luôn |
+| Type 03 | MANAGER00004: ￥10,000～￥20,000 (税込). MANAGER00005: ￥0～無制限. Ngoài khoảng → người đó không duyệt được |
+| Type 04 | LINKSYS STORE00004. Lv1 20,000 (MANAGER00001) · Lv2 30,000 (MANAGER00002) · Lv3 40,000 (MANAGER00003) · Lv4 50,000 (MANAGER00004). Admin: bấm duyệt lần lượt từng cấp. Manager: duyệt tuần tự 1 → 2 → 3; người đã duyệt thì không còn nút 承認する |
+| Type 04 + Lv0 | LINKSYS STORE00009. MANAGER00001 = Lv0 → duyệt thẳng, không qua cấp khác |
+| Urgent | Vào 編集 trouble → 案件区分 '営業停止案件' → 保存. Không cần duyệt báo giá nhưng vẫn qua 02-07 (作業中) |
+| Key | Store read-key: LINKSYS STORE00001 (TORIDOLL) · Store no-key: LINKSYS STORE00002 (QNAVI) · Worker write-key: linksysworker · Worker no-key: linksysworkerqnavi |
+| Đã chốt | G2 cấu hình đã set sẵn, không đổi · G3 税込 · G12 chainstore · G11 bỏ case 28 (còn 38 case) · G27 ≤ FIX tự duyệt, > FIX người đó duyệt · G28 lưu ở qc/test-cases/e2e-suite |
+
+## 2. Câu mới phát sinh từ thông tin trên
 | # | Câu hỏi | Case | Đề xuất của em |
 |---|---|---|---|
-| G1 | Bảng map vai trò → tài khoản. Cần: chainstore theo từng 承認タイプ 01–04; chainstore manager; CS Admin Lv1, Lv2, Lv3, Lv4 (cao nhất); CS Admin có khoảng tiền (range) và 0→∞; CS Admin Level 0 (thay thế); Store Manager; store read-key; store no-key; worker 2 | 01–39 | type01 → STORE00006 · type02 → STORE00007 · type03 → STORE00008 · type04 稟議 → STORE00004 · auto → STORE00005 · Level 0 → STORE00009 · urgent → STORE00003 · chainstore manager → MANAGER00001 · còn lại anh bổ sung |
-| G2 | 承認タイプ (01–04) của store cấu hình ở đâu? Có đổi được giữa 2 lần 提示 không (case 12: 02→04, 13: 04→02, 15: 01→01, 16: 02→04)? | 01–39 | Mỗi case dùng 1 store cố định đúng type; case đổi type → Admin sửa ở チェーンシステム情報 › store › 編集 giữa 2 lần 提示 |
-| G3 | So sánh với 限度額 theo 税抜 hay 税込? | 01–39 | 税込 (tổng hiển thị ở 見積もり) |
-| G4 | Số tiền cụ thể: case 4 '> fix (¥49,999)' (FIX phải < 49,999?) · case 5 '< ¥5,000 (below min)' — mức tối thiểu type04 cấu hình ở đâu? · case 3, 14, 25 'within range' và case 6 '0→∞' — khoảng tiền của người duyệt cấu hình ở đâu? · case 6 '> fix (high)' bao nhiêu? | 03, 04, 05, 06, 14, 25 | Đọc cấu hình trên app (như Q4) rồi chọn số, ghi vào data |
-| G23 | Được phép sửa 限度額 / toggle ナビ của Linksys trên môi trường test không? Có cần trả lại giá trị cũ cuối mỗi case không? | 08, 09, 27 (+ TC-001 mọi case) | Được sửa; cuối case trả lại FIX cũ |
+| N1 | Type 04: số tiền nào cần mấy cấp? Anh ghi "≤ 50,000 → duyệt 3 cấp", nhưng Lv4 = 50,000. Em hiểu: ≤ 20,000 → Lv1 · ≤ 30,000 → Lv1–2 · ≤ 40,000 → Lv1–3 · ≤ 50,000 → Lv1–4, đúng không? | 04, 09, 10, 11, 12, 13, 17, 22, 26 | Theo cách hiểu trên; case 4 (¥49,999) → 4 cấp |
+| N2 | STORE00009: anh ghi MANAGER00001 = Lv0, nhưng cuối lại ghi "lv0 là empty"; Lv4 và Lv5 đều là MANAGER00004 — có nhầm không? | 07 | Lv0 = MANAGER00001 |
+| N3 | Type 03 dùng store nào? | 03, 06, 14, 25 | LINKSYS STORE00008 (APPROVE TYPE 3) |
+| N4 | Vì không đổi được cấu hình (G2): store nào KHÔNG có 限度額 (case 8; Continue của 9, 27)? | 08, 09, 27 | — |
+| N5 | Vì không đổi được 承認タイプ: các case "đổi type khi 再提示" (12: 02→04, 13: 04→02, 16: 02→04) làm thế nào? | 12, 13, 16 | Bỏ phần đổi type, chỉ giữ 差し戻し / 取り下げ / 再提示 trên 1 store |
+| N6 | Store read-key 00001 và no-key 00002: 承認タイプ là gì, ai duyệt? "Read-key store approves" là đăng nhập tài khoản store (linksysstore00001) để duyệt? | 29–34 | Đăng nhập tài khoản store |
+| N7 | Vai trò 'Chain Store' và 'CS Admin' (người duyệt báo cáo / thanh toán 作業完了確認) đăng nhập bằng tài khoản nào? | 01–39 | Chain Store = tài khoản store của case; CS Admin = manager quản lý store đó |
+| N8 | 'chainstore manager' tạo trouble: tài khoản manager nào? | 02–07, 09–11, 16–18, 22, 23, 26, 37, 38 | MANAGER00001 |
+| N9 | 'Store Manager' (case 10, 13, 35–39) là ai? | 10, 13, 35–39 | — |
+| N10 | Case 5 '< ¥5,000 below min, auto-approve': store nào, mức tối thiểu ở đâu? | 05 | STORE00005 (AUTO APPROVE), số tiền ¥4,999 |
+| N11 | G23 anh ghi "nên bỏ mặc định": nghĩa là KHÔNG sửa 限度額 / toggle (dùng cấu hình sẵn), hay được sửa và không cần trả lại? | 01–39 | Chỉ bật/tắt トラブルNAVI và シサンNAVI; không sửa 限度額 |
+| N12 | Case 34 (no-key: '承認する' disabled) và 31 (kiểm mã hoá) có số tiền ≤ FIX → tự duyệt theo G27, nên không kiểm được nút của người duyệt. Đổi 2 case này sang > FIX? | 31, 34 | Đổi sang > FIX |
+| N13 | Type 04: dùng tài khoản manager duyệt tuần tự hay Admin bấm hộ từng cấp? | 04, 07, 09–13, 16, 17, 22, 26 | Manager duyệt tuần tự (đúng nghiệp vụ); Admin chỉ dùng ở case ghi 'Admin' |
 
-## B. Tạo trouble
+## 3. Câu cũ còn mở
 | # | Câu hỏi | Case | Đề xuất |
 |---|---|---|---|
-| G5 | Tạo trouble 緊急 (urgent) thế nào? Radio '至急' trong トラブルナビ có phải là cờ urgent không? Case thường (không urgent) thì chọn radio nào? Continue urgent (20, 21, 23) bật ở đâu? | 24 case có トラブルナビ / urgent | — |
-| G6 | トラブルナビ OFF → tạo bằng form web như file CSV (作業依頼登録 → chọn store → 作業項目 → 故障詳細), đúng không? Admin tạo trouble khi トラブルナビ ON cũng dùng form web? | 15 case | Đúng như CSV; admin luôn dùng form web |
-| G12 | Case 34: 'Trouble creator' ghi 'CMS Web' (có vẻ nhầm cột) → ai tạo? | 34 | chainstore |
-| G29 | Case 37: シサンNAVI ON nhưng トラブルナビ OFF → chọn tài sản ở form web giống CSV bước 17–37? | 37 | Đúng như CSV |
-| G11 | Case 28: tạo trouble 'OLD version' thế nào? | 28 | — |
-
-## C. Báo giá và duyệt
-| # | Câu hỏi | Case | Đề xuất |
-|---|---|---|---|
-| G27 | 16 case có số tiền ≤ FIX (→ tự duyệt theo Q5) nhưng cột 'Approver' lại ghi người duyệt cụ thể (vd 27 Chain Store, 31 read-key store, 34 no-key store, 35–39 Store Manager; Continue của 01, 04, 24–31). Giữ tự duyệt hay đổi số tiền thành > FIX để người đó duyệt? Đặc biệt 31, 34 (kiểm key) cần có người duyệt | 01, 04, 24–31, 34–39 | 31, 34: đổi thành > FIX; còn lại giữ tự duyệt |
-| G20 | 稟議: mỗi cấp Lv1 → Lv3 duyệt bằng tài khoản riêng, hay Admin duyệt hộ lặp tới 承認済み như phase007 (P6)? | 04, 07, 09, 10, 12, 16, 17, 26 | Tài khoản riêng nếu có (G1), không thì Admin duyệt hộ |
-| G21 | Case 7 'Level 0 substitute approver' là cấu hình gì, kiểm điều gì? | 07 | — |
-| G22 | Case 2 'Type02 multi-level, highest must approve': cấp thấp bấm 承認する thì trạng thái thế nào? | 02 | Cấp thấp duyệt → vẫn 承認待ち; cấp cao nhất duyệt → 承認済み |
-| G14 | 'non-target → 失効' khi chỉ có 1 báo giá (12, 29, 33) / 'approved → 失効' (16): báo giá nào bị 失効? Re-edit có tạo bản mới không? | 12, 16, 29, 33 | — |
-| G15 | Case 17: 3 báo giá '1 approve → 2 失効 (下書き kept)' — 提示 mấy cái, giữ nháp mấy cái? Case 22: 3 báo giá urgent | 17, 22 | 17: 提示 2 + giữ 1 nháp? |
-| G16 | Case 18 'bulk submit → 1 notification': trên CMS kiểm '1 notification' ở đâu (push không thấy trên CMS)? | 18 | Chỉ kiểm hộp xác nhận liệt kê 3 báo giá + 3 dòng 承認待ち; push để manual |
-| G17 | Case 22 (urgent, không cần duyệt): ai duyệt 1 báo giá để 2 cái còn lại 失効? | 22 | Admin duyệt hộ |
-| G24 | Quy tắc Q5 (≤ 限度額 → tự duyệt) áp cho cả Continue? | 01–39 | Có (đã áp) |
-| G13 | Case 10: dòng 14 ghi 'fix both NEW and CONTINUE', dòng 78 ghi 'fix only CONTINUE' — đúng là cái nào? | 10 | Theo dòng 14 (cả 2) |
-
-## D. Key / mã hoá
-| # | Câu hỏi | Case | Đề xuất |
-|---|---|---|---|
-| G18 | Kiểm key trên CMS: no-key thấy số tiền '0', chữ '***' (README dự án) — đúng không? Nút của no-key: '承認する' disabled, '差し戻し' (file ghi '承認しない') enabled? | 29, 31, 33, 34 | Đúng như README |
-| G19 | Worker 'No key' (13, 14, 26, 28, 32, 33): báo giá do Admin tạo thay trên CMS nên không kiểm được phía worker → bỏ phần kiểm worker? | 13, 14, 26, 28, 32, 33 | Bỏ, ghi chú manual |
-
-## E. Thiết bị / vai trò đặc biệt
-| # | Câu hỏi | Case | Đề xuất |
-|---|---|---|---|
-| G25 | Case 24 iOS, 25 Android, 27 cross-device: phần thiết bị không test (báo giá admin tạo trên CMS) — OK? | 24, 25, 27 | OK, ghi chú manual / Appium sau |
-| G9 | Case 24: các dòng 'duyệt NEW', 'báo cáo', 'kết quả NEW' ghi 🚫 → NEW dừng ở bước nào rồi sang Continue? | 24 | — |
-| G10 | Case 26: Worker Company (05) đăng nhập CMS tự tạo báo giá được không, hay Admin tạo thay? | 26 | Admin tạo thay |
-| G8 | Admin / Sub Admin là người thanh toán (作業完了確認) trên CMS được không? | 24, 25, 30, 35 | — |
-| G26 | Case 39 'report with attach PDF': đính PDF ở hộp 報告書 (như phase007 TC-038)? File nào? | 39 | test1.pdf ở hộp 報告書 |
-| G7 | Worker thứ 2 để đổi 作業スタッフ ở Continue (変更あり) | 31 case | — |
-
-## F. Tổ chức file
-| # | Câu hỏi | Đề xuất |
-|---|---|---|
-| G28 | Lưu ở projects/qnavi/qc/test-cases/e2e-suite/E2E-NN-<tên>-test-cases.md, mã TC 'E2ENN-TC-NNN' | OK |
+| G6 | トラブルNAVI OFF → tạo trouble bằng form web như file CSV? Admin tạo trouble luôn dùng form web? | 15 case | Đúng như CSV |
+| G7 | Worker thứ 2 khi đổi 作業スタッフ (変更あり) | 31 case | linksysworkerqnavi (lưu ý: đổi sang worker no-key) |
+| G8 | Admin / Sub Admin làm 作業完了確認 (thanh toán) trên CMS được không? | 24, 25, 30, 35 | — |
+| G9 | Case 24: các dòng NEW ghi 🚫 → NEW dừng ở đâu rồi sang Continue? | 24 | — |
+| G10 | Case 26: Worker Company (05) tự tạo báo giá trên CMS hay Admin tạo thay? | 26 | Admin tạo thay |
+| G13 | Case 10: 'fix both' (dòng 14) hay 'fix only CONTINUE' (dòng 78)? | 10 | fix both |
+| G14 | 'non-target → 失効' khi chỉ có 1 báo giá (12, 29, 33) và 'approved → 失効' (16): báo giá nào bị 失効? | 12, 16, 29, 33 | — |
+| G15 | Case 17: 3 báo giá '1 duyệt → 2 失効, 下書き giữ lại' → 提示 mấy cái? Case 22: urgent 3 báo giá | 17, 22 | 17: 提示 3, duyệt 1 → 2 失効 |
+| G16 | Case 18 'bulk → 1 notification': trên CMS kiểm ở đâu? | 18 | Chỉ kiểm hộp xác nhận 3 báo giá; push để manual |
+| G17 | Case 22 (urgent, không cần duyệt): ai duyệt 1 báo giá để các cái khác 失効? | 22 | Admin |
+| G18 | No-key thấy số tiền '0', chữ '***'; nút '承認する' disabled, '差し戻し' enabled — đúng không? | 29, 31, 33, 34 | Đúng như README dự án |
+| G19 | Case 'Worker NO key' (32, 33): gán linksysworkerqnavi làm 作業者? | 13, 14, 26, 32, 33 | Gán linksysworkerqnavi |
+| G24 | ≤ FIX tự duyệt áp cho cả Continue? | 01–39 | Có |
+| G25 | Case 24, 25, 27 (iOS / Android / cross-device): phần thiết bị không test — OK? | 24, 25, 27 | OK |
+| G26 | Case 39: đính PDF ở hộp 報告書 (như phase007 TC-038), file test1.pdf? | 39 | OK |
+| G29 | Case 37 (シサンNAVI ON, トラブルNAVI OFF): em tự xem trên app — cần anh đăng nhập Browser pane (dev) | 37 | — |

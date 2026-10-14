@@ -73,7 +73,7 @@ export default defineConfig({
     {
       name: 'cms',
       testMatch: /tests\/cms\/.*\.spec\.ts/,
-      testIgnore: [/tests\/cms\/e2e-.*\.spec\.ts/, /tests\/cms\/phase\d+-.*\.spec\.ts/, /tests\/cms\/recon\.spec\.ts/],
+      testIgnore: [/tests\/cms\/e2e-.*\.spec\.ts/, /tests\/cms\/phase\d+-.*\.spec\.ts/, /tests\/cms\/recon.*\.spec\.ts/],
       dependencies: ['setup'],
       use: { ...devices['Desktop Chrome'] },
     },
@@ -94,7 +94,7 @@ export default defineConfig({
     {
       // Đi qua màn hình, không lưu dữ liệu, ghi aria snapshot → reports/recon-<run>/ (lấy locator thật).
       name: 'recon',
-      testMatch: /tests\/cms\/recon\.spec\.ts/,
+      testMatch: /tests\/cms\/recon.*\.spec\.ts/,
       use: { ...devices['Desktop Chrome'] },
     },
   ],

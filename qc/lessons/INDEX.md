@@ -14,6 +14,7 @@
 - D11 Trước khi đưa ticket vào scope: check role scope của ticket, release phase, ticket cha/con.
 - D12 Check duplicate theo nội dung (không chỉ theo ID) và trace 2 chiều VP ↔ TC (không VP rỗng, không TC trỏ VP không tồn tại).
 - D14 Nhập TC E2E từ file ngoài (CSV viết tay…): đối chiếu từng bước với catalog / màn hình thật, bổ sung bước bắt buộc bị bỏ. (design/2026-10-12-e2e-missing-ui-step.md)
+- D17 Luồng lấy từ CSV / app mobile: đối chiếu màn CMS web (catalog / recon) trước khi LOCK; mỗi nhánh điều kiện (ON / OFF, category…) có bước riêng, không dùng chung 1 template khi sinh TC bằng script. (design/2026-10-14-e2e-branch-flow-template.md)
 - D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
 
 ## Excel / công cụ

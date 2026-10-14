@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- Lesson QC D17 (TC sinh bằng script phải tách bước theo nhánh, đối chiếu màn CMS web) từ e2e-suite TC-002; TC e2e-suite rev 3 (DRAFT)
 - Nguồn message Qnavi: raw/List messages.xlsx → spec/messages.md (6 sheet), sources.md mã MSG; luật đối chiếu message khi viết TC và automation (D23)
 - [auto] Automation Phase 007 Regression (65 TC): tests/cms/phase007-regression.spec.ts, screen mới chain-system, asset-column, subadmin, task/chat/asset-info; common/scenario.ts (khung chạy nối tiếp dùng chung); npm run p007
 - [auto] E2E quay video cả lần chạy (reports/Runs/<run>/video, chỉ giữ khi có fail); FAIL.md có link video + mốc thời gian + cách mở trace

@@ -1,7 +1,7 @@
 # Test case — E2E-00 · Common setup (cấu hình chain Linksys)
 - Project: qnavi · Scope Key: e2e-suite · Sheet prefix: E2E00
 - Source: QUESTIONS.md (C4: トラブルナビ luôn ON · N11: chỉ bật/tắt シサンNAVI · G29) — tiền đề chung của mọi case E2E.
-- State: LOCKED · Revision: 2 · Approved by / at: Hieu Nguyen / 14/10/2026
+- State: LOCKED · Revision: 3 · Approved by / at: Hieu Nguyen / 14/10/2026
 - Dùng: TC-001 (シサンNAVI OFF) là tiền đề của 35 case; TC-002 (シサンNAVI ON) là tiền đề của E2E-37, E2E-38. Chạy lẻ 1 case → chạy TC common tương ứng trước.
 - シサンNAVI là cấu hình chung của chain → không chạy song song case nhóm OFF với nhóm ON.
 

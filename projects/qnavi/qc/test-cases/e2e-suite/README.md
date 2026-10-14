@@ -1,6 +1,6 @@
-# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 2, 14/10/2026)
+# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 3, 14/10/2026)
 
-Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–6) + quy tắc R1–R20. Sinh bằng _tools/gen_e2e.py.
+Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–7) + quy tắc R1–R20 + T1–T5. Sinh bằng _tools/gen_e2e.py.
 Bỏ case 16 (G14) và case 28 (G11).
 
 ## Thứ tự chạy
@@ -19,7 +19,7 @@ Tổng: 38 file · 562 TC.
 | E2E-05 | Type04 auto-approve / (< ¥5,000 below min) | LINKSYS STORE00005 | 15 | [E2E-05-type04-auto-approve-test-cases.md](E2E-05-type04-auto-approve-test-cases.md) |
 | E2E-06 | Type03 full-permission / account (range 0→∞) | LINKSYS STORE00008 | 15 | [E2E-06-type03-full-permission-test-cases.md](E2E-06-type03-full-permission-test-cases.md) |
 | E2E-07 | Type04 Level 0 / substitute approver | LINKSYS STORE00009 | 15 | [E2E-07-type04-level-0-test-cases.md](E2E-07-type04-level-0-test-cases.md) |
-| E2E-08 | fix_amount NOT set / (none) both phases | LINKSYS STORE00001 | 15 | [E2E-08-fix-amount-not-set-test-cases.md](E2E-08-fix-amount-not-set-test-cases.md) |
+| E2E-08 | fix_amount NOT set / (none) both phases | LINKSYS STORE00002 | 15 | [E2E-08-fix-amount-not-set-test-cases.md](E2E-08-fix-amount-not-set-test-cases.md) |
 | E2E-09 | fix only NEW / (continue none) | LINKSYS STORE00005 | 15 | [E2E-09-fix-only-new-test-cases.md](E2E-09-fix-only-new-test-cases.md) |
 | E2E-10 | fix both NEW and CONTINUE | LINKSYS STORE00005 | 15 | [E2E-10-fix-both-new-and-continue-test-cases.md](E2E-10-fix-both-new-and-continue-test-cases.md) |
 | E2E-11 | Boundary / est amount == fix | LINKSYS STORE00004 | 15 | [E2E-11-boundary-test-cases.md](E2E-11-boundary-test-cases.md) |

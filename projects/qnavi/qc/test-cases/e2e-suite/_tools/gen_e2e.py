@@ -7,7 +7,8 @@ HERE = os.path.dirname(__file__)
 C = json.load(open(os.path.join(HERE, 'cases.json')))
 BR = '<br>'
 SKIP = {16, 28}
-LOCK = '- State: LOCKED · Revision: 2 · Approved by / at: Hieu Nguyen / 14/10/2026'
+LOCK = '- State: LOCKED · Revision: 3 · Approved by / at: Hieu Nguyen / 14/10/2026'
+TYPE_LABEL = {'01': '個人承認', '02': '階層承認（No順）', '03': '金額承認', '04': '金額と階層承認 (No順)'}   # T3: chữ trên app (recon toridoll-test 14/10)
 
 def slug(s):
     s = re.sub(r'[^A-Za-z0-9]+', '-', s.split('/')[0]).strip('-').lower()
@@ -20,7 +21,7 @@ LAST_MGR = {'00006': '00005', '00007': '00002', '00008': '00005', '00004': '0000
 def store_of(no, typ, role=''):
     """Store của trouble. Case key 29–34: chỉ dùng STORE00001 (confirm 14/10)."""
     if no in (5, 9, 10, 27): return '00005'
-    if no == 8: return '00001'           # N17: store không có 限度額
+    if no == 8: return '00002'           # T4 (rev 3): store không có 限度額, 決済承認 許可する
     if no == 7: return '00009'
     if 29 <= no <= 34: return '00001'
     return TYPE_STORE[typ]
@@ -43,7 +44,7 @@ def person(role, st):
 def amount(cat, fix, st):
     c = cat.strip().lower()
     if fix == 'no' or 'no limit' in c:
-        if st == '00001': return ('total = ¥10,000 (store has no 限度額)', False)
+        if st == '00002': return ('total = ¥10,000 (store has no 限度額)', False)
         return ('total = FIX + 1 (cột gốc "no limit"; STORE00005 vẫn có FIX — N17)', False)
     if c.startswith('<='): return ('total = FIX − 1', True)
     if 'equal' in c: return ('total = FIX (boundary)', True)
@@ -61,7 +62,7 @@ def approvers(no, typ, st, role, amt):
     if r.startswith('sub admin'): return ['CMS SubAdmin (98)']
     if st == '00005':
         return [store_acc('00005')] if r.startswith('chain store') else [mgr('00001')]
-    if st in ('00001', '00002'): return [store_acc('00001')]       # không có approve type → read-key store duyệt
+    if st in ('00001', '00002'): return [store_acc(st)]            # không có approve type → chính store duyệt
     if st == '00009': return [mgr('00001') + ' (Lv0)']
     if typ == '01': return [mgr('00005')]
     if typ == '02': return [mgr('00001'), mgr('00002')]
@@ -84,7 +85,7 @@ def build(d):
     sname = f'LINKSYS STORE{st}'
     fix_new = 'yes' if d['32'].startswith('あり') else 'no'
     fix_cont = 'yes' if d['60'].startswith('あり') else 'no'
-    if st == '00001' and no == 8: fix_new = fix_cont = 'no'
+    if no == 8: fix_new = fix_cont = 'no'
     urgent_new = d['12'] == '✅'; urgent_cont = d['13'] == '✅' or d['53'] == '✅'
     navi_csv = d['28'] == 'ON'; asset_navi = d['29'] == 'ON'
     creator = d['19'] if d['19'] != 'CMS Web' else 'chainstore'    # G12
@@ -113,7 +114,7 @@ def build(d):
     elif st == '00005':
         s.append(f"2. Scroll to store list → open '{sname}' → Verify: auto approve is set (N16)")
     else:
-        s.append(f"2. Scroll to store list → open '{sname}' → Verify: 承認タイプ = {typ if st != '00009' else '04 (with Lv0)'}")
+        s.append(f"2. Scroll to store list → open '{sname}' → Verify: 承認タイプ = '{TYPE_LABEL['04' if st == '00009' else typ]}'" + (' (Lv0 setting)' if st == '00009' else ''))
     if fix_new == 'no':
         s.append("3. Verify: '限度額' is empty (store has no 限度額 — N17)")
         expx = 'store has no 限度額'
@@ -131,15 +132,25 @@ def build(d):
         who = store_acc(st) if creator == 'chainstore' else store_mgr(st)
         q += ['N8'] if creator == 'chainstore manager' else []
         if st == '00006' and creator == 'chainstore manager': q.append('N18')
-        cat = '水' if navi_csv else '操作テスト'
-        s = [f'1. Login {who} → Verify: Dashboard',
-             f"2. Menu '作業依頼登録' → select big category '{cat}' → Verify: webview トラブルナビ opens" + ('' if navi_csv else " (cột gốc トラブルナビ OFF → category '操作テスト' — C4)"),
-             "3. Select '中項目', '小項目', '症状'" + (", '資産' (field shown because シサンNAVI ON) → select asset 'TEST AUTOMATION'" if asset_navi else " (no field '資産' because シサンNAVI OFF)") + " → '次へ'",
-             "4. Click 'このまま依頼する' → click 'このまま依頼する' again",
-             "5. Upload 'hieu6.jpg', input text 'AUTOMATION' → click next (icon button)",
-             "6. Select radio '至急' → click '依頼する'",
-             "7. Click 'トップ画面に戻る' → Verify: Dashboard; record 依頼番号"]
-        scr = '作業依頼登録 (トラブルナビ)'
+        step1 = ([f"2. Menu '作業依頼登録' → Step 1 店舗 shows '{sname}' → '担当者選択' → first row → '選択' → '次へ'"] if creator == 'chainstore' else
+                 [f"2. Menu '作業依頼登録' → Step 1 'チェーン店舗選択' → search 店名 '{sname}' → '選択' → '担当者選択' → first row → '選択' → '次へ'"])
+        if navi_csv:   # T2: thẻ '水' → webview トラブルNAVI (iframe)
+            s = [f'1. Login {who} → Verify: Dashboard'] + step1 + [
+                 "3. Step 2 作業項目選択: card 故障内容 '選択' → click '水' → Verify: webview 'トラブル相談内容' opens, 大項目 = '水'",
+                 "4. Select '中項目', '小項目', '症状'" + (", '資産' (field shown because シサンNAVI ON) → select asset 'TEST AUTOMATION'" if asset_navi else " (no field '資産' because シサンNAVI OFF)") + " → '次へ'",
+                 "5. Click 'このまま依頼する' → click 'このまま依頼する' again",
+                 "6. Upload 'hieu6.jpg', input text 'AUTOMATION' → click next (icon button)",
+                 "7. Select radio '至急' → click '依頼する'",
+                 "8. Click 'トップ画面に戻る' → Verify: Dashboard; record 依頼番号"]
+            scr = '作業依頼登録 (トラブルナビ)'
+        else:          # T1: '操作テスト' → luồng CMS thường, không webview
+            s = [f'1. Login {who} → Verify: Dashboard'] + step1 + [
+                 "3. Step 2 作業項目選択: card 故障内容 '選択' → '操作テスト' → 故障個所 'トイレ（テスト）' → 故障症状 'つまり：大便器（テスト）' (cột gốc トラブルNAVI OFF → category '操作テスト', no webview — C4)"]
+            if asset_navi:
+                s.append("4. Tick '対象資産がある場合はチェックを入れてください' → '修理対象資産選択' → '新しい機器を登録する' → 名称 'Automation Asset', 型式 'TVB005', 製造番号 '100014914', photo 'hieu5.jpg' → '保存' → '決定' → 'OK' → '選択' row 'Automation Asset' → '決定する'")
+            s += [f"{len(s)+1}. '次へ' → Step 3 故障詳細: upload 'hieu6.jpg', 故障詳細記入欄 'AUTOMATION'",
+                  f"{len(s)+2}. '決定して問合わせ' → '決定' (if date error: '明日以降', 開始 4:00) → 'OK' → minimize chat; record 依頼番号"]
+            scr = '作業依頼登録'
     else:
         who = 'CMS Admin (99)'
         s = ['1. Login Admin (99)', "2. Menu '作業依頼登録' → '新規依頼' → '次へ'",
@@ -345,7 +356,9 @@ def build(d):
             auto_tc('cont', cnames[0], '見積承認済', approver_c)
         else:
             apps = approvers(no, typ, st, approver_c, amt_c)
-            approve_seq('cont', cnames[0], apps, ringi_new, '見積承認済', admin_branch_new)
+            lv1_only = len(cnames) > 1 and apps == ['DYN']   # case 17: ≤ FIX dưới ngưỡng Lv1 → MANAGER00001 (Lv1) duyệt (rev 3)
+            if lv1_only: apps = [mgr('00001') + ' (Lv1)']
+            approve_seq('cont', cnames[0], apps, ringi_new and not lv1_only, '見積承認済', admin_branch_new)
         if len(cnames) > 1:
             add('Trouble Detail › 見積もり (継続)', 'CONTINUE · Other estimate → 失効', '-', ["1. Reload → '見積もり'"],
                 f"'{cnames[0]}' = '承認済み', '{cnames[1]}' = '失効'", 'CMS Admin (99)')
@@ -385,8 +398,8 @@ def finish(d, n, no, P, v, st, sname, typ, T, dec, notes, amt_n, amt_c, names):
               ('Kết luận gốc', d['78'])]
     head = [f"# Test case — {n} · {v}",
             f"- Project: qnavi · Scope Key: e2e-suite · Sheet prefix: {P}",
-            f"- Source: projects/qnavi/spec/e2e-suite.md › {n} (gốc: raw/Test suite for automation_E2E.xlsx, \"Expanded v2\"). Luồng thao tác: raw/Automation Test AI - Format Main Case.csv, TC LOCKED phase007. Quyết định: QUESTIONS.md lượt 1–6 + quy tắc R1–R20 (14/10/2026).",
-            "- State: LOCKED · Revision: 2 · Approved by / at: Hieu Nguyen / 14/10/2026",
+            f"- Source: projects/qnavi/spec/e2e-suite.md › {n} (gốc: raw/Test suite for automation_E2E.xlsx, \"Expanded v2\"). Luồng thao tác: raw/Automation Test AI - Format Main Case.csv, TC LOCKED phase007. Quyết định: QUESTIONS.md lượt 1–7 + quy tắc R1–R20, T1–T5 (14/10/2026). Môi trường tham chiếu: toridoll-test.",
+            LOCK,
             "- Môi trường: tuỳ biến khi chạy (Q9).",
             "- Ngoại lệ D05: 1 file = 1 kịch bản nối tiếp NEW → CONTINUE → 完了; mỗi TC = 1 giai đoạn. 'Verify:' = điểm kiểm giữa chừng.",
             "- Quy ước chung: báo giá do Admin (99) tạo thay worker trên CMS; worker = linksysworker; FIX = 限度額 (税込) đọc ở TC-001, không sửa; ≤ FIX → tự duyệt cả New và Continue; 承認タイプ theo cấu hình store; báo cáo = đổi trạng thái trên CMS; bỏ 日程承認."]
@@ -425,8 +438,8 @@ def common_setup():
 rows = [common_setup()] + [build(d) for d in C if int(d['id'].split('-')[1]) not in SKIP]
 json.dump(rows, open(os.path.join(HERE, '_index.json'), 'w'), ensure_ascii=False)
 total = sum(r[3] for r in rows)
-readme = ['# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 2, 14/10/2026)', '',
-          'Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–6) + quy tắc R1–R20. Sinh bằng _tools/gen_e2e.py.',
+readme = ['# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 3, 14/10/2026)', '',
+          'Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–7) + quy tắc R1–R20 + T1–T5. Sinh bằng _tools/gen_e2e.py.',
           'Bỏ case 16 (G14) và case 28 (G11).', '',
           '## Thứ tự chạy', '- Chạy lẻ từng case: chạy E2E00-TC-001 (シサンNAVI OFF) trước, riêng E2E-37 / E2E-38 chạy E2E00-TC-002 (シサンNAVI ON) trước.',
           '- Không chạy song song case nhóm OFF với E2E-37 / E2E-38 (シサンNAVI là cấu hình chung của chain).', '',

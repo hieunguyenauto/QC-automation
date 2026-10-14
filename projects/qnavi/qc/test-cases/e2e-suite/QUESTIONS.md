@@ -1,11 +1,22 @@
-# Câu hỏi — E2E suite · cập nhật 14/10/2026 (lượt 6)
+# Câu hỏi — E2E suite · cập nhật 14/10/2026 (lượt 7)
 **Đã chốt hết — không còn câu mở.**
-Suite sau lượt 6 (TC Revision 2): bỏ case 28 (G11) và case 16 (G14) → còn **37 case**.
+Suite sau lượt 7 (TC Revision 3): bỏ case 28 (G11) và case 16 (G14) → còn **37 case**.
 
 ## A. Câu còn mở
 (không còn)
 
 ## B. Đã chốt (không cần trả lời)
+### Lượt 7 (14/10) — khi recon cho automation → TC Revision 3
+| # | Kết quả |
+|---|---|
+| ENV | Môi trường tham chiếu: toridoll-test (est-test lỗi môi trường ở luồng tạo trouble) |
+| FIX | 限度額 (継続依頼にも適用する) đã set: STORE00001 ¥10,000 · 00004 / 00005 / 00006 / 00007 / 00009 ¥20,000 · 00008 ¥5,000 · 00002 trống. 00001 決済承認 = 許可する |
+| T1 | Category '操作テスト' (cột gốc トラブルNAVI OFF) không có webview → TC-002 đi luồng CMS thường (case 04, 09, 26, 37, 39) |
+| T2 | Category '水' → webview 'トラブル相談内容' (iframe); TC-002 thêm Step 1 (store: 担当者選択; manager: チェーン店舗選択 + 担当者選択) |
+| T3 | 承認タイプ theo chữ trên app: 01 個人承認 · 02 階層承認（No順） · 03 金額承認 · 04 金額と階層承認 (No順) |
+| T4 | Case 08 dùng STORE00002 (không 限度額) |
+| T5 | Case 17 Continue (2 báo giá ≤ FIX, không tự duyệt): MANAGER00001 (Lv1) duyệt 1 cái, cái còn lại 失効 |
+
 ### Lượt 6 (14/10) — khi sinh TC Revision 2
 | # | Kết quả |
 |---|---|

@@ -1,6 +1,6 @@
 # 2026-10-13 hasText khớp chuỗi con: dòng 'Test' bắt nhầm 'EnterTest'
 - Loại: LOCATOR
-- Nguồn: @P007-TC-032 (cùng kiểu ở TC-053 dòng E.main) — file: web/tests/cms/phase007-regression.spec.ts (dev)
+- Nguồn: @P007-TC-032 (cùng kiểu ở TC-053 dòng E.main) — file: web/tests/cms/phase007/phase007-regression.spec.ts (dev)
 - Function / màn hình: Trouble Detail › 見積もり管理 (bảng 見積一覧)
 - Triệu chứng: expect dòng 'Test' = '承認待ち' nhận "1EnterTest…下書き…".
 - Nguyên nhân gốc: locator('tr', { hasText: 'Test' }) khớp chuỗi con, không phân biệt hoa thường → dòng 'EnterTest' (TC-028 tạo trước) đứng trên được chọn bởi first().

@@ -1,0 +1,2720 @@
+{
+  "config": {
+    "configFile": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/playwright.config.ts",
+    "rootDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/junit.xml"
+        }
+      ],
+      [
+        "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/common/qc-reporter.ts",
+        {
+          "reportsRoot": "reports",
+          "runDir": "reports/_tmp_chk/all_15-10-2026_03-42-47_est-test",
+          "stamp": "15-10-2026_03-42-47",
+          "envName": "est-test",
+          "baseUrl": "https://cms-test.estimation.qnavi.picontechnology.com"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "setup",
+        "name": "setup",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/common\\/auth\\.setup\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "cms",
+        "name": "cms",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/cms\\/smoke\\/.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [
+          "/tests\\/cms\\/smoke\\//"
+        ],
+        "testMatch": [
+          "/tests\\/cms\\/.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "open",
+        "name": "open",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/open\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/all_15-10-2026_03-42-47_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "recon",
+        "name": "recon",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/recon.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "common/auth.setup.ts",
+      "file": "common/auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "login CMS [CMS SubAdmin]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3301f4c919c7a127ea22-9eb6c04379e868a123c8",
+          "file": "common/auth.setup.ts",
+          "line": 10,
+          "column": 8
+        },
+        {
+          "title": "login CMS [CMS Admin]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3301f4c919c7a127ea22-882ec56f1ec3666c3ec5",
+          "file": "common/auth.setup.ts",
+          "line": 10,
+          "column": 8
+        },
+        {
+          "title": "login CMS [CMS ChainStore Manager]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3301f4c919c7a127ea22-32f428bdd9638f1066d8",
+          "file": "common/auth.setup.ts",
+          "line": 10,
+          "column": 8
+        },
+        {
+          "title": "login CMS [CMS ChainStore]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3301f4c919c7a127ea22-14ed1d6633946a1a95f9",
+          "file": "common/auth.setup.ts",
+          "line": 10,
+          "column": 8
+        },
+        {
+          "title": "login CMS [CMS ManagementCompany]",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "3301f4c919c7a127ea22-287472a429d440e2d8e9",
+          "file": "common/auth.setup.ts",
+          "line": 10,
+          "column": 8
+        }
+      ]
+    },
+    {
+      "title": "tests/cms/smoke/sample-login.spec.ts",
+      "file": "tests/cms/smoke/sample-login.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "[CMS Admin]",
+          "file": "common/roles.ts",
+          "line": 14,
+          "column": 10,
+          "specs": [
+            {
+              "title": "SAMPLE-TC-001 Logged-in user opens CMS home",
+              "ok": true,
+              "tags": [
+                "role-99",
+                "SAMPLE-TC-001"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "cms",
+                  "projectName": "cms",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ec6a3a8c08f7b03a4123-df6dfc9af85efe442969",
+              "file": "tests/cms/smoke/sample-login.spec.ts",
+              "line": 12,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[CMS SubAdmin]",
+          "file": "common/roles.ts",
+          "line": 14,
+          "column": 10,
+          "specs": [
+            {
+              "title": "SAMPLE-TC-001 Logged-in user opens CMS home",
+              "ok": true,
+              "tags": [
+                "role-98",
+                "SAMPLE-TC-001"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "cms",
+                  "projectName": "cms",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ec6a3a8c08f7b03a4123-816bfb38f3eeccf633a2",
+              "file": "tests/cms/smoke/sample-login.spec.ts",
+              "line": 12,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[CMS ChainStore Manager]",
+          "file": "common/roles.ts",
+          "line": 14,
+          "column": 10,
+          "specs": [
+            {
+              "title": "SAMPLE-TC-001 Logged-in user opens CMS home",
+              "ok": true,
+              "tags": [
+                "role-01",
+                "SAMPLE-TC-001"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "cms",
+                  "projectName": "cms",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ec6a3a8c08f7b03a4123-1c8217ac358e27fb049a",
+              "file": "tests/cms/smoke/sample-login.spec.ts",
+              "line": 12,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[CMS ChainStore]",
+          "file": "common/roles.ts",
+          "line": 14,
+          "column": 10,
+          "specs": [
+            {
+              "title": "SAMPLE-TC-001 Logged-in user opens CMS home",
+              "ok": true,
+              "tags": [
+                "role-02",
+                "SAMPLE-TC-001"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "cms",
+                  "projectName": "cms",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ec6a3a8c08f7b03a4123-035d0e3fc518ad5968f9",
+              "file": "tests/cms/smoke/sample-login.spec.ts",
+              "line": 12,
+              "column": 7
+            }
+          ]
+        },
+        {
+          "title": "[CMS ManagementCompany]",
+          "file": "common/roles.ts",
+          "line": 14,
+          "column": 10,
+          "specs": [
+            {
+              "title": "SAMPLE-TC-001 Logged-in user opens CMS home",
+              "ok": true,
+              "tags": [
+                "role-05",
+                "SAMPLE-TC-001"
+              ],
+              "tests": [
+                {
+                  "timeout": 120000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "cms",
+                  "projectName": "cms",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "ec6a3a8c08f7b03a4123-4cb67c29e17faeb2c75e",
+              "file": "tests/cms/smoke/sample-login.spec.ts",
+              "line": 12,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "tests/cms/e2e-suite/E2E-00.spec.ts",
+      "file": "tests/cms/e2e-suite/E2E-00.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E00-TC-001 COMMON · Linksys: トラブルナビ ON, シサンNAVI OFF",
+          "ok": true,
+          "tags": [
+            "E2E00-TC-001",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5845f3bb96aec3685d36-793dd32d3bf0cb762fba",
+          "file": "tests/cms/e2e-suite/E2E-00.spec.ts",
+          "line": 15,
+          "column": 7
+        },
+        {
+          "title": "E2E00-TC-002 COMMON · Linksys: トラブルナビ ON, シサンNAVI ON",
+          "ok": true,
+          "tags": [
+            "E2E00-TC-002",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5845f3bb96aec3685d36-aced7e1a002726cfd841",
+          "file": "tests/cms/e2e-suite/E2E-00.spec.ts",
+          "line": 15,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "tests/cms/e2e-suite/E2E-01.spec.ts",
+      "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E01-TC-001 SETUP · LINKSYS STORE00006; 限度額 read",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-001",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-2c490010aaed1785e86d",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-002 NEW · chainstore creates trouble (トラブルナビ)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-002",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-1a9c1e7ac88f6fc83cfe",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-003 NEW · Admin: 対応中 + assign worker",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-003",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-48a1bd0c1a0154d70873",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-004",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-0fb7930be7754279595d",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-005 NEW · Create 1 estimate (total = FIX − 1) and 提示",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-005",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-4e36e7d0993058c26908",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-006 NEW · ≤ FIX → auto approve (no approver)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-006",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-aea40fa5a3274729905b",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-007",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-aff0920149e600abd9e5",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-008 NEW · Chain Store 確認・決済 → 完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-008",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-880df9896a10c5443b54",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-009 CONTINUE · subadmin creates 継続依頼 '_2'",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-009",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-4d485fe6c88d0de6c8c2",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-010",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-819d5aa2fd87a837d401",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-011 CONTINUE · Create 1 estimate (total = FIX − 1) and 提示",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-011",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-542a817c919129800046",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-012",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-dd97550ff13bfe6c4cf7",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-013",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-3ae0a2cf8136ab0375d8",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-014 CONTINUE · 報告済 (02-90)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-014",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-01bdc5c1ad1b341969cb",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-015 CONTINUE · Chain Store 確認・決済 → 完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-015",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-bcd2e27e9799945c8087",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 25,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+      "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E-TC-001 Login as admin",
+          "ok": true,
+          "tags": [
+            "E2E-TC-001",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-b3c8745d265c0850654c",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 127,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-002 Create trouble",
+          "ok": true,
+          "tags": [
+            "E2E-TC-002",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-0614c8eb272b0266df62",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 142,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-003 Trouble detail and edit 対応区分",
+          "ok": true,
+          "tags": [
+            "E2E-TC-003",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-d10d4478ee4f5c507451",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 228,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-004 状態 = 対応中 and assign worker",
+          "ok": true,
+          "tags": [
+            "E2E-TC-004",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-f7030ef983bd76f0a966",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 267,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-005 受注 → 移動中 → 到着",
+          "ok": true,
+          "tags": [
+            "E2E-TC-005",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-df16d741d416e950dc44",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 298,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-006 Create estimate Test and submit",
+          "ok": true,
+          "tags": [
+            "E2E-TC-006",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-28ecd58ee2e38b385ef9",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 314,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-007 取り下げ申請 → 取り下げ承認 → 承認",
+          "ok": true,
+          "tags": [
+            "E2E-TC-007",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-a2936120c9b1f9f36a70",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 355,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-008 作業完了",
+          "ok": true,
+          "tags": [
+            "E2E-TC-008",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-5009cc22458ae780508e",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 398,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-009 報告済 and input 報告書",
+          "ok": true,
+          "tags": [
+            "E2E-TC-009",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-757dd831b6aad8fab17e",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 410,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-010 Admin views 報告書 and downloads",
+          "ok": true,
+          "tags": [
+            "E2E-TC-010",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-305c6a0e2e7c32ff87e1",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 461,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-011 Logout, login as chain store manager",
+          "ok": true,
+          "tags": [
+            "E2E-TC-011",
+            "role-01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-61341c7470b26bca5a3b",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 488,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-012 Manager views estimate and history",
+          "ok": true,
+          "tags": [
+            "E2E-TC-012",
+            "role-01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-a9eeac48e7f6b03e407d",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 509,
+          "column": 5
+        },
+        {
+          "title": "E2E-TC-013 Manager 作業完了確認",
+          "ok": true,
+          "tags": [
+            "E2E-TC-013",
+            "role-01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "07c04ce30301d0f947a0-934a27877dc5d271cff7",
+          "file": "tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts",
+          "line": 537,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "tests/cms/phase007/phase007-regression.spec.ts",
+      "file": "tests/cms/phase007/phase007-regression.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "P007-TC-001 Login admin",
+          "ok": true,
+          "tags": [
+            "P007-TC-001",
+            "role-none"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-daba5dacc65d1fa6306b",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-002 #2 · 2296 · 店舗別作業項目DL confirm dialog says CSV",
+          "ok": true,
+          "tags": [
+            "P007-TC-002",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-289b0621ccfd942a78c7",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-003 #3 · 2174-01 · タイマー形式 年月",
+          "ok": true,
+          "tags": [
+            "P007-TC-003",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-ae5c6d0b5fd4b432a6d3",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-004 #4 · 2174-02 · タイマー形式 年月日",
+          "ok": true,
+          "tags": [
+            "P007-TC-004",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-cc91d24c4fc414668a3c",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-005 #5 · 2174-03 · タイマー形式 年月日時",
+          "ok": true,
+          "tags": [
+            "P007-TC-005",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-6d1bfd2d174159502f31",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-006 #6 · 1706-02 · Enter repeatedly in フィルタ名",
+          "ok": true,
+          "tags": [
+            "P007-TC-006",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-6e8f989330dd59c725da",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-007 #7 · 1706-03 · Enter repeatedly in chat search",
+          "ok": true,
+          "tags": [
+            "P007-TC-007",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-c29e031a3d1db5346a14",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-008 #8 · 1388-01 · Subadmin detail shows 症状グループ",
+          "ok": true,
+          "tags": [
+            "P007-TC-008",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-5335591b7775e5dd2810",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-009 #9 · 1388-02 · Add subadmin form has no 症状グループ",
+          "ok": true,
+          "tags": [
+            "P007-TC-009",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-6d9cd2cb595bb1658149",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-010 #10 · 1388-03 · Empty 症状グループ名 → error",
+          "ok": true,
+          "tags": [
+            "P007-TC-010",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-f524f3306bb1f45964fb",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-011 #11 · 1388-04 · Add 症状グループ AT_Group_<time>",
+          "ok": true,
+          "tags": [
+            "P007-TC-011",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-df136bf0057d47994496",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-012 #12 · 1388-05 · 表示件数 = 0",
+          "ok": true,
+          "tags": [
+            "P007-TC-012",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-8e07f2c582a1aa673182",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-013 #13 · 1388-06 · Import store CSV (追加のみ)",
+          "ok": true,
+          "tags": [
+            "P007-TC-013",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-c62940b8abb004671213",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-014 #14 · 1388-07 · Import empty CSV → error",
+          "ok": true,
+          "tags": [
+            "P007-TC-014",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-e6ef9455f89e9ea459c2",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-015 #15 · 1388-08 · Admin sees 症状一覧DL",
+          "ok": true,
+          "tags": [
+            "P007-TC-015",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-26629f85fbcc24bd1ee1",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-016 #16 · Create T1 (605-28)",
+          "ok": true,
+          "tags": [
+            "P007-TC-016",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-6a4cacbd2dd05c8002ac",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-017 #17 · Trouble detail of T1 (605-34)",
+          "ok": true,
+          "tags": [
+            "P007-TC-017",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-a916421b0e6bbb93d9a7",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-018 #18 · 2132-01 · 戻る from detail returns to タスク管理",
+          "ok": true,
+          "tags": [
+            "P007-TC-018",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-64b70f6662fadb6b0109",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-019 #19 · 2132-02 · Edit keeps from=task",
+          "ok": true,
+          "tags": [
+            "P007-TC-019",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-3543440a9f7e38eeb8c8",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-020 #20 · 2132-03 · 戻る returns to 資産詳細 (also after 編集)",
+          "ok": true,
+          "tags": [
+            "P007-TC-020",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-6e39b786b257fcbf47e1",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-021 #21 · 2132-04 · 戻る keeps tab 自動マッチング",
+          "ok": true,
+          "tags": [
+            "P007-TC-021",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-961fcf3a79cb3423d8a6",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-022 #22 · 2132-05 · 戻る returns to チャット一覧 (すべて, 自分宛て)",
+          "ok": true,
+          "tags": [
+            "P007-TC-022",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-fa6766b5666f9dcaaae8",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-023 #23 · 2132-06 · 戻る from 作業依頼情報 and plain URL",
+          "ok": true,
+          "tags": [
+            "P007-TC-023",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-a3c8f278f0dff8cdd962",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-024 #24 · 2285-02 · 資産チェック ON with ≥1 asset can be saved",
+          "ok": true,
+          "tags": [
+            "P007-TC-024",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-0e9746ea2ecd76097c5c",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-025 #25 · 2164-01 · Send long chat message, minimize / reopen",
+          "ok": true,
+          "tags": [
+            "P007-TC-025",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-f4774bd4e623104234b1",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-026 #27 · 対応中 + assign LINKSYS WORKER (2057-02)",
+          "ok": true,
+          "tags": [
+            "P007-TC-026",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-08fe235fd622efb64e91",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-027 #28 · 受注 → 移動中 → 到着",
+          "ok": true,
+          "tags": [
+            "P007-TC-027",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-f3a41752386681ddeff8",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-028 #29 · 1706-01 · Enter repeatedly in 見積名 → 1 estimate",
+          "ok": true,
+          "tags": [
+            "P007-TC-028",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-b948c4a8e2d8b197b5c1",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-029 #30 · 1771-01 · Add 部材 item",
+          "ok": true,
+          "tags": [
+            "P007-TC-029",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-795b58f772b4a6790354",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-030 #31 · 1771-02 · Add 諸経費 item",
+          "ok": true,
+          "tags": [
+            "P007-TC-030",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-6204cc1ca7ddc1e73899",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-031 #32 · 1771-03 · Typing 作業 then picking 作業項目選択 adds only 1 row",
+          "ok": true,
+          "tags": [
+            "P007-TC-031",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-1fcc3b12edde262f65e2",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-032 #33 · Create 見積 Test (Autotest 99,999) and 提示",
+          "ok": true,
+          "tags": [
+            "P007-TC-032",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-1253ed21b47965ca0f39",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-033 #34 · 取り下げ申請 → 取り下げ承認 → 提示 → 承認する",
+          "ok": true,
+          "tags": [
+            "P007-TC-033",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-c03aed1f8afe63b5e615",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-034 #35 · 2267-01 · 作業中 → 見積承認待ち blocked (新規)",
+          "ok": true,
+          "tags": [
+            "P007-TC-034",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-aaa40d904a35177df35c",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-035 #36 · 2267-02 · 作業中 → 見積拒否 blocked (新規)",
+          "ok": true,
+          "tags": [
+            "P007-TC-035",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-a9b2612766ab5443d50e",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-036 #37 · 605-07 · Each asset has its own 対応 dropdown",
+          "ok": true,
+          "tags": [
+            "P007-TC-036",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-0770cecf770f09b1176b",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-037 #38 · 605-08 · Changing row A does not affect row B",
+          "ok": true,
+          "tags": [
+            "P007-TC-037",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-6e1596aef8342a9400d6",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-038 #39 · 1846-01 · Upload 1 PDF, preview, delete",
+          "ok": true,
+          "tags": [
+            "P007-TC-038",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-7b04e0dd6fa591f42872",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-039 #40 · 1846-02 · Upload 6 PDF → only 5 accepted",
+          "ok": true,
+          "tags": [
+            "P007-TC-039",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-8a581fc0987e007d6cf1",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-040 #41 · 1846-03 · Non-PDF file → error",
+          "ok": true,
+          "tags": [
+            "P007-TC-040",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-3f4e9b89e11893e48322",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-041 #42 · 作業完了",
+          "ok": true,
+          "tags": [
+            "P007-TC-041",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-7cc56eb3ff3f56d982af",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-042 #43 · 報告済 + 報告書 (1846-04, 605-09)",
+          "ok": true,
+          "tags": [
+            "P007-TC-042",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-4bc1ea0cf4ca3a0b03f2",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-043 #44 · Admin views 報告書 (136-01, 605-10, 1846-04)",
+          "ok": true,
+          "tags": [
+            "P007-TC-043",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-2696d30103fd23160a82",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-044 #45 · 136-02 · Download 報告書 from 状態変更",
+          "ok": true,
+          "tags": [
+            "P007-TC-044",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-1874ff9cdf7c09939dc7",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-045 #46 · 136-03 · Download 報告書 from 作業依頼情報 list",
+          "ok": true,
+          "tags": [
+            "P007-TC-045",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-effc5a1c768fa40fcf55",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-046 #47 · SETUP-T2 · Create T2 and move to 到着",
+          "ok": true,
+          "tags": [
+            "P007-TC-046",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-53c2bf07f948c2285545",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-047 #48 · 1765-02 · Estimate < fix_amount → auto approved, 作業中",
+          "ok": true,
+          "tags": [
+            "P007-TC-047",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-cee639848c56c71581a0",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-048 #49 · 1765-02b · fix_amount boundary on 店舗向け 税込",
+          "ok": true,
+          "tags": [
+            "P007-TC-048",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-d649ff40deed43393e73",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-049 #50 · 2267-03 · 作業中 → 到着 allowed (新規)",
+          "ok": true,
+          "tags": [
+            "P007-TC-049",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-85a67640be69eb9372fb",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-050 #51 · SETUP-T3 · Create urgent T3 (至急)",
+          "ok": true,
+          "tags": [
+            "P007-TC-050",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-66548beb94a8969dbcb1",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-051 #52 · 2285-01 · 資産チェック ON with 0 asset → error text",
+          "ok": true,
+          "tags": [
+            "P007-TC-051",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-491c8b3daa6fc784458b",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-052 #53 · SETUP-T5 · T5 (STORE00004 RINGI) Urgent → 到着",
+          "ok": true,
+          "tags": [
+            "P007-TC-052",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-be837f6e2f0ebf3f5f0b",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-053 #54 · 1786-01 (+1765-01) · Urgent 稟議: approve all steps → auto selected, task 完了",
+          "ok": true,
+          "tags": [
+            "P007-TC-053",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-16b5100c898563ffb28a",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-054 #55 · 1786-02 · Second estimate not selected → task stays open after 作業完了",
+          "ok": true,
+          "tags": [
+            "P007-TC-054",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-4e39dbedf92401af9904",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-055 #56 · SETUP-T4 · 継続依頼 → 作業中",
+          "ok": true,
+          "tags": [
+            "P007-TC-055",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-93eff59615034b6fa939",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-056 #57 · 2267-04 · 継続: 作業中 → 見積承認待ち blocked",
+          "ok": true,
+          "tags": [
+            "P007-TC-056",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-3885be37a0de43557e7d",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-057 #58 · 2267-05 · 継続: 作業中 → 見積待ち allowed",
+          "ok": true,
+          "tags": [
+            "P007-TC-057",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-44bf6590fff3b03f30cb",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-058 #59 · Logout admin → login manager",
+          "ok": true,
+          "tags": [
+            "P007-TC-058",
+            "role-none"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-7cb0175091c2919e6a3b",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-059 #60 · 1388-09 · Manager does not see 症状一覧DL",
+          "ok": true,
+          "tags": [
+            "P007-TC-059",
+            "role-01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-90eeef82c59d703fdcdc",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-060 #61 · Manager views 見積 and history (605-44)",
+          "ok": true,
+          "tags": [
+            "P007-TC-060",
+            "role-01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-bfa961f6c385f33521bd",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-061 #62 · Manager 作業完了確認",
+          "ok": true,
+          "tags": [
+            "P007-TC-061",
+            "role-01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-c0a21854545388cb4884",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-062 #63 · 1786-03 · Manager checks 見積承認依頼 tasks of T5",
+          "ok": true,
+          "tags": [
+            "P007-TC-062",
+            "role-01"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-c0c6a61384c3c3845b0a",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-063 #64 · Logout manager → login subadmin",
+          "ok": true,
+          "tags": [
+            "P007-TC-063",
+            "role-none"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-e5d8a1e63cbe5582b63c",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-064 #65 · 2132-07 · SubAdmin 戻る from タスク管理 / チャット一覧",
+          "ok": true,
+          "tags": [
+            "P007-TC-064",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-e72bb17338fa6e7bd12a",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        },
+        {
+          "title": "P007-TC-065 #66 · 1846-05 · SubAdmin downloads PDF from 報告書 preview",
+          "ok": true,
+          "tags": [
+            "P007-TC-065",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "490d0cac692c172e2699-25bddc0b03ab887799d4",
+          "file": "tests/cms/phase007/phase007-regression.spec.ts",
+          "line": 68,
+          "column": 7
+        }
+      ]
+    },
+    {
+      "title": "tests/tools/open.spec.ts",
+      "file": "tests/tools/open.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "open browser",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "open",
+              "projectName": "open",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "5d929e44aacd26992d31-4f186d5ad3be31539619",
+          "file": "tests/tools/open.spec.ts",
+          "line": 14,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "tests/tools/recon-e2e.spec.ts",
+      "file": "tests/tools/recon-e2e.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "recon E2E suite screens (read-only)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "recon",
+              "projectName": "recon",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0a87aea3bd91988ffe37-8e831f4c963c5ea83489",
+          "file": "tests/tools/recon-e2e.spec.ts",
+          "line": 51,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "tests/tools/recon.spec.ts",
+      "file": "tests/tools/recon.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "recon CMS screens (read-only)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "recon",
+              "projectName": "recon",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "75a9fac2c163aab99621-3dd08f0e7830a308b1c5",
+          "file": "tests/tools/recon.spec.ts",
+          "line": 57,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T03:42:47.862Z",
+    "duration": 249.52899999999988,
+    "expected": 0,
+    "skipped": 108,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

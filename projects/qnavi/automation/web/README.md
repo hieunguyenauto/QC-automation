@@ -29,16 +29,18 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 | Mục đích | Lệnh |
 |---|---|
 | Chạy tất cả | `npm test` |
-| Chọn môi trường | `ENV=dev npm test` |
+| Chọn môi trường (bắt buộc; mặc định lấy `ENV=` trong `.env`) | `ENV=est-test npm test` · có: `toridoll-test`, `est-test`, `stg` |
 | 1 TC (mọi role) | `npm test -- --grep @WB2-TC-001` |
 | 1 role | `npm test -- --grep @role-99` |
-| 1 sheet | `npm test -- tests/cms/WB2.spec.ts` |
+| 1 bộ test (thư mục) | `npm test -- tests/cms/phase007/` |
 | Xem trình duyệt khi chạy | `npm run test:headed -- --grep @WB2-TC-001` |
 | Chế độ UI (debug từng bước) | `npm run test:ui` |
 | Chỉ login lại các role | `npm run setup` |
 | Liệt kê test | `npm run list` |
 | Kiểm tra code TypeScript | `npm run typecheck` |
 | Kịch bản E2E trouble (13 TC, nối tiếp, tạo trouble mới) | `npm run e2e:headed` |
+| 1 kịch bản trong bộ E2E suite (E2E-00 … E2E-39) | `ENV=est-test npm run suite:headed -- E2E-01` (bỏ `:headed` để chạy ẩn) |
+| Regression Phase 007 | `ENV=est-test npm run p007:headed` |
 | Chạy tiếp E2E trên trouble có sẵn (đúng trạng thái) | `E2E_TROUBLE_ID=1234 npm run e2e -- --grep "TC-00[5-9]\|TC-01"` |
 | Lấy locator thật: đi qua các màn hình, **không lưu dữ liệu**, ghi aria snapshot + ảnh | `npm run recon` / `npm run recon:e2e` → `reports/_tmp_chk/recon*/` (tạm, mỗi lần ghi đè; viết locator vào `screens/` xong là bỏ) (`_summary.txt` liệt kê bước lỗi) |
 | Mở trình duyệt **đã qua Basic Auth**, đăng nhập sẵn, để xem / lấy locator (Inspector: Record, Pick locator) | `ACCOUNT=99 npm run open` · `ENV=est-test ACCOUNT=02:urgent URL=/admin/troubles npm run open` |
@@ -75,13 +77,14 @@ Phase 007 chạy nối tiếp (common/scenario.ts): T1…T5 tạo trong lần ch
 
 | Thư mục | Chứa gì | Ai sửa |
 |---|---|---|
-| `env/` | Cấu hình theo môi trường (`dev`, `stg`, `est-test`): `cmsBaseUrl`, timeout, **tài khoản test theo role** (`accounts`), **Basic Auth** (`httpAuth.username`; mật khẩu ở `.env` `HTTP_AUTH_PASSWORD`). Đổi môi trường: `ENV=est-test npm run e2e` | Lead |
+| `env/` | Cấu hình theo môi trường (`toridoll-test`, `est-test`, `stg`): `cmsBaseUrl`, timeout, **tài khoản test theo role** (`accounts`), **Basic Auth** (`httpAuth.username`; mật khẩu ở `.env` `HTTP_AUTH_PASSWORD`). Đổi môi trường: `ENV=est-test npm run e2e` | Lead |
 | `.env` | ENV đang dùng + **mật khẩu** theo role `CMS_<role>_PASSWORD` (không commit). `CMS_<role>_ID` chỉ để ghi đè loginId | Người chạy |
 | `data/roles.ts` | Mã role ↔ tên cột Excel ↔ trang chủ sau login | kb-update-automation |
 | `data/<scope-key>.json` | Data test theo TC ID | Khi automate TC |
-| `common/` | Dùng chung: env, login (`auth.setup.ts`), `forRoles`, chờ API, assert message | kb-update-automation |
+| `common/` | Dùng chung: `env.ts` (môi trường), `session.ts` (đăng nhập / phiên), `ui.ts` (thao tác UI), `wait.ts` (chờ API / loader), `scenario.ts` (khung kịch bản nối tiếp + video / trace), `e2e-suite.ts` (bước dùng chung bộ E2E), `qc-reporter.ts` (report), `fixtures.ts` + `roles.ts` (test smoke theo role) | kb-update-automation |
 | `screens/cms/*.screen.ts` | **Knowledge màn hình**: mã màn hình, route, role, locator, thao tác ngắn | kb-update-automation |
-| `tests/cms/<scope-key>.spec.ts` | 1 file = 1 sheet TC | Khi automate TC |
+| `tests/cms/<bộ test>/` | Mỗi bộ test 1 thư mục: `e2e-trouble-flow/`, `phase007/`, `e2e-suite/` (E2E-00…39), `smoke/` (test lẻ theo role). Thư mục ≠ `smoke/` chạy bằng project `e2e` (nối tiếp) | Khi automate TC |
+| `tests/tools/` | Công cụ phụ trợ, không phải test: `open` (mở trình duyệt đã đăng nhập), `recon*` (dò màn hình) | Khi cần |
 | `reports/` | Kết quả mỗi lần chạy | Tự sinh |
 
 Mô tả đầy đủ màn hình (route, role, API, modal): `projects/qnavi/screens/catalog/cms-frontend.md`. File `.screen.ts` ghi mã màn hình để tra ngược, **không chép lại mô tả**.

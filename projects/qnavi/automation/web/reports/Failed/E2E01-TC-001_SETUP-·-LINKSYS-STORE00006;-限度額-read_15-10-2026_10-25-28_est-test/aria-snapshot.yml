@@ -1,0 +1,131 @@
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - link " サポート":
+        - /url: https://globar.notion.site/Q-ORDER-1c2daf8bd905804182fdceff93352190
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼情報":
+          - text: 
+          - paragraph: 作業依頼情報
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 個人事業主情報":
+          - text: 
+          - paragraph: 個人事業主情報
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " 作業項目情報":
+          - text: 
+          - paragraph: 作業項目情報
+      - listitem:
+        - link " 代理店情報":
+          - text: 
+          - paragraph: 代理店情報
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " 見積用作業項目情報":
+          - text: 
+          - paragraph: 見積用作業項目情報
+      - listitem:
+        - link " サブアドミン情報":
+          - text: 
+          - paragraph: サブアドミン情報
+      - listitem:
+        - link " 作業員情報":
+          - text: 
+          - paragraph: 作業員情報
+      - listitem:
+        - link " 作業会社情報":
+          - text: 
+          - paragraph: 作業会社情報
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " 資産管理項目マスター":
+          - text: 
+          - paragraph: 資産管理項目マスター
+      - listitem:
+        - link " 資産情報":
+          - text: 
+          - paragraph: 資産情報
+      - listitem:
+        - link " システム設定":
+          - text: 
+          - paragraph: システム設定
+      - listitem:
+        - link " GlobaR管理者情報":
+          - text: 
+          - paragraph: GlobaR管理者情報
+  - paragraph: Qナビ担当者 （株式会社グローバー）
+- heading "全体" [level=5]
+- text:  作業依頼
+- heading [level=5]
+- text:  個人事業主
+- heading [level=5]
+- text:  チェーンシステム
+- heading [level=5]
+- text:  メッセージ配信
+- heading [level=5]
+- text:  価格項目
+- heading [level=5]
+- text:  代理店
+- heading [level=5]
+- text:  見積用作業項目
+- heading [level=5]
+- text:  作業員
+- heading [level=5]
+- heading "状態率" [level=3]
+- heading "緊急率" [level=3]
+- heading "継続トラブル率" [level=3]
+- heading "本日" [level=5]
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - link "利用規約":
+        - /url: https://dev.terms.picontechnology.com/
+    - listitem:
+      - button "プライバシーポリシー"

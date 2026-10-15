@@ -1562,6 +1562,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] Cấu trúc automation/web: tests/cms/ chia theo bộ test (e2e-trouble-flow/, phase007/, e2e-suite/, smoke/); project e2e/cms chọn theo thư mục; npm run suite -- E2E-NN; bắt buộc ENV (mặc định từ .env); bỏ common/auth.ts, assert.ts, ui-wait.ts (gộp vào wait.ts)
 - [auto] Recon (dò màn hình) là bắt buộc trước khi viết locator; kết quả chỉ ghi vào reports/_tmp_chk/recon*/ (ghi đè), không tạo reports/recon-* nữa (CLAUDE.md mục Automation)
 - [auto] Automation E2E suite: E2E-00 (common setup) + E2E-01 pass 15/15 trên toridoll-test; screen mới trouble-navi.webview.ts, ChainSystemScreen (công tắc シサンNAVI / トラブルNAVI, store, 限度額), common/e2e-suite.ts, data/e2e-suite.json; lesson R31–R33 (bước wizard theo role, số có hậu tố, ant-select trong iframe)
 - Lesson QC D17 (TC sinh bằng script phải tách bước theo nhánh, đối chiếu màn CMS web) từ e2e-suite TC-002; TC e2e-suite rev 3 (DRAFT)
@@ -1617,4 +1618,3 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - 3 skill thiết kế dùng chung: spec-review, test-viewpoint, test-case (D03)
 - 6 template theo format Excel của team (D04)
 - Luật mỗi TC 1 expected result (D05)
-- Nhóm viewpoint 7 Performance, 8 Bài học / bug cũ; lesson DESIGN_GAP (D06)

@@ -1,0 +1,110 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - list [ref=e4]:
+      - listitem [ref=e5]:
+        - button "" [ref=e6] [cursor=pointer]:
+          - generic [ref=e7]: 
+    - list [ref=e8]:
+      - listitem [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e12] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e13]
+          - button "" [ref=e15] [cursor=pointer]:
+            - generic [ref=e16]: 
+      - listitem [ref=e17]:
+        - button "" [ref=e18] [cursor=pointer]:
+          - generic [ref=e19]: 
+      - listitem [ref=e20]:
+        - link " サポート" [ref=e21] [cursor=pointer]:
+          - /url: https://globar.notion.site/Q-ORDER-1c2daf8bd905804182fdceff93352190
+          - generic [ref=e22]: 
+          - text: サポート
+      - listitem [ref=e24]:
+        - button "フィルタ" [ref=e25] [cursor=pointer]:
+          - generic [ref=e27]: フィルタ
+      - listitem [ref=e28]:
+        - button "パスワード変更" [ref=e29] [cursor=pointer]
+      - listitem [ref=e30]:
+        - button "ログアウト" [ref=e31] [cursor=pointer]
+  - complementary [ref=e32]:
+    - link "Qnavi管理画面" [ref=e33] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e35]:
+      - menu [ref=e36]:
+        - listitem [ref=e37]: メニュー
+        - listitem [ref=e38]:
+          - link " ホーム" [ref=e39] [cursor=pointer]:
+            - generic [ref=e40]: 
+            - paragraph [ref=e41]: ホーム
+        - listitem [ref=e42]:
+          - link " 作業依頼登録" [ref=e43] [cursor=pointer]:
+            - generic [ref=e44]: 
+            - paragraph [ref=e45]: 作業依頼登録
+        - listitem [ref=e46]:
+          - link " 進行中のトラブル一覧" [ref=e47] [cursor=pointer]:
+            - generic [ref=e48]: 
+            - paragraph [ref=e49]: 進行中のトラブル一覧
+        - listitem [ref=e50]:
+          - link " 店舗詳細設定" [ref=e51] [cursor=pointer]:
+            - generic [ref=e52]: 
+            - paragraph [ref=e53]: 店舗詳細設定
+        - listitem [ref=e54]:
+          - link " チャット一覧" [ref=e55] [cursor=pointer]:
+            - generic [ref=e56]: 
+            - paragraph [ref=e57]: チャット一覧
+        - listitem [ref=e58]:
+          - link " タスク管理" [ref=e59] [cursor=pointer]:
+            - generic [ref=e60]: 
+            - paragraph [ref=e61]: タスク管理
+        - listitem [ref=e62]:
+          - link " Q&A管理" [ref=e63] [cursor=pointer]:
+            - generic [ref=e64]: 
+            - paragraph [ref=e65]: Q&A管理
+        - listitem [ref=e66]:
+          - link " お知らせ管理" [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]: 
+            - paragraph [ref=e69]: お知らせ管理
+    - paragraph [ref=e71]: LINKSYS STORE00006 (APPROVE TYPE 1) [5] （Linksys Chain System）
+  - generic [ref=e75]:
+    - generic [ref=e77]:
+      - heading "依頼登録" [level=4] [ref=e78]
+      - button " 戻る" [ref=e81] [cursor=pointer]:
+        - generic [ref=e82]: 
+        - text: 戻る
+    - list [ref=e85]:
+      - listitem [ref=e86]:
+        - generic [ref=e87]:
+          - heading "Step 1" [level=4] [ref=e88]
+          - paragraph [ref=e89]: 店舗
+      - listitem [ref=e90]:
+        - generic [ref=e91]:
+          - heading "Step 2" [level=4] [ref=e92]
+          - paragraph [ref=e93]: 作業項目選択
+      - listitem [ref=e94]:
+        - generic [ref=e95]:
+          - heading "Step 3" [level=4] [ref=e96]
+          - paragraph [ref=e97]: 故障詳細
+    - generic [ref=e98]:
+      - generic [ref=e99]:
+        - heading "店舗選択" [level=3] [ref=e103]
+        - generic [ref=e108]:
+          - heading "担当者選択" [level=3] [ref=e110]
+          - button " 担当者選択" [disabled] [ref=e114]:
+            - generic [ref=e115]: 
+            - text: 担当者選択
+      - button "次へ" [disabled] [ref=e117]
+  - contentinfo [ref=e118]:
+    - generic [ref=e119]:
+      - strong [ref=e120]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e122]:
+      - listitem [ref=e123]:
+        - link "利用規約" [ref=e124] [cursor=pointer]:
+          - /url: https://dev.terms.picontechnology.com/
+      - listitem [ref=e125]:
+        - button "プライバシーポリシー" [ref=e126] [cursor=pointer]
+  - text: 
+```

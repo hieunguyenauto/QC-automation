@@ -1,0 +1,144 @@
+<testsuites id="" name="" tests="15" failures="1" skipped="14" errors="0" time="45.12057">
+<testsuite name="tests/cms/e2e-suite/E2E-01.spec.ts" timestamp="2026-10-15T03:25:28.110Z" hostname="e2e" tests="15" failures="1" skipped="14" time="28.153" errors="0">
+<testcase name="E2E01-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="28.153">
+<properties>
+<property name="env-warning" value="firebase-auth/exchange lỗi HTTP 504 → app huỷ request đang chạy — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+<property name="env-warning" value="Hộp lỗi app đã tự đóng (OK): 確認 表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。 OK — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+<property name="env-warning" value="Đăng nhập 99: app huỷ firebase-auth/exchange + mọi request (net::ERR_ABORTED; app tự log &apos;status: 504&apos;, server không trả) → đăng xuất, đăng nhập lại (lần 1/2) — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+<property name="env-warning" value="firebase-auth/exchange lỗi HTTP 504 → app huỷ request đang chạy — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+<property name="env-warning" value="Hộp lỗi app đã tự đóng (OK): 確認 表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。 OK — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+<property name="env-warning" value="Đăng nhập 99: app huỷ firebase-auth/exchange + mọi request (net::ERR_ABORTED; app tự log &apos;status: 504&apos;, server không trả) → đăng xuất, đăng nhập lại (lần 2/2) — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+<property name="env-warning" value="firebase-auth/exchange lỗi HTTP 504 → app huỷ request đang chạy — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+<property name="env-warning" value="Hộp lỗi app đã tự đóng (OK): 確認 表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。 OK — URL https://cms-test.estimation.qnavi.picontechnology.com/admin">
+</property>
+</properties>
+<failure message="E2E-01.spec.ts:25:7 E2E01-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" type="FAILURE">
+<![CDATA[  [e2e] › tests/cms/e2e-suite/E2E-01.spec.ts:25:7 › E2E01-TC-001 SETUP · LINKSYS STORE00006; 限度額 read @E2E01-TC-001 @role-99 › Pre-condition: E2E00-TC-001 (トラブルナビ ON, シサンNAVI OFF) 
+
+    Error: Đăng nhập 99: app huỷ firebase-auth/exchange 3 lần liên tiếp (net::ERR_ABORTED) — phiên không dùng được
+
+       at common/session.ts:127
+
+      125 |       continue;
+      126 |     }
+    > 127 |     if (state === 'aborted') throw new Error(`Đăng nhập ${who}: app huỷ firebase-auth/exchange ${MAX_RETRY + 1} lần liên tiếp (net::ERR_ABORTED) — phiên không dùng được`);
+          |                                    ^
+      128 |     break;
+      129 |   }
+      130 |   await login.waitAfterLogin();
+        at loginAs (/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/common/session.ts:127:36)
+        at E2E.commonSetup (/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/common/e2e-suite.ts:54:5)
+        at /Users/hieunt/work/qc-automation/projects/qnavi/automation/web/tests/cms/e2e-suite/E2E-01.spec.ts:29:3
+        at /Users/hieunt/work/qc-automation/projects/qnavi/automation/web/tests/cms/e2e-suite/E2E-01.spec.ts:25:104
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    reports/Runs/E2E-01_15-10-2026_10-25-28_est-test/artifacts/tests-cms-e2e-suite-E2E-01-80f8f-LINKSYS-STORE00006-限度額-read-e2e/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #2: url (text/plain) ────────────────────────────────────────────────────────────────
+    https://cms-test.estimation.qnavi.picontechnology.com/admin
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #4: aria-snapshot (text/yaml) ───────────────────────────────────────────────────────
+    - navigation:
+      - list:
+        - listitem:
+          - button ""
+      - list:
+        - listitem:
+          - text: 
+          - textbox "依頼番号 または 店舗名でEnter"
+          - button ""
+        - listitem:
+          - link " サポート":
+            - /url: https://globar.notion.site/Q-ORDER-1c2daf8bd905804182fdceff93352190
+        - listitem:
+        ...
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    attachment #5: trace (application/zip) ─────────────────────────────────────────────────────────
+    reports/Runs/E2E-01_15-10-2026_10-25-28_est-test/artifacts/tests-cms-e2e-suite-E2E-01-80f8f-LINKSYS-STORE00006-限度額-read-e2e/attachments/trace-befc0bea79142c5bae9e482232d0d69dba2ca143.zip
+    Usage:
+
+        npx playwright show-trace reports/Runs/E2E-01_15-10-2026_10-25-28_est-test/artifacts/tests-cms-e2e-suite-E2E-01-80f8f-LINKSYS-STORE00006-限度額-read-e2e/attachments/trace-befc0bea79142c5bae9e482232d0d69dba2ca143.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: reports/Runs/E2E-01_15-10-2026_10-25-28_est-test/artifacts/tests-cms-e2e-suite-E2E-01-80f8f-LINKSYS-STORE00006-限度額-read-e2e/error-context.md
+]]>
+</failure>
+<system-out>
+<![CDATA[
+[[ATTACHMENT|artifacts/tests-cms-e2e-suite-E2E-01-80f8f-LINKSYS-STORE00006-限度額-read-e2e/test-failed-1.png]]
+
+[[ATTACHMENT|artifacts/tests-cms-e2e-suite-E2E-01-80f8f-LINKSYS-STORE00006-限度額-read-e2e/attachments/trace-befc0bea79142c5bae9e482232d0d69dba2ca143.zip]]
+
+[[ATTACHMENT|artifacts/tests-cms-e2e-suite-E2E-01-80f8f-LINKSYS-STORE00006-限度額-read-e2e/error-context.md]]
+]]>
+</system-out>
+</testcase>
+<testcase name="E2E01-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-005 NEW · Create 1 estimate (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-011 CONTINUE · Create 1 estimate (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E01-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

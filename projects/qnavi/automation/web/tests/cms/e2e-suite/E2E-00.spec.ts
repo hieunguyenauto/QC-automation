@@ -5,7 +5,7 @@ import { E2E } from '../../../common/e2e-suite';
 /**
  * E2E-00 · Common setup — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-00-common-setup-test-cases.md (LOCKED rev 3).
  * Mỗi case E2E-01…39 tự gọi E2E.commonSetup() ở Pre-condition TC-001 → chạy lẻ case không cần chạy file này trước.
- * Chạy: ENV=toridoll-test npx playwright test --project=e2e tests/cms/e2e-suite/E2E-00.spec.ts
+ * Chạy: ENV=toridoll-test npm run suite -- E2E-00.spec.ts
  */
 test.describe.configure({ mode: 'serial' });
 const sc = serialScenario();

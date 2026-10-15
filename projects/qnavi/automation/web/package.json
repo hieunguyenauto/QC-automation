@@ -10,14 +10,16 @@
     "list": "playwright test --list",
     "report": "node scripts/open-report.mjs",
     "typecheck": "tsc --noEmit",
-    "e2e": "playwright test --project=e2e tests/cms/e2e-trouble-flow.spec.ts",
-    "e2e:headed": "playwright test --project=e2e --headed tests/cms/e2e-trouble-flow.spec.ts",
+    "e2e": "playwright test --project=e2e tests/cms/e2e-trouble-flow/",
+    "e2e:headed": "playwright test --project=e2e --headed tests/cms/e2e-trouble-flow/",
     "recon": "playwright test --project=recon --headed tests/tools/recon.spec.ts",
     "recon:e2e": "playwright test --project=recon --headed tests/tools/recon-e2e.spec.ts",
     "open": "playwright test --project=open --headed",
     "summary": "node scripts/summary.mjs",
-    "p007": "playwright test --project=e2e tests/cms/phase007-regression.spec.ts",
-    "p007:headed": "playwright test --project=e2e --headed tests/cms/phase007-regression.spec.ts"
+    "p007": "playwright test --project=e2e tests/cms/phase007/",
+    "p007:headed": "playwright test --project=e2e --headed tests/cms/phase007/",
+    "suite": "playwright test --project=e2e",
+    "suite:headed": "playwright test --project=e2e --headed"
   },
   "devDependencies": {
     "@playwright/test": "1.56.0",

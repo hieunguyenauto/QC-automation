@@ -5,7 +5,7 @@ import { trackApis } from './wait';
 
 /**
  * Khung cho kịch bản chạy NỐI TIẾP trên 1 trình duyệt dùng chung (mọi TC cùng 1 page).
- * Gom lại từ tests/cms/e2e-trouble-flow.spec.ts, áp dụng lesson:
+ * Gom lại từ tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts, áp dụng lesson:
  *  - R02 / R13: trace tự ghi theo chunk từng TC (config project e2e: trace/video off), giữ khi fail; mọi lệnh trong hook có giới hạn thời gian.
  *  - Ảnh + aria snapshot + URL khi fail (FAIL.md của common/qc-reporter.ts đọc các file đính kèm này).
  *  - Video cả kịch bản → reports/Runs/<lần chạy>/video/<lần chạy>.webm, luôn giữ (tắt: E2E_VIDEO=off); TC fail có thêm video-fail.webm (reporter cắt bằng ffmpeg).

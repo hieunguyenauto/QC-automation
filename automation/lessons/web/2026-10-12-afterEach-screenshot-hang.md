@@ -1,6 +1,6 @@
 # 2026-10-12 Hook chụp màn hình sau khi fail bị treo
 - Loại: TIMING
-- Nguồn: @E2E-TC-002 — tests/cms/e2e-trouble-flow.spec.ts (afterEach), report 20261012-090955-dev
+- Nguồn: @E2E-TC-002 — tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts (afterEach), report 20261012-090955-dev
 - Function / màn hình: hook afterEach của kịch bản E2E (context tự tạo bằng browser.newContext)
 - Triệu chứng: test fail sau 5 giây nhưng cả lần chạy treo thêm ~2 phút, báo 'Test timeout of 120000ms exceeded'.
 - Nguyên nhân gốc: page.screenshot({ fullPage: true }) không có timeout, bị treo trên trang có layout cố định.

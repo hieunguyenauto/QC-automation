@@ -25,10 +25,13 @@ export type EnvConfig = {
 };
 
 function loadEnv(): EnvConfig {
-  const envName = process.env.ENV || 'stg';
+  const list = fs.readdirSync(path.resolve(__dirname, '../env')).filter((f) => f.endsWith('.json')).map((f) => f.replace(/\.json$/, ''));
+  const envName = process.env.ENV;
+  // Bắt buộc chọn môi trường: không có mặc định để tránh chạy nhầm.
+  if (!envName) throw new Error(`Chưa chọn môi trường. Thêm ENV=<tên> trước lệnh, vd: ENV=est-test npm run suite -- E2E-01. Có: ${list.join(', ')}`);
   const file = path.resolve(__dirname, `../env/${envName}.json`);
   if (!fs.existsSync(file)) {
-    throw new Error(`Không thấy env/${envName}.json. Đặt ENV=dev|stg hoặc tạo file mới trong env/.`);
+    throw new Error(`Không thấy env/${envName}.json. Có: ${list.join(', ')} — hoặc tạo file mới trong env/.`);
   }
   const cfg = JSON.parse(fs.readFileSync(file, 'utf-8')) as EnvConfig;
   if (process.env.CMS_BASE_URL) cfg.cmsBaseUrl = process.env.CMS_BASE_URL;

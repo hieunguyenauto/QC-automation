@@ -1,6 +1,6 @@
 # 2026-10-13 Bấm sang trang khác khi dashboard (/api/home) chưa về → hộp 「表示に時間がかかっております」 ở trang sau
 - Loại: TIMING (kèm ENV: /api/home của est-test có lúc treo > 30s)
-- Nguồn: @P007-TC-002, @P007-TC-003 — file: web/tests/cms/phase007-regression.spec.ts (est-test)
+- Nguồn: @P007-TC-002, @P007-TC-003 — file: web/tests/cms/phase007/phase007-regression.spec.ts (est-test)
 - Function / màn hình: CMS dashboard (/admin, GET /api/home = 進行中の作業一覧) → チェーンシステム情報, 資産管理項目マスター編集
 - Triệu chứng: hộp '確認' 「表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。」 chặn click menu ("intercepts pointer events"); có lúc trang sau (asset-column) hiện '該当データが0件でした', API không response ~17s rồi app tự reload. Người dùng thật không gặp.
 - Nguyên nhân gốc: test bấm menu / goto chỉ ~1s sau đăng nhập, khi GET /api/home còn chờ (người dùng thật đợi dashboard hiện xong mới bấm). Riêng est-test, /api/home có lúc > 30s dù API khác ~100ms.

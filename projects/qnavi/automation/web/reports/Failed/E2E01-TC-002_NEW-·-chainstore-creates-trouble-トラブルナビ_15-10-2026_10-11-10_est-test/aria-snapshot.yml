@@ -1,0 +1,84 @@
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - button ""
+    - listitem:
+      - link " サポート":
+        - /url: https://globar.notion.site/Q-ORDER-1c2daf8bd905804182fdceff93352190
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 進行中のトラブル一覧":
+          - text: 
+          - paragraph: 進行中のトラブル一覧
+      - listitem:
+        - link " 店舗詳細設定":
+          - text: 
+          - paragraph: 店舗詳細設定
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+  - paragraph: LINKSYS STORE00006 (APPROVE TYPE 1) [5] （Linksys Chain System）
+- heading "依頼登録" [level=4]
+- button " 戻る"
+- list:
+  - listitem:
+    - heading "Step 1" [level=4]
+    - paragraph: 店舗
+  - listitem:
+    - heading "Step 2" [level=4]
+    - paragraph: 作業項目選択
+  - listitem:
+    - heading "Step 3" [level=4]
+    - paragraph: 故障詳細
+- heading "店舗選択" [level=3]
+- heading "担当者選択" [level=3]
+- button " 担当者選択" [disabled]
+- button "次へ" [disabled]
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - link "利用規約":
+        - /url: https://dev.terms.picontechnology.com/
+    - listitem:
+      - button "プライバシーポリシー"

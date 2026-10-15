@@ -1,8 +1,7 @@
 import { expect, type Locator } from '@playwright/test';
 import { BaseScreen } from '../base.screen';
-import { waitApisIdle } from '../../common/wait';
-import { tableRow, waitForApiSafe } from '../../common/ui-wait';
-import { click, modal } from '../../common/ui';
+import { waitApisIdle, waitForApiSafe } from '../../common/wait';
+import { click, modal, tableRow } from '../../common/ui';
 
 /**
  * 作業依頼一覧 — catalog: cms-frontend.md › "Trouble List: /admin/troubles" (không có route guard, mọi role).

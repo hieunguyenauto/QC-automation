@@ -1,6 +1,6 @@
 # 2026-10-12 Màn tạo trouble có bước ẩn trước bước 店舗
 - Loại: LOCATOR (sai luồng màn hình)
-- Nguồn: @E2E-TC-002 — file: projects/qnavi/automation/web/tests/cms/e2e-trouble-flow.spec.ts, report 20261012-090955-dev
+- Nguồn: @E2E-TC-002 — file: projects/qnavi/automation/web/tests/cms/e2e-trouble-flow/e2e-trouble-flow.spec.ts, report 20261012-090955-dev
 - Function / màn hình: CMS 作業依頼登録 (/admin/trouble/create), role 99
 - Triệu chứng: bước 1 chờ chữ '店舗' nhưng màn hình chỉ có '作業依頼登録 新規依頼 継続依頼 次へ'.
 - Nguyên nhân gốc: code được sinh chỉ dựa vào CSV và catalog; cả hai đều không ghi bước chọn loại依頼 (radio 新規依頼 / 継続依頼 + 次へ) của role 99/98.

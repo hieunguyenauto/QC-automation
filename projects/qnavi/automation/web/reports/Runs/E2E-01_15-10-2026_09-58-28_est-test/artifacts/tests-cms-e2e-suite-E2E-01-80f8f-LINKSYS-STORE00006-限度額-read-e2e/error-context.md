@@ -1,0 +1,322 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - list [ref=e4]:
+      - listitem [ref=e5]:
+        - button "" [ref=e6] [cursor=pointer]:
+          - generic [ref=e7]: 
+    - list [ref=e8]:
+      - listitem [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e12] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e13]
+          - button "" [ref=e15] [cursor=pointer]:
+            - generic [ref=e16]: 
+      - listitem [ref=e17]:
+        - link " サポート" [ref=e18] [cursor=pointer]:
+          - /url: https://globar.notion.site/Q-ORDER-1c2daf8bd905804182fdceff93352190
+          - generic [ref=e19]: 
+          - text: サポート
+      - listitem [ref=e21]:
+        - button "フィルタ" [ref=e22] [cursor=pointer]:
+          - generic [ref=e24]: フィルタ
+      - listitem [ref=e25]:
+        - button "パスワード変更" [ref=e26] [cursor=pointer]
+      - listitem [ref=e27]:
+        - button "ログアウト" [ref=e28] [cursor=pointer]
+  - complementary [ref=e29]:
+    - link "Qnavi管理画面" [ref=e30] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e32]:
+      - menu [ref=e33]:
+        - listitem [ref=e34]: メニュー
+        - listitem [ref=e35]:
+          - link " ホーム" [ref=e36] [cursor=pointer]:
+            - generic [ref=e37]: 
+            - paragraph [ref=e38]: ホーム
+        - listitem [ref=e39]:
+          - link " 作業依頼情報" [ref=e40] [cursor=pointer]:
+            - generic [ref=e41]: 
+            - paragraph [ref=e42]: 作業依頼情報
+        - listitem [ref=e43]:
+          - link " 作業依頼登録" [ref=e44] [cursor=pointer]:
+            - generic [ref=e45]: 
+            - paragraph [ref=e46]: 作業依頼登録
+        - listitem [ref=e47]:
+          - link " 個人事業主情報" [ref=e48] [cursor=pointer]:
+            - generic [ref=e49]: 
+            - paragraph [ref=e50]: 個人事業主情報
+        - listitem [ref=e51]:
+          - link " チェーンシステム情報" [ref=e52] [cursor=pointer]:
+            - generic [ref=e53]: 
+            - paragraph [ref=e54]: チェーンシステム情報
+        - listitem [ref=e55]:
+          - link " 作業項目情報" [ref=e56] [cursor=pointer]:
+            - generic [ref=e57]: 
+            - paragraph [ref=e58]: 作業項目情報
+        - listitem [ref=e59]:
+          - link " 代理店情報" [ref=e60] [cursor=pointer]:
+            - generic [ref=e61]: 
+            - paragraph [ref=e62]: 代理店情報
+        - listitem [ref=e63]:
+          - link " お知らせ管理" [ref=e64] [cursor=pointer]:
+            - generic [ref=e65]: 
+            - paragraph [ref=e66]: お知らせ管理
+        - listitem [ref=e67]:
+          - link " チャット一覧" [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]: 
+            - paragraph [ref=e70]: チャット一覧
+        - listitem [ref=e71]:
+          - link " タスク管理" [ref=e72] [cursor=pointer]:
+            - generic [ref=e73]: 
+            - paragraph [ref=e74]: タスク管理
+        - listitem [ref=e75]:
+          - link " 見積用作業項目情報" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+            - paragraph [ref=e78]: 見積用作業項目情報
+        - listitem [ref=e79]:
+          - link " サブアドミン情報" [ref=e80] [cursor=pointer]:
+            - generic [ref=e81]: 
+            - paragraph [ref=e82]: サブアドミン情報
+        - listitem [ref=e83]:
+          - link " 作業員情報" [ref=e84] [cursor=pointer]:
+            - generic [ref=e85]: 
+            - paragraph [ref=e86]: 作業員情報
+        - listitem [ref=e87]:
+          - link " 作業会社情報" [ref=e88] [cursor=pointer]:
+            - generic [ref=e89]: 
+            - paragraph [ref=e90]: 作業会社情報
+        - listitem [ref=e91]:
+          - link " Q&A管理" [ref=e92] [cursor=pointer]:
+            - generic [ref=e93]: 
+            - paragraph [ref=e94]: Q&A管理
+        - listitem [ref=e95]:
+          - link " 資産管理項目マスター" [ref=e96] [cursor=pointer]:
+            - generic [ref=e97]: 
+            - paragraph [ref=e98]: 資産管理項目マスター
+        - listitem [ref=e99]:
+          - link " 資産情報" [ref=e100] [cursor=pointer]:
+            - generic [ref=e101]: 
+            - paragraph [ref=e102]: 資産情報
+        - listitem [ref=e103]:
+          - link " システム設定" [ref=e104] [cursor=pointer]:
+            - generic [ref=e105]: 
+            - paragraph [ref=e106]: システム設定
+        - listitem [ref=e107]:
+          - link " GlobaR管理者情報" [ref=e108] [cursor=pointer]:
+            - generic [ref=e109]: 
+            - paragraph [ref=e110]: GlobaR管理者情報
+    - paragraph [ref=e112]: Qナビ担当者 （株式会社グローバー）
+  - generic [ref=e116]:
+    - heading "企業一覧" [level=4] [ref=e118]
+    - generic [ref=e120]:
+      - heading " 検索条件" [level=4] [ref=e121] [cursor=pointer]:
+        - generic [ref=e122]: 
+        - text: 検索条件
+      - button " 検索条件解除" [ref=e123] [cursor=pointer]:
+        - generic [ref=e124]: 
+        - text: 検索条件解除
+    - text:   
+    - paragraph [ref=e128]: 全 109 件中 1 件目 〜 20 件目を表示
+    - generic [ref=e129]:
+      - table [ref=e130]:
+        - rowgroup [ref=e131]:
+          - row "No 社名  有効中項目数 / 登録した項目数 最新更新者  最終更新日時  登録日時 " [ref=e132]:
+            - cell "No" [ref=e133]:
+              - generic [ref=e136]: "No"
+            - cell "社名 " [ref=e137]:
+              - generic [ref=e139] [cursor=pointer]:
+                - generic [ref=e140]: 社名
+                - generic [ref=e141]: 
+            - cell "有効中項目数 / 登録した項目数" [ref=e142]:
+              - generic [ref=e145]: 有効中項目数 / 登録した項目数
+            - cell "最新更新者 " [ref=e146]:
+              - generic [ref=e148] [cursor=pointer]:
+                - generic [ref=e149]: 最新更新者
+                - generic [ref=e150]: 
+            - cell "最終更新日時 " [ref=e151]:
+              - generic [ref=e153] [cursor=pointer]:
+                - generic [ref=e154]: 最終更新日時
+                - generic [ref=e155]: 
+            - cell "登録日時 " [ref=e156]:
+              - generic [ref=e158] [cursor=pointer]:
+                - generic [ref=e159]: 登録日時
+                - generic [ref=e160]: 
+        - rowgroup [ref=e161]:
+          - row "1 Công ty của Đức 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年09月28日 16:21:51 2026年09月28日 16:21:51" [ref=e162] [cursor=pointer]:
+            - cell "1" [ref=e163]
+            - cell "Công ty của Đức" [ref=e164]
+            - cell "11 / 11" [ref=e165]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e166]
+            - cell "2026年09月28日 16:21:51" [ref=e167]
+            - cell "2026年09月28日 16:21:51" [ref=e168]
+          - row "2 uyentm1945 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年09月21日 16:26:03 2026年09月21日 16:26:03" [ref=e169] [cursor=pointer]:
+            - cell "2" [ref=e170]
+            - cell "uyentm1945" [ref=e171]
+            - cell "11 / 11" [ref=e172]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e173]
+            - cell "2026年09月21日 16:26:03" [ref=e174]
+            - cell "2026年09月21日 16:26:03" [ref=e175]
+          - row "3 ma_chain system_test 03 11 / 11 Qナビ担当者（株式会社グローバー） 2026年09月17日 13:54:33 2026年09月17日 13:54:33" [ref=e176] [cursor=pointer]:
+            - cell "3" [ref=e177]
+            - cell "ma_chain system_test 03" [ref=e178]
+            - cell "11 / 11" [ref=e179]
+            - cell "Qナビ担当者（株式会社グローバー）" [ref=e180]
+            - cell "2026年09月17日 13:54:33" [ref=e181]
+            - cell "2026年09月17日 13:54:33" [ref=e182]
+          - row "4 QNAVI-1946(ThaoLTH) 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年09月16日 13:16:11 2026年09月16日 13:16:11" [ref=e183] [cursor=pointer]:
+            - cell "4" [ref=e184]
+            - cell "QNAVI-1946(ThaoLTH)" [ref=e185]
+            - cell "11 / 11" [ref=e186]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e187]
+            - cell "2026年09月16日 13:16:11" [ref=e188]
+            - cell "2026年09月16日 13:16:11" [ref=e189]
+          - row "5 Smoke test 1945 (Quang) 16 / 17 Qナビ担当者（株式会社グローバー）adminV2 2026年09月22日 13:27:43 2026年09月16日 12:20:28" [ref=e190] [cursor=pointer]:
+            - cell "5" [ref=e191]
+            - cell "Smoke test 1945 (Quang)" [ref=e192]
+            - cell "16 / 17" [ref=e193]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e194]
+            - cell "2026年09月22日 13:27:43" [ref=e195]
+            - cell "2026年09月16日 12:20:28" [ref=e196]
+          - row "6 Hệ thông Vingroup SA 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年07月08日 10:53:41 2026年07月08日 10:53:41" [ref=e197] [cursor=pointer]:
+            - cell "6" [ref=e198]
+            - cell "Hệ thông Vingroup SA" [ref=e199]
+            - cell "11 / 11" [ref=e200]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e201]
+            - cell "2026年07月08日 10:53:41" [ref=e202]
+            - cell "2026年07月08日 10:53:41" [ref=e203]
+          - row "7 Testchainsystem1 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年07月01日 16:15:50 2026年07月01日 16:15:50" [ref=e204] [cursor=pointer]:
+            - cell "7" [ref=e205]
+            - cell "Testchainsystem1" [ref=e206]
+            - cell "11 / 11" [ref=e207]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e208]
+            - cell "2026年07月01日 16:15:50" [ref=e209]
+            - cell "2026年07月01日 16:15:50" [ref=e210]
+          - row "8 Thuý Chain system 11 / 11 Qナビ担当者（株式会社グローバー） 2026年06月29日 17:12:24 2026年06月29日 17:12:24" [ref=e211] [cursor=pointer]:
+            - cell "8" [ref=e212]
+            - cell "Thuý Chain system" [ref=e213]
+            - cell "11 / 11" [ref=e214]
+            - cell "Qナビ担当者（株式会社グローバー）" [ref=e215]
+            - cell "2026年06月29日 17:12:24" [ref=e216]
+            - cell "2026年06月29日 17:12:24" [ref=e217]
+          - row "9 【DEV】株式会社大森 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年06月24日 17:06:51 2026年06月24日 17:06:51" [ref=e218] [cursor=pointer]:
+            - cell "9" [ref=e219]
+            - cell "【DEV】株式会社大森" [ref=e220]
+            - cell "11 / 11" [ref=e221]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e222]
+            - cell "2026年06月24日 17:06:51" [ref=e223]
+            - cell "2026年06月24日 17:06:51" [ref=e224]
+          - row "10 QuangUAT(ringing-type1) 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年06月17日 16:01:18 2026年06月17日 16:01:18" [ref=e225] [cursor=pointer]:
+            - cell "10" [ref=e226]
+            - cell "QuangUAT(ringing-type1)" [ref=e227]
+            - cell "11 / 11" [ref=e228]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e229]
+            - cell "2026年06月17日 16:01:18" [ref=e230]
+            - cell "2026年06月17日 16:01:18" [ref=e231]
+          - row "11 testexport 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年06月10日 16:17:21 2026年06月10日 16:17:21" [ref=e232] [cursor=pointer]:
+            - cell "11" [ref=e233]
+            - cell "testexport" [ref=e234]
+            - cell "11 / 11" [ref=e235]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e236]
+            - cell "2026年06月10日 16:17:21" [ref=e237]
+            - cell "2026年06月10日 16:17:21" [ref=e238]
+          - row "12 ローズマーリEST 12 / 12 Qナビ担当者（株式会社グローバー）adminV2 2026年09月16日 15:35:10 2026年05月25日 12:10:02" [ref=e239] [cursor=pointer]:
+            - cell "12" [ref=e240]
+            - cell "ローズマーリEST" [ref=e241]
+            - cell "12 / 12" [ref=e242]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e243]
+            - cell "2026年09月16日 15:35:10" [ref=e244]
+            - cell "2026年05月25日 12:10:02" [ref=e245]
+          - row "13 Linksys Chain System 27 / 27 Qナビ担当者（株式会社グローバー） 2026年10月14日 12:16:17 2026年05月22日 10:14:05" [ref=e246] [cursor=pointer]:
+            - cell "13" [ref=e247]
+            - cell "Linksys Chain System" [ref=e248]
+            - cell "27 / 27" [ref=e249]
+            - cell "Qナビ担当者（株式会社グローバー）" [ref=e250]
+            - cell "2026年10月14日 12:16:17" [ref=e251]
+            - cell "2026年05月22日 10:14:05" [ref=e252]
+          - row "14 ma_chain system_test 02 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年03月24日 15:49:30 2026年03月24日 15:49:30" [ref=e253] [cursor=pointer]:
+            - cell "14" [ref=e254]
+            - cell "ma_chain system_test 02" [ref=e255]
+            - cell "11 / 11" [ref=e256]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e257]
+            - cell "2026年03月24日 15:49:30" [ref=e258]
+            - cell "2026年03月24日 15:49:30" [ref=e259]
+          - row "15 354テスト用会社 11 / 11 Qナビ担当者（株式会社グローバー） 2026年03月23日 11:28:12 2026年03月23日 11:28:12" [ref=e260] [cursor=pointer]:
+            - cell "15" [ref=e261]
+            - cell "354テスト用会社" [ref=e262]
+            - cell "11 / 11" [ref=e263]
+            - cell "Qナビ担当者（株式会社グローバー）" [ref=e264]
+            - cell "2026年03月23日 11:28:12" [ref=e265]
+            - cell "2026年03月23日 11:28:12" [ref=e266]
+          - row "16 PICON COMPANY 12 / 12 Qナビ担当者（株式会社グローバー）adminV3 2026年10月13日 11:33:21 2026年03月12日 12:17:59" [ref=e267] [cursor=pointer]:
+            - cell "16" [ref=e268]
+            - cell "PICON COMPANY" [ref=e269]
+            - cell "12 / 12" [ref=e270]
+            - cell "Qナビ担当者（株式会社グローバー）adminV3" [ref=e271]
+            - cell "2026年10月13日 11:33:21" [ref=e272]
+            - cell "2026年03月12日 12:17:59" [ref=e273]
+          - row "17 Nhu Dang 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年03月10日 12:12:29 2026年03月10日 12:12:29" [ref=e274] [cursor=pointer]:
+            - cell "17" [ref=e275]
+            - cell "Nhu Dang" [ref=e276]
+            - cell "11 / 11" [ref=e277]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e278]
+            - cell "2026年03月10日 12:12:29" [ref=e279]
+            - cell "2026年03月10日 12:12:29" [ref=e280]
+          - row "18 HungPT chainsystem 11 / 11 Qナビ担当者（株式会社グローバー）adminV2 2026年03月05日 13:39:56 2026年03月05日 13:39:56" [ref=e281] [cursor=pointer]:
+            - cell "18" [ref=e282]
+            - cell "HungPT chainsystem" [ref=e283]
+            - cell "11 / 11" [ref=e284]
+            - cell "Qナビ担当者（株式会社グローバー）adminV2" [ref=e285]
+            - cell "2026年03月05日 13:39:56" [ref=e286]
+            - cell "2026年03月05日 13:39:56" [ref=e287]
+          - row "19 huong thao Corp 2 11 / 11 Qナビ担当者（株式会社グローバー） 2026年03月03日 16:42:57 2026年03月03日 16:42:57" [ref=e288] [cursor=pointer]:
+            - cell "19" [ref=e289]
+            - cell "huong thao Corp 2" [ref=e290]
+            - cell "11 / 11" [ref=e291]
+            - cell "Qナビ担当者（株式会社グローバー）" [ref=e292]
+            - cell "2026年03月03日 16:42:57" [ref=e293]
+            - cell "2026年03月03日 16:42:57" [ref=e294]
+          - row "20 huongthao Cop 11 / 11 Qナビ担当者（株式会社グローバー） 2026年03月02日 17:43:11 2026年03月02日 17:43:11" [ref=e295] [cursor=pointer]:
+            - cell "20" [ref=e296]
+            - cell "huongthao Cop" [ref=e297]
+            - cell "11 / 11" [ref=e298]
+            - cell "Qナビ担当者（株式会社グローバー）" [ref=e299]
+            - cell "2026年03月02日 17:43:11" [ref=e300]
+            - cell "2026年03月02日 17:43:11" [ref=e301]
+      - status [ref=e302]
+    - navigation [ref=e303]:
+      - list [ref=e304]:
+        - listitem [ref=e305]:
+          - generic: 最初
+        - listitem [ref=e306]:
+          - generic: 前
+        - listitem [ref=e307]:
+          - generic [ref=e308]: "1"
+        - listitem [ref=e309]:
+          - generic [ref=e310]: "2"
+        - listitem [ref=e311]:
+          - generic [ref=e312]: "3"
+        - listitem [ref=e313]:
+          - generic [ref=e314]: "4"
+        - listitem [ref=e315]:
+          - generic [ref=e316]: "5"
+        - listitem [ref=e317]:
+          - generic [ref=e318]: "6"
+        - listitem [ref=e319]:
+          - generic [ref=e320]: 次
+        - listitem [ref=e321]:
+          - generic [ref=e322]: 最後
+  - contentinfo [ref=e323]:
+    - generic [ref=e324]:
+      - strong [ref=e325]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e327]:
+      - listitem [ref=e328]:
+        - link "利用規約" [ref=e329] [cursor=pointer]:
+          - /url: https://dev.terms.picontechnology.com/
+      - listitem [ref=e330]:
+        - button "プライバシーポリシー" [ref=e331] [cursor=pointer]
+  - text: 
+```

@@ -18,6 +18,22 @@
 - R15 Hộp con / modal lồng nhau đóng chỉ bỏ class show (vẫn ở DOM): kiểm "đã đóng" bằng đúng phần tử vừa thao tác (elementHandle) hoặc loại modal cha bằng chữ chỉ cha có; không tìm lại bằng locator .last() lọc theo chữ. (web/2026-10-12-cms-nested-modal-hidden-keep-dom.md)
 - R16 Upload file (S3) chạy bất đồng bộ sau 完了, app bỏ qua upload tiếp theo: chờ response upload (PUT S3) OK rồi mới thao tác tiếp; không dùng waitForTimeout. (web/2026-10-12-cms-s3-upload-async.md)
 - R17 Hộp kết quả sau thao tác lưu (OK / 完了) hiện khi server xong: chờ với timeout dài (~30s), không dùng timeout mặc định 5s, không dùng waitForTimeout. (web/2026-10-12-cms-save-ok-dialog-slow.md)
+- R18 Sau đăng nhập / mở trang có API nặng: đợi API chính trả về thực tế; quá ngưỡng env (apiPerfLimitMs) → ghi cảnh báo 'PERFORMANCE' để check sau, vẫn chạy tiếp. Hộp 「表示に時間がかかっております」: chỉ bấm OK + ghi 'env-warning'; code KHÔNG tự reload / retry (app tự reload thì để app làm); chỉ reload khi TC ghi rõ bước F5. (web/2026-10-13-cms-dashboard-api-wait.md)
+- R19 Drawer / panel trượt đóng nằm ngoài màn hình (input vẫn "visible", nút không bấm được): kiểm trạng thái mở (class show) rồi mới thao tác; nút của drawer có thể nằm ngoài form bên trong. (web/2026-10-13-cms-offscreen-drawer.md)
+- R20 Chọn dòng / thẻ theo tên: khớp đúng ô (td + exact), không dùng hasText của cả dòng — hasText khớp chuỗi con ('Test' ⊂ 'EnterTest'). (web/2026-10-13-cms-hastext-substring.md)
+- R21 Bảng nằm trong form dạng table: tr ngoài cũng chứa nội dung bảng con → lấy tr trong cùng (hasNot tr) hoặc chỉ rõ tbody bằng thuộc tính riêng. (web/2026-10-13-cms-nested-table-rows.md)
+- R22 Thao tác có thể đã tự gửi form (Enter, double click): chờ form đóng trước; còn mở sau vài giây mới bấm nút gửi — không kiểm isVisible tức thời rồi click. (web/2026-10-13-cms-enter-submit-race.md)
+- R23 Thẻ có thumbnail + caption: phần bấm được là phần tử role=button (thumbnail), dò thật trước; modal preview lọc bằng class riêng, không bằng tên file (form cha cũng chứa tên). (web/2026-10-13-cms-pdf-thumbnail-click.md)
+- R24 Kịch bản serial: TC kết thúc ở form chưa lưu phải có step 'Cleanup' (không thuộc TC) rời form, để hộp 破棄 không chặn TC sau; không xử lý hộp 破棄 chung. (web/2026-10-13-serial-dirty-form-cleanup.md)
+- R25 Ô app tự tính / tự format (店舗向け 単価, tổng…): chờ app tính xong (hết giá trị tạm '0') rồi mới nhập; sau khi nhập KIỂM lại giá trị + tổng. (web/2026-10-13-cms-auto-computed-field.md)
+- R26 Loader toàn trang '#loader-container' chặn click khi danh sách lớn: chờ loader tắt (common/wait.ts waitForAppIdle) trước khi thao tác. (web/2026-10-13-cms-app-loader.md)
+- R27 Sau 検索: chờ ĐÚNG response của lần tìm (tham số tìm) rồi mới đọc bảng — '全 N 件' / dòng có sẵn từ danh sách mặc định là kết quả cũ. (web/2026-10-13-cms-search-stale-result.md)
+- R28 Ô tìm kiếm có thể tự tìm sau khi gõ: chờ URL / response vài giây, chưa tìm mới bấm 検索; panel / drawer còn mở sau khi tìm thì đóng trước khi thao tác bảng. (web/2026-10-13-cms-search-auto-submit.md)
+- R29 Trạng thái nhiều bước (稟議…): không giả định badge đổi sau mỗi bước; lặp tới trạng thái cuối, kiểm ở cuối. (web/2026-10-13-cms-multistep-status.md)
+- R30 Không dùng count() ngay sau khi mở màn / modal có dữ liệu tải async (count() không chờ): chờ phần tử mong đợi hiện ra trước; count() = 0 không được làm điều kiện bỏ qua thao tác của TC. (web/2026-10-14-cms-count-before-async-load.md)
+- R31 Wizard / màn có bước tuỳ role (vd 作業依頼登録: 99 có '操作モード設定', 98 継続依頼 không): chờ "bước tuỳ chọn hoặc bước kế tiếp", không cố định số bước; ghi role đã dò trong screen. (web/2026-10-14-cms-wizard-step-by-role.md)
+- R32 Đọc mã / số hiển thị khớp đủ định dạng thật (vd 継続依頼 '223470066_2' → `\d+(?:_\d+)?`), assert giá trị đầy đủ. (web/2026-10-14-cms-number-suffix.md)
+- R33 Ant Design select (webview トラブルNAVI): mở bằng mousedown lặp tới khi có option, lọc dropdown theo aria-controls của đúng ô, chọn xong kiểm .ant-select-selection-item. (web/2026-10-14-antd-select-in-iframe.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

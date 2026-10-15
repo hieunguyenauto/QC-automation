@@ -1,11 +1,18 @@
-# Câu hỏi — E2E suite · cập nhật 14/10/2026 (lượt 7)
+# Câu hỏi — E2E suite · cập nhật 14/10/2026 (lượt 8)
 **Đã chốt hết — không còn câu mở.**
-Suite sau lượt 7 (TC Revision 3): bỏ case 28 (G11) và case 16 (G14) → còn **37 case**.
+Suite sau lượt 8 (TC Revision 6): bỏ case 28 (G11) và case 16 (G14) → còn **37 case**.
 
 ## A. Câu còn mở
 (không còn)
 
 ## B. Đã chốt (không cần trả lời)
+### Lượt 8 (14/10) — chạy automation E2E-01 → TC Revision 4
+| # | Kết quả |
+|---|---|
+| R4-1 | Báo giá ≤ FIX (1 báo giá, không urgent): '提示する' → '決定' → '承認済み' ngay (tự duyệt khi 提示), không qua '承認待ち'. Sau khi lưu: NEW badge '作業中', CONTINUE badge '見積承認済' (TC "≤ FIX → auto approve" kiểm) |
+| R5-1 | Sau khi báo giá tự duyệt, header '見積書' hiện số tiền 税抜 của báo giá đã duyệt (vd '¥18,181'), không phải 'あり' |
+| R6-1 | Note khi tạo từng case = 'Automation E2E NN' (NN = số case 2 chữ số) ở cả 3 ô: chi tiết khi tạo trouble (webview / 故障詳細記入欄), 原因と発生起因 (報告書), comment 作業完了確認 |
+
 ### Lượt 7 (14/10) — khi recon cho automation → TC Revision 3
 | # | Kết quả |
 |---|---|

@@ -24,6 +24,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 - Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 - Đăng nhập trong test: CHỈ dùng <P>/automation/web/common/session.ts (loginAs(page, '02:urgent'), logout, forAccounts([...]) ). Không tự viết hàm login, không ghi loginId / mật khẩu trong spec. Tài khoản: env/<ENV>.json › accounts + .env.
 - Message dùng để expect (data/<scope-key>.json › messages) phải khớp <P>/spec/messages.md; không có trong file → ghi chú nguồn (TC LOCKED / app thật) và báo người dùng.
+- Màn hình mới / chưa chạy qua: BẮT BUỘC dò màn hình thật trước khi viết locator (R01) — Browser pane hoặc npm run recon / recon:e2e. Kết quả dò chỉ ghi vào thư mục tạm reports/_tmp_chk/recon*/ (ghi đè mỗi lần), không tạo thư mục reports/recon-* mới; thứ cần giữ ghi vào screens/ (locator) và automation/lessons/ (bài học). Trích nguồn ghi 'dò thật <ngày>, <môi trường>', không ghi đường dẫn reports/.
 - Sinh / sửa code test: đọc automation/lessons/INDEX.md TRƯỚC; locator chỉ lấy / ghi ở screens/. Sửa xong 1 lỗi test fail → luôn đề xuất lesson (bản nháp: loại, nguyên nhân gốc, rule) cho người dùng duyệt rồi ghi vào automation/lessons/ + INDEX; lỗi do TC sai → lesson phía QC (qc/lessons).
 
 ## Skill dùng trong repo

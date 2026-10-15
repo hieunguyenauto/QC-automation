@@ -1,4 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { waitApisIdle } from './wait';
 
 /**
  * Helper thao tác UI chung cho CMS (Bootstrap modal, nút theo label tiếng Nhật).
@@ -43,6 +44,7 @@ export async function confirmDecide(page: Page, expectText?: string | RegExp): P
   await expect(d).toBeVisible();
   if (expectText) await expect(d).toContainText(expectText);
   await click(d, '決定');
+  await waitApisIdle(page, '決定');
 }
 /** Bấm OK trong hộp thông báo (kiểm nội dung nếu truyền expectText).
  *  Hộp OK hiện SAU khi server lưu xong (lưu kèm ảnh trên est-test > 5s) → chờ tới 30s. */
@@ -52,6 +54,7 @@ export async function acknowledgeOk(page: Page, expectText?: string | RegExp): P
   if (expectText) await expect(d).toContainText(expectText);
   await click(d, 'OK');
   await expect(d).toBeHidden();
+  await waitApisIdle(page, 'OK');
 }
 /** 保存 → 決定 → OK (mẫu lưu dùng khắp CMS). */
 export async function saveDecideOk(page: Page, scope: Scope, okText?: string | RegExp): Promise<void> {

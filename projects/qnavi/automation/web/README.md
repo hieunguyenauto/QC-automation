@@ -40,7 +40,7 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 | Kiểm tra code TypeScript | `npm run typecheck` |
 | Kịch bản E2E trouble (13 TC, nối tiếp, tạo trouble mới) | `npm run e2e:headed` |
 | Chạy tiếp E2E trên trouble có sẵn (đúng trạng thái) | `E2E_TROUBLE_ID=1234 npm run e2e -- --grep "TC-00[5-9]\|TC-01"` |
-| Lấy locator thật: đi qua các màn hình, **không lưu dữ liệu**, ghi aria snapshot + ảnh | `npm run recon` → `reports/recon-<lần chạy>/` (`_summary.txt` liệt kê bước lỗi) |
+| Lấy locator thật: đi qua các màn hình, **không lưu dữ liệu**, ghi aria snapshot + ảnh | `npm run recon` / `npm run recon:e2e` → `reports/_tmp_chk/recon*/` (tạm, mỗi lần ghi đè; viết locator vào `screens/` xong là bỏ) (`_summary.txt` liệt kê bước lỗi) |
 | Mở trình duyệt **đã qua Basic Auth**, đăng nhập sẵn, để xem / lấy locator (Inspector: Record, Pick locator) | `ACCOUNT=99 npm run open` · `ENV=est-test ACCOUNT=02:urgent URL=/admin/troubles npm run open` |
 
 Mỗi lần chạy, project `setup` login từng role có tài khoản trong `.env` và lưu phiên vào `.auth/` (không commit). Role không có tài khoản → test của role đó **skip**, không fail.
@@ -58,10 +58,9 @@ Phase 007 chạy nối tiếp (common/scenario.ts): T1…T5 tạo trong lần ch
 
 | Thư mục / file | Nội dung |
 |---|---|
-| `reports/Failed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>/` | `FAIL.md` (mỗi trường 1 dòng: test case, ngày chạy, môi trường, tài khoản, bước fail, lỗi, locator, expected / received, vị trí code, URL lúc fail, trouble) + `screenshot.png`, `aria-snapshot.yml`, `error-context.md`, `trace.zip` |
-| `reports/Passed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md` | TC pass: ngày chạy, môi trường, tài khoản, thời gian |
-| `reports/Skipped/<TC ID>_<tên TC>_<ngày giờ>_<ENV>.md` | TC không chạy + lý do |
-| `reports/Runs/<tên bộ test>_<ngày giờ>_<ENV>/` | `SUMMARY.md` (tổng + link tới từng file trên) và report gốc Playwright: `html/` (`npm run report`), `results.json`, `junit.xml`, `artifacts/` |
+| `reports/Failed/<TC ID>_<tên TC>_<ngày giờ>_<ENV>/` | `FAIL.md` (mỗi trường 1 dòng: test case, ngày chạy, môi trường, tài khoản, bước fail, lỗi, locator, expected / received, vị trí code, URL lúc fail, trouble) + `video-fail.webm` (đoạn video của TC fail), `screenshot.png`, `aria-snapshot.yml`, `error-context.md`, `trace.zip` |
+| `reports/Passed/<kịch bản>_<ngày giờ>_<ENV>/` | 1 thư mục / lần chạy: `PASSED.md` (TC pass, tài khoản, thời gian, mốc tua video) + `video-full.webm` (video đầy đủ cả lần chạy) |
+| `reports/Runs/<tên bộ test>_<ngày giờ>_<ENV>/` | `SUMMARY.md` (tổng, link Passed / Failed, danh sách TC bị bỏ qua + lý do) và report gốc Playwright: `html/` (`npm run report`), `results.json`, `junit.xml`, `artifacts/` |
 | `reports/HISTORY.md` | Mỗi lần chạy 1 dòng: ngày, môi trường, tổng / pass / fail / skip |
 
 **Xem lại lỗi (đầy đủ hơn ảnh):**

@@ -10,13 +10,15 @@ import { CmsLayout } from '../../screens/cms/layout.screen';
 
 /**
  * RECON — đi qua các màn hình CMS, KHÔNG lưu dữ liệu, chụp ảnh + cây phần tử (aria snapshot) từng bước
- * vào reports/recon-<lần chạy>/. Dùng để lấy locator thật trước khi viết / sửa screens/ (automation/lessons R01).
+ * vào reports/_tmp_chk/recon/ (tạm, ghi đè). Dùng để lấy locator thật trước khi viết / sửa screens/ (automation/lessons R01).
  * Không bấm 保存 / 決定 / 提示する / 決定して問合わせ. Bước nào lỗi vẫn ghi lại và đi tiếp.
  *
  * Chạy:  npm run recon                       (màn chi tiết lấy trouble đầu tiên trong danh sách)
  *        E2E_TROUBLE_ID=1234 npm run recon   (dùng trouble cụ thể)
  */
-const OUT = path.resolve(__dirname, `../../reports/recon-${process.env.RUN_ID ?? Date.now()}`);
+// Thư mục TẠM duy nhất, mỗi lần chạy ghi đè (không lưu lâu dài): locator rút ra ghi vào screens/, bài học vào automation/lessons/.
+const OUT = path.resolve(__dirname, '../../reports/_tmp_chk/recon');
+try { fs.rmSync(OUT, { recursive: true, force: true }); } catch { /* không xoá được thì ghi đè */ }
 let n = 0;
 const notes: string[] = [];
 

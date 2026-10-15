@@ -2,7 +2,7 @@ import { expect } from '@playwright/test';
 import path from 'path';
 import { BaseScreen } from '../base.screen';
 import {
-  acknowledgeOk, click, clickables, confirmDecide, exact, field, fill, modal, tableRow, uploadVia,
+  acknowledgeOk, click, clickable, clickables, confirmDecide, exact, field, fill, modal, tableRow, uploadVia,
 } from '../../common/ui';
 import { AssetSelectDialog } from './asset-select.dialog';
 
@@ -51,9 +51,15 @@ export class TroubleCreateScreen extends BaseScreen {
     await expect(this.page.getByRole('heading', { name: '作業依頼登録' })).toBeVisible();
     await this.content.locator('label.btn', { hasText: exact(type) }).click();
     await click(this.content, '次へ');
-    await expect(this.content).toContainText('操作モード設定');
-    await this.content.locator('label.btn', { hasText: exact(mode) }).click();
-    await click(this.content, '次へ');
+    // Role 99: có bước '操作モード設定'. Role 98 (dò thật 2026-10-14, toridoll-test): 継続依頼 vào thẳng 'Step 1 作業依頼設定' (nút 作業依頼選択).
+    const modeStep = this.content.getByText('操作モード設定').first();
+    const next = type === '継続依頼' ? clickable(this.content, '作業依頼選択') : this.content.getByText(/チェーン店舗?選択/).first();
+    await expect(modeStep.or(next)).toBeVisible({ timeout: 15_000 });
+    if (await modeStep.isVisible()) {
+      await this.content.locator('label.btn', { hasText: exact(mode) }).click();
+      await click(this.content, '次へ');
+    }
+    await expect(next).toBeVisible({ timeout: 15_000 });
   }
   /** 継続依頼: 作業依頼選択 → hộp 検索条件 (input[name=number]) → 選択 dòng có 依頼番号. */
   async pickContinuationSource(number: string): Promise<void> {
@@ -64,7 +70,7 @@ export class TroubleCreateScreen extends BaseScreen {
     if (!(await num.isVisible().catch(() => false))) await box.locator('h4', { hasText: '検索条件' }).first().click();
     await num.fill(number);
     await click(box, '検索');
-    const row = box.locator('tbody tr', { hasText: number }).first();
+    const row = box.locator('tbody tr').filter({ has: this.page.locator('td', { hasText: exact(number) }) }).first(); // R20
     await expect(row).toBeVisible({ timeout: 15_000 });
     await click(row, '選択');
     await expect(box).toBeHidden();
@@ -134,7 +140,8 @@ export class TroubleCreateScreen extends BaseScreen {
     for (let attempt = 1; ; attempt++) {
       const box = modal(this.page);
       const target = box.getByText(exact(item)).first();
-      await expect(target).toBeVisible();
+      // Danh sách thẻ có lúc quay spinner > 5s dù API largecategories đã 200 (dev + est-test 2026-10-13) → chờ thực tế tới 30s, không reload (D24).
+      await expect(target).toBeVisible({ timeout: 30_000 });
       await box.evaluate(async (el) => {
         const imgs = Array.from(el.querySelectorAll('img'));
         await Promise.all(imgs.map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
@@ -146,6 +153,23 @@ export class TroubleCreateScreen extends BaseScreen {
       if (attempt >= 3) await expect(this.content).toContainText(item); // ném lỗi rõ ràng
       await this.openCategory(this.lastCategory);
     }
+  }
+
+  /**
+   * Thẻ 故障内容 → bấm category có webview トラブルNAVI (vd '水'): modal đóng, content chỉ còn iframe .trouble-navi (dò thật 2026-10-14,
+   * toridoll-test). Category không có webview (vd '操作テスト') dùng chooseCategory.
+   */
+  async openTroubleNavi(category: string): Promise<void> {
+    await this.openCategory(0);
+    const box = modal(this.page);
+    const target = box.getByText(exact(category)).first();
+    await expect(target).toBeVisible({ timeout: 30_000 });
+    await target.dispatchEvent('click');
+    await expect(this.content.locator('.trouble-navi iframe')).toBeVisible({ timeout: 30_000 });
+  }
+  /** Step 1 khi store đăng nhập: card 店舗選択 đã có sẵn store của tài khoản. */
+  async expectOwnStore(storeName: string): Promise<void> {
+    await expect(this.content).toContainText(storeName, { timeout: 30_000 });
   }
 
   async tickHasAsset(): Promise<void> {

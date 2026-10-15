@@ -1,5 +1,5 @@
 {
-  "_note": "Data cho projects/qnavi/qc/test-cases/phase007-regression-test-cases.md (rev 2, LOCKED). Tài khoản: env/<ENV>.json › accounts + .env.",
+  "_note": "Data cho projects/qnavi/qc/test-cases/phase007-regression-test-cases.md (rev 6, LOCKED). Tài khoản: env/<ENV>.json › accounts + .env.",
   "chain": { "companyQuery": "Linksys", "name": "Linksys Chain System" },
   "store": { "query": "LINKSYS STORE00001", "name": "LINKSYS STORE00001 (TORIDOLL)", "ringiQuery": "LINKSYS STORE00004 (RINGI)", "ringiName": "LINKSYS STORE00004 (RINGI)" },
   "categories": { "large": "操作テスト", "medium": "トイレ（テスト）", "small": "つまり：大便器（テスト）" },
@@ -40,6 +40,8 @@
     "assetRequired": "修理対象資産を選択してください。",
     "assetOld": "デバイスを入力してください。",
     "approvedCard": "この見積は承認済みです。現在実行できるアクションはありません。",
-    "payOk": "作業依頼の決済状態の保存が完了しました"
+    "payOk": "作業依頼の決済状態の保存が完了しました",
+    "filterSaved": "検索条件の保存が完了しました。",
+    "_filterSaved": "Không có trong spec/messages.md — nguồn: TC LOCKED rev 4 (P007-TC-006) + app thật dev 2026-10-13"
   }
 }

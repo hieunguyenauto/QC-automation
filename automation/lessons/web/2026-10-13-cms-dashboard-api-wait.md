@@ -1,0 +1,13 @@
+# 2026-10-13 Bấm sang trang khác khi dashboard (/api/home) chưa về → hộp 「表示に時間がかかっております」 ở trang sau
+- Loại: TIMING (kèm ENV: /api/home của est-test có lúc treo > 30s)
+- Nguồn: @P007-TC-002, @P007-TC-003 — file: web/tests/cms/phase007-regression.spec.ts (est-test)
+- Function / màn hình: CMS dashboard (/admin, GET /api/home = 進行中の作業一覧) → チェーンシステム情報, 資産管理項目マスター編集
+- Triệu chứng: hộp '確認' 「表示に時間がかかっております。進行中の作業一覧を再読み込みし、ご確認ください。」 chặn click menu ("intercepts pointer events"); có lúc trang sau (asset-column) hiện '該当データが0件でした', API không response ~17s rồi app tự reload. Người dùng thật không gặp.
+- Nguyên nhân gốc: test bấm menu / goto chỉ ~1s sau đăng nhập, khi GET /api/home còn chờ (người dùng thật đợi dashboard hiện xong mới bấm). Riêng est-test, /api/home có lúc > 30s dù API khác ~100ms.
+- Cách fix:
+  - screens/cms/layout.screen.ts waitDashboardApi(): bắt request trước khi bấm ログイン, đợi response thực tế (tối đa env apiMaxWaitMs = 120s). Chậm hơn apiPerfLimitMs (30s) / không về / lỗi HTTP → annotation 'perf' (SUMMARY + reports/PERFORMANCE.md), không fail, chạy tiếp. Dùng ở common/session.ts loginAs và các bước login UI trong spec.
+  - CmsLayout đăng ký page.addLocatorHandler cho đúng hộp SLOW_LOAD: chỉ bấm OK + annotation 'env-warning' + đợi load. KHÔNG reload / retry (người dùng chốt: app tự reload thì để app làm; code chỉ reload khi TC ghi F5).
+  - Helper chung common/wait.ts waitApiPerf(page, match, label): đợi API thực tế, chậm / không về → 'perf', trả false, chạy tiếp. Áp cho P007-TC-003~005 bước 3a (POST + GET column-management sau 決定: GET chưa về thì bảng còn trạng thái tạm, タイマー形式 chưa khoá → fail sai).
+  - Kết quả: 10:02 pass 5/5 không còn hộp lỗi; các lần /api/home treo > 30s được ghi PERFORMANCE.
+- Rule rút ra: R18
+- Áp dụng cho: mọi bước đăng nhập / mở trang có API nặng tải sau (dashboard…); mọi hộp lỗi app do môi trường chậm.

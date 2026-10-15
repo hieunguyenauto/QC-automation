@@ -4,7 +4,7 @@ import { expect, type Browser, type Page } from '@playwright/test';
 import { env } from './env';
 import { CMS_ROLES, credentials, type CmsRole } from '../data/roles';
 import { LoginScreen } from '../screens/cms/login.screen';
-import { CmsLayout } from '../screens/cms/layout.screen';
+import { CmsLayout, waitDashboardApi } from '../screens/cms/layout.screen';
 
 /**
  * ĐĂNG NHẬP DÙNG CHUNG — mọi spec dùng file này, không tự viết hàm login.
@@ -72,8 +72,11 @@ export async function loginAs(page: Page, who: Who, opts: { save?: boolean } = {
   const c = credentialsOf(who);
   const login = new LoginScreen(page);
   await login.goto();
+  const dashboard = waitDashboardApi(page);
   await login.login(c.loginId, c.password);
   await expect(page, `Đăng nhập ${who} (${c.loginId}) không thành công`).not.toHaveURL(/\/login/, { timeout: 20_000 });
+  await dashboard;
+  await login.waitAfterLogin();
   current.set(page, who);
   if (opts.save !== false) {
     fs.mkdirSync(path.dirname(authFile(who)), { recursive: true });

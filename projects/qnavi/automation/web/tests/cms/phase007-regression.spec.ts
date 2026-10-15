@@ -3,9 +3,11 @@ import data from '../../data/phase007-regression.json';
 import { serialScenario } from '../../common/scenario';
 import { credentialsOf, loginAs, markLoggedIn, logout, type Who } from '../../common/session';
 import { account } from '../../data/roles';
-import { click, closeModal, minimizeChat, modal, modalWithButton, acknowledgeOk, confirmDecide, valueOf } from '../../common/ui';
+import { click, closeModal, exact, minimizeChat, modal, modalWithButton, acknowledgeOk, confirmDecide, valueOf } from '../../common/ui';
 import { LoginScreen } from '../../screens/cms/login.screen';
-import { CmsLayout } from '../../screens/cms/layout.screen';
+import { CmsLayout, waitDashboardApi } from '../../screens/cms/layout.screen';
+import { env } from '../../common/env';
+import { waitApiPerf, waitApisIdle } from '../../common/wait';
 import { TroubleCreateScreen } from '../../screens/cms/trouble-create.screen';
 import { TroubleListScreen } from '../../screens/cms/trouble-list.screen';
 import { TroubleDetailScreen } from '../../screens/cms/trouble-detail.screen';
@@ -16,7 +18,7 @@ import { SubAdminScreen, STORE_CSV_HEADER } from '../../screens/cms/subadmin.scr
 import { TaskListScreen, ChatListScreen, AssetInfoScreen } from '../../screens/cms/task-chat-asset.screen';
 
 /**
- * TC: projects/qnavi/qc/test-cases/phase007-regression-test-cases.md (rev 2, LOCKED 2026-10-12) — 65 TC, chạy nối tiếp.
+ * TC: projects/qnavi/qc/test-cases/phase007-regression-test-cases.md (rev 6, LOCKED 2026-10-13) — 65 TC, chạy nối tiếp.
  * Môi trường: est-test (ENV=est-test). Locator dò thật trên dev 2026-10-13 (cùng CMS); chỗ chưa dò ghi [chưa dò] trong screens/.
  * Lesson đã áp dụng (automation/lessons/INDEX.md): R01 dò DOM trước · R03/R05 chờ dữ liệu tải · R04 valueOf · R07 option:checked
  *  · R08 nút 閉じる · R09/R15 modal lồng nhau · R10 toggle · R11/R12 dispatchEvent · R13 trace theo chunk (common/scenario.ts)
@@ -69,9 +71,12 @@ function tc(id: string, title: string, who: Who | null, body: () => Promise<void
     await body();
   });
 }
+/** Dòng 見積 theo đúng tên ở ô td (hasText khớp chuỗi con: 'Test' khớp cả 'EnterTest'). */
+const estimationRow = (box: ReturnType<typeof modal>, name: string) =>
+  box.locator('tr.estimation-row').filter({ has: page.locator('td', { hasText: exact(name) }) }).first();
 const need = (t: T, name: string) => test.skip(!t.id, `Chưa có ${name} (TC tạo ${name} chưa chạy / fail)`);
 async function openTrouble(t: T): Promise<void> {
-  await page.goto(`/admin/troubles/${t.id}/detail`);
+  await page.goto(`/admin/troubles/${t.id}/detail`); await waitApisIdle(page, 'goto');
   await s.detail.expectOpened(t.id);
 }
 /** Ghi id / 依頼番号 ngay khi vào chi tiết sau khi tạo (R14). */
@@ -85,7 +90,7 @@ async function record(t: T, created: T): Promise<void> {
 /** 作業依頼登録 新規依頼 tới bước 作業項目選択 (store + 担当者 + 3 thẻ 作業項目). */
 async function createUntilCategories(storeQuery: string, storeName: string): Promise<void> {
   const c = s.create;
-  await page.goto('/admin/trouble/create');
+  await page.goto('/admin/trouble/create'); await waitApisIdle(page, 'goto');
   await c.start('新規依頼');
   await c.openChainStoreSearch();
   await c.expandSearch('電話番号');
@@ -187,9 +192,12 @@ tc('P007-TC-001', 'Login admin', null, async () => {
   });
   await step('2. Input admin login ID', () => s.login.loginId.fill(c.loginId));
   await step('3. Input admin password', () => s.login.password.fill(c.password));
-  await step('4. Click ログイン', () => s.login.submit.click());
+  let dashboard: Promise<void> = Promise.resolve();
+  await step('4. Click ログイン', async () => { dashboard = waitDashboardApi(page); await s.login.submit.click(); });
   await step("Expected: sidebar 'Qナビ担当者', dashboard '全体', menu '作業依頼登録'", async () => {
-    await expect(page).toHaveURL(/\/admin(\/|$|\?)/);
+    await expect(page).toHaveURL(/\/admin(\/|$|\?)/, { timeout: env.navigationTimeoutMs }); // đợi chuyển trang thực tế (R18), không dùng 5s mặc định
+    await dashboard;
+    await s.login.waitAfterLogin();
     markLoggedIn(page, '99');
     await s.layout.expectAccount('Qナビ担当者');
     await expect(s.layout.content).toContainText('全体', { timeout: 20_000 });
@@ -236,16 +244,27 @@ for (const [i, t] of data.timers.entries()) {
       await s.column.chooseTimer();
       await s.column.chooseFormat(t.format as '年月');
     });
-    await step('3. 保存 → 決定', async () => {
+    await step('3. 保存 (form) → row added', async () => {
       await click(s.column.form, '保存');
+      await expect(s.column.form).toBeHidden();
+      await expect(s.column.row(t.name)).toContainText('タイマー');
+    });
+    await step('3a. 保存 (page) → 決定 (→ OK)', async () => {
+      // Đợi lưu + tải lại danh sách thực tế (R18): GET chưa về thì bảng còn trạng thái tạm (dòng mới vẫn sửa được タイマー形式)
+      const api = (m: string) => (u: URL, method: string) => method === m && u.pathname.endsWith('/api/asset/column-management');
+      const saved = waitApiPerf(page, api('POST'), '資産管理項目 POST column-management (保存)');
+      const listed = waitApiPerf(page, api('GET'), '資産管理項目 GET column-management (tải lại sau 保存)');
+      await s.column.saveAll();
       await confirmDecide(page);
       const ok = modalWithButton(page, 'OK');
       if (await ok.waitFor({ state: 'visible', timeout: 15_000 }).then(() => true).catch(() => false)) await acknowledgeOk(page);
+      await saved;
+      await listed;
       await expect(s.column.row(t.name)).toContainText('タイマー', { timeout: 15_000 });
       await expect(s.column.row(t.name)).toContainText(t.format);
     });
     if (i === 1) await step('4. Reload (F5) → row still shows the format', async () => {
-      await page.reload();
+      await s.column.reload();
       await expect(s.column.row(t.name)).toContainText(t.format, { timeout: 20_000 });
     });
     await step(`${i === 1 ? 5 : 4}. Open row ${t.name}`, () => s.column.openEdit(t.name));
@@ -267,6 +286,7 @@ tc('P007-TC-006', '#6 · 1706-02 · Enter repeatedly in フィルタ名', '99', 
     for (let k = 0; k < 5; k++) await f.press('Enter').catch(() => {}); // modal có thể đã đóng sau Enter đầu
     await expect(s.list.saveFilterModal).toBeHidden({ timeout: 15_000 });
   });
+  await step(`Verify: dialog '${data.messages.filterSaved}' → OK`, () => acknowledgeOk(page, data.messages.filterSaved));
   await step(`Expected: header フィルタ lists '${st.filter}' once`, async () => {
     const names = await s.list.headerFilterNames();
     expect(names.filter((n) => n === st.filter)).toHaveLength(1);
@@ -325,6 +345,8 @@ tc('P007-TC-010', '#10 · 1388-03 · Empty 症状グループ名 → error', '99
     await expect(s.sub.groupError).toHaveText(M.groupNameRequired);
     await expect(page).toHaveURL(/\/presets$/);
   });
+  // Dọn (không thuộc TC): form nhập dở chặn menu của TC sau bằng hộp xác nhận 破棄.
+  await step('Cleanup: rời form 症状グループ追加 (戻る → はい)', () => s.sub.discardGroupForm());
 });
 
 tc('P007-TC-011', '#11 · 1388-04 · Add 症状グループ AT_Group_<time>', '99', async () => {
@@ -354,7 +376,7 @@ tc('P007-TC-012', '#12 · 1388-05 · 表示件数 = 0', '99', async () => {
 tc('P007-TC-013', '#13 · 1388-06 · Import store CSV (追加のみ)', '99', async () => {
   test.skip(!st.group || !st.chainId, 'Cần TC-002 (chainId) và TC-011 (AT_Group)');
   await step('Pre: lấy id STORE00001 (chain detail)', async () => {
-    await page.goto(`/admin/chain-systems/${st.chainId}/stores`);
+    await page.goto(`/admin/chain-systems/${st.chainId}/stores`); await waitApisIdle(page, 'goto');
     st.storeId = await s.chain.storeId(data.store.name);
   });
   await step('1. AT_Group detail → 紐付け店舗一括登録 CSVアップロード → 追加のみ', async () => {
@@ -424,7 +446,7 @@ tc('P007-TC-016', '#16 · Create T1 (605-28)', '99', async () => {
   });
   await step(`10. Select ${data.asset.name} (+ ${data.asset.existingName}) → 決定する`, async () => {
     expect(await c.assets.selectRows(data.asset.name, 1)).toBe(1);
-    await c.assets.selectRows(data.asset.existingName, 1);
+    expect(await c.assets.selectRows(data.asset.existingName, 1)).toBe(1); // TC-036/037 cần 2 dòng tài sản
     await c.assets.decide();
     for (const h of ['資産名', '型式', '製造番号']) await expect(c.content).toContainText(h);
   });
@@ -590,10 +612,10 @@ tc('P007-TC-023', '#23 · 2132-06 · 戻る from 作業依頼情報 and plain UR
 tc('P007-TC-024', '#24 · 2285-02 · 資産チェック ON with ≥1 asset can be saved', '99', async () => {
   need(T1, 'T1');
   await step('1. Open T1', () => openTrouble(T1));
-  await step('2. 編集 → asset checkbox ticked, ≥1 asset', async () => {
+  await step(`2. 編集 → 資産一覧 → ≥1 asset ('${data.asset.name}')`, async () => {
     await s.detail.headerButton('編集');
     await s.edit.expectOpened();
-    await expect(s.edit.content).toContainText(data.asset.name);
+    await s.edit.expectAssetInList(data.asset.name);
   });
   await step('3. 変更 (作業項目（大）) → 保存 → OK', () => s.edit.setFirstAssetResponseType());
   await step(`Expected: saved without '${M.assetRequired}', detail shown`, async () => {
@@ -677,7 +699,9 @@ tc('P007-TC-028', '#29 · 1706-01 · Enter repeatedly in 見積名 → 1 estimat
     await d.pressEnterInEstimateName(5);
   });
   await step('4. 決定 on form', async () => {
-    if (await d.estimateForm.isVisible().catch(() => false)) await click(d.estimateForm, '決定');
+    // Enter thường đã gửi form (nút 決定 disabled khi đang gửi rồi form đóng) → chờ form tự đóng; còn mở sau 5s mới bấm 決定.
+    const closed = await expect(d.estimateForm).toBeHidden({ timeout: 5_000 }).then(() => true, () => false);
+    if (!closed) await click(d.estimateForm, '決定');
     await expect(d.estimateForm).toBeHidden({ timeout: 15_000 });
   });
   await step(`Expected: only 1 '${E.enterName}' (下書き)`, async () => {
@@ -743,7 +767,7 @@ tc('P007-TC-031', '#32 · 1771-03 · Typing 作業 then picking 作業項目選�
   });
   await step(`Expected: only '${e.item}' added (no '${e.typed}')`, async () => {
     const labels = await d.estimateForm.locator('textarea[name$=".label"]').evaluateAll((ts) => ts.map((t) => (t as HTMLTextAreaElement).value));
-    const tdText = await d.estimateForm.locator('tbody').innerText();
+    const tdText = await d.estimateItemsBody.innerText();
     expect.soft(labels.includes(e.typed) || tdText.includes(e.typed), `BUG 1771-03: có dòng '${e.typed}'`).toBe(false);
     expect(tdText).toContain(e.item);
   });
@@ -769,7 +793,7 @@ tc('P007-TC-032', '#33 · Create 見積 Test (Autotest 99,999) and 提示', '99'
   await step('5. 閉じる, 保存 (見積承認待ち), reload, header 見積もり', async () => {
     await d.closeEstimateModal();
     await d.saveStatus();
-    await page.reload();
+    await page.reload(); await waitApisIdle(page, 'F5');
     await d.expectOpened(T1.id);
   });
   await step("Expected: '対応中' / '見積承認待ち', row Test = '承認待ち'", async () => {
@@ -777,7 +801,7 @@ tc('P007-TC-032', '#33 · Create 見積 Test (Autotest 99,999) and 提示', '99'
     await d.headerButton('見積もり');
     const box = modal(page, '見積もり管理');
     await expect(box).toContainText(e.name);
-    await expect(box.locator('tr.estimation-row', { hasText: e.name }).first()).toContainText('承認待ち');
+    await expect(estimationRow(box, e.name)).toContainText('承認待ち');
     await click(box, '閉じる');
   });
 });
@@ -817,7 +841,7 @@ tc('P007-TC-033', '#34 · 取り下げ申請 → 取り下げ承認 → 提示 �
   await step('7. 閉じる, reload, minimize chat', async () => {
     await d.closeEstimateModal();
     await d.closeStatus();
-    await page.reload();
+    await page.reload(); await waitApisIdle(page, 'F5');
     await d.expectOpened(T1.id);
     await minimizeChat(page);
   });
@@ -849,24 +873,28 @@ tc('P007-TC-036', '#37 · 605-07 · Each asset has its own 対応 dropdown', '99
     for (const f of ['開始', '終了', '原因と発生起因', '作業前の写真', '作業後の写真', 'PDFファイル', '修理対象資産選択']) await expect(s.detail.reportModal).toContainText(f);
   });
   await step('Expected: each asset row has its own dropdown', async () => {
-    const rows = s.detail.reportModal.locator('tbody tr').filter({ has: page.locator('select[name^="types."]') });
-    expect(await rows.count()).toBeGreaterThanOrEqual(1);
-    expect(await s.detail.assetTypeSelects.count()).toBe(await rows.count());
+    const rows = s.detail.assetRows;
+    const n = await rows.count();
+    expect(n).toBeGreaterThanOrEqual(1);
+    for (let i = 0; i < n; i++) await expect(rows.nth(i).locator('select[name^="types."]')).toHaveCount(1);
+    // Mỗi dòng 1 select; số name (types.<assetId>) khác nhau = số dòng.
+    const names = new Set(await s.detail.assetTypeSelects.evaluateAll((ss) => ss.map((e) => (e as HTMLSelectElement).name)));
+    expect(names.size).toBe(n);
   });
   await step('3. キャンセル', () => cancelReportForm());
 });
 
 tc('P007-TC-037', '#38 · 605-08 · Changing row A does not affect row B', '99', async () => {
   need(T1, 'T1');
-  const sel = () => s.detail.assetTypeSelects;
+  const sel = (i: number) => s.detail.assetTypeSelect(i);
   await step('1. Open 報告書 form; note row 2 (b0)', async () => { await openTrouble(T1); await openReportForm(); });
-  const b0 = await sel().nth(1).inputValue();
+  const b0 = await sel(1).inputValue();
   await step('2. Row 1: 修理 → 入れ替え → 清掃', async () => {
-    for (const v of ['修理', '入れ替え', '清掃']) await sel().nth(0).selectOption({ label: v });
+    for (const v of ['修理', '入れ替え', '清掃']) await sel(0).selectOption({ label: v });
   });
   await step('Expected: row 1 = 清掃, row 2 = b0', async () => {
-    await expect(sel().nth(0).locator('option:checked')).toHaveText('清掃');
-    await expect(sel().nth(1)).toHaveValue(b0);
+    await expect(sel(0).locator('option:checked')).toHaveText('清掃');
+    await expect(sel(1)).toHaveValue(b0);
   });
   await step('3. キャンセル', () => cancelReportForm());
 });
@@ -882,13 +910,11 @@ tc('P007-TC-038', '#39 · 1846-01 · Upload 1 PDF, preview, delete', '99', async
     await expect(d.pdfCard(data.report.pdf)).toBeVisible();
   });
   await step('3. Click card → preview (canvas) → close', async () => {
-    await d.pdfCard(data.report.pdf).click();
-    const pv = modal(page, data.report.pdf);
-    await expect(pv.locator('canvas').first()).toBeVisible({ timeout: 20_000 });
+    const pv = await d.openPdfPreview(data.report.pdf);
     await closeModal(pv);
   });
   await step('4. × on card', async () => {
-    await valueOf(d.reportModal, 'PDFファイル').locator('button, i, span').filter({ hasText: /^×$/ }).first().click();
+    await d.removePdf(data.report.pdf);
   });
   await step(`Expected: '${data.report.pdf}' removed`, () => expect(d.pdfCard(data.report.pdf)).toHaveCount(0));
   await step('5. キャンセル', () => cancelReportForm());
@@ -953,8 +979,8 @@ tc('P007-TC-042', '#43 · 報告済 + 報告書 (1846-04, 605-09)', '99', async 
     await expect(d.pdfCard(data.report.pdf)).toBeVisible();
   });
   await step("5. Keep 対応区分 '---' (605-09)", async () => {
-    const n = await d.assetTypeSelects.count();
-    for (let k = 0; k < n; k++) await d.assetTypeSelects.nth(k).selectOption({ index: 0 });
+    const n = await d.assetRows.count();
+    for (let k = 0; k < n; k++) await d.assetTypeSelect(k).selectOption({ index: 0 });
   });
   await step('6. 完了 → back to 状態変更', async () => {
     await click(d.reportModal, '完了');
@@ -1004,7 +1030,8 @@ tc('P007-TC-044', '#45 · 136-02 · Download 報告書 from 状態変更', '99',
   await step("Expected: '.xlsx' and '.pdf' downloaded", async () => {
     expect(xl).toMatch(/\.xlsx$/i);
     expect(pdf).toMatch(/\.pdf$/i);
-    await click(d.reportModal, '閉じる');
+    // Hộp 報告書 mở từ 状態変更 không có nút '閉じる' ở cuối (khác hộp mở từ header) → đóng bằng × (R08).
+    await closeModal(d.reportModal);
     await d.closeStatus().catch(() => {});
   });
 });
@@ -1133,18 +1160,21 @@ async function finishCreateAfterNext(text: string, urgent: boolean): Promise<T> 
 tc('P007-TC-051', '#52 · 2285-01 · 資産チェック ON with 0 asset → error text', '99', async () => {
   need(T3, 'T3');
   await step('1. Open T3 → 編集', async () => { await openTrouble(T3); await s.detail.headerButton('編集'); await s.edit.expectOpened(); });
-  await step('2. 資産 変更 → 対象資産: 削除 hết, giữ tick → 保存', async () => {
-    const box = await s.edit.openAssetPopup();
-    while (await box.locator('button', { hasText: /^\s*削除\s*$/ }).count()) await box.locator('button', { hasText: /^\s*削除\s*$/ }).first().click();
-    await click(box, '保存');
+  // Admin: hàng '資産' chỉ có '資産一覧' → xoá tài sản trong modal 店舗・担当者編集 ('変更' của 作業項目（大）) — Q11, dò thật dev 2026-10-13.
+  let box!: Awaited<ReturnType<typeof s.edit.openItemEditModal>>;
+  const assetCheck = () => s.edit.itemEditAssetCheck(box);
+  await step("2. 変更 (作業項目（大）) → 削除 all assets, keep checkbox ticked", async () => {
+    box = await s.edit.openItemEditModal();
+    await expect(assetCheck()).toBeChecked();
+    await s.edit.removeAllItemEditAssets(box);
+    await expect(assetCheck()).toBeChecked();
   });
-  await step(`3. 変更 (作業項目（大）) → 保存 → message`, async () => {
-    const err = page.getByText(M.assetRequired);
-    if (!(await err.first().isVisible().catch(() => false))) await click(s.edit.content, '保存');
-  });
-  await step(`Expected: '${M.assetRequired}' once, no '${M.assetOld}'`, async () => {
+  await step('3. 保存', () => click(box, '保存'));
+  await step(`Expected: '${M.assetRequired}' once, no '${M.assetOld}', checkbox stays ticked`, async () => {
     await expect(page.getByText(M.assetRequired)).toHaveCount(1, { timeout: 15_000 });
     await expect(page.getByText(M.assetOld)).toHaveCount(0);
+    await expect(assetCheck()).toBeChecked();
+    await click(box, 'キャンセル'); // không lưu: T3 giữ nguyên tài sản
   });
 });
 
@@ -1194,7 +1224,7 @@ tc('P007-TC-053', '#54 · 1786-01 (+1765-01) · Urgent 稟議: approve all steps
   });
   await step('4. 承認する lặp tới 承認済み (≤5 bước 稟議)', async () => {
     for (let k = 0; k < 5; k++) {
-      await page.reload();
+      await page.reload(); await waitApisIdle(page, 'F5');
       await d.expectOpened(T5.id);
       await openEstimates();
       const status = (await d.estimateRow(name).locator('.badge').innerText()).trim();
@@ -1202,13 +1232,15 @@ tc('P007-TC-053', '#54 · 1786-01 (+1765-01) · Urgent 稟議: approve all steps
       await d.openEstimateMenu(name);
       await d.estimateAction('manager', '承認する').click();
       await d.decide(/承認/);
-      await expect(d.estimateRow(name).locator('.badge')).not.toHaveText(status, { timeout: 15_000 });
+      // 稟議 nhiều bước: badge giữ '稟議承認中' giữa các bước (nút 承認する hiện lại cho bước sau) → không kiểm badge đổi;
+      // chờ API xong, vòng sau reload + kiểm. Bước 5 kiểm '承認済み' (dev 2026-10-13).
+      await waitApisIdle(page, `稟議 承認 lần ${k + 1}`);
       await d.closeEstimateModal();
       await d.closeStatus();
     }
   });
   await step("5. 見積もり selected = RingiTest2, 対応中の状態 '作業中' (1765-01)", async () => {
-    await page.reload();
+    await page.reload(); await waitApisIdle(page, 'F5');
     await d.openQuickAction();
     await d.openEstimateFromStatus();
     await d.expectEstimateStatus(name, '承認済み');
@@ -1220,7 +1252,7 @@ tc('P007-TC-053', '#54 · 1786-01 (+1765-01) · Urgent 稟議: approve all steps
   });
   await step('6. タスク管理 → 依頼番号 T5 (全て)', async () => {
     await s.layout.menu('タスク管理');
-    await s.tasks.search({ number: T5.number, status: '' });
+    await s.tasks.search({ number: T5.number, status: '', scope: '' }); // TC rev 6: 状態 '全て', タスク範囲 '全て'
   });
   await step("Expected: every '見積承認依頼' task of T5 is '完了'", async () => {
     const n = await s.tasks.rows.count();
@@ -1243,7 +1275,7 @@ tc('P007-TC-054', '#55 · 1786-02 · Second estimate not selected → task stays
   });
   await step("2. タスク管理 → newest task '未着手'", async () => {
     await s.layout.menu('タスク管理');
-    await s.tasks.search({ number: T5.number, status: '' });
+    await s.tasks.search({ number: T5.number, status: '', scope: '' }); // TC rev 6: 状態 '全て', タスク範囲 '全て'
     await expect(s.tasks.status(s.tasks.rows.first())).toHaveText('未着手');
   });
   await step("3. T5 → 作業完了 → 見積もり '見積もり選択', '対応中' / '作業完了'", async () => {
@@ -1256,7 +1288,7 @@ tc('P007-TC-054', '#55 · 1786-02 · Second estimate not selected → task stays
   });
   await step('4. タスク管理 → task of RingiTest3', async () => {
     await s.layout.menu('タスク管理');
-    await s.tasks.search({ number: T5.number, status: '' });
+    await s.tasks.search({ number: T5.number, status: '', scope: '' }); // TC rev 6: 状態 '全て', タスク範囲 '全て'
   });
   await step("Expected: RingiTest3 task still '未着手' (BUG 1786-02 nếu 完了)", () =>
     expect(s.tasks.status(s.tasks.rows.first())).toHaveText('未着手'));
@@ -1269,7 +1301,7 @@ tc('P007-TC-055', '#56 · SETUP-T4 · 継続依頼 → 作業中', '99', async (
   need(T1, 'T1 (trouble 報告済 của STORE00001)');
   const d = s.detail;
   await step('1-3. 継続依頼 → ロックなし → 作業依頼選択 T1 → 決定して問合わせ → 決定 → OK', async () => {
-    await page.goto('/admin/trouble/create');
+    await page.goto('/admin/trouble/create'); await waitApisIdle(page, 'goto');
     await s.create.start('継続依頼');
     await s.create.pickContinuationSource(T1.number!);
     await s.create.submitContinuation();
@@ -1289,7 +1321,7 @@ tc('P007-TC-055', '#56 · SETUP-T4 · 継続依頼 → 作業中', '99', async (
     await d.closeEstimateModal();
     await d.closeStatus();
   });
-  await step("5. reload → '対応中' / '見積承認済'", async () => { await page.reload(); await d.expectOpened(T4.id); await d.expectBadges('対応中', '見積承認済'); });
+  await step("5. reload → '対応中' / '見積承認済'", async () => { await page.reload(); await waitApisIdle(page, 'F5'); await d.expectOpened(T4.id); await d.expectBadges('対応中', '見積承認済'); });
   await step('6. 日程確定 → 移動中 → 到着 → 作業中', async () => {
     for (const l of ['日程確定', '移動中', '到着', '作業中']) {
       await d.openQuickAction();
@@ -1338,10 +1370,14 @@ tc('P007-TC-058', '#59 · Logout admin → login manager', null, async () => {
   await step("1-2. ログアウト → 'ログアウトします' → 決定", async () => { await loginAs(page, '99'); await logout(page); });
   await step('3-4. Login manager (role 01)', async () => {
     const c = credentialsOf('01');
+    await s.login.waitReady();
     await s.login.loginId.fill(c.loginId);
     await s.login.password.fill(c.password);
+    const dashboard = waitDashboardApi(page);
     await s.login.submit.click();
     await expect(page).not.toHaveURL(/\/login/, { timeout: 20_000 });
+    await dashboard;
+    await s.login.waitAfterLogin();
     markLoggedIn(page, '01');
   });
   await step("Expected: sidebar 'LINKSYS MANAGER00001', no menu '作業依頼情報'", async () => {
@@ -1374,7 +1410,7 @@ tc('P007-TC-060', '#61 · Manager views 見積 and history (605-44)', '01', asyn
     await d.headerButton('見積もり');
     const box = modal(page, '見積もり管理');
     for (const v of [data.chain.name, E.main.total, E.main.totalTax]) await expect(box).toContainText(v);
-    await expect(box.locator('tr.estimation-row', { hasText: E.main.name }).first()).toContainText('承認済み');
+    await expect(estimationRow(box, E.main.name)).toContainText('承認済み');
     await expect(box.locator('tr.estimation-row', { hasText: '下書き' })).toHaveCount(0);
   });
   await step('4. 履歴を見る → 取り下げ申請中 / Request cancel → 閉じる ×2', async () => {
@@ -1440,10 +1476,14 @@ tc('P007-TC-063', '#64 · Logout manager → login subadmin', null, async () => 
   await step('1. ログアウト → 決定', async () => { await loginAs(page, '01'); await logout(page); });
   await step("2. Login subadmin (98) → 'LINKSYS SUBADMIN', no 資産情報", async () => {
     const c = credentialsOf('98');
+    await s.login.waitReady();
     await s.login.loginId.fill(c.loginId);
     await s.login.password.fill(c.password);
+    const dashboard = waitDashboardApi(page);
     await s.login.submit.click();
     await expect(page).not.toHaveURL(/\/login/, { timeout: 20_000 });
+    await dashboard;
+    await s.login.waitAfterLogin();
     markLoggedIn(page, '98');
     await expect(page.locator('.account')).toContainText(data.subadmin.displayName);
     await expect(s.layout.sidebar.getByText('資産情報', { exact: true })).toHaveCount(0);
@@ -1479,10 +1519,9 @@ tc('P007-TC-065', '#66 · 1846-05 · SubAdmin downloads PDF from 報告書 previ
     await expect(d.reportModal).toContainText(data.report.pdf);
   });
   await step('2. Click test1.pdf → preview with canvas', async () => {
-    await d.reportModal.getByText(data.report.pdf).first().click();
-    await expect(modal(page, data.report.pdf).locator('canvas').first()).toBeVisible({ timeout: 20_000 });
+    await d.openPdfPreview(data.report.pdf);
   });
   let name = '';
-  await step('3. ダウンロード', async () => { name = await downloadName(() => click(modal(page, data.report.pdf), 'ダウンロード')); });
+  await step('3. ダウンロード', async () => { name = await downloadName(() => click(d.pdfPreview(data.report.pdf), 'ダウンロード')); });
   await step(`Expected: file name '${data.report.pdf}'`, () => expect(name).toBe(data.report.pdf));
 });

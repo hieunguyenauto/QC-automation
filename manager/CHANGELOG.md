@@ -2,7 +2,20 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] Recon (dò màn hình) là bắt buộc trước khi viết locator; kết quả chỉ ghi vào reports/_tmp_chk/recon*/ (ghi đè), không tạo reports/recon-* nữa (CLAUDE.md mục Automation)
+- [auto] Automation E2E suite: E2E-00 (common setup) + E2E-01 pass 15/15 trên toridoll-test; screen mới trouble-navi.webview.ts, ChainSystemScreen (công tắc シサンNAVI / トラブルNAVI, store, 限度額), common/e2e-suite.ts, data/e2e-suite.json; lesson R31–R33 (bước wizard theo role, số có hậu tố, ant-select trong iframe)
 - Lesson QC D17 (TC sinh bằng script phải tách bước theo nhánh, đối chiếu màn CMS web) từ e2e-suite TC-002; TC e2e-suite rev 3 (DRAFT)
+- Sửa lesson QC D17: thêm trạng thái kỳ vọng theo nhánh (提示 ≤ FIX → 承認済み); TC e2e-suite rev 4 LOCKED
+- [auto] Lesson automation R30 (count() trước khi dữ liệu async tải xong); P007-TC-051 sửa: chờ bảng tài sản trong modal 店舗・担当者編集 rồi mới xoá (TroubleEditScreen.removeAllItemEditAssets), gỡ test.fail BUG 2285-01 (người dùng thử tay: app đúng); TC-050 + 051 pass trên dev
+- [auto] Report E2E: Passed gộp 1 thư mục / lần chạy (Passed/<kịch bản>_<ngày giờ>_<ENV>/PASSED.md + video-full.webm, mốc tua từng TC); Failed giữ từng TC + video-fail.webm (cắt bằng ffmpeg); bỏ thư mục Skipped (danh sách skip ở Runs/<lần chạy>/SUMMARY.md); Runs giữ nguyên
+- [auto] Lesson automation R25–R29 (ô app tự tính, loader #loader-container, kết quả tìm cũ, ô tự tìm + drawer, trạng thái nhiều bước); P007 dev 64/65 pass, TC-051 đánh dấu bug đã biết 2285-01 (test.fail, FAIL.md có 'Bug đã biết'); TC phase007-regression rev 6 (TC-053/054 タスク範囲 '全て')
+- [auto] P007 rà toàn bộ TC-039~065 sau vòng 19 (43/65 pass trên dev): pdfCard theo thẻ (TC-040), removePdf, đóng 報告書 từ 状態変更 bằng × (TC-044), TC-051 xoá tài sản trong modal 店舗・担当者編集 (Q11), rowOf 依頼番号 khớp đúng (list, 継続依頼), TC-042 chọn 対応区分 theo dòng
+- [auto] Lesson automation R19–R24 (drawer ngoài màn hình, hasText chuỗi con, bảng lồng trong form, Enter đã gửi form, thumbnail role=button / modal preview PDF, cleanup form dở giữa TC serial) từ chạy P007 trên dev; sửa P007-TC-010/011/016/023/028/031/032/036/037/038/065 (locator .message--error, chờ thẻ 故障内容 30s, openAdvanced, estimationRow, assetRows, openPdfPreview); TC-024 theo TC rev 5
+- Lesson QC D16 (lưu xong có hộp thoại hoàn tất → TC ghi bước 'OK') từ P007-TC-006; TC phase007-regression rev 4
+- [auto] P007-TC-006: bấm 'OK' dialog '検索条件の保存が完了しました。' trước khi mở 'フィルタ' (theo TC rev 4); env/dev.json trả cmsBaseUrl về cms-toridoll-test
+- Lesson QC D15 (màn master-edit lưu 2 tầng, TC ghi đủ cả 2) từ P007-TC-003; TC phase007-regression rev 3
+- [auto] Lesson automation R18 (đợi /api/home thực tế sau login, quá ngưỡng ghi PERFORMANCE không fail; hộp 表示に時間がかかっております chỉ bấm OK, không reload) (D24); report thêm mục Cảnh báo môi trường, Performance, reports/PERFORMANCE.md; env apiPerfLimitMs / apiMaxWaitMs
+- [auto] P007-TC-003~005: '保存' 2 tầng ở 資産管理項目 (AssetColumnScreen.saveAll) theo TC rev 3
 - Nguồn message Qnavi: raw/List messages.xlsx → spec/messages.md (6 sheet), sources.md mã MSG; luật đối chiếu message khi viết TC và automation (D23)
 - [auto] Automation Phase 007 Regression (65 TC): tests/cms/phase007-regression.spec.ts, screen mới chain-system, asset-column, subadmin, task/chat/asset-info; common/scenario.ts (khung chạy nối tiếp dùng chung); npm run p007
 - [auto] E2E quay video cả lần chạy (reports/Runs/<run>/video, chỉ giữ khi có fail); FAIL.md có link video + mốc thời gian + cách mở trace

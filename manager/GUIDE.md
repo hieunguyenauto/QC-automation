@@ -924,6 +924,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 - Knowledge automation cập nhật bằng skill kb-update-automation (không dùng kb-update).
 - Đăng nhập trong test: CHỈ dùng <P>/automation/web/common/session.ts (loginAs(page, '02:urgent'), logout, forAccounts([...]) ). Không tự viết hàm login, không ghi loginId / mật khẩu trong spec. Tài khoản: env/<ENV>.json › accounts + .env.
 - Message dùng để expect (data/<scope-key>.json › messages) phải khớp <P>/spec/messages.md; không có trong file → ghi chú nguồn (TC LOCKED / app thật) và báo người dùng.
+- Màn hình mới / chưa chạy qua: BẮT BUỘC dò màn hình thật trước khi viết locator (R01) — Browser pane hoặc npm run recon / recon:e2e. Kết quả dò chỉ ghi vào thư mục tạm reports/_tmp_chk/recon*/ (ghi đè mỗi lần), không tạo thư mục reports/recon-* mới; thứ cần giữ ghi vào screens/ (locator) và automation/lessons/ (bài học). Trích nguồn ghi 'dò thật <ngày>, <môi trường>', không ghi đường dẫn reports/.
 - Sinh / sửa code test: đọc automation/lessons/INDEX.md TRƯỚC; locator chỉ lấy / ghi ở screens/. Sửa xong 1 lỗi test fail → luôn đề xuất lesson (bản nháp: loại, nguyên nhân gốc, rule) cho người dùng duyệt rồi ghi vào automation/lessons/ + INDEX; lỗi do TC sai → lesson phía QC (qc/lessons).
 
 ## Skill dùng trong repo
@@ -1460,6 +1461,9 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - D11 Trước khi đưa ticket vào scope: check role scope của ticket, release phase, ticket cha/con.
 - D12 Check duplicate theo nội dung (không chỉ theo ID) và trace 2 chiều VP ↔ TC (không VP rỗng, không TC trỏ VP không tồn tại).
 - D14 Nhập TC E2E từ file ngoài (CSV viết tay…): đối chiếu từng bước với catalog / màn hình thật, bổ sung bước bắt buộc bị bỏ. (design/2026-10-12-e2e-missing-ui-step.md)
+- D15 Màn master-edit có 2 tầng lưu (modal thêm dòng → '保存' của trang): TC phải ghi đủ cả 2 tầng và kiểm dữ liệu còn sau reload. (design/2026-10-13-two-level-save.md)
+- D16 Lưu xong mà app hiện hộp thoại hoàn tất (…が完了しました。 + 'OK'): Steps phải ghi "Verify: dialog '<message>' → 'OK'" trước bước tiếp theo. (design/2026-10-13-save-done-dialog.md)
+- D17 Luồng lấy từ CSV / app mobile: đối chiếu màn CMS web (catalog / recon) trước khi LOCK; mỗi nhánh điều kiện (ON / OFF, category, ≤ / > FIX…) có bước và trạng thái kỳ vọng riêng, không dùng chung 1 template khi sinh TC bằng script. (design/2026-10-14-e2e-branch-flow-template.md)
 - D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
 
 ## Excel / công cụ
@@ -1495,6 +1499,22 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - R15 Hộp con / modal lồng nhau đóng chỉ bỏ class show (vẫn ở DOM): kiểm "đã đóng" bằng đúng phần tử vừa thao tác (elementHandle) hoặc loại modal cha bằng chữ chỉ cha có; không tìm lại bằng locator .last() lọc theo chữ. (web/2026-10-12-cms-nested-modal-hidden-keep-dom.md)
 - R16 Upload file (S3) chạy bất đồng bộ sau 完了, app bỏ qua upload tiếp theo: chờ response upload (PUT S3) OK rồi mới thao tác tiếp; không dùng waitForTimeout. (web/2026-10-12-cms-s3-upload-async.md)
 - R17 Hộp kết quả sau thao tác lưu (OK / 完了) hiện khi server xong: chờ với timeout dài (~30s), không dùng timeout mặc định 5s, không dùng waitForTimeout. (web/2026-10-12-cms-save-ok-dialog-slow.md)
+- R18 Sau đăng nhập / mở trang có API nặng: đợi API chính trả về thực tế; quá ngưỡng env (apiPerfLimitMs) → ghi cảnh báo 'PERFORMANCE' để check sau, vẫn chạy tiếp. Hộp 「表示に時間がかかっております」: chỉ bấm OK + ghi 'env-warning'; code KHÔNG tự reload / retry (app tự reload thì để app làm); chỉ reload khi TC ghi rõ bước F5. (web/2026-10-13-cms-dashboard-api-wait.md)
+- R19 Drawer / panel trượt đóng nằm ngoài màn hình (input vẫn "visible", nút không bấm được): kiểm trạng thái mở (class show) rồi mới thao tác; nút của drawer có thể nằm ngoài form bên trong. (web/2026-10-13-cms-offscreen-drawer.md)
+- R20 Chọn dòng / thẻ theo tên: khớp đúng ô (td + exact), không dùng hasText của cả dòng — hasText khớp chuỗi con ('Test' ⊂ 'EnterTest'). (web/2026-10-13-cms-hastext-substring.md)
+- R21 Bảng nằm trong form dạng table: tr ngoài cũng chứa nội dung bảng con → lấy tr trong cùng (hasNot tr) hoặc chỉ rõ tbody bằng thuộc tính riêng. (web/2026-10-13-cms-nested-table-rows.md)
+- R22 Thao tác có thể đã tự gửi form (Enter, double click): chờ form đóng trước; còn mở sau vài giây mới bấm nút gửi — không kiểm isVisible tức thời rồi click. (web/2026-10-13-cms-enter-submit-race.md)
+- R23 Thẻ có thumbnail + caption: phần bấm được là phần tử role=button (thumbnail), dò thật trước; modal preview lọc bằng class riêng, không bằng tên file (form cha cũng chứa tên). (web/2026-10-13-cms-pdf-thumbnail-click.md)
+- R24 Kịch bản serial: TC kết thúc ở form chưa lưu phải có step 'Cleanup' (không thuộc TC) rời form, để hộp 破棄 không chặn TC sau; không xử lý hộp 破棄 chung. (web/2026-10-13-serial-dirty-form-cleanup.md)
+- R25 Ô app tự tính / tự format (店舗向け 単価, tổng…): chờ app tính xong (hết giá trị tạm '0') rồi mới nhập; sau khi nhập KIỂM lại giá trị + tổng. (web/2026-10-13-cms-auto-computed-field.md)
+- R26 Loader toàn trang '#loader-container' chặn click khi danh sách lớn: chờ loader tắt (common/wait.ts waitForAppIdle) trước khi thao tác. (web/2026-10-13-cms-app-loader.md)
+- R27 Sau 検索: chờ ĐÚNG response của lần tìm (tham số tìm) rồi mới đọc bảng — '全 N 件' / dòng có sẵn từ danh sách mặc định là kết quả cũ. (web/2026-10-13-cms-search-stale-result.md)
+- R28 Ô tìm kiếm có thể tự tìm sau khi gõ: chờ URL / response vài giây, chưa tìm mới bấm 検索; panel / drawer còn mở sau khi tìm thì đóng trước khi thao tác bảng. (web/2026-10-13-cms-search-auto-submit.md)
+- R29 Trạng thái nhiều bước (稟議…): không giả định badge đổi sau mỗi bước; lặp tới trạng thái cuối, kiểm ở cuối. (web/2026-10-13-cms-multistep-status.md)
+- R30 Không dùng count() ngay sau khi mở màn / modal có dữ liệu tải async (count() không chờ): chờ phần tử mong đợi hiện ra trước; count() = 0 không được làm điều kiện bỏ qua thao tác của TC. (web/2026-10-14-cms-count-before-async-load.md)
+- R31 Wizard / màn có bước tuỳ role (vd 作業依頼登録: 99 có '操作モード設定', 98 継続依頼 không): chờ "bước tuỳ chọn hoặc bước kế tiếp", không cố định số bước; ghi role đã dò trong screen. (web/2026-10-14-cms-wizard-step-by-role.md)
+- R32 Đọc mã / số hiển thị khớp đủ định dạng thật (vd 継続依頼 '223470066_2' → `\d+(?:_\d+)?`), assert giá trị đầy đủ. (web/2026-10-14-cms-number-suffix.md)
+- R33 Ant Design select (webview トラブルNAVI): mở bằng mousedown lặp tới khi có option, lọc dropdown theo aria-controls của đúng ô, chọn xong kiểm .ant-select-selection-item. (web/2026-10-14-antd-select-in-iframe.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->
@@ -1510,6 +1530,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D24 | 2026-10-13 | Automation: hộp lỗi app do môi trường chậm (「表示に時間がかかっております」) chỉ bấm OK + ghi env-warning, code KHÔNG tự reload / retry (chỉ reload khi TC ghi F5); API nặng sau login đợi response thực tế, chậm quá ngưỡng ghi PERFORMANCE để check sau, không fail TC | Người dùng thật không gặp lỗi vì đợi trang tải xong; reload / retry che lỗi hiệu năng; perf est-test chập chờn không được chặn cả kịch bản | screens/cms/layout.screen.ts, common/session.ts, common/env.ts, common/qc-reporter.ts, automation/lessons/INDEX.md (R18) |
 | D23 | 2026-10-13 | List messages.xlsx là nguồn ưu tiên cao nhất cho chữ message (MSG): gốc ở raw/ (được commit, không có mật khẩu), bản tra cứu spec/messages.md; TC và data automation phải đối chiếu | Message là chỗ hay sai chữ; cần 1 nguồn chuẩn để double check | projects/qnavi/sources.md, spec/messages.md, CLAUDE.md, .gitignore |
 | D22 | 2026-10-12 | Đăng nhập test dùng chung common/session.ts: tài khoản 'role[:variant]', phiên lưu .auth/<ENV>/ (dùng lại 8h), tự logout khi đổi tài khoản | Mỗi spec tự viết login, phiên dev/est-test đè nhau, chưa hỗ trợ 9 store | common/session.ts, common/roles.ts, CLAUDE.md |
 | D21 | 2026-10-12 | Mỗi lỗi khi chạy code test do AI sinh → sửa screens/ (locator) + ghi lesson automation (rule vào automation/lessons/INDEX.md) sau khi người dùng duyệt; lỗi do TC → lesson QC. AI đọc INDEX trước khi sinh code | Lỗi đã gặp không lặp lại khi sinh code mới | CLAUDE.md, automation/lessons/, qc/lessons/ |
@@ -1541,6 +1562,20 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] Recon (dò màn hình) là bắt buộc trước khi viết locator; kết quả chỉ ghi vào reports/_tmp_chk/recon*/ (ghi đè), không tạo reports/recon-* nữa (CLAUDE.md mục Automation)
+- [auto] Automation E2E suite: E2E-00 (common setup) + E2E-01 pass 15/15 trên toridoll-test; screen mới trouble-navi.webview.ts, ChainSystemScreen (công tắc シサンNAVI / トラブルNAVI, store, 限度額), common/e2e-suite.ts, data/e2e-suite.json; lesson R31–R33 (bước wizard theo role, số có hậu tố, ant-select trong iframe)
+- Lesson QC D17 (TC sinh bằng script phải tách bước theo nhánh, đối chiếu màn CMS web) từ e2e-suite TC-002; TC e2e-suite rev 3 (DRAFT)
+- Sửa lesson QC D17: thêm trạng thái kỳ vọng theo nhánh (提示 ≤ FIX → 承認済み); TC e2e-suite rev 4 LOCKED
+- [auto] Lesson automation R30 (count() trước khi dữ liệu async tải xong); P007-TC-051 sửa: chờ bảng tài sản trong modal 店舗・担当者編集 rồi mới xoá (TroubleEditScreen.removeAllItemEditAssets), gỡ test.fail BUG 2285-01 (người dùng thử tay: app đúng); TC-050 + 051 pass trên dev
+- [auto] Report E2E: Passed gộp 1 thư mục / lần chạy (Passed/<kịch bản>_<ngày giờ>_<ENV>/PASSED.md + video-full.webm, mốc tua từng TC); Failed giữ từng TC + video-fail.webm (cắt bằng ffmpeg); bỏ thư mục Skipped (danh sách skip ở Runs/<lần chạy>/SUMMARY.md); Runs giữ nguyên
+- [auto] Lesson automation R25–R29 (ô app tự tính, loader #loader-container, kết quả tìm cũ, ô tự tìm + drawer, trạng thái nhiều bước); P007 dev 64/65 pass, TC-051 đánh dấu bug đã biết 2285-01 (test.fail, FAIL.md có 'Bug đã biết'); TC phase007-regression rev 6 (TC-053/054 タスク範囲 '全て')
+- [auto] P007 rà toàn bộ TC-039~065 sau vòng 19 (43/65 pass trên dev): pdfCard theo thẻ (TC-040), removePdf, đóng 報告書 từ 状態変更 bằng × (TC-044), TC-051 xoá tài sản trong modal 店舗・担当者編集 (Q11), rowOf 依頼番号 khớp đúng (list, 継続依頼), TC-042 chọn 対応区分 theo dòng
+- [auto] Lesson automation R19–R24 (drawer ngoài màn hình, hasText chuỗi con, bảng lồng trong form, Enter đã gửi form, thumbnail role=button / modal preview PDF, cleanup form dở giữa TC serial) từ chạy P007 trên dev; sửa P007-TC-010/011/016/023/028/031/032/036/037/038/065 (locator .message--error, chờ thẻ 故障内容 30s, openAdvanced, estimationRow, assetRows, openPdfPreview); TC-024 theo TC rev 5
+- Lesson QC D16 (lưu xong có hộp thoại hoàn tất → TC ghi bước 'OK') từ P007-TC-006; TC phase007-regression rev 4
+- [auto] P007-TC-006: bấm 'OK' dialog '検索条件の保存が完了しました。' trước khi mở 'フィルタ' (theo TC rev 4); env/dev.json trả cmsBaseUrl về cms-toridoll-test
+- Lesson QC D15 (màn master-edit lưu 2 tầng, TC ghi đủ cả 2) từ P007-TC-003; TC phase007-regression rev 3
+- [auto] Lesson automation R18 (đợi /api/home thực tế sau login, quá ngưỡng ghi PERFORMANCE không fail; hộp 表示に時間がかかっております chỉ bấm OK, không reload) (D24); report thêm mục Cảnh báo môi trường, Performance, reports/PERFORMANCE.md; env apiPerfLimitMs / apiMaxWaitMs
+- [auto] P007-TC-003~005: '保存' 2 tầng ở 資産管理項目 (AssetColumnScreen.saveAll) theo TC rev 3
 - Nguồn message Qnavi: raw/List messages.xlsx → spec/messages.md (6 sheet), sources.md mã MSG; luật đối chiếu message khi viết TC và automation (D23)
 - [auto] Automation Phase 007 Regression (65 TC): tests/cms/phase007-regression.spec.ts, screen mới chain-system, asset-column, subadmin, task/chat/asset-info; common/scenario.ts (khung chạy nối tiếp dùng chung); npm run p007
 - [auto] E2E quay video cả lần chạy (reports/Runs/<run>/video, chỉ giữ khi có fail); FAIL.md có link video + mốc thời gian + cách mở trace
@@ -1583,4 +1618,3 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - 6 template theo format Excel của team (D04)
 - Luật mỗi TC 1 expected result (D05)
 - Nhóm viewpoint 7 Performance, 8 Bài học / bug cũ; lesson DESIGN_GAP (D06)
-- Knowledge hub: skill kb-update, build_guide.py, decisions, pre-commit hook (D07)

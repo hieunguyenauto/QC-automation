@@ -32,7 +32,8 @@ export class TroubleDetailScreen extends BaseScreen {
   }
   /** 番号 (= 依頼番号 trong danh sách) đang hiển thị. */
   async number(): Promise<string | undefined> {
-    return (await valueOf(this.content, '番号').innerText()).match(/\d+/)?.[0];
+    // 継続依頼 có hậu tố '_N' (vd '223470066_2', dò thật 2026-10-14) → giữ cả hậu tố.
+    return (await valueOf(this.content, '番号').innerText()).match(/\d+(?:_\d+)?/)?.[0];
   }
   /** Badge trạng thái: vd ('対応中', '受注'). */
   async expectBadges(...badges: string[]): Promise<void> {
@@ -110,6 +111,8 @@ export class TroubleDetailScreen extends BaseScreen {
   get estimateForm(): Locator {
     return this.page.locator('.modal.show').filter({ visible: true }).filter({ has: this.page.locator('input[name="title"]') }).last();
   }
+  /** Bảng hạng mục của form 見積もり (form có 2 tbody: thông tin chung + hạng mục kéo thả) — dò thật dev 2026-10-13. */
+  get estimateItemsBody(): Locator { return this.estimateForm.locator('tbody[data-rbd-droppable-id="dnd-create-estimates"]'); }
   get itemModal(): Locator { return modal(this.page, '作業項目追加'); }
   estimateRow(name: string): Locator {
     return this.estimateModal.locator('tr.estimation-row').filter({ has: this.page.locator('td', { hasText: exact(name) }) }).first();
@@ -219,10 +222,16 @@ export class TroubleDetailScreen extends BaseScreen {
     }
   }
   /** Ô 店舗向け 単価 của dòng hạng mục cuối (input[name="items.N.amount"]). */
+  /** App tự tính 店舗向け 単価 (= 作業会社単価 / 0.7) SAU khi thêm hạng mục / xoá dòng mặc định; lúc đầu ô = '0'.
+   *  Nhập trước khi app tính xong → bị ghi đè (TC-048 dev 2026-10-13: 9500 → 4,285). Chờ ô hết '0' rồi nhập, KIỂM giá trị + 会計. */
   async setStoreUnitPrice(value: string): Promise<void> {
     const f = this.estimateForm.locator('input[name$=".amount"]').last();
+    await expect(f).not.toHaveValue(/^0?$/, { timeout: 15_000 });
     await f.fill(value);
-    await f.blur();
+    await f.press('Tab');
+    const shown = Number(value).toLocaleString('en-US');
+    await expect(f).toHaveValue(shown);
+    await expect(this.estimateForm).toContainText(new RegExp(`会計[^￥]*￥${shown.replace(',', '\\,')}`));
   }
   /** Chọn 対応中の状態（継続） (trouble 継続依頼: select name=continuationFlowStatus, dò thật 2026-10-13). */
   async setContinuationFlow(label: string): Promise<void> {
@@ -292,6 +301,13 @@ export class TroubleDetailScreen extends BaseScreen {
   }
   /** Mỗi tài sản 1 dropdown 対応区分 (select name="types.<assetId>"). */
   get assetTypeSelects(): Locator { return this.reportModal.locator('select[name^="types."]'); }
+  /** Dòng tài sản trong form 報告書: tr TRONG CÙNG có select types.<assetId>. Bảng tài sản lồng trong tr '修理対象資産選択' của form
+   *  → tr ngoài cũng "có" select, phải loại tr chứa tr (dev 2026-10-13). */
+  get assetRows(): Locator {
+    return this.reportModal.locator('tr').filter({ has: this.page.locator('select[name^="types."]') }).filter({ hasNot: this.page.locator('tr') });
+  }
+  /** Dropdown 対応区分 của dòng tài sản thứ i (theo dòng, không theo thứ tự phần tử). */
+  assetTypeSelect(i: number): Locator { return this.assetRows.nth(i).locator('select[name^="types."]').first(); }
   /**
    * PDF 報告書: input[type=file accept=pdf] trong .dropzone của dòng 'PDFファイル' → hộp con 'N / 5' → 完了.
    * [chưa dò thật: hộp con PDF — giả định giống hộp ảnh 'N / 20' (R15, R16)]. Trả về hộp con (đang mở) để kiểm message.
@@ -312,8 +328,28 @@ export class TroubleDetailScreen extends BaseScreen {
   async cancelBox(box: Locator): Promise<void> {
     if (await box.isVisible().catch(() => false)) await click(box, 'キャンセル');
   }
+  /** Thẻ PDF = '.pdf-report-items__item' có img[title=<tên>]. Không tìm theo chữ trong ô PDFファイル: message lỗi
+   *  '<tên>: ファイルの形式は正しくありません。' cũng chứa tên file (TC-040, dev 2026-10-13). */
   pdfCard(name: string): Locator {
-    return valueOf(this.reportModal, 'PDFファイル').getByText(name, { exact: false }).first();
+    return this.reportModal.locator('.pdf-report-items__item', { has: this.page.locator(`img[title="${name}"]`) }).first();
+  }
+  /** Preview PDF (dò thật dev 2026-10-13): phần bấm được là thumbnail '.upload-pdf-holder__preview' (role=button, img[title=<tên>]);
+   *  bấm tên file (p.pdf-filename) KHÔNG mở gì. Preview = '.modal.show.app-pdf-preview-modal' (tiêu đề tên file, ダウンロード, canvas).
+   *  Form 報告書 cũng có 1 canvas riêng → không tìm canvas theo modal chứa tên file. */
+  /** × của thẻ PDF = '.btn-close-card' (icon .fa, không có chữ) trong '.pdf-report-items__item' (dò thật dev 2026-10-13). */
+  async removePdf(name: string): Promise<void> {
+    await this.pdfCard(name).locator('.btn-close-card').first().click();
+  }
+  pdfPreview(name: string): Locator {
+    return this.page.locator('.modal.show.app-pdf-preview-modal').filter({ hasText: name }).last();
+  }
+  async openPdfPreview(name: string): Promise<Locator> {
+    const thumb = this.reportModal.locator('[role="button"]', { has: this.page.locator(`img[title="${name}"]`) }).first();
+    if (await thumb.isVisible().catch(() => false)) await thumb.click();
+    else await this.reportModal.getByText(name).first().click(); // màn xem 報告書 (không phải form sửa): chưa dò
+    const pv = this.pdfPreview(name);
+    await expect(pv.locator('canvas').first()).toBeVisible({ timeout: 20_000 });
+    return pv;
   }
   async downloadFrom(button: string): Promise<string> {
     const dl = this.page.waitForEvent('download');

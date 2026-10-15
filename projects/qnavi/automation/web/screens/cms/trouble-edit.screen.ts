@@ -1,6 +1,7 @@
 import { expect } from '@playwright/test';
 import { BaseScreen } from '../base.screen';
-import { acknowledgeOk, click, clickable, modal, modalWithButton, rowOf } from '../../common/ui';
+import { acknowledgeOk, click, clickable, closeModal, exact, modal, modalWithButton, rowOf } from '../../common/ui';
+import { waitApisIdle } from '../../common/wait';
 
 /**
  * 作業依頼編集 — catalog: cms-frontend.md › "Trouble Edit: /admin/troubles/:id/edit".
@@ -20,10 +21,37 @@ export class TroubleEditScreen extends BaseScreen {
   }
 
   /** 変更 ở dòng 作業項目（大）→ 対応区分 = giá trị đầu tiên cho mọi tài sản → 保存 → OK. Trả về các giá trị đã chọn. */
-  async setFirstAssetResponseType(): Promise<string[]> {
+  /** 変更 ở dòng 作業項目（大）→ modal 店舗・担当者編集 (role 99). Dò thật dev 2026-10-13: 3 thẻ 選択 (故障内容/個所/症状),
+   *  checkbox '対象資産がある場合はチェックを入れてください', 修理対象資産選択, bảng tài sản (対応区分 select + 削除 mỗi dòng), キャンセル / 保存. */
+  async openItemEditModal(): Promise<ReturnType<typeof modal>> {
     await click(rowOf(this.content, '作業項目（大）'), '変更');
     const box = modal(this.page, '店舗・担当者編集');
     await expect(box).toBeVisible();
+    // Modal hiện ngay nhưng bảng tài sản tải sau (lúc đầu chỉ có '選択してください' + spinner) — dò thật dev 2026-10-14.
+    await waitApisIdle(this.page, '店舗・担当者編集');
+    return box;
+  }
+  /** Checkbox '対象資産がある場合はチェックを入れてください' trong modal 店舗・担当者編集. */
+  itemEditAssetCheck(box: ReturnType<typeof modal>) {
+    return box.locator('input[type="checkbox"]').first();
+  }
+  /** Nút '削除' của từng dòng tài sản trong modal 店舗・担当者編集. */
+  itemEditAssetDeletes(box: ReturnType<typeof modal>) {
+    return box.locator('button', { hasText: exact('削除') });
+  }
+  /** Xoá hết tài sản trong modal. Trouble phải có sẵn ≥1 tài sản: chờ dòng tài sản hiện ra rồi mới đếm
+   *  (count() không chờ — đếm lúc bảng chưa tải = 0 → không xoá gì, bug test 2026-10-14). */
+  async removeAllItemEditAssets(box: ReturnType<typeof modal>): Promise<void> {
+    const del = this.itemEditAssetDeletes(box);
+    await expect(del.first(), 'Trouble không có tài sản nào trong modal 店舗・担当者編集').toBeVisible({ timeout: 30_000 });
+    for (let n = await del.count(); n > 0; n--) {
+      await del.first().click();
+      await expect(del).toHaveCount(n - 1);
+    }
+    await expect(box).toContainText('選択してください');
+  }
+  async setFirstAssetResponseType(): Promise<string[]> {
+    const box = await this.openItemEditModal();
     await expect(box).toContainText('対応区分');
     const selects = box.locator('select').filter({ visible: true });
     const n = await selects.count();
@@ -62,6 +90,14 @@ export class TroubleEditScreen extends BaseScreen {
     const box = modal(this.page, '対象資産');
     await expect(box).toBeVisible();
     return box;
+  }
+  /** Hàng '資産' chỉ có nút '資産一覧' (không có checkbox) → modal: No | 対応区分 | … | 名称 | 型式 | 製造番号 (dò thật dev 2026-10-13). */
+  async expectAssetInList(name: string): Promise<void> {
+    await click(rowOf(this.content, '資産'), '資産一覧');
+    const box = modal(this.page).filter({ hasText: '製造番号' });
+    await expect(box).toBeVisible();
+    await expect(box).toContainText(name);
+    await closeModal(box);
   }
   async back(): Promise<void> {
     await clickable(this.content, '戻る').click();

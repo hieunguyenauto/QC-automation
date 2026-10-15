@@ -1,5 +1,6 @@
-import { expect } from '@playwright/test';
+import { expect, type Locator } from '@playwright/test';
 import { BaseScreen } from '../base.screen';
+import { waitApisIdle } from '../../common/wait';
 import { tableRow, waitForApiSafe } from '../../common/ui-wait';
 import { click, modal } from '../../common/ui';
 
@@ -40,6 +41,7 @@ export class TroubleListScreen extends BaseScreen {
     }
     if (!t.id) throw new Error('Không có 依頼番号 / id của trouble tạo ở E2E-TC-002');
     await this.page.goto(`/admin/troubles/${t.id}/detail`);
+    await waitApisIdle(this.page, 'Mở chi tiết trouble');
     await expect(this.page).toHaveURL(/\/admin\/troubles\/\d+\/detail/);
   }
 
@@ -47,7 +49,7 @@ export class TroubleListScreen extends BaseScreen {
   // '表示条件を保存' → modal '表示条件を保存': input[name=name] (フィルタ名), nút キャンセル / '検索条件をフィルタとして保存'.
   // Header: a.nav-link 'フィルタ' → .dropdown-menu.show liệt kê tên bộ lọc (mỗi dòng có 削除).
   // '表示設定' → modal '表示設定': checkbox #reportPdf (報告書PDF), #reportExcel (報告書Excel)…, nút 初期値にリセット / 設定.
-  // Vùng tìm kiếm .filter-advance: input[name=number] (作業依頼の番号), 検索.
+  // Vùng tìm kiếm .filter-advance (trong drawer '高度な検索', phải mở trước): input[name=number] (作業依頼の番号), 検索.
   get saveFilterModal() { return modal(this.page, '表示条件を保存'); }
   async openSaveFilter(): Promise<void> {
     await click(this.page.locator('.content-wrapper'), '表示条件を保存');
@@ -70,17 +72,38 @@ export class TroubleListScreen extends BaseScreen {
     await click(this.displayModal, '設定');
     await expect(this.displayModal).toBeHidden();
   }
+  /** '.filter-advance' nằm trong drawer phải: đóng = '.drawer.drawer-right' ở ngoài màn hình (input vẫn "visible" nhưng '検索' không bấm được);
+   *  '高度な検索' → thêm class 'show'. Nút 条件解除 / 検索 ở đầu drawer, ngoài form.filter-advance (dò thật dev 2026-10-13). */
+  private async openAdvanced(): Promise<void> {
+    const drawer = this.page.locator('.drawer.drawer-right');
+    if (!(await drawer.evaluate((d) => d.classList.contains('show')).catch(() => false))) await this.advancedSearch.click();
+    await expect(drawer).toHaveClass(/\bshow\b/);
+  }
+  /** Dòng có link 依頼番号 đúng bằng number (hasText khớp chuỗi con: '223470007' ⊂ '223470007_2' — R20). */
+  rowOf(number: string): Locator {
+    return this.rows.filter({ has: this.page.getByRole('link', { name: number, exact: true }) }).first();
+  }
   async searchNumber(number: string): Promise<void> {
+    await this.openAdvanced();
     const f = this.page.locator('.filter-advance input[name="number"]');
     await f.fill(number);
-    await click(this.page.locator('.filter-advance'), '検索');
-    await expect(this.rows.filter({ hasText: number }).first()).toBeVisible({ timeout: 15_000 });
+    // App có lúc TỰ tìm sau khi gõ (URL ?number=…, drawer đóng, form reset, 検索 disabled — TC-045 dev 2026-10-13)
+    // → chờ URL tối đa 3s; chưa tự tìm mới bấm 検索 (ở đầu drawer, NGOÀI form.filter-advance).
+    const auto = await this.page.waitForURL((u) => u.searchParams.get('number') === number, { timeout: 3_000 }).then(() => true, () => false);
+    if (!auto) await click(this.page.locator('.drawer.drawer-right'), '検索');
+    await expect(this.rowOf(number)).toBeVisible({ timeout: 15_000 });
+    // Bấm 検索 thì drawer vẫn mở, che nửa phải bảng (cột 報告書PDF…) → đóng bằng × (.drawer__header i.fa-times).
+    const drawer = this.page.locator('.drawer.drawer-right');
+    if (await drawer.evaluate((d) => d.classList.contains('show')).catch(() => false)) {
+      await drawer.locator('.drawer__header i.fa-times').click();
+      await expect(drawer).not.toHaveClass(/\bshow\b/);
+    }
   }
   /** Ô của cột có tiêu đề header ở dòng có 依頼番号 number. [chưa dò: nội dung ô 報告書PDF / 報告書Excel — giả định có link / nút tải] */
   async cellOf(number: string, header: string) {
     const idx = await this.table.locator('thead th').evaluateAll((ths, h) => ths.findIndex((t) => (t.textContent || '').trim() === h), header);
     if (idx < 0) throw new Error(`Không thấy cột '${header}' trong 作業依頼一覧`);
-    return this.rows.filter({ hasText: number }).first().locator('td').nth(idx);
+    return this.rowOf(number).locator('td').nth(idx);
   }
 
   /** Mở trouble đầu tiên (mới nhất) có đủ các chữ trong texts → màn hình chi tiết. */

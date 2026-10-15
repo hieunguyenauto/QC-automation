@@ -1,6 +1,7 @@
 import { expect, type Locator } from '@playwright/test';
 import { BaseScreen } from '../base.screen';
-import { acknowledgeOk, click, confirmDecide } from '../../common/ui';
+import { acknowledgeOk, click, confirmDecide, modalWithButton } from '../../common/ui';
+import { waitApisIdle } from '../../common/wait';
 
 /**
  * サブアドミン情報 / 詳細 / 症状グループ — catalog: cms-frontend.md › "Sub Admin".
@@ -11,7 +12,7 @@ import { acknowledgeOk, click, confirmDecide } from '../../common/ui';
  *    Vùng search 症状グループ: input[name=title], input[name=numberItem] (表示件数, mặc định 20).
  *  - 登録 → trang /presets: input[name=title] (症状グループ名), textarea[name=description] (説明), 戻る / 保存.
  *    保存 → '確認 この症状グループを保存します。よろしいですか？' → 決定.
- *    Trống tên → '.invalid-feedback' '症状グループ名を入力してください。', vẫn ở /presets.
+ *    Trống tên → '.message--error p.text-danger' '症状グループ名を入力してください。' dưới ô tên, vẫn ở /presets (DOM thật dev 2026-10-13; KHÔNG phải .invalid-feedback).
  *    OK → '<tên>の保存が完了しました。' → /presets/<presetId>/detail.
  *  - Chi tiết nhóm: '症状グループ詳細', dòng '紐付け店舗一括登録' (CSVダウンロード / CSVアップロード), dòng '症状一括登録'.
  *  - CSVアップロード → /presets/<id>/import-store: radio name=appSelectModeImport (upsert = 追加のみ, mặc định; replace),
@@ -67,7 +68,17 @@ export class SubAdminScreen extends BaseScreen {
     await click(this.content, '保存');
     await confirmDecide(this.page, 'この症状グループを保存します');
   }
-  get groupError(): Locator { return this.content.locator('.invalid-feedback').filter({ visible: true }).first(); }
+  /** Rời form /presets đang nhập dở: 戻る → '画面の編集内容が破棄されますが、処理を続行しますか？' → はい (dò thật dev 2026-10-13).
+   *  Chỉ dùng để dọn trạng thái giữa các TC chạy nối tiếp, không phải bước của TC. */
+  async discardGroupForm(): Promise<void> {
+    await click(this.content, '戻る');
+    const d = modalWithButton(this.page, 'はい').filter({ hasText: '画面の編集内容が破棄されますが' });
+    await expect(d).toBeVisible();
+    await click(d, 'はい');
+    await expect(this.page).not.toHaveURL(/\/presets$/);
+    await waitApisIdle(this.page, '破棄 → はい');
+  }
+  get groupError(): Locator { return this.content.locator('.message--error').filter({ visible: true }).first(); }
   async expectGroupSaved(name: string): Promise<void> {
     await acknowledgeOk(this.page, `${name}の保存が完了しました`);
     await expect(this.page).toHaveURL(/\/presets\/\d+\/detail/);

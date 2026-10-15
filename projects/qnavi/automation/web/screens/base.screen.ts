@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test';
 import type { CmsRole } from '../data/roles';
-import { waitForAppIdle } from '../common/wait';
+import { trackApis, waitApisIdle, waitForAppIdle } from '../common/wait';
 
 /**
  * Knowledge automation: 1 file = 1 màn hình.
@@ -13,10 +13,11 @@ export abstract class BaseScreen {
   abstract readonly path: string;
   abstract readonly roles: readonly CmsRole[];
 
-  constructor(protected readonly page: Page) {}
+  constructor(protected readonly page: Page) { trackApis(page); }
 
   async goto(): Promise<void> {
     await this.page.goto(this.path);
+    await waitApisIdle(this.page, `Mở ${this.path}`);
     await waitForAppIdle(this.page);
   }
 }

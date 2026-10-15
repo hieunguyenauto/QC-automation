@@ -3,6 +3,7 @@
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D24 | 2026-10-13 | Automation: hộp lỗi app do môi trường chậm (「表示に時間がかかっております」) chỉ bấm OK + ghi env-warning, code KHÔNG tự reload / retry (chỉ reload khi TC ghi F5); API nặng sau login đợi response thực tế, chậm quá ngưỡng ghi PERFORMANCE để check sau, không fail TC | Người dùng thật không gặp lỗi vì đợi trang tải xong; reload / retry che lỗi hiệu năng; perf est-test chập chờn không được chặn cả kịch bản | screens/cms/layout.screen.ts, common/session.ts, common/env.ts, common/qc-reporter.ts, automation/lessons/INDEX.md (R18) |
 | D23 | 2026-10-13 | List messages.xlsx là nguồn ưu tiên cao nhất cho chữ message (MSG): gốc ở raw/ (được commit, không có mật khẩu), bản tra cứu spec/messages.md; TC và data automation phải đối chiếu | Message là chỗ hay sai chữ; cần 1 nguồn chuẩn để double check | projects/qnavi/sources.md, spec/messages.md, CLAUDE.md, .gitignore |
 | D22 | 2026-10-12 | Đăng nhập test dùng chung common/session.ts: tài khoản 'role[:variant]', phiên lưu .auth/<ENV>/ (dùng lại 8h), tự logout khi đổi tài khoản | Mỗi spec tự viết login, phiên dev/est-test đè nhau, chưa hỗ trợ 9 store | common/session.ts, common/roles.ts, CLAUDE.md |
 | D21 | 2026-10-12 | Mỗi lỗi khi chạy code test do AI sinh → sửa screens/ (locator) + ghi lesson automation (rule vào automation/lessons/INDEX.md) sau khi người dùng duyệt; lỗi do TC → lesson QC. AI đọc INDEX trước khi sinh code | Lỗi đã gặp không lặp lại khi sinh code mới | CLAUDE.md, automation/lessons/, qc/lessons/ |

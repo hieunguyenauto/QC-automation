@@ -1,7 +1,8 @@
 import { expect, type Page } from '@playwright/test';
 import path from 'path';
+import { waitApisIdle, waitForAppIdle } from '../../common/wait';
 import {
-  acknowledgeOk, click, clickable, clickables, confirmDecide, field, fill, modal, today, uploadVia,
+  acknowledgeOk, click, clickable, clickables, confirmDecide, exact, field, fill, modal, today, uploadVia,
 } from '../../common/ui';
 
 const FILES = path.resolve(__dirname, '../../data/files');
@@ -28,8 +29,12 @@ export class AssetSelectDialog {
     // Danh sách tải sau (recon 2026-10-12: lúc đầu hiện '0件'). Chờ '全 N 件中' có số; quá 10s mới coi là 0 件.
     const loaded = await this.box.getByText(/全\s*\d+\s*件中/).first().waitFor({ timeout: 10_000 }).then(() => true).catch(() => false);
     if (!loaded || (await this.box.getByText('該当データが0件でした').isVisible().catch(() => false))) return 0;
-    const named = this.box.locator('tbody tr').filter({ hasText: name });
+    await waitForAppIdle(this.page);
+    const named = this.box.locator('tbody tr').filter({ has: this.page.locator('td', { hasText: exact(name) }) }); // R20
     const selectable = named.filter({ has: clickables(this.page, '選択') });
+    // Danh sách 20 dòng/trang; tài sản test tạo mỗi lần chạy đẩy tài sản cũ sang trang sau (dev 2026-10-13: 89 件)
+    // → không thấy ở trang đầu thì tìm theo 名称 (input[name=assetName] trong '検索条件' thu gọn).
+    if (!(await selectable.count())) await this.searchName(name);
     const selected = named.filter({ has: clickables(this.page, '削除') });
     const count = Math.min(n, await selectable.count());
     for (let i = 0; i < count; i++) {
@@ -40,7 +45,20 @@ export class AssetSelectDialog {
     return count;
   }
 
+  /** '検索条件' (thu gọn) → 名称 = name → 検索 → chờ '全 N 件中'. Dò thật dev 2026-10-13. */
+  async searchName(name: string): Promise<void> {
+    const input = this.box.locator('input[name="assetName"]');
+    // '検索条件' là tiêu đề (h4 / card-header), không phải button; khớp đúng chữ để không trúng '検索条件解除'. R10
+    if (!(await input.isVisible().catch(() => false))) await this.box.getByText('検索条件', { exact: true }).first().click();
+    await expect(input).toBeVisible();
+    await input.fill(name);
+    await click(this.box, '検索');
+    await waitApisIdle(this.page, `資産検索 ${name}`); // API tìm tài sản có lúc > 15s (dev 2026-10-13, spinner trên bảng) → ghi perf nếu chậm
+    await expect(this.box.locator('tbody tr').filter({ has: this.page.locator('td', { hasText: exact(name) }) }).first()).toBeVisible({ timeout: 45_000 });
+  }
+
   async openRegister(): Promise<void> {
+    await waitForAppIdle(this.page); // #loader-container khi danh sách tài sản lớn
     await click(this.box, '新しい機器を登録する');
     await expect(this.register).toBeVisible();
   }

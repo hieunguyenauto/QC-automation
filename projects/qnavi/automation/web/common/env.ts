@@ -12,6 +12,10 @@ export type EnvConfig = {
   actionTimeoutMs: number;
   navigationTimeoutMs: number;
   testTimeoutMs: number;
+  /** Ngưỡng performance khi đợi API thực tế (common/wait.ts waitApiPerf; mặc định 30s). Quá ngưỡng → ghi cảnh báo PERFORMANCE, không fail. */
+  apiPerfLimitMs: number;
+  /** Đợi API tối đa bao lâu (mặc định 120s); quá → ghi PERFORMANCE rồi chạy tiếp. */
+  apiMaxWaitMs: number;
   /** Basic Auth của môi trường (hộp đăng nhập trình duyệt). Mật khẩu: .env HTTP_AUTH_PASSWORD. */
   httpAuth?: { username: string };
   /** Tính sẵn từ httpAuth + .env để truyền vào Playwright (undefined = môi trường không có Basic Auth). */
@@ -28,6 +32,8 @@ function loadEnv(): EnvConfig {
   }
   const cfg = JSON.parse(fs.readFileSync(file, 'utf-8')) as EnvConfig;
   if (process.env.CMS_BASE_URL) cfg.cmsBaseUrl = process.env.CMS_BASE_URL;
+  cfg.apiPerfLimitMs ??= 30_000;
+  cfg.apiMaxWaitMs ??= 120_000;
   if (cfg.httpAuth) {
     const username = (process.env.HTTP_AUTH_USER || cfg.httpAuth.username || '').trim();
     const password = (process.env.HTTP_AUTH_PASSWORD || '').trim();

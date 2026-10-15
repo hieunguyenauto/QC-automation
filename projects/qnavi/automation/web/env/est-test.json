@@ -9,26 +9,84 @@
   "navigationTimeoutMs": 30000,
   "testTimeoutMs": 120000,
   "accounts": {
-    "_note": "Tài khoản đăng nhập CMS (form ログイン) của môi trường này — chưa có, anh gửi thì điền.",
+    "_note": "Tài khoản test theo role cho môi trường này. CHỈ loginId + thông tin hiển thị; mật khẩu ở .env (CMS_<role>_PASSWORD).",
     "99": {
-      "loginId": "",
-      "displayName": ""
+      "loginId": "adminTest1",
+      "displayName": "",
+      "note": "CMS Admin"
     },
     "98": {
-      "loginId": "",
-      "displayName": ""
+      "loginId": "linksyssubadmin",
+      "displayName": "",
+      "note": "CMS SubAdmin"
     },
     "01": {
-      "loginId": "",
-      "displayName": ""
+      "loginId": "linksysmanager00001",
+      "displayName": "LINKSYS MANAGER00001",
+      "chainSystem": "Linksys Chain System",
+      "note": "ChainStore Manager, dùng ở E2E-TC-011..013. Manager khác: variant credentials('01', 'm2'…'m5'); mật khẩu CMS_01_PASSWORD (dùng chung) hoặc CMS_01_<VARIANT>_PASSWORD",
+      "variants": {
+        "m2": { "loginId": "linksysmanager00002", "displayName": "LINKSYS MANAGER00002", "note": "loginId theo mẫu — cần xác nhận" },
+        "m3": { "loginId": "linksysmanager00003", "displayName": "LINKSYS MANAGER00003", "note": "loginId theo mẫu — cần xác nhận" },
+        "m4": { "loginId": "linksysmanager00004", "displayName": "LINKSYS MANAGER00004", "note": "loginId theo mẫu — cần xác nhận" },
+        "m5": { "loginId": "linksysmanager00005", "displayName": "LINKSYS MANAGER00005", "note": "loginId theo mẫu — cần xác nhận" }
+      }
     },
     "02": {
-      "loginId": "",
-      "displayName": ""
+      "loginId": "linksysstore00001",
+      "note": "ChainStore (cửa hàng). Mặc định = store00001. Chọn tài khoản khác bằng variant: credentials('02', '<variant>'). Mật khẩu: CMS_02_PASSWORD (dùng chung) hoặc CMS_02_<VARIANT>_PASSWORD để ghi đè.",
+      "variants": {
+        "toridoll": {
+          "loginId": "linksysstore00001",
+          "storeName": "LINKSYS STORE00001 (TORIDOLL)",
+          "note": "Account Toridoll — CÓ encrypt"
+        },
+        "qnavi": {
+          "loginId": "linksysstore00002",
+          "storeName": "LINKSYS STORE00002 (QNAVI)",
+          "note": "Account Qnavi — KHÔNG encrypt"
+        },
+        "urgent": {
+          "loginId": "linksysstore00003",
+          "storeName": "LINKSYS STORE00003 (URGENT)",
+          "note": "Trouble tạo ra luôn là Urgent"
+        },
+        "ringi": {
+          "loginId": "linksysstore00004",
+          "storeName": "LINKSYS STORE00004 (RINGI)",
+          "note": "Có setting Ringi"
+        },
+        "autoApprove": {
+          "loginId": "linksysstore00005",
+          "storeName": "LINKSYS STORE00005 (AUTO APPROVE)",
+          "note": "Có auto approve"
+        },
+        "approveType1": {
+          "loginId": "linksysstore00006",
+          "storeName": "LINKSYS STORE00006",
+          "note": "APPROVE TYPE 1"
+        },
+        "approveType2": {
+          "loginId": "linksysstore00007",
+          "storeName": "LINKSYS STORE00007",
+          "note": "APPROVE TYPE 2"
+        },
+        "approveType3": {
+          "loginId": "linksysstore00008",
+          "storeName": "LINKSYS STORE00008",
+          "note": "APPROVE TYPE 3"
+        },
+        "ringi0_99": {
+          "loginId": "linksysstore00009",
+          "storeName": "LINKSYS STORE00009",
+          "note": "Ringi sử dụng với [0] [99]"
+        }
+      }
     },
     "05": {
-      "loginId": "",
-      "displayName": ""
+      "loginId": "linksysworkercompany",
+      "displayName": "",
+      "note": "Worker Company (ManagementCompany)"
     }
   }
 }

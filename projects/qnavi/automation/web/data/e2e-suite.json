@@ -1,0 +1,26 @@
+{
+  "_source": "projects/qnavi/qc/test-cases/e2e-suite/ (LOCKED rev 3). Môi trường tham chiếu: toridoll-test.",
+  "chain": { "company": "Linksys", "name": "Linksys Chain System" },
+  "stores": {
+    "00001": { "name": "LINKSYS STORE00001", "who": "02" },
+    "00002": { "name": "LINKSYS STORE00002", "who": "02:qnavi" },
+    "00004": { "name": "LINKSYS STORE00004", "who": "02:ringi" },
+    "00005": { "name": "LINKSYS STORE00005", "who": "02:autoApprove" },
+    "00006": { "name": "LINKSYS STORE00006", "who": "02:approveType1" },
+    "00007": { "name": "LINKSYS STORE00007", "who": "02:approveType2" },
+    "00008": { "name": "LINKSYS STORE00008", "who": "02:approveType3" },
+    "00009": { "name": "LINKSYS STORE00009", "who": "02:ringi0_99" }
+  },
+  "managers": { "00001": "01", "00002": "01:m2", "00003": "01:m3", "00004": "01:m4", "00005": "01:m5" },
+  "typeLabel": { "01": "個人承認", "02": "階層承認（No順）", "03": "金額承認", "04": "金額と階層承認 (No順)" },
+  "worker": { "companyQuery": "linksys", "loginId": "linksysworker", "companyName": "LINKSYS WORKER" },
+  "categories": { "navi": "水", "noNavi": "操作テスト", "medium": "トイレ（テスト）", "small": "つまり：大便器（テスト）" },
+  "files": { "fault": "hieu6.jpg", "before": "hieu4.jpg", "after": "hieu3.jpg", "asset": "hieu5.jpg", "pdf": "automation.pdf" },
+  "text": { "_note": "Chi tiết / 原因と発生起因 / comment thanh toán = 'Automation E2E NN' (E2E.note, TC rev 6)", "reject": "Automation reject", "cancel": "Request cancel" },
+  "estimate": { "item": "Autotest", "workerPrice": "1000" },
+  "messages": {
+    "_note": "Không có trong spec/messages.md — nguồn: TC LOCKED e2e-suite rev 3 / e2e-trouble-flow (app thật 2026-10-12)",
+    "submitOne": "以下1件の見積を店舗へ提出しますか",
+    "paymentSaved": "作業依頼の決済状態の保存が完了しました。"
+  }
+}

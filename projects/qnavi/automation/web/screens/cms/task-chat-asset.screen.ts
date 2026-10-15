@@ -1,5 +1,6 @@
 import { expect, type Locator } from '@playwright/test';
 import { BaseScreen } from '../base.screen';
+import { waitApisIdle } from '../../common/wait';
 import { click } from '../../common/ui';
 
 /**
@@ -29,8 +30,13 @@ export class TaskListScreen extends BaseScreen {
     if (opts.status !== undefined) await this.content.locator('select[name="status"]').selectOption(opts.status);
     if (opts.scope !== undefined) await this.content.locator('select[name="taskScope"]').selectOption(opts.scope);
     await this.content.locator('input[name="storeName"]').fill(opts.storeName ?? '');
+    // Chờ ĐÚNG response của lần tìm này: '全 N 件' đã có sẵn từ danh sách mặc định (status=01, taskScope=02) → đọc nhầm dòng cũ (TC-053 dev 2026-10-13).
+    const res = this.page.waitForResponse((r) => r.url().includes('/tasks') && r.request().method() === 'GET'
+      && new URL(r.url()).searchParams.get('troubleNumber') === (opts.number ?? ''), { timeout: 30_000 });
     await click(this.content, '検索');
-    await expect(this.content.getByText(/全\s*\d+\s*件/).first()).toBeVisible({ timeout: 15_000 });
+    await res;
+    await waitApisIdle(this.page, 'タスク検索');
+    await expect(this.content.getByText(/全\s*\d+\s*件|該当データが0件/).first()).toBeVisible({ timeout: 15_000 });
   }
   /** Cột 状態 của dòng (index 0 = mới nhất). */
   status(row: Locator): Locator { return row.locator('td').nth(13); }

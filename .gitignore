@@ -12,3 +12,5 @@ projects/**/raw/*.pdf
 projects/**/raw/*.xlsx
 !projects/qnavi/raw/List messages.xlsx
 projects/**/raw/*.csv
+.DS_Store
+**/.DS_Store

@@ -7,7 +7,7 @@ HERE = os.path.dirname(__file__)
 C = json.load(open(os.path.join(HERE, 'cases.json')))
 BR = '<br>'
 SKIP = {16, 28}
-LOCK = '- State: LOCKED · Revision: 3 · Approved by / at: Hieu Nguyen / 14/10/2026'
+LOCK = '- State: LOCKED · Revision: 6 · Approved by / at: Hieu Nguyen / 14/10/2026'
 TYPE_LABEL = {'01': '個人承認', '02': '階層承認（No順）', '03': '金額承認', '04': '金額と階層承認 (No順)'}   # T3: chữ trên app (recon toridoll-test 14/10)
 
 def slug(s):
@@ -79,6 +79,7 @@ def tc_row(t):
 
 def build(d):
     n = d['id']; no = int(n.split('-')[1]); P = f'E2E{no:02d}'
+    NOTE = f'Automation E2E {no:02d}'   # rev 6: note khi tạo case (chi tiết, 原因と発生起因, comment thanh toán)
     v = d['14'].replace(' /  ', ' / ')
     typ = (d['35'] or '1').zfill(2)
     st = store_of(no, typ)
@@ -139,7 +140,7 @@ def build(d):
                  "3. Step 2 作業項目選択: card 故障内容 '選択' → click '水' → Verify: webview 'トラブル相談内容' opens, 大項目 = '水'",
                  "4. Select '中項目', '小項目', '症状'" + (", '資産' (field shown because シサンNAVI ON) → select asset 'TEST AUTOMATION'" if asset_navi else " (no field '資産' because シサンNAVI OFF)") + " → '次へ'",
                  "5. Click 'このまま依頼する' → click 'このまま依頼する' again",
-                 "6. Upload 'hieu6.jpg', input text 'AUTOMATION' → click next (icon button)",
+                 f"6. Upload 'hieu6.jpg', input text '{NOTE}' → click next (icon button)",
                  "7. Select radio '至急' → click '依頼する'",
                  "8. Click 'トップ画面に戻る' → Verify: Dashboard; record 依頼番号"]
             scr = '作業依頼登録 (トラブルナビ)'
@@ -148,7 +149,7 @@ def build(d):
                  "3. Step 2 作業項目選択: card 故障内容 '選択' → '操作テスト' → 故障個所 'トイレ（テスト）' → 故障症状 'つまり：大便器（テスト）' (cột gốc トラブルNAVI OFF → category '操作テスト', no webview — C4)"]
             if asset_navi:
                 s.append("4. Tick '対象資産がある場合はチェックを入れてください' → '修理対象資産選択' → '新しい機器を登録する' → 名称 'Automation Asset', 型式 'TVB005', 製造番号 '100014914', photo 'hieu5.jpg' → '保存' → '決定' → 'OK' → '選択' row 'Automation Asset' → '決定する'")
-            s += [f"{len(s)+1}. '次へ' → Step 3 故障詳細: upload 'hieu6.jpg', 故障詳細記入欄 'AUTOMATION'",
+            s += [f"{len(s)+1}. '次へ' → Step 3 故障詳細: upload 'hieu6.jpg', 故障詳細記入欄 '{NOTE}'",
                   f"{len(s)+2}. '決定して問合わせ' → '決定' (if date error: '明日以降', 開始 4:00) → 'OK' → minimize chat; record 依頼番号"]
             scr = '作業依頼登録'
     else:
@@ -158,7 +159,7 @@ def build(d):
              "4. Select 作業項目 '操作テスト' > 'トイレ（テスト）' > 'つまり：大便器（テスト）'"]
         if asset_navi:
             s.append("5. Tick '対象資産がある場合はチェックを入れてください' → '修理対象資産選択' → '新しい機器を登録する' → 名称 'Automation Asset', 型式 'TVB005', 製造番号 '100014914', photo 'hieu5.jpg' → '保存' → '決定' → 'OK' → '選択' row 'Automation Asset' → '決定する'")
-        s += [f"{len(s)+1}. '次へ' → Step 3 故障詳細: upload 'hieu6.jpg', 故障詳細記入欄 'AUTOMATION'",
+        s += [f"{len(s)+1}. '次へ' → Step 3 故障詳細: upload 'hieu6.jpg', 故障詳細記入欄 '{NOTE}'",
               f"{len(s)+2}. '決定して問合わせ' → '決定' (if date error: '明日以降', 開始 4:00) → 'OK' → minimize chat; record 依頼番号"]
         scr = '作業依頼登録'
     exp = f"Trouble is created for '{sname}': '問い合わせ中' / '受注待ち', 業者 '未確定', 見積書 '未提出'" + (", asset attached" if asset_navi else '')
@@ -188,6 +189,7 @@ def build(d):
     if est_creator == 'Worker Company': ec = "Worker Company (05) 'linksysworkercompany'"; eq.append('G10')
     if est_creator == 'subadmin': ec = 'CMS SubAdmin (98)'
     multi3 = est_n.startswith('3')
+    auto1_new = auto_n is True and not est_n.startswith('3') and no not in (12, 29, 33) and not urgent_new and not new_stop   # rev 4
     bulk = 'bulk' in est_n
     two = no in (12, 29, 33)                                          # R13 / G14
     if multi3 and not bulk:
@@ -204,7 +206,8 @@ def build(d):
     if bulk:
         s.append(f"3. Tick all 3 rows → '提示する' once → Verify: confirmation lists 3 names ('以下3件の見積を店舗へ提出しますか') → '決定' → Verify: all 3 '承認待ち' (push notification not checked — G16)")
     elif len(names) == 1:
-        s.append(f"3. Tick '{names[0]}' → '提示する' → Verify: '以下1件の見積を店舗へ提出しますか' → '決定' → Verify: '承認待ち'")
+        st_after = "'承認済み' (≤ FIX → tự duyệt ngay khi 提示 — rev 4)" if auto1_new else "'承認待ち'"
+        s.append(f"3. Tick '{names[0]}' → '提示する' → Verify: '以下1件の見積を店舗へ提出しますか' → '決定' → Verify: {st_after}")
     else:
         s.append(f"3. Tick {', '.join(repr(x) for x in names)} → '提示する' → '決定' → Verify: {len(names)} rows '承認待ち'" + (f"; '{draft}' stays '下書き'" if draft else ''))
     s.append("4. '閉じる' → '保存' → '決定' → 'OK'")
@@ -213,6 +216,8 @@ def build(d):
         exp = f"Badge '対応中' / '見積承認待ち' (02-05), estimate '承認待ち'. NEW flow stops here; no CONTINUE (G9)"
     elif urgent_new:
         exp = "Badge '対応中' / '作業中' (urgent: skip approval, 02-07); submitted estimates stay '承認待ち'"
+    elif auto1_new:
+        exp = f"見積書 = 税抜 amount of the approved estimate (e.g. '¥18,181' when FIX ¥20,000 — rev 5), estimate '{names[0]}' = '承認済み' (≤ FIX, tự duyệt khi 提示)"
     else:
         exp = "Badge '対応中' / '見積承認待ち' (02-05), 見積書 'あり', submitted estimate(s) '承認待ち'"
     add('Trouble Detail › 見積もり', (f"NEW · Create {len(allnames)} estimates ({amt_n}), 提示 {len(names)}, keep 1 下書き" if draft else f"NEW · Create {len(names)} estimate(s) ({amt_n}) and 提示"), 'Previous TC passed', s, exp, ec, q=eq)
@@ -322,7 +327,7 @@ def build(d):
 
     # ---- NEW: báo cáo + thanh toán ----
     s = ["1. Login Admin (99) → 'クイック操作' → '作業完了' → '保存' → '決定' → 'OK' → Verify: badge '作業完了'",
-         "2. 'クイック操作' → '報告済' → edit icon '報告書' → '編集' → 開始 day 1, 終了 day 2, 原因と発生起因 'automation', 作業前 'hieu4.jpg', 作業後 'hieu3.jpg'"
+         f"2. 'クイック操作' → '報告済' → edit icon '報告書' → '編集' → 開始 day 1, 終了 day 2, 原因と発生起因 '{NOTE}', 作業前 'hieu4.jpg', 作業後 'hieu3.jpg'"
          + (", attach PDF 'automation.pdf'" if no == 39 else '') + " → '完了'", "3. '保存' → '決定' → 'OK'"]
     add('Trouble Detail › 状態変更 / 報告書', 'NEW · 作業完了 → 報告済 (02-08 → 02-09)' + (' + PDF attachment' if no == 39 else ''), '-', s,
         "Badge '対応中' / '報告済' (02-09)" + ("; 報告書 shows PDF 'automation.pdf'" if no == 39 else ''), 'CMS Admin (99)', q=(['G26'] if no == 39 else []))
@@ -330,7 +335,7 @@ def build(d):
     pq = ['N7', 'R3'] + (['G8'] if payer in ('Admin', 'Sub Admin') else []) + (['N18'] if st == '00006' and payer.lower().startswith('store manager') else [])
     add('Trouble Detail › 作業完了確認', f'NEW · {payer} 確認・決済 → 完了', '-',
         [f"1. Logout → login {pw} → open trouble → minimize chat", "2. '作業完了確認' → Verify: '支払情報' with 作業項目 and total of the approved estimate",
-         "3. Star '感動' → comment 'Automation test' → '作業完了確認' → '決定' → Verify: '作業依頼の決済状態の保存が完了しました。' → 'OK'"],
+         f"3. Star '感動' → comment '{NOTE}' → '作業完了確認' → '決定' → Verify: '作業依頼の決済状態の保存が完了しました。' → 'OK'"],
         "Badge '完了' / '報告済', '作業完了確認' disappears; NEW trouble = 完了", pw, q=pq)
 
     # ---- CONTINUE ----
@@ -346,11 +351,12 @@ def build(d):
         [f"1. Open '_2' → Verify: 業者 = 'LINKSYS WORKER' (inherited){note}"], "Worker 'LINKSYS WORKER' is kept from the original trouble", cw, q=['N15'])
     cnames = [f'{P}-Cont'] if est_c in ('1', '') else [f'{P}-Cont{i}' for i in (1, 2)]
     if len(cnames) > 1: auto_c = False                               # confirm 14/10: nhiều báo giá ≤ FIX → không cái nào tự duyệt
+    auto1_c = auto_c is True and not urgent_cont                       # rev 4
     s = [f"1. Login Admin (99) → open '_2' → 'クイック操作' → edit icon '見積もり' → for each of {', '.join(repr(x) for x in cnames)}: '登録', item '作業' 'Autotest', {amt_c} → '決定'",
-         "2. Tick → '提示する' → '決定' → Verify: '承認待ち'",
+         ("2. Tick → '提示する' → '決定' → Verify: '承認済み' (≤ FIX → tự duyệt ngay khi 提示 — rev 4)" if auto1_c else "2. Tick → '提示する' → '決定' → Verify: '承認待ち'"),
          ("3. '閉じる' → (urgent: skip approval) → '保存' → '決定' → 'OK'" if urgent_cont else "3. '閉じる' → select '見積承認待ち' → '保存' → '決定' → 'OK'")]
     add('Trouble Detail › 見積もり (継続)', f'CONTINUE · Create {len(cnames)} estimate(s) ({amt_c}) and 提示', '-', s,
-        ("Badge '対応中' / '見積承認済' (02-40, urgent skip)" if urgent_cont else "Badge '対応中' / '見積承認待ち' (02-20)" + (f"; {len(cnames)} estimates '承認待ち' — none auto-approved even if ≤ FIX" if len(cnames) > 1 else '')), 'CMS Admin (99)', q=['G24'])
+        ("Badge '対応中' / '見積承認済' (02-40, urgent skip)" if urgent_cont else ("Badge '対応中', estimate '承認済み' (≤ FIX, tự duyệt khi 提示)" if auto1_c else "Badge '対応中' / '見積承認待ち' (02-20)") + (f"; {len(cnames)} estimates '承認待ち' — none auto-approved even if ≤ FIX" if len(cnames) > 1 else '')), 'CMS Admin (99)', q=['G24'])
     if not urgent_cont:
         if auto_c:
             auto_tc('cont', cnames[0], '見積承認済', approver_c)
@@ -367,11 +373,11 @@ def build(d):
          "2. Same with '移動中', '到着', '作業中', '作業完了' → Verify: badge after each step"],
         "Badge '対応中' / '作業完了' (02-80)", 'CMS Admin (99)')
     add('Trouble Detail › 報告書 (継続)', 'CONTINUE · 報告済 (02-90)', '-',
-        ["1. 'クイック操作' → '報告済' → edit '報告書' → '編集' → 開始 / 終了, 原因と発生起因 'automation', photos → '完了' → '保存' → '決定' → 'OK'"],
+        [f"1. 'クイック操作' → '報告済' → edit '報告書' → '編集' → 開始 / 終了, 原因と発生起因 '{NOTE}', photos → '完了' → '保存' → '決定' → 'OK'"],
         "Badge '対応中' / '報告済' (02-90)", 'CMS Admin (99)')
     add('Trouble Detail › 作業完了確認 (継続)', f'CONTINUE · {payer} 確認・決済 → 完了', '-',
         [f"1. Logout → login {pw} → open '_2'", "2. '作業完了確認' → Verify: '支払情報' total of the CONTINUE estimate",
-         "3. '感動' → 'Automation test' → '作業完了確認' → '決定' → 'OK'"],
+         f"3. '感動' → '{NOTE}' → '作業完了確認' → '決定' → 'OK'"],
         "'_2' badge '完了' / '報告済'; both troubles 完了", pw, q=pq)
     if no in (9, 27):
         notes.append('Cột gốc CONTINUE "no limit": STORE00005 dùng chung FIX cho New / Continue (N17) → Continue dùng total = FIX + 1 để có bước duyệt.')
@@ -398,7 +404,7 @@ def finish(d, n, no, P, v, st, sname, typ, T, dec, notes, amt_n, amt_c, names):
               ('Kết luận gốc', d['78'])]
     head = [f"# Test case — {n} · {v}",
             f"- Project: qnavi · Scope Key: e2e-suite · Sheet prefix: {P}",
-            f"- Source: projects/qnavi/spec/e2e-suite.md › {n} (gốc: raw/Test suite for automation_E2E.xlsx, \"Expanded v2\"). Luồng thao tác: raw/Automation Test AI - Format Main Case.csv, TC LOCKED phase007. Quyết định: QUESTIONS.md lượt 1–7 + quy tắc R1–R20, T1–T5 (14/10/2026). Môi trường tham chiếu: toridoll-test.",
+            f"- Source: projects/qnavi/spec/e2e-suite.md › {n} (gốc: raw/Test suite for automation_E2E.xlsx, \"Expanded v2\"). Luồng thao tác: raw/Automation Test AI - Format Main Case.csv, TC LOCKED phase007. Quyết định: QUESTIONS.md lượt 1–8 + quy tắc R1–R20, T1–T5, rev 4–6 (14/10/2026). Môi trường tham chiếu: toridoll-test.",
             LOCK,
             "- Môi trường: tuỳ biến khi chạy (Q9).",
             "- Ngoại lệ D05: 1 file = 1 kịch bản nối tiếp NEW → CONTINUE → 完了; mỗi TC = 1 giai đoạn. 'Verify:' = điểm kiểm giữa chừng.",
@@ -438,8 +444,8 @@ def common_setup():
 rows = [common_setup()] + [build(d) for d in C if int(d['id'].split('-')[1]) not in SKIP]
 json.dump(rows, open(os.path.join(HERE, '_index.json'), 'w'), ensure_ascii=False)
 total = sum(r[3] for r in rows)
-readme = ['# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 3, 14/10/2026)', '',
-          'Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–7) + quy tắc R1–R20 + T1–T5. Sinh bằng _tools/gen_e2e.py.',
+readme = ['# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 6, 14/10/2026)', '',
+          'Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–8) + quy tắc R1–R20 + T1–T5 + rev 4. Sinh bằng _tools/gen_e2e.py.',
           'Bỏ case 16 (G14) và case 28 (G11).', '',
           '## Thứ tự chạy', '- Chạy lẻ từng case: chạy E2E00-TC-001 (シサンNAVI OFF) trước, riêng E2E-37 / E2E-38 chạy E2E00-TC-002 (シサンNAVI ON) trước.',
           '- Không chạy song song case nhóm OFF với E2E-37 / E2E-38 (シサンNAVI là cấu hình chung của chain).', '',

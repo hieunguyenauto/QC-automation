@@ -1,0 +1,196 @@
+import { expect, test, type Page } from '@playwright/test';
+import data from '../data/e2e-suite.json';
+import { loginAs, logout, type Who } from './session';
+import { click, minimizeChat, modal, rowOf } from './ui';
+import { waitApisIdle } from './wait';
+import { CmsLayout } from '../screens/cms/layout.screen';
+import { ChainSystemScreen } from '../screens/cms/chain-system.screen';
+import { TroubleCreateScreen } from '../screens/cms/trouble-create.screen';
+import { TroubleDetailScreen } from '../screens/cms/trouble-detail.screen';
+import { TroubleEditScreen } from '../screens/cms/trouble-edit.screen';
+import { TroubleListScreen } from '../screens/cms/trouble-list.screen';
+import { TroubleNaviWebview } from '../screens/cms/trouble-navi.webview';
+
+/**
+ * Bước dùng chung của bộ E2E suite (TC: projects/qnavi/qc/test-cases/e2e-suite/, LOCKED rev 3).
+ * Mỗi hàm = 1 cụm thao tác lặp lại giữa các case; spec gọi trong test.step đặt tên đúng bước của TC.
+ * Locator chỉ ở screens/. Tài khoản: common/session.ts (data/e2e-suite.json › stores / managers).
+ */
+export type StoreKey = keyof typeof data.stores;
+export type Trouble = { id?: string; number?: string };
+
+export const storeName = (k: StoreKey) => data.stores[k].name;
+export const storeWho = (k: StoreKey) => data.stores[k].who as Who;
+export const managerWho = (n: keyof typeof data.managers) => data.managers[n] as Who;
+
+/** Tổng 税込 = floor(店舗向け 単価 × 1.1) khi xoá dòng mặc định (P007-TC-048: 9090 → ￥9,999, 9500 → ￥10,450). Tìm 単価 cho đúng tổng. */
+export function storePriceFor(totalTax: number): string {
+  for (let p = Math.floor(totalTax / 1.1) - 2; p < totalTax; p++) if (Math.floor(p * 1.1 + 1e-9) === totalTax) return String(p);
+  throw new Error(`Không tìm được 単価 cho tổng 税込 ${totalTax}`);
+}
+export const yen = (n: number) => `￥${n.toLocaleString('en-US')}`;
+
+export class E2E {
+  readonly layout: CmsLayout; readonly chain: ChainSystemScreen; readonly create: TroubleCreateScreen;
+  readonly detail: TroubleDetailScreen; readonly edit: TroubleEditScreen; readonly list: TroubleListScreen;
+  readonly navi: TroubleNaviWebview;
+  /** Note của case (TC rev 6): 'Automation E2E NN' — chi tiết khi tạo trouble, 原因と発生起因, comment thanh toán. */
+  readonly note: string;
+  constructor(readonly page: Page, caseNo: number) {
+    this.note = `Automation E2E ${String(caseNo).padStart(2, '0')}`;
+    this.layout = new CmsLayout(page); this.chain = new ChainSystemScreen(page); this.create = new TroubleCreateScreen(page);
+    this.detail = new TroubleDetailScreen(page); this.edit = new TroubleEditScreen(page); this.list = new TroubleListScreen(page);
+    this.navi = new TroubleNaviWebview(page);
+  }
+
+  // ---------- E2E-00 common / TC-001 SETUP ----------
+  async openChain(): Promise<void> {
+    await this.layout.menu('チェーンシステム情報');
+    await this.chain.openChain(data.chain.company, data.chain.name);
+    await this.chain.expectChainLoaded();
+  }
+  /** E2E00-TC-001 / 002: トラブルNAVI phải ON; シサンNAVI = asset (đổi + lưu nếu khác). */
+  async commonSetup(asset: boolean): Promise<void> {
+    await loginAs(this.page, '99');
+    await this.openChain();
+    await this.chain.openEdit();
+    await expect(this.chain.toggle('chatbotFlag'), "Verify: 'トラブルNAVI' = ON").toBeChecked();
+    if ((await this.chain.isOn('assetFlag')) !== asset) {
+      await this.chain.setToggle('assetFlag', asset);
+      await this.chain.saveEdit();
+      await this.openChain();
+      await this.chain.openEdit();
+    }
+    await expect(this.chain.toggle('assetFlag')).toBeChecked({ checked: asset });
+    await expect(this.chain.toggle('chatbotFlag')).toBeChecked();
+  }
+  /** TC-001 bước 2–3: mở store, kiểm 承認タイプ, đọc 限度額. Trả về FIX (null nếu trống). */
+  async readStore(k: StoreKey, type?: keyof typeof data.typeLabel): Promise<number | null> {
+    await this.chain.openStore(storeName(k));
+    if (type) await expect(this.chain.storeValue('承認タイプ')).toContainText(data.typeLabel[type]);
+    return this.chain.limitAmount();
+  }
+
+  // ---------- TC-002: tạo trouble ----------
+  /** Store / manager vào 作業依頼登録 → Step 1 → Step 2. Manager chọn store (チェーン店舗選択). */
+  async createStep1(k: StoreKey, byManager: boolean): Promise<void> {
+    const c = this.create;
+    await this.layout.menu('作業依頼登録');
+    if (byManager) {
+      await c.openChainStoreSearch();
+      await c.expandSearch('店名');
+      await c.fillSearch('店名', storeName(k));
+      await c.search();
+      await c.pickStore(storeName(k));
+    } else {
+      await c.expectOwnStore(storeName(k));
+    }
+    await c.openStaff();
+    await c.pickFirstStaff();
+    await c.next('作業項目選択');
+  }
+  /** Webview: 中項目 / 小項目 / 症状 (+ 資産) chọn option đầu → 次へ. */
+  async naviPickAll(asset: boolean): Promise<void> {
+    for (const l of ['中項目', '小項目', '症状']) await this.navi.pick(l);
+    if (asset) await this.navi.pick('資産');
+    else await expect(this.navi.hasSelect('資産'), "no field '資産' because シサンNAVI OFF").toHaveCount(0);
+    await this.navi.next();
+  }
+  /** Sau 'トップ画面に戻る': trouble mới nhất của store ở 進行中のトラブル一覧 (webview không trả id) [cần kiểm trên app thật]. */
+  async recordNewest(t: Trouble, k: StoreKey): Promise<void> {
+    await this.layout.menu('進行中のトラブル一覧');
+    await this.list.openTrouble(storeName(k));
+    await this.detail.expectOpened();
+    t.id = this.page.url().match(/troubles\/(\d+)\/detail/)?.[1];
+    t.number = await this.detail.number();
+  }
+
+  // ---------- mở trouble ----------
+  async openTrouble(t: Trouble): Promise<void> {
+    test.skip(!t.id && !t.number, 'Chưa có trouble (TC tạo trouble chưa chạy / fail)');
+    if (t.id) {
+      await this.page.goto(`/admin/troubles/${t.id}/detail`);
+      await waitApisIdle(this.page, 'goto trouble');
+    } else {
+      await this.list.open();
+      await this.list.openByNumber(t);
+    }
+    await this.detail.expectOpened(t.id);
+    t.id ??= this.page.url().match(/troubles\/(\d+)\/detail/)?.[1];
+    t.number ??= await this.detail.number();
+  }
+
+  // ---------- trạng thái ----------
+  async assignWorker(): Promise<void> {
+    const d = this.detail;
+    await d.openQuickAction();
+    await d.setStatus('対応中');
+    await d.editRow('作業者');
+    await d.expandSearch();
+    await d.searchWorker(data.worker.companyQuery);
+    await d.pickWorker(data.worker.loginId);
+    await expect(d.statusModal).toContainText(data.worker.companyName);
+    await d.saveStatus();
+  }
+  async moveFlow(label: string, continuation = false): Promise<void> {
+    const d = this.detail;
+    await d.openQuickAction();
+    if (continuation) await d.setContinuationFlow(label); else await d.setFlow(label);
+    await d.saveStatus();
+    await d.expectBadges('対応中', label);
+  }
+
+  // ---------- báo giá ----------
+  /** Đang ở 見積一覧: tạo báo giá 1 hạng mục 作業 'Autotest', tổng 税込 = total → 下書き. */
+  async newEstimate(name: string, total: number): Promise<void> {
+    const d = this.detail;
+    await d.startNewEstimate();
+    await d.fillEstimateName(name);
+    await d.openAddItem();
+    await d.chooseItemType('作業');
+    await d.fillItemName(data.estimate.item);
+    await d.fillUnitPrice(data.estimate.workerPrice, Number(data.estimate.workerPrice).toLocaleString('en-US'));
+    await d.decideItem(data.estimate.item);
+    await d.deleteDefaultRows();
+    await d.setStoreUnitPrice(storePriceFor(total));
+    await d.decideEstimate(name);
+    await d.expectEstimateStatus(name, '下書き');
+  }
+
+  // ---------- báo cáo / thanh toán ----------
+  async report(flowContinuation = false): Promise<void> {
+    const d = this.detail;
+    await d.openQuickAction();
+    if (flowContinuation) await d.setContinuationFlow('報告済'); else await d.setFlow('報告済');
+    await d.editRow('報告書');
+    await click(d.reportModal, '編集');
+    await d.pickDay('start', 1);
+    await d.pickDay('end', 2);
+    await d.reportModal.locator('textarea[name="reason"]').fill(this.note);
+    await d.uploadReportPhoto('作業前の写真', data.files.before);
+    await d.uploadReportPhoto('作業後の写真', data.files.after);
+    await click(d.reportModal, '完了');
+    await expect(d.statusModal).toBeVisible();
+    await d.saveStatus();
+  }
+  /** Header 作業完了確認 → 支払情報 → 感動 → comment → 作業完了確認 → 決定 → OK. Trả về modal 支払情報 để kiểm trước khi bấm. */
+  async payment(checkTotal?: string): Promise<void> {
+    const d = this.detail;
+    await minimizeChat(this.page);
+    await d.headerButton('作業完了確認');
+    const box = modal(this.page, '支払情報');
+    await expect(box).toBeVisible();
+    if (checkTotal) await expect(box).toContainText(checkTotal);
+    await box.locator('.rating-star', { hasText: '感動' }).locator('[data-index] img').click();
+    await box.locator('textarea[name="description"]').fill(this.note);
+    await click(box, '作業完了確認');
+    await d.decide('作業依頼の決済状態を保存します');
+    await d.ok(data.messages.paymentSaved);
+  }
+
+  async switchTo(who: Who): Promise<void> {
+    await loginAs(this.page, who);
+  }
+  async signOut(): Promise<void> { await logout(this.page); }
+  rowOf = rowOf;
+}

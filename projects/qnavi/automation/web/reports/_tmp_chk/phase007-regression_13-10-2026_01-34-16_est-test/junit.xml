@@ -1,0 +1,264 @@
+<testsuites id="" name="" tests="65" failures="0" skipped="65" errors="0" time="0.06085299999999995">
+<testsuite name="tests/cms/phase007-regression.spec.ts" timestamp="2026-10-13T01:34:16.855Z" hostname="e2e" tests="65" failures="0" skipped="65" time="0" errors="0">
+<testcase name="P007-TC-001 Login admin" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-002 #2 · 2296 · 店舗別作業項目DL confirm dialog says CSV" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-003 #3 · 2174-01 · タイマー形式 年月" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-004 #4 · 2174-02 · タイマー形式 年月日" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-005 #5 · 2174-03 · タイマー形式 年月日時" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-006 #6 · 1706-02 · Enter repeatedly in フィルタ名" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-007 #7 · 1706-03 · Enter repeatedly in chat search" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-008 #8 · 1388-01 · Subadmin detail shows 症状グループ" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-009 #9 · 1388-02 · Add subadmin form has no 症状グループ" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-010 #10 · 1388-03 · Empty 症状グループ名 → error" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-011 #11 · 1388-04 · Add 症状グループ AT_Group_&lt;time&gt;" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-012 #12 · 1388-05 · 表示件数 = 0" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-013 #13 · 1388-06 · Import store CSV (追加のみ)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-014 #14 · 1388-07 · Import empty CSV → error" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-015 #15 · 1388-08 · Admin sees 症状一覧DL" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-016 #16 · Create T1 (605-28)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-017 #17 · Trouble detail of T1 (605-34)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-018 #18 · 2132-01 · 戻る from detail returns to タスク管理" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-019 #19 · 2132-02 · Edit keeps from=task" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-020 #20 · 2132-03 · 戻る returns to 資産詳細 (also after 編集)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-021 #21 · 2132-04 · 戻る keeps tab 自動マッチング" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-022 #22 · 2132-05 · 戻る returns to チャット一覧 (すべて, 自分宛て)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-023 #23 · 2132-06 · 戻る from 作業依頼情報 and plain URL" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-024 #24 · 2285-02 · 資産チェック ON with ≥1 asset can be saved" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-025 #25 · 2164-01 · Send long chat message, minimize / reopen" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-026 #27 · 対応中 + assign LINKSYS WORKER (2057-02)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-027 #28 · 受注 → 移動中 → 到着" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-028 #29 · 1706-01 · Enter repeatedly in 見積名 → 1 estimate" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-029 #30 · 1771-01 · Add 部材 item" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-030 #31 · 1771-02 · Add 諸経費 item" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-031 #32 · 1771-03 · Typing 作業 then picking 作業項目選択 adds only 1 row" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-032 #33 · Create 見積 Test (Autotest 99,999) and 提示" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-033 #34 · 取り下げ申請 → 取り下げ承認 → 提示 → 承認する" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-034 #35 · 2267-01 · 作業中 → 見積承認待ち blocked (新規)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-035 #36 · 2267-02 · 作業中 → 見積拒否 blocked (新規)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-036 #37 · 605-07 · Each asset has its own 対応 dropdown" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-037 #38 · 605-08 · Changing row A does not affect row B" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-038 #39 · 1846-01 · Upload 1 PDF, preview, delete" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-039 #40 · 1846-02 · Upload 6 PDF → only 5 accepted" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-040 #41 · 1846-03 · Non-PDF file → error" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-041 #42 · 作業完了" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-042 #43 · 報告済 + 報告書 (1846-04, 605-09)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-043 #44 · Admin views 報告書 (136-01, 605-10, 1846-04)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-044 #45 · 136-02 · Download 報告書 from 状態変更" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-045 #46 · 136-03 · Download 報告書 from 作業依頼情報 list" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-046 #47 · SETUP-T2 · Create T2 and move to 到着" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-047 #48 · 1765-02 · Estimate &lt; fix_amount → auto approved, 作業中" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-048 #49 · 1765-02b · fix_amount boundary on 店舗向け 税込" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-049 #50 · 2267-03 · 作業中 → 到着 allowed (新規)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-050 #51 · SETUP-T3 · Create urgent T3 (至急)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-051 #52 · 2285-01 · 資産チェック ON with 0 asset → error text" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-052 #53 · SETUP-T5 · T5 (STORE00004 RINGI) Urgent → 到着" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-053 #54 · 1786-01 (+1765-01) · Urgent 稟議: approve all steps → auto selected, task 完了" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-054 #55 · 1786-02 · Second estimate not selected → task stays open after 作業完了" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-055 #56 · SETUP-T4 · 継続依頼 → 作業中" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-056 #57 · 2267-04 · 継続: 作業中 → 見積承認待ち blocked" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-057 #58 · 2267-05 · 継続: 作業中 → 見積待ち allowed" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-058 #59 · Logout admin → login manager" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-059 #60 · 1388-09 · Manager does not see 症状一覧DL" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-060 #61 · Manager views 見積 and history (605-44)" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-061 #62 · Manager 作業完了確認" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-062 #63 · 1786-03 · Manager checks 見積承認依頼 tasks of T5" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-063 #64 · Logout manager → login subadmin" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-064 #65 · 2132-07 · SubAdmin 戻る from タスク管理 / チャット一覧" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="P007-TC-065 #66 · 1846-05 · SubAdmin downloads PDF from 報告書 preview" classname="tests/cms/phase007-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

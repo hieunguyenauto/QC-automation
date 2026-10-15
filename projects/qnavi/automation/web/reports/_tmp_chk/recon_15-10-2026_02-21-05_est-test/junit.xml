@@ -1,0 +1,14 @@
+<testsuites id="" name="" tests="2" failures="0" skipped="2" errors="0" time="0.05388699999999994">
+<testsuite name="tests/tools/recon-e2e.spec.ts" timestamp="2026-10-15T02:21:05.558Z" hostname="recon" tests="1" failures="0" skipped="1" time="0" errors="0">
+<testcase name="recon E2E suite screens (read-only)" classname="tests/tools/recon-e2e.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/tools/recon.spec.ts" timestamp="2026-10-15T02:21:05.558Z" hostname="recon" tests="1" failures="0" skipped="1" time="0" errors="0">
+<testcase name="recon CMS screens (read-only)" classname="tests/tools/recon.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

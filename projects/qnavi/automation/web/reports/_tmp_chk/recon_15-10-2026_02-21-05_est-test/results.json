@@ -1,0 +1,204 @@
+{
+  "config": {
+    "configFile": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/playwright.config.ts",
+    "rootDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/junit.xml"
+        }
+      ],
+      [
+        "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/common/qc-reporter.ts",
+        {
+          "reportsRoot": "reports",
+          "runDir": "reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test",
+          "stamp": "15-10-2026_02-21-05",
+          "envName": "est-test",
+          "baseUrl": "https://cms-test.estimation.qnavi.picontechnology.com"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "setup",
+        "name": "setup",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/common\\/auth\\.setup\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "cms",
+        "name": "cms",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [
+          "/tests\\/cms\\/e2e-.*\\.spec\\.ts/",
+          "/tests\\/cms\\/phase\\d+-.*\\.spec\\.ts/"
+        ],
+        "testMatch": [
+          "/tests\\/cms\\/.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/cms\\/(e2e-|phase\\d+-).*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "open",
+        "name": "open",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/open\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/recon_15-10-2026_02-21-05_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "recon",
+        "name": "recon",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/recon.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "tests/tools/recon-e2e.spec.ts",
+      "file": "tests/tools/recon-e2e.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "recon E2E suite screens (read-only)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "recon",
+              "projectName": "recon",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "0a87aea3bd91988ffe37-8e831f4c963c5ea83489",
+          "file": "tests/tools/recon-e2e.spec.ts",
+          "line": 51,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "tests/tools/recon.spec.ts",
+      "file": "tests/tools/recon.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "recon CMS screens (read-only)",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "recon",
+              "projectName": "recon",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "75a9fac2c163aab99621-3dd08f0e7830a308b1c5",
+          "file": "tests/tools/recon.spec.ts",
+          "line": 57,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T02:21:05.504Z",
+    "duration": 53.886999999999944,
+    "expected": 0,
+    "skipped": 2,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

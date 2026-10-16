@@ -19,7 +19,8 @@
     "p007": "playwright test --project=e2e tests/cms/phase007/",
     "p007:headed": "playwright test --project=e2e --headed tests/cms/phase007/",
     "suite": "playwright test --project=e2e",
-    "suite:headed": "playwright test --project=e2e --headed"
+    "suite:headed": "playwright test --project=e2e --headed",
+    "gen:e2e": "node scripts/gen-e2e-specs.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.56.0",

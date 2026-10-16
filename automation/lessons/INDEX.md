@@ -34,6 +34,13 @@
 - R31 Wizard / màn có bước tuỳ role (vd 作業依頼登録: 99 có '操作モード設定', 98 継続依頼 không): chờ "bước tuỳ chọn hoặc bước kế tiếp", không cố định số bước; ghi role đã dò trong screen. (web/2026-10-14-cms-wizard-step-by-role.md)
 - R32 Đọc mã / số hiển thị khớp đủ định dạng thật (vd 継続依頼 '223470066_2' → `\d+(?:_\d+)?`), assert giá trị đầy đủ. (web/2026-10-14-cms-number-suffix.md)
 - R33 Ant Design select (webview トラブルNAVI): mở bằng mousedown lặp tới khi có option, lọc dropdown theo aria-controls của đúng ô, chọn xong kiểm .ant-select-selection-item. (web/2026-10-14-antd-select-in-iframe.md)
+- R34 Cùng 1 modal mở được nhiều đường, quyền khác theo role (99 và 98: 見積もり ở header chỉ xem, thao tác phải qua クイック操作 → 状態変更): dò đường có nút thao tác cho từng role, không giả định 2 đường giống nhau. (web/2026-10-15-cms-estimate-modal-99-readonly.md)
+- R35 Tên menu sidebar khác theo role (danh sách trouble: 99 '作業依頼情報', 01/02/98 '進行中のトラブル一覧'): gọi menu đúng tên của role, hoặc mở thẳng URL khi TC không kiểm menu. (web/2026-10-15-cms-menu-name-by-role.md)
+- R36 Mọi spec trong bộ phải hiểu E2E_DRY (không chạy khô được → skip cả file khi DRY). Kiểm / recon luôn DRY, chạy thật không DRY. (web/2026-10-15-e2e-dry-run-all-specs.md)
+- R37 Chờ API idle: request treo quá ngưỡng thì ghi perf một lần rồi bỏ khỏi danh sách; không để nó chặn mọi lần chờ sau. (web/2026-10-16-cms-api-stuck-request.md)
+- R38 Modal có dữ liệu từ API riêng (支払情報 ← /payments): chờ đúng response đó rồi mới kiểm nội dung; modal hiện ≠ dữ liệu đã có. (web/2026-10-16-cms-modal-own-api.md)
+- R39 Dữ liệu gắn với trouble (tài sản, báo cáo): dò xem hiển thị thẳng hay qua modal; modal mở để kiểm thì đóng trong cùng bước (kịch bản serial). (web/2026-10-16-cms-detail-related-data-modal.md)
+- R40 Nút header '見積もり' chỉ có khi còn báo giá đã nộp (sau 取り下げ承認 / 却下 → mất với 01 / 02): kiểm trạng thái báo giá bằng 99 / 98 qua 状態変更. (web/2026-10-16-cms-estimate-header-hidden-after-cancel.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

@@ -8,6 +8,8 @@ import { E2E } from '../../../common/e2e-suite';
  * Chạy: ENV=toridoll-test npm run suite -- E2E-00.spec.ts
  */
 test.describe.configure({ mode: 'serial' });
+// E2E_DRY=1 (kiểm TC ↔ code / recon): spec viết riêng, không có chế độ khô → bỏ qua cả file, KHÔNG mở app (chạy bình thường: không đặt E2E_DRY).
+test.skip(!!process.env.E2E_DRY, 'E2E_DRY: spec viết riêng, không chạy khô được');
 const sc = serialScenario();
 
 for (const [id, asset] of [['E2E00-TC-001', false], ['E2E00-TC-002', true]] as const) {

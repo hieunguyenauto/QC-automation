@@ -22,10 +22,10 @@
       "chainSystem": "Linksys Chain System",
       "note": "ChainStore Manager, dùng ở E2E-TC-011..013. Manager khác: variant credentials('01', 'm2'…'m5'); mật khẩu CMS_01_PASSWORD (dùng chung) hoặc CMS_01_<VARIANT>_PASSWORD",
       "variants": {
-        "m2": { "loginId": "linksysmanager00002", "displayName": "LINKSYS MANAGER00002", "note": "loginId theo mẫu — cần xác nhận" },
-        "m3": { "loginId": "linksysmanager00003", "displayName": "LINKSYS MANAGER00003", "note": "loginId theo mẫu — cần xác nhận" },
-        "m4": { "loginId": "linksysmanager00004", "displayName": "LINKSYS MANAGER00004", "note": "loginId theo mẫu — cần xác nhận" },
-        "m5": { "loginId": "linksysmanager00005", "displayName": "LINKSYS MANAGER00005", "note": "loginId theo mẫu — cần xác nhận" }
+        "m2": { "loginId": "linksysmanager00002", "displayName": "LINKSYS MANAGER00002", "note": "đăng nhập OK (dò thật 2026-10-15, toridoll-test)" },
+        "m3": { "loginId": "linksysmanager00003", "displayName": "LINKSYS MANAGER00003", "note": "đăng nhập OK (dò thật 2026-10-15, toridoll-test)" },
+        "m4": { "loginId": "linksysmanager00004", "displayName": "LINKSYS MANAGER00004", "note": "đăng nhập OK (dò thật 2026-10-15, toridoll-test)" },
+        "m5": { "loginId": "linksysmanager00005", "displayName": "LINKSYS MANAGER00005", "note": "đăng nhập OK (dò thật 2026-10-15, toridoll-test)" }
       }
     },
     "02": {

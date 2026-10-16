@@ -1,11 +1,55 @@
-# Câu hỏi — E2E suite · cập nhật 14/10/2026 (lượt 8)
-**Đã chốt hết — không còn câu mở.**
-Suite sau lượt 8 (TC Revision 6): bỏ case 28 (G11) và case 16 (G14) → còn **37 case**.
+# Câu hỏi — E2E suite · cập nhật 16/10/2026 (lượt 14)
+**Đã chốt hết — không còn câu mở.** (Q1 chờ chốt chữ sau lần chạy thật)
+Suite sau lượt 9 (TC Revision 7): bỏ case 28 (G11) và case 16 (G14) → còn **37 case**.
 
 ## A. Câu còn mở
 (không còn)
 
 ## B. Đã chốt (không cần trả lời)
+### Lượt 14 (16/10) — chạy lại E2E-13 / 14 → TC Revision 12
+| # | Kết quả |
+|---|---|
+| R12-1 | Sau '取り下げ却下': báo giá gốc = '失効' (không phải '取り下げ却下'), chỉ 'コピー' (Hieu Nguyen xác nhận 16/10; dò thật E2E-14). Thay R8-2 phần trạng thái |
+| R12-2 | Sau 取り下げ承認 / 却下: '見積書: 未提出', manager (01) không còn nút '見積もり' → bước manager chỉ kiểm '見積書' = '未提出'; trạng thái báo giá ('下書き' / '失効') kiểm ở bước Admin (dò thật E2E-13, 14) |
+
+### Lượt 13 (16/10) — chạy automation E2E-21 → TC Revision 11
+| # | Kết quả |
+|---|---|
+| R11-1 | NEW urgent → 継続依頼 '_2' kế thừa 案件区分 '営業停止案件'. Urgent cả 2 phase: TC CONTINUE chỉ kiểm kế thừa, không 編集 / 保存 (chọn lại cùng giá trị thì '保存' disabled) (Hieu Nguyen xác nhận 16/10; E2E-21) |
+
+### Lượt 12 (16/10) — chạy automation E2E-29 → TC Revision 10
+| # | Kết quả |
+|---|---|
+| R10-1 | Sau 差し戻し → コピー (R8-1): báo giá được duyệt là '<X>-copy'; '<X>' (差し戻し) cùng các báo giá khác → '失効'. TC 'Other estimates → 失効' sửa theo (dò thật E2E-29 16/10; E2E-12, 29, 33) |
+
+### Lượt 11 (16/10) — chạy automation E2E-13 … 26 trên toridoll-test → TC Revision 9
+| # | Kết quả |
+|---|---|
+| R9-1 | Type 04 (STORE00004): tự duyệt nếu **税抜 < min_amount** (Lv1 ¥20,000 — MANAGER00001) **hoặc 税込 < fix_amount** (¥20,000). FIX + 1 税込 (¥20,001 = 税抜 ¥18,183) vẫn tự duyệt → TC 1 báo giá type 04 đổi thành total = ¥22,001 (税抜 ¥20,001). Nhiều báo giá 提示 cùng lúc không tự duyệt (giữ). Bổ sung G3 (Hieu Nguyen xác nhận 16/10; E2E-13, 26) |
+| R9-2 | Trouble urgent: báo giá ≤ FIX vẫn tự duyệt khi 提示 (như thường); chỉ > FIX mới bỏ duyệt ở 02-05 / 02-40 và duyệt lại ở 02-08 / 02-80. Thay Q5 / Q6 cho trường hợp ≤ FIX (Hieu Nguyen xác nhận 16/10; E2E-19, 20, 23) |
+
+### Lượt 10 (16/10) — chạy automation E2E-02…39 trên toridoll-test → TC Revision 8
+| # | Kết quả |
+|---|---|
+| R8-1 | Báo giá '差し戻し': chỉ 'コピー' rồi 提示 lại (không 編集 được — card 作業員 'コピーできます。'). TC 差し戻し → コピー '<X>-copy' → 提示 → '承認待ち'; TC sau duyệt / thanh toán theo '<X>-copy' (Hieu Nguyen xác nhận; dò thật E2E-12 16/10) |
+| R8-2 | '取り下げ却下' mở hộp '取り下げを却下する' (ô lý do + nút '取り下げ却下'): điền 'Automation reject cancel' (dò thật E2E-14 16/10) |
+| R8-3 | '取り下げ承認': nếu mở hộp lý do thì điền 'Automation approve cancel' (chưa dò — kiểm khi chạy E2E-13) |
+| R8-4 (đóng → R9-1) | STORE00004 (type 04): báo giá ¥20,001 税込 / ¥18,183 税抜 (= FIX + 1 theo 税込) → app '承認済み' ngay khi 提示 (E2E-13 16/10). Chờ Hieu Nguyen thử 提示 để chốt 限度額 so 税込 hay 税抜 cho type 04 |
+
+### Lượt 9 (15/10) — khi viết automation E2E-02…39 → TC Revision 7
+| # | Kết quả |
+|---|---|
+| N16 (sửa) | TC-001 'Verify: auto approve is set' (STORE00005) = chi tiết store có '限度額' (vd '￥20,000（継続依頼にも適用する：適用する）'); không có mục riêng tên auto approve |
+| Q1 | E2E-13 TC-006: sau 取り下げ承認 → 提示 lại, trạng thái là 1 trong '再承認待ち' / '承認待ち' → giữ cả 2; chốt chữ theo kết quả chạy thật |
+| Q2 | E2E-14: bản copy đặt 見積名 'E2E14-New-copy' (theo TC) |
+| Q3 | 差し戻し → re-edit 'change 単価 +1': đơn giá nào cũng được (automation tăng 店舗向け 単価) |
+| Q4 | E2E-03 'total within ¥10,000–¥20,000 and > FIX': TC đủ cụ thể, không ghi số (automation dùng ¥15,000) |
+| Q5 | Urgent NEW, báo giá chưa duyệt (E2E-19, E2E-21): tới 02-08 (作業完了) quay lại duyệt (Admin 99) → TC 作業完了 → 報告済 thêm bước 2. Mục đích: chứng minh qua được 02-05 mà không cần duyệt. E2E-22 giữ TC Admin duyệt riêng |
+| Q6 | Urgent CONTINUE (E2E-20, 21, 23): TC tạo báo giá chỉ 保存 (bỏ qua duyệt); tới 02-80 (作業完了) Admin (99) duyệt → TC 日程確定 … 作業完了 thêm bước 3 |
+| Q7 | Lỗi ngày khi gửi web form: '明日以降', 開始 4:00, 終了 5:00 |
+| Q8 | Tài sản 'TEST AUTOMATION' (webview, STORE00006) đã có sẵn |
+| Q9 | Worker Company (05) 'linksysworkercompany' đã được gán (E2E-26 tạo báo giá) |
+
 ### Lượt 8 (14/10) — chạy automation E2E-01 → TC Revision 4
 | # | Kết quả |
 |---|---|

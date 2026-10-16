@@ -1,4 +1,4 @@
-import { expect } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import path from 'path';
 import { BaseScreen } from '../base.screen';
 import {
@@ -206,6 +206,21 @@ export class TroubleCreateScreen extends BaseScreen {
     const [eh, em] = endTime.split(':');
     await hours.nth(0).fill(sh); await minutes.nth(0).fill(sm);
     await hours.nth(1).fill(eh); await minutes.nth(1).fill(em);
+  }
+
+  /**
+   * E2E suite: '決定して問合わせ' → '決定' (nếu lỗi ngày: '明日以降', 開始 4:00, 終了 5:00 — TC rev 7) → 'OK'. Trả về id / 依頼番号.
+   * [chưa dò thật: lỗi ngày] — hộp 'この新規依頼を保存します' không hiện sau 5s thì coi là lỗi ngày.
+   */
+  async submitWithDateFallback(): Promise<{ id?: string; number?: string }> {
+    await this.clickSubmit();
+    const confirm = this.page.locator('.modal.show').filter({ visible: true }).filter({ hasText: 'この新規依頼を保存します' });
+    if (!(await confirm.first().waitFor({ timeout: 5_000 }).then(() => true, () => false))) {
+      test.info().annotations.push({ type: 'date-fallback', description: "Không có hộp xác nhận → chọn '明日以降', 開始 4:00, 終了 5:00 rồi gửi lại" });
+      await this.chooseExpectedDate('明日以降', '4:00', '5:00');
+      await this.clickSubmit();
+    }
+    return this.confirmSubmit();
   }
 
   async clickSubmit(): Promise<void> {

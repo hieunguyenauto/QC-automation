@@ -117,7 +117,7 @@ export class TroubleDetailScreen extends BaseScreen {
   estimateRow(name: string): Locator {
     return this.estimateModal.locator('tr.estimation-row').filter({ has: this.page.locator('td', { hasText: exact(name) }) }).first();
   }
-  async expectEstimateStatus(name: string, status: string): Promise<void> {
+  async expectEstimateStatus(name: string, status: string | RegExp): Promise<void> {
     await expect(this.estimateRow(name).locator('.badge')).toHaveText(status, { timeout: 15_000 });
   }
 
@@ -193,6 +193,111 @@ export class TroubleDetailScreen extends BaseScreen {
   async closeEstimateModal(): Promise<void> {
     await click(this.estimateModal, '閉じる');
     await expect(this.estimateModal).toBeHidden();
+  }
+
+  // ----- E2E suite (2026-10-15) -----
+  // Dò thật 15/10/2026, toridoll-test (trouble 223470066, role 01 / 02 / 98): nút header '見積もり' (chỉ có khi đã có báo giá)
+  //  → modal '見積もり管理' (có h4 '見積一覧' → estimateModal dùng chung). 1 báo giá: dòng đã mở sẵn (is-expanded) → openEstimateMenu.
+  //  Báo giá 承認済み: vùng mở rộng không có nút thao tác.
+  /** Mở danh sách báo giá: nút header '見積もり' nếu có, không thì クイック操作 → icon 見積もり (99 / 05).
+   *  Role 99: modal mở bằng header CHỈ ĐỂ XEM (không có card 店舗 / 作業員, không 承認する / 差し戻し) — dò thật 2026-10-15, toridoll-test.
+   *  99 cần thao tác báo giá → openQuickAction() + openEstimateFromStatus(). */
+  async openEstimates(): Promise<void> {
+    const header = clickable(this.content, '見積もり');
+    if (await header.isVisible().catch(() => false)) await header.click();
+    else { await this.openQuickAction(); await this.editRow('見積もり'); }
+    await expect(this.estimateModal).toBeVisible();
+    await expect(this.estimateModal.locator('tr.estimation-row').first()).toBeVisible({ timeout: 15_000 });
+  }
+  /** Đóng danh sách báo giá (+ 状態変更 nếu mở bằng クイック操作). */
+  async closeEstimates(): Promise<void> {
+    await this.closeEstimateModal();
+    if (await this.statusModal.isVisible().catch(() => false)) await this.closeStatus();
+  }
+  /** Tick các dòng → 提示する → hộp '以下N件の見積を店舗へ提出しますか' liệt kê đủ tên → 決定 → trạng thái mong đợi (nếu truyền). */
+  async submitEstimates(names: string[], status?: string | RegExp): Promise<void> {
+    for (const n of names) await this.estimateRow(n).locator('input[type="checkbox"]').first().check();
+    await click(this.estimateModal, '提示する');
+    const d = modal(this.page, `以下${names.length}件の見積を店舗へ提出しますか`);
+    for (const n of names) await expect(d).toContainText(n);
+    await click(d, '決定');
+    await expect(d).toBeHidden();
+    if (status) for (const n of names) await this.expectEstimateStatus(n, status);
+  }
+  /** Card 店舗: 承認する → 決定 (hộp 'この見積を承認しますか', P007-TC-033). */
+  async approveEstimate(name: string): Promise<void> {
+    await this.openEstimateMenu(name);
+    await this.estimateAction('manager', '承認する').click();
+    await this.decide(/この見積を承認しますか/);
+    // Dò thật 15/10/2026 (toridoll-test, role 01): sau 決定 có hộp '見積書を承認しました。' (OK) và modal 見積もり管理 đóng → mở lại để kiểm trạng thái.
+    await this.reopenAfterOk(/見積書を承認しました/);
+  }
+  /** Hộp OK (nếu có) → bấm OK; modal báo giá đã đóng thì mở lại (trong 状態変更 nếu đang mở, không thì header). */
+  async reopenAfterOk(text: RegExp = /しました/): Promise<void> {
+    const ok = this.page.locator('.modal.show, [role="dialog"]').filter({ visible: true }).filter({ hasText: text });
+    if (await ok.first().waitFor({ timeout: 5_000 }).then(() => true, () => false)) await this.ok(text);
+    if (await this.estimateModal.isVisible().catch(() => false)) return;
+    if (await this.statusModal.isVisible().catch(() => false)) await this.editRow('見積もり');
+    else await this.openEstimates();
+    await expect(this.estimateModal).toBeVisible();
+  }
+  /** Card 店舗: 差し戻し → hộp '見積もりを差し戻す' (textarea[name=reason] '差し戻し理由', nút キャンセル / '差し戻し実行')
+   *  → hộp '差し戻しをおこないますか？' (閉じる / 決定) → không có hộp OK, modal 見積一覧 vẫn mở, trạng thái '差し戻し'.
+   *  Dò thật 2026-10-15, toridoll-test, role 99 (trouble 43888, gửi thật). */
+  async rejectEstimate(name: string, reason: string): Promise<void> {
+    await this.openEstimateMenu(name);
+    await this.estimateAction('manager', '差し戻し').click();
+    const box = modal(this.page, '見積もりを差し戻す');
+    await box.locator('textarea[name="reason"]').fill(reason);
+    await click(box, '差し戻し実行');
+    await this.decide(/差し戻しをおこないますか/);
+    await this.reopenAfterOk();
+  }
+  /** Card 作業員: 取り下げ申請 → lý do → 申請を送信 → 決定 (P007-TC-033). */
+  async requestCancel(name: string, reason: string): Promise<void> {
+    await this.openEstimateMenu(name);
+    await this.estimateAction('worker', '取り下げ申請').click();
+    const req = modal(this.page, '申請を送信');
+    await req.locator('textarea[name="reason"]').fill(reason);
+    await click(req, '申請を送信');
+    await this.decide(/以下の理由で取り下げ申請を行いますか/);
+    await this.reopenAfterOk();
+  }
+  /** Card 店舗: trả lời 取り下げ申請 ('取り下げ承認' / '取り下げ却下') → hộp lý do (nếu mở) → nút cùng tên → 決定 → OK.
+   *  '取り下げ却下' mở hộp '取り下げを却下する' (ô '理由を入力してください' + nút '取り下げ却下' / キャンセル) — dò thật 2026-10-16, toridoll-test, role 01.
+   *  '取り下げ承認': [chưa dò thật] hộp lý do có thể có hoặc không (TC rev 8 R8-3). */
+  async answerCancelRequest(name: string, action: '取り下げ承認' | '取り下げ却下', reason: string): Promise<void> {
+    await this.openEstimateMenu(name);
+    await this.estimateAction('manager', action).click();
+    const box = this.page.locator('.modal.show').filter({ visible: true }).filter({ has: this.page.locator('textarea, input[type="text"]') })
+      .filter({ hasText: /取り下げを(却下|承認)する/ }).last();
+    if (await box.waitFor({ timeout: 5_000 }).then(() => true, () => false)) {
+      await box.locator('textarea, input[type="text"]').first().fill(reason);
+      await click(box, action);
+    }
+    await this.decide();
+    // 取り下げ承認 → báo giá về 下書き → '見積書: 未提出', nút header '見積もり' biến mất với 01 / 02 (dò thật 2026-10-16, E2E-13 trouble 43966)
+    //  → chỉ mở lại danh sách khi còn đường mở.
+    const ok = this.page.locator('.modal.show, [role="dialog"]').filter({ visible: true }).filter({ hasText: /しました/ });
+    if (await ok.first().waitFor({ timeout: 5_000 }).then(() => true, () => false)) await this.ok(/しました/);
+    if (await clickable(this.content, '見積もり').isVisible().catch(() => false)) await this.openEstimates();
+  }
+  /** Mở form sửa báo giá (card 作業員 '編集', chỉ có khi 下書き; 承認待ち chỉ có 取り下げ申請 / コピー) — dò thật 2026-10-15, toridoll-test, role 99. */
+  async editEstimate(name: string): Promise<void> {
+    await this.openEstimateMenu(name);
+    await this.estimateAction('worker', '編集').click();
+    await expect(this.estimateForm.locator('input[name="title"]')).toHaveValue(name, { timeout: 15_000 });
+  }
+  /** Card 作業員 'コピー' (có ở 下書き và 承認待ち) → form 見積もり điền sẵn, 見積名 = tên gốc; form có キャンセル / 決定 (đóng bằng キャンセル
+   *  không hỏi 破棄) — dò thật 2026-10-15, toridoll-test, role 99. */
+  async copyEstimate(name: string): Promise<void> {
+    await this.openEstimateMenu(name);
+    await this.estimateAction('worker', 'コピー').click();
+    await expect(this.estimateForm.locator('input[name="title"]')).toBeVisible({ timeout: 15_000 });
+  }
+  /** Giá 店舗向け 単価 hiện tại của dòng hạng mục cuối trong form báo giá (số). */
+  async storeUnitPrice(): Promise<number> {
+    return Number((await this.estimateForm.locator('input[name$=".amount"]').last().inputValue()).replace(/,/g, ''));
   }
 
   // ----- Phase 007 (P007-TC-028~054) -----
@@ -310,13 +415,13 @@ export class TroubleDetailScreen extends BaseScreen {
   assetTypeSelect(i: number): Locator { return this.assetRows.nth(i).locator('select[name^="types."]').first(); }
   /**
    * PDF 報告書: input[type=file accept=pdf] trong .dropzone của dòng 'PDFファイル' → hộp con 'N / 5' → 完了.
-   * [chưa dò thật: hộp con PDF — giả định giống hộp ảnh 'N / 20' (R15, R16)]. Trả về hộp con (đang mở) để kiểm message.
+   * Hộp con PDF (dò thật 2026-10-15, toridoll-test, role 99): '.modal.show.app-pdf-upload-modal' — thẻ file (.btn-close-card + tên),
+   * 'N / 5', ファイル選択, キャンセル, 完了. Trả về hộp con (đang mở) để kiểm message.
    */
   async choosePdf(files: string[]): Promise<Locator> {
     await valueOf(this.reportModal, 'PDFファイル').locator('.dropzone input[type="file"]').first()
       .setInputFiles(files.map((f) => path.join(FILES, f)));
-    return this.page.locator('.modal.show, [role="dialog"]').filter({ visible: true })
-      .filter({ hasText: /\d+\s*\/\s*5/ }).filter({ hasNotText: '施工業者' }).last();
+    return this.page.locator('.modal.show.app-pdf-upload-modal').filter({ visible: true }).last();
   }
   async confirmPdf(box: Locator): Promise<void> {
     const uploaded = this.page.waitForResponse((r) => r.request().method() === 'PUT' && r.url().includes('/modules/troubles/files/'), { timeout: 30_000 }).catch(() => null);

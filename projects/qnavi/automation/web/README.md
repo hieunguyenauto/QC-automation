@@ -39,7 +39,9 @@ cp .env.example .env           # điền ENV và tài khoản theo role
 | Liệt kê test | `npm run list` |
 | Kiểm tra code TypeScript | `npm run typecheck` |
 | Kịch bản E2E trouble (13 TC, nối tiếp, tạo trouble mới) | `npm run e2e:headed` |
-| 1 kịch bản trong bộ E2E suite (E2E-00 … E2E-39) | `ENV=est-test npm run suite:headed -- E2E-01` (bỏ `:headed` để chạy ẩn) |
+| 1 kịch bản trong bộ E2E suite (E2E-00 … E2E-39) | `ENV=toridoll-test npm run suite:headed -- E2E-01` (bỏ `:headed` để chạy ẩn) |
+| Sinh lại spec E2E-02…39 từ TC LOCKED (sau khi TC đổi revision; E2E-00 / 01 viết tay) | `npm run gen:e2e` · 1 kịch bản: `npm run gen:e2e -- 12` |
+| Kiểm TC E2E suite ↔ code khớp (không mở app, < 1 giây) | `npm run gen:e2e -- --check` |
 | Regression Phase 007 | `ENV=est-test npm run p007:headed` |
 | Chạy tiếp E2E trên trouble có sẵn (đúng trạng thái) | `E2E_TROUBLE_ID=1234 npm run e2e -- --grep "TC-00[5-9]\|TC-01"` |
 | Lấy locator thật: đi qua các màn hình, **không lưu dữ liệu**, ghi aria snapshot + ảnh | `npm run recon` / `npm run recon:e2e` → `reports/_tmp_chk/recon*/` (tạm, mỗi lần ghi đè; viết locator vào `screens/` xong là bỏ) (`_summary.txt` liệt kê bước lỗi) |
@@ -85,6 +87,7 @@ Phase 007 chạy nối tiếp (common/scenario.ts): T1…T5 tạo trong lần ch
 | `screens/cms/*.screen.ts` | **Knowledge màn hình**: mã màn hình, route, role, locator, thao tác ngắn | kb-update-automation |
 | `tests/cms/<bộ test>/` | Mỗi bộ test 1 thư mục: `e2e-trouble-flow/`, `phase007/`, `e2e-suite/` (E2E-00…39), `smoke/` (test lẻ theo role). Thư mục ≠ `smoke/` chạy bằng project `e2e` (nối tiếp) | Khi automate TC |
 | `tests/tools/` | Công cụ phụ trợ, không phải test: `open` (mở trình duyệt đã đăng nhập), `recon*` (dò màn hình) | Khi cần |
+| `scripts/gen-e2e-specs.mjs` | Sinh `tests/cms/e2e-suite/E2E-02…39.spec.ts` từ TC LOCKED (mỗi loại TC = 1 khuôn code; spec sinh ra **không sửa tay**, ghi rev TC và tự dừng nếu TC đổi rev) | Khi TC đổi / cần thao tác mới |
 | `reports/` | Kết quả mỗi lần chạy | Tự sinh |
 
 Mô tả đầy đủ màn hình (route, role, API, modal): `projects/qnavi/screens/catalog/cms-frontend.md`. File `.screen.ts` ghi mã màn hình để tra ngược, **không chép lại mô tả**.

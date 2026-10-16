@@ -1464,6 +1464,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - D15 Màn master-edit có 2 tầng lưu (modal thêm dòng → '保存' của trang): TC phải ghi đủ cả 2 tầng và kiểm dữ liệu còn sau reload. (design/2026-10-13-two-level-save.md)
 - D16 Lưu xong mà app hiện hộp thoại hoàn tất (…が完了しました。 + 'OK'): Steps phải ghi "Verify: dialog '<message>' → 'OK'" trước bước tiếp theo. (design/2026-10-13-save-done-dialog.md)
 - D17 Luồng lấy từ CSV / app mobile: đối chiếu màn CMS web (catalog / recon) trước khi LOCK; mỗi nhánh điều kiện (ON / OFF, category, ≤ / > FIX…) có bước và trạng thái kỳ vọng riêng, không dùng chung 1 template khi sinh TC bằng script. (design/2026-10-14-e2e-branch-flow-template.md)
+- D18 TC theo trạng thái báo giá / 承認タイプ: trước khi LOCK dò thật nút ở từng trạng thái (下書き / 承認待ち / 差し戻し / 取り下げ…), trạng thái sau mỗi hành động, điều kiện tự duyệt đầy đủ (税込 / 税抜, min_amount theo Lv, urgent, nhiều báo giá); Verify đặt ở role nhìn thấy được. (design/2026-10-16-estimate-state-actions.md)
 - D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
 
 ## Excel / công cụ
@@ -1515,6 +1516,13 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - R31 Wizard / màn có bước tuỳ role (vd 作業依頼登録: 99 có '操作モード設定', 98 継続依頼 không): chờ "bước tuỳ chọn hoặc bước kế tiếp", không cố định số bước; ghi role đã dò trong screen. (web/2026-10-14-cms-wizard-step-by-role.md)
 - R32 Đọc mã / số hiển thị khớp đủ định dạng thật (vd 継続依頼 '223470066_2' → `\d+(?:_\d+)?`), assert giá trị đầy đủ. (web/2026-10-14-cms-number-suffix.md)
 - R33 Ant Design select (webview トラブルNAVI): mở bằng mousedown lặp tới khi có option, lọc dropdown theo aria-controls của đúng ô, chọn xong kiểm .ant-select-selection-item. (web/2026-10-14-antd-select-in-iframe.md)
+- R34 Cùng 1 modal mở được nhiều đường, quyền khác theo role (99 và 98: 見積もり ở header chỉ xem, thao tác phải qua クイック操作 → 状態変更): dò đường có nút thao tác cho từng role, không giả định 2 đường giống nhau. (web/2026-10-15-cms-estimate-modal-99-readonly.md)
+- R35 Tên menu sidebar khác theo role (danh sách trouble: 99 '作業依頼情報', 01/02/98 '進行中のトラブル一覧'): gọi menu đúng tên của role, hoặc mở thẳng URL khi TC không kiểm menu. (web/2026-10-15-cms-menu-name-by-role.md)
+- R36 Mọi spec trong bộ phải hiểu E2E_DRY (không chạy khô được → skip cả file khi DRY). Kiểm / recon luôn DRY, chạy thật không DRY. (web/2026-10-15-e2e-dry-run-all-specs.md)
+- R37 Chờ API idle: request treo quá ngưỡng thì ghi perf một lần rồi bỏ khỏi danh sách; không để nó chặn mọi lần chờ sau. (web/2026-10-16-cms-api-stuck-request.md)
+- R38 Modal có dữ liệu từ API riêng (支払情報 ← /payments): chờ đúng response đó rồi mới kiểm nội dung; modal hiện ≠ dữ liệu đã có. (web/2026-10-16-cms-modal-own-api.md)
+- R39 Dữ liệu gắn với trouble (tài sản, báo cáo): dò xem hiển thị thẳng hay qua modal; modal mở để kiểm thì đóng trong cùng bước (kịch bản serial). (web/2026-10-16-cms-detail-related-data-modal.md)
+- R40 Nút header '見積もり' chỉ có khi còn báo giá đã nộp (sau 取り下げ承認 / 却下 → mất với 01 / 02): kiểm trạng thái báo giá bằng 99 / 98 qua 状態変更. (web/2026-10-16-cms-estimate-header-hidden-after-cancel.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->
@@ -1530,6 +1538,8 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D26 | 2026-10-16 | Automation E2E-02…39: spec sinh từ TC LOCKED bằng scripts/gen-e2e-specs.mjs (đọc được như E2E-01, không sửa tay, tự dừng khi TC đổi rev); kiểm TC ↔ code bằng `npm run gen:e2e -- --check` | Người dùng muốn mỗi E2E là 1 file spec đầy đủ, dễ đọc; 1 khuôn / loại TC giữ 562 TC đồng bộ với TC khi đổi revision | projects/qnavi/automation/web/scripts/gen-e2e-specs.mjs, tests/cms/e2e-suite/, README.md |
+| D25 | 2026-10-15 | Automation: kiểm TC ↔ code / recon E2E luôn chạy E2E_DRY=1 (không đụng app), chạy thật không DRY; mọi spec trong e2e-suite phải hiểu E2E_DRY (không chạy khô được → skip cả file) | Lệnh dry-run cả thư mục đã chạy thật E2E-01 (spec viết riêng không hiểu DRY), tạo trouble trên toridoll-test | tests/cms/e2e-suite/E2E-00.spec.ts, E2E-01.spec.ts, automation/lessons/INDEX.md (R36) |
 | D24 | 2026-10-13 | Automation: hộp lỗi app do môi trường chậm (「表示に時間がかかっております」) chỉ bấm OK + ghi env-warning, code KHÔNG tự reload / retry (chỉ reload khi TC ghi F5); API nặng sau login đợi response thực tế, chậm quá ngưỡng ghi PERFORMANCE để check sau, không fail TC | Người dùng thật không gặp lỗi vì đợi trang tải xong; reload / retry che lỗi hiệu năng; perf est-test chập chờn không được chặn cả kịch bản | screens/cms/layout.screen.ts, common/session.ts, common/env.ts, common/qc-reporter.ts, automation/lessons/INDEX.md (R18) |
 | D23 | 2026-10-13 | List messages.xlsx là nguồn ưu tiên cao nhất cho chữ message (MSG): gốc ở raw/ (được commit, không có mật khẩu), bản tra cứu spec/messages.md; TC và data automation phải đối chiếu | Message là chỗ hay sai chữ; cần 1 nguồn chuẩn để double check | projects/qnavi/sources.md, spec/messages.md, CLAUDE.md, .gitignore |
 | D22 | 2026-10-12 | Đăng nhập test dùng chung common/session.ts: tài khoản 'role[:variant]', phiên lưu .auth/<ENV>/ (dùng lại 8h), tự logout khi đổi tài khoản | Mỗi spec tự viết login, phiên dev/est-test đè nhau, chưa hỗ trợ 9 store | common/session.ts, common/roles.ts, CLAUDE.md |
@@ -1562,6 +1572,9 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] E2E suite chạy thật toridoll-test 15–16/10: 36/37 kịch bản (E2E-02…39) pass; E2E-14 chờ chạy lại theo TC rev 12. Spec E2E-02…39 sinh từ TC (scripts/gen-e2e-specs.mjs, npm run gen:e2e; bỏ common/e2e-case.ts); waitApisIdle bỏ request treo; reporter che mật khẩu trong snapshot; 98 thao tác báo giá qua 状態変更; chờ /payments; kiểm tài sản qua 資産一覧; recon-e2e thêm RECON_PART=E / F / S (S tạo tài sản 'TEST AUTOMATION'); lesson automation R37–R40, mở rộng R34
+- TC e2e-suite rev 8 → 12 (QUESTIONS lượt 10–14): 差し戻し → コピー; 取り下げ却下 có lý do, gốc = 失効; type 04 tự duyệt 税抜 < min_amount; urgent ≤ FIX tự duyệt; '_2' kế thừa 案件区分; Verify sau 取り下げ ở role Admin. Lesson QC D18
+- [auto] Recon E2E còn lại trên toridoll-test: 13 tài khoản E2E đăng nhập OK (manager m2–m5 xác nhận loginId), 案件区分 role 99, hộp PDF 報告書 (.app-pdf-upload-modal), card báo giá 下書き / 承認待ち (編集 / コピー / 取り下げ申請), hộp 差し戻し ('見積もりを差し戻す' → '差し戻し実行' → '差し戻しをおこないますか？' 決定); e2e-case: 99 thao tác báo giá qua 状態変更; E2E-00/01 skip khi E2E_DRY; recon-e2e thêm RECON_PART=E / F; lesson automation R34–R36
 - [auto] Cấu trúc automation/web: tests/cms/ chia theo bộ test (e2e-trouble-flow/, phase007/, e2e-suite/, smoke/); project e2e/cms chọn theo thư mục; npm run suite -- E2E-NN; bắt buộc ENV (mặc định từ .env); bỏ common/auth.ts, assert.ts, ui-wait.ts (gộp vào wait.ts)
 - [auto] Recon (dò màn hình) là bắt buộc trước khi viết locator; kết quả chỉ ghi vào reports/_tmp_chk/recon*/ (ghi đè), không tạo reports/recon-* nữa (CLAUDE.md mục Automation)
 - [auto] Automation E2E suite: E2E-00 (common setup) + E2E-01 pass 15/15 trên toridoll-test; screen mới trouble-navi.webview.ts, ChainSystemScreen (công tắc シサンNAVI / トラブルNAVI, store, 限度額), common/e2e-suite.ts, data/e2e-suite.json; lesson R31–R33 (bước wizard theo role, số có hậu tố, ant-select trong iframe)
@@ -1615,6 +1628,3 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 ## [0.1.0] - 2026-10-09
 ### Thêm
 - Kiến trúc 5 giai đoạn có cổng (D01, D02)
-- 3 skill thiết kế dùng chung: spec-review, test-viewpoint, test-case (D03)
-- 6 template theo format Excel của team (D04)
-- Luật mỗi TC 1 expected result (D05)

@@ -1,6 +1,6 @@
-# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 6, 14/10/2026)
+# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 12, 16/10/2026)
 
-Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–8) + quy tắc R1–R20 + T1–T5 + rev 4. Sinh bằng _tools/gen_e2e.py.
+Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–9) + quy tắc R1–R20 + T1–T5 + rev 4–7. Sinh bằng _tools/gen_e2e.py.
 Bỏ case 16 (G14) và case 28 (G11).
 
 ## Thứ tự chạy

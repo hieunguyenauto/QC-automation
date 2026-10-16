@@ -73,7 +73,7 @@ export class TroubleEditScreen extends BaseScreen {
     return chosen;
   }
 
-  /** 案件区分: nút '営業停止案件' / '通常案件' (dò thật 2026-10-13 ở role 01; role 99 giả định giống). */
+  /** 案件区分: nút '営業停止案件' / '通常案件' (dò thật 2026-10-13 role 01; dò thật 2026-10-15, toridoll-test, role 99: giống — button.btn, đang chọn = btn-success). */
   async setCaseType(type: '営業停止案件' | '通常案件'): Promise<void> {
     await click(rowOf(this.content, '案件区分'), type);
   }

@@ -69,6 +69,10 @@ function grab(msg: string, label: string): string | undefined {
   return strip(msg).match(new RegExp(`^\\s*${label}:\\s*(.+)$`, 'm'))?.[1]?.trim();
 }
 
+/** Che giá trị ô mật khẩu trong snapshot: 'textbox "パスワード" [ref=e27]: xxx' → '…: ***'. */
+export const maskSecrets = (text: string) =>
+  text.replace(/(textbox "[^"]*(?:パスワード|[Pp]assword)[^"]*"(?: \[[^\]]*\])*): .+/g, '$1: ***');
+
 export default class QcReporter implements Reporter {
   private rows: Row[] = [];
   private start = new Date();
@@ -150,7 +154,12 @@ export default class QcReporter implements Reporter {
         let target = path.join(dir, base + ext);
         if (fs.existsSync(target)) target = path.join(dir, `${base}-${++n}${ext}`);
         try {
-          if (a.path && fs.existsSync(a.path)) fs.copyFileSync(a.path, target);
+          if (/\.(yml|md|txt)$/.test(target)) {
+            // Snapshot trang (aria / error-context) ghi cả giá trị ô mật khẩu → che trước khi ghi vào reports/.
+            const text = a.path && fs.existsSync(a.path) ? fs.readFileSync(a.path, 'utf8') : a.body?.toString();
+            if (text == null) continue;
+            fs.writeFileSync(target, maskSecrets(text));
+          } else if (a.path && fs.existsSync(a.path)) fs.copyFileSync(a.path, target);
           else if (a.body) fs.writeFileSync(target, a.body);
           else continue;
           files.push(path.basename(target));

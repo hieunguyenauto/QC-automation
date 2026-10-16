@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] E2E suite chạy thật toridoll-test 15–16/10: 36/37 kịch bản (E2E-02…39) pass; E2E-14 chờ chạy lại theo TC rev 12. Spec E2E-02…39 sinh từ TC (scripts/gen-e2e-specs.mjs, npm run gen:e2e; bỏ common/e2e-case.ts); waitApisIdle bỏ request treo; reporter che mật khẩu trong snapshot; 98 thao tác báo giá qua 状態変更; chờ /payments; kiểm tài sản qua 資産一覧; recon-e2e thêm RECON_PART=E / F / S (S tạo tài sản 'TEST AUTOMATION'); lesson automation R37–R40, mở rộng R34
+- TC e2e-suite rev 8 → 12 (QUESTIONS lượt 10–14): 差し戻し → コピー; 取り下げ却下 có lý do, gốc = 失効; type 04 tự duyệt 税抜 < min_amount; urgent ≤ FIX tự duyệt; '_2' kế thừa 案件区分; Verify sau 取り下げ ở role Admin. Lesson QC D18
+- [auto] Recon E2E còn lại trên toridoll-test: 13 tài khoản E2E đăng nhập OK (manager m2–m5 xác nhận loginId), 案件区分 role 99, hộp PDF 報告書 (.app-pdf-upload-modal), card báo giá 下書き / 承認待ち (編集 / コピー / 取り下げ申請), hộp 差し戻し ('見積もりを差し戻す' → '差し戻し実行' → '差し戻しをおこないますか？' 決定); e2e-case: 99 thao tác báo giá qua 状態変更; E2E-00/01 skip khi E2E_DRY; recon-e2e thêm RECON_PART=E / F; lesson automation R34–R36
 - [auto] Cấu trúc automation/web: tests/cms/ chia theo bộ test (e2e-trouble-flow/, phase007/, e2e-suite/, smoke/); project e2e/cms chọn theo thư mục; npm run suite -- E2E-NN; bắt buộc ENV (mặc định từ .env); bỏ common/auth.ts, assert.ts, ui-wait.ts (gộp vào wait.ts)
 - [auto] Recon (dò màn hình) là bắt buộc trước khi viết locator; kết quả chỉ ghi vào reports/_tmp_chk/recon*/ (ghi đè), không tạo reports/recon-* nữa (CLAUDE.md mục Automation)
 - [auto] Automation E2E suite: E2E-00 (common setup) + E2E-01 pass 15/15 trên toridoll-test; screen mới trouble-navi.webview.ts, ChainSystemScreen (công tắc シサンNAVI / トラブルNAVI, store, 限度額), common/e2e-suite.ts, data/e2e-suite.json; lesson R31–R33 (bước wizard theo role, số có hậu tố, ant-select trong iframe)

@@ -6,12 +6,14 @@ import { minimizeChat, rowOf } from '../../../common/ui';
 import { waitApisIdle } from '../../../common/wait';
 
 /**
- * E2E-01 · Type01 direct / approver=Chain Store — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md (LOCKED rev 6).
+ * E2E-01 · Type01 direct / approver=Chain Store — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md (LOCKED rev 7).
  * 1 test() = 1 TC, test.step đặt tên theo cột Steps. Chạy nối tiếp trên 1 trình duyệt; TC fail → TC sau skip.
  * Chạy lẻ: ENV=toridoll-test npm run suite -- E2E-01.spec.ts
  * Chạy tiếp trên trouble có sẵn: E2E_TROUBLE_ID=<id> … --grep "TC-00[3-9]|TC-01"
  */
 test.describe.configure({ mode: 'serial' });
+// E2E_DRY=1 (kiểm TC ↔ code / recon): spec viết riêng, không có chế độ khô → bỏ qua cả file, KHÔNG mở app (chạy bình thường: không đặt E2E_DRY).
+test.skip(!!process.env.E2E_DRY, 'E2E_DRY: spec viết riêng, không chạy khô được');
 const STORE = '00006' as const;
 const P = 'E2E01';
 const t: Trouble = { id: process.env.E2E_TROUBLE_ID || undefined };

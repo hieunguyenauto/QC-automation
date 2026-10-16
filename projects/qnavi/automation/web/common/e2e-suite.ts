@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { expect, test, type Page } from '@playwright/test';
 import data from '../data/e2e-suite.json';
 import { loginAs, logout, type Who } from './session';
@@ -12,7 +14,7 @@ import { TroubleListScreen } from '../screens/cms/trouble-list.screen';
 import { TroubleNaviWebview } from '../screens/cms/trouble-navi.webview';
 
 /**
- * Bước dùng chung của bộ E2E suite (TC: projects/qnavi/qc/test-cases/e2e-suite/, LOCKED rev 3).
+ * Bước dùng chung của bộ E2E suite (TC: projects/qnavi/qc/test-cases/e2e-suite/, LOCKED rev 7).
  * Mỗi hàm = 1 cụm thao tác lặp lại giữa các case; spec gọi trong test.step đặt tên đúng bước của TC.
  * Locator chỉ ở screens/. Tài khoản: common/session.ts (data/e2e-suite.json › stores / managers).
  */
@@ -29,6 +31,20 @@ export function storePriceFor(totalTax: number): string {
   throw new Error(`Không tìm được 単価 cho tổng 税込 ${totalTax}`);
 }
 export const yen = (n: number) => `￥${n.toLocaleString('en-US')}`;
+/** Tổng 税込 khi xoá dòng mặc định = floor(店舗向け 単価 × 1.1). */
+export const taxOf = (storePrice: number) => Math.floor(storePrice * 1.1 + 1e-9);
+/** Số cấp 稟議 cần: tổng ≥ ngưỡng Lv nào thì cần Lv đó (Lv1 ¥20,000 · Lv2 ¥30,000 · Lv3 ¥40,000 · Lv4 ¥50,000). */
+export const ringiLevels = (total: number) => Math.max(1, [20_000, 30_000, 40_000, 50_000].filter((x) => total >= x).length);
+/** Manager duyệt 稟議 theo cấp (Lv1…Lv4). */
+export const RINGI = ['00001', '00002', '00003', '00004'] as const;
+
+/** Spec sinh từ TC (scripts/gen-e2e-specs.mjs): TC đổi revision mà chưa sinh lại → dừng, không chạy theo TC cũ. */
+export function assertTcRevision(tcFile: string, rev: number): void {
+  const text = fs.readFileSync(path.resolve(__dirname, '../../../../..', tcFile), 'utf8');
+  const st = text.match(/State: (\w+) · Revision: (\d+)/);
+  if (st?.[1] !== 'LOCKED') throw new Error(`${tcFile}: State ≠ LOCKED — automation chỉ chạy TC LOCKED`);
+  if (Number(st[2]) !== rev) throw new Error(`${tcFile}: TC rev ${st[2]} ≠ spec rev ${rev} → chạy: node scripts/gen-e2e-specs.mjs`);
+}
 
 export class E2E {
   readonly layout: CmsLayout; readonly chain: ChainSystemScreen; readonly create: TroubleCreateScreen;
@@ -106,6 +122,24 @@ export class E2E {
   }
 
   // ---------- mở trouble ----------
+  /** Đổi sang tài khoản who rồi mở trouble (đóng modal báo giá còn mở trước — nó che nút ログアウト, dò thật 15/10/2026). */
+  async open(who: Who, t: Trouble): Promise<void> {
+    if (await this.detail.estimateModal.isVisible().catch(() => false)) await this.detail.closeEstimates();
+    await this.switchTo(who);
+    await this.openTrouble(t);
+  }
+  /** Mở 見積一覧 để thao tác: 99 / 98 qua クイック操作 → 状態変更 (modal header của 99 / 98 chỉ xem — R34; 98: E2E-25 16/10/2026);
+   *  role khác (01 / 02) dùng nút header. */
+  async openEstimatesAs(who: Who): Promise<void> {
+    if (who === '99' || who === '98') { await this.detail.openQuickAction(); await this.detail.openEstimateFromStatus(); } else await this.detail.openEstimates();
+  }
+  /** Urgent (rev 7): tới 作業完了 Admin quay lại duyệt báo giá còn '承認待ち'. */
+  async lateApprove(name: string): Promise<void> {
+    await this.detail.openQuickAction(); await this.detail.openEstimateFromStatus();
+    await this.detail.approveEstimate(name);
+    await this.detail.expectEstimateStatus(name, '承認済み');
+    await this.detail.closeEstimates();
+  }
   async openTrouble(t: Trouble): Promise<void> {
     test.skip(!t.id && !t.number, 'Chưa có trouble (TC tạo trouble chưa chạy / fail)');
     if (t.id) {
@@ -162,6 +196,12 @@ export class E2E {
     const d = this.detail;
     await d.openQuickAction();
     if (flowContinuation) await d.setContinuationFlow('報告済'); else await d.setFlow('報告済');
+    await this.reportForm();
+    await d.saveStatus();
+  }
+  /** Modal 状態変更 đang mở ở '報告済': icon 報告書 → 編集 → ngày, 原因と発生起因, ảnh (+ PDF) → 完了 (chưa 保存). */
+  async reportForm(pdf?: string): Promise<void> {
+    const d = this.detail;
     await d.editRow('報告書');
     await click(d.reportModal, '編集');
     await d.pickDay('start', 1);
@@ -169,18 +209,34 @@ export class E2E {
     await d.reportModal.locator('textarea[name="reason"]').fill(this.note);
     await d.uploadReportPhoto('作業前の写真', data.files.before);
     await d.uploadReportPhoto('作業後の写真', data.files.after);
+    if (pdf) {
+      const box = await d.choosePdf([pdf]);
+      await d.confirmPdf(box);
+      await expect(d.pdfCard(pdf)).toBeVisible();
+    }
     await click(d.reportModal, '完了');
     await expect(d.statusModal).toBeVisible();
-    await d.saveStatus();
   }
-  /** Header 作業完了確認 → 支払情報 → 感動 → comment → 作業完了確認 → 決定 → OK. Trả về modal 支払情報 để kiểm trước khi bấm. */
+  /** Header 作業完了確認 → 支払情報 → 感動 → comment → 作業完了確認 → 決定 → OK. */
   async payment(checkTotal?: string): Promise<void> {
-    const d = this.detail;
     await minimizeChat(this.page);
-    await d.headerButton('作業完了確認');
+    await this.paymentOpen(checkTotal ?? '');
+    await this.paymentSubmit();
+  }
+  /** Header 作業完了確認 → modal 支払情報 (kiểm chữ nếu truyền). */
+  async paymentOpen(...texts: string[]): Promise<void> {
+    // Modal hiện trước, dữ liệu (作業項目, 金額) đến từ GET /troubles/<id>/payments — có lúc > 5s (E2E-22 16/10/2026) → chờ response rồi mới kiểm.
+    const payments = this.page.waitForResponse((r) => /\/api\/troubles\/\d+\/payments/.test(r.url()), { timeout: 30_000 }).catch(() => null);
+    await this.detail.headerButton('作業完了確認');
     const box = modal(this.page, '支払情報');
     await expect(box).toBeVisible();
-    if (checkTotal) await expect(box).toContainText(checkTotal);
+    await payments;
+    for (const t of texts.filter(Boolean)) await expect(box).toContainText(t, { timeout: 30_000 });
+  }
+  /** Trong 支払情報: 感動 → comment → 作業完了確認 → 決定 → OK. */
+  async paymentSubmit(): Promise<void> {
+    const d = this.detail;
+    const box = modal(this.page, '支払情報');
     await box.locator('.rating-star', { hasText: '感動' }).locator('[data-index] img').click();
     await box.locator('textarea[name="description"]').fill(this.note);
     await click(box, '作業完了確認');

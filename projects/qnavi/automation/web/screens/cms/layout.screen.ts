@@ -64,7 +64,8 @@ export class CmsLayout {
   get content() { return this.page.locator('.content-wrapper').first(); }
   get quickSearch() { return this.page.getByRole('textbox', { name: '依頼番号 または 店舗名でEnter' }); }
 
-  /** Bấm menu sidebar theo tên (vd 作業依頼登録, 進行中のトラブル一覧). */
+  /** Bấm menu sidebar theo tên (vd 作業依頼登録, 進行中のトラブル一覧). Danh sách trouble: role 99 = '作業依頼情報' (không có
+   *  '進行中のトラブル一覧' — Hieu Nguyen xác nhận 15/10/2026); role 01 / 02 / 98 = '進行中のトラブル一覧'. */
   async menu(name: string): Promise<void> {
     const link = this.sidebar.getByRole('link', { name: new RegExp(`(^|\\s)${name}$`) }).first();
     if (!(await link.isVisible().catch(() => false))) {

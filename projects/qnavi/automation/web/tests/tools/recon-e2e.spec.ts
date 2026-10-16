@@ -7,6 +7,8 @@ import { clickables } from '../../common/ui';
 import { CmsLayout } from '../../screens/cms/layout.screen';
 import { ChainSystemScreen } from '../../screens/cms/chain-system.screen';
 import { TroubleCreateScreen } from '../../screens/cms/trouble-create.screen';
+import { TroubleDetailScreen } from '../../screens/cms/trouble-detail.screen';
+import { E2E } from '../../common/e2e-suite';
 
 /**
  * RECON E2E suite — KHÔNG lưu dữ liệu. Lấy cây phần tử thật (R01) cho 2 màn chưa có trong screens/:
@@ -203,6 +205,338 @@ test('recon E2E suite screens (read-only)', async ({ browser }) => {
     });
     await iframeHtml('webview-7');
     await page.goto('/').catch(() => undefined);   // rời form, KHÔNG bấm 依頼する
+  }
+
+  // ---- D. 見積もり theo role không phải 99 (manager / store / subadmin / worker company): mở trouble đầu tiên có báo giá,
+  //      header '見積もり' (hoặc クイック操作 → 見積もり), mở rộng dòng đầu. KHÔNG bấm 承認する / 差し戻し / 保存.
+  if (process.env.RECON_PART === 'D') {
+    const who = (process.env.RECON_WHO || '01:m5,02:approveType1,98,05').split(',') as Parameters<typeof loginAs>[1][];
+    const html = async (name: string, loc: ReturnType<Page['locator']>) => {
+      fs.mkdirSync(OUT, { recursive: true });
+      fs.writeFileSync(path.join(OUT, `D-${name}.html`), await loc.evaluate((e) => e.outerHTML).catch((e) => String(e)));
+    };
+    for (const w of who) {
+      const tag = `D-${w.replace(':', '-')}`;
+      await snap(page, `${tag}-login`, () => loginAs(page, w, { save: false }));
+      await snap(page, `${tag}-list`, async () => {
+        if (process.env.RECON_TROUBLE) { await page.goto(`/admin/troubles/${process.env.RECON_TROUBLE}/detail`); return; }
+        await layout.menu('進行中のトラブル一覧');
+        await content.locator('tbody tr').first().waitFor({ timeout: 30_000 });
+        await content.locator('tbody tr').filter({ hasText: /見積|承認/ }).first().locator('td').nth(1).click({ timeout: 15_000 });
+      });
+      await snap(page, `${tag}-detail`, () => content.getByText('番号').first().waitFor({ timeout: 30_000 }));
+      await html(`${tag}-detail-header`, content.locator('.trouble-action').first());
+      const est = clickables(content, /^\s*見積もり\s*$/).first();
+      const viaHeader = await est.isVisible().catch(() => false);
+      await snap(page, `${tag}-estimates`, async () => {
+        if (viaHeader) await est.click();
+        else {
+          await clickables(content, /クイック操作/).first().click();
+          await page.locator('.modal.show').filter({ hasText: '状態変更' }).locator('tr', { hasText: '見積もり' }).locator('.fa-edit').first().click();
+        }
+        await page.locator('.modal.show tr.estimation-row').first().waitFor({ timeout: 20_000 });
+      });
+      const box = page.locator('.modal.show').filter({ has: page.locator('tr.estimation-row') }).last();
+      await html(`${tag}-estimates-modal`, box);
+      await snap(page, `${tag}-expand`, async () => {
+        await box.locator('tr.estimation-row').first().getByText(/メニュー展開/).first().click();
+        await expect(box.locator('tr.estimation-row').first()).toHaveClass(/is-expanded/);
+      });
+      await html(`${tag}-expanded-modal`, box);
+      await page.goto('/').catch(() => undefined);
+    }
+  }
+
+  // ---- E. Phần còn [chưa dò thật] của E2E-02…39 (KHÔNG 保存 / 決定 / 送信 / 完了):
+  //  E1 đăng nhập mọi tài khoản E2E dùng · E2 案件区分 ở 作業依頼編集 role 99 · E3 nút card 作業員 / 店舗 của báo giá (99) + form コピー / 編集
+  //  E4 hộp 差し戻し (manager, báo giá 承認待ち) · E5 hộp con PDF ở 報告書 (99). Trouble: RECON_TROUBLE=<id> hoặc tự tìm ở list.
+  if (process.env.RECON_PART === 'E') {
+    const d = new TroubleDetailScreen(page);
+    const html = async (name: string, loc: ReturnType<Page['locator']>) => {
+      fs.mkdirSync(OUT, { recursive: true });
+      fs.writeFileSync(path.join(OUT, `E-${name}.html`), await loc.evaluate((x) => x.outerHTML, undefined, { timeout: 10_000 }).catch((x) => String(x)));
+    };
+    const parts = (process.env.RECON_SUB || '1,2,3,4,5').split(',');
+    /** Mở trouble: RECON_TROUBLE, không thì list /admin/troubles → thử tối đa 8 dòng khớp filter (cần nút header '見積もり' nếu needEst). */
+    const openTrouble = async (filter: RegExp, needEst = false) => {
+      if (process.env.RECON_TROUBLE) {
+        await page.goto(`/admin/troubles/${process.env.RECON_TROUBLE}/detail`);
+        await content.getByText('番号').first().waitFor({ timeout: 30_000 });
+        return;
+      }
+      await page.goto('/admin/troubles');
+      await content.locator('tbody tr').first().waitFor({ timeout: 30_000 });
+      await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+      const hrefs = await content.locator('tbody tr').filter({ hasText: filter }).locator('a[href*="/detail"]')
+        .evaluateAll((as) => [...new Set(as.map((a) => a.getAttribute('href') ?? ''))].filter(Boolean).slice(0, Number(process.env.RECON_MAX || 8)));
+      notes.push(`  list khớp ${filter}: ${hrefs.join(' ')}`);
+      for (const h of hrefs) {
+        await page.goto(h);
+        await content.getByText('番号').first().waitFor({ timeout: 30_000 });
+        await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+        if (!needEst || await clickables(content, /^\s*見積もり\s*$/).first().isVisible().catch(() => false)) { notes.push(`  → dùng ${h}`); return; }
+      }
+      throw new Error(`Không thấy trouble khớp ${filter}${needEst ? ' có nút 見積もり' : ''}`);
+    };
+    /** Quét trouble (list khớp filter) tới khi 見積一覧 có dòng badge khớp badge → trả về dòng đó (modal đang mở). */
+    const findEstimate = async (filter: RegExp, badge: RegExp) => {
+      await page.goto('/admin/troubles');
+      await content.locator('tbody tr').first().waitFor({ timeout: 30_000 });
+      await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+      const hrefs = await content.locator('tbody tr').filter({ hasText: filter }).locator('a[href*="/detail"]')
+        .evaluateAll((as) => [...new Set(as.map((a) => a.getAttribute('href') ?? ''))].filter(Boolean));
+      for (const h of hrefs.slice(0, Number(process.env.RECON_MAX || 20))) {
+        await page.goto(h);
+        await content.getByText('番号').first().waitFor({ timeout: 30_000 });
+        await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+        if (!(await clickables(content, /^\s*見積もり\s*$/).first().isVisible().catch(() => false))) continue;
+        if (!(await d.openEstimates().then(() => true, () => false))) continue;
+        const badges = await d.estimateModal.locator('tr.estimation-row .badge').allInnerTexts().catch(() => []);
+        notes.push(`  ${h}: ${badges.map((b) => b.trim()).join(', ')}`);
+        const row = d.estimateModal.locator('tr.estimation-row').filter({ has: page.locator('.badge', { hasText: badge }) }).first();
+        if (await row.isVisible().catch(() => false)) { notes.push(`  → dùng ${h}`); return row; }
+        await page.keyboard.press('Escape').catch(() => undefined);
+      }
+      throw new Error(`Không thấy báo giá ${badge} trong ${hrefs.length} trouble`);
+    };
+    const leave = async () => { await page.keyboard.press('Escape').catch(() => undefined); await page.goto('/').catch(() => undefined); };
+
+    if (parts.includes('1')) {
+      for (const w of ['01', '01:m2', '01:m3', '01:m4', '01:m5', '02', '02:qnavi', '02:autoApprove', '02:approveType1', '02:approveType2', '02:approveType3', '98', '05'] as const) {
+        await snap(page, `E1-login-${w.replace(':', '-')}`, () => loginAs(page, w, { save: false }));
+      }
+    }
+    if (parts.some((p) => ['2', '3', '5'].includes(p))) await snap(page, 'E-admin-login', () => loginAs(page, '99', { save: false }));
+    if (parts.includes('2')) {
+      await snap(page, 'E2-detail', () => openTrouble(/対応中|問い合わせ中/));
+      await snap(page, 'E2-edit', async () => {
+        await clickables(content, /^\s*編集\s*$/).first().click();
+        await content.getByText('案件区分').first().waitFor({ timeout: 30_000 });
+      });
+      await html('E2-案件区分', content.locator('tr, .row, .form-group', { has: page.getByText('案件区分', { exact: true }) }).last());
+      await leave();
+    }
+    if (parts.includes('3')) {
+      let r3 = d.estimateModal.locator('tr.estimation-row').first();
+      await snap(page, 'E3-find', async () => { r3 = await findEstimate(/見積|作業|対応中/, /^\s*(下書き|承認待ち|差し戻し)\s*$/); });
+      await snap(page, 'E3-expand', async () => {
+        if (!/is-expanded/.test((await r3.getAttribute('class')) ?? '')) await r3.getByText(/メニュー展開/).first().click();
+        await expect(r3).toHaveClass(/is-expanded/);
+      });
+      await html('E3-estimates-modal', d.estimateModal);
+      for (const b of ['コピー', '編集']) {
+        const btn = clickables(d.estimateModal.locator('.group-worker'), new RegExp(`^\\s*${b}\\s*$`)).first();
+        if (!(await btn.isVisible().catch(() => false))) { notes.push(`E3 không thấy nút card 作業員 '${b}'`); continue; }
+        await snap(page, `E3-${b}-form`, async () => { await btn.click(); await d.estimateForm.locator('input[name="title"]').waitFor({ timeout: 15_000 }); });
+        await html(`E3-${b}-form`, d.estimateForm);
+        await snap(page, `E3-${b}-close`, async () => {
+          await clickables(d.estimateForm, /^\s*(閉じる|キャンセル|戻る)\s*$/).first().click().catch(() => page.keyboard.press('Escape'));
+          const discard = page.locator('.modal.show').filter({ hasText: /破棄/ }).last();
+          if (await discard.isVisible().catch(() => false)) await clickables(discard, /^\s*(はい|OK|破棄)\s*$/).first().click();
+        });
+      }
+      await leave();
+    }
+    if (parts.includes('4')) {
+      const mgr = (process.env.RECON_WHO || '01') as Parameters<typeof loginAs>[1];
+      await snap(page, 'E4-manager-login', () => loginAs(page, mgr, { save: false }));
+      let row = d.estimateModal.locator('tr.estimation-row').first();
+      await snap(page, 'E4-find', async () => { row = await findEstimate(/見積承認待ち/, /^\s*(再)?承認待ち\s*$/); });
+      await snap(page, 'E4-expand', async () => {
+        if (!/is-expanded/.test((await row.getAttribute('class')) ?? '')) await row.getByText(/メニュー展開/).first().click();
+        await expect(row).toHaveClass(/is-expanded/);
+      });
+      await html('E4-estimates-modal', d.estimateModal);
+      await snap(page, 'E4-reject-box', async () => {
+        await clickables(d.estimateModal.locator('.group-manager'), /^\s*差し戻し\s*$/).first().click();
+        await page.locator('.modal.show textarea').filter({ visible: true }).first().waitFor({ timeout: 15_000 });
+      });
+      await html('E4-reject-box', page.locator('.modal.show').filter({ has: page.locator('textarea') }).last());
+      await leave();   // KHÔNG gửi 差し戻し
+    }
+    if (parts.includes('5')) {
+      if (parts.includes('4')) await snap(page, 'E5-admin-login', () => loginAs(page, '99', { save: false }));
+      await snap(page, 'E5-detail', () => openTrouble(/作業完了|到着|作業中/));
+      await snap(page, 'E5-status-報告済', async () => { await d.openQuickAction(); await d.setFlow('報告済'); });
+      await html('E5-status-modal', d.statusModal);
+      await snap(page, 'E5-report-edit', async () => {
+        await d.editRow('報告書');
+        await clickables(d.reportModal, /^\s*編集\s*$/).first().click();
+        await d.reportModal.getByText('PDFファイル').first().waitFor({ timeout: 15_000 });
+      });
+      await html('E5-report-modal', d.reportModal);
+      await snap(page, 'E5-pdf-box', async () => {
+        const box = await d.choosePdf(['automation.pdf']);
+        await box.waitFor({ timeout: 15_000 });
+        await html('E5-pdf-box', box);
+      });
+      await html('E5-pdf-box-any', page.locator('.modal.show').filter({ visible: true }).last());
+      await leave();   // KHÔNG 完了 / 保存
+    }
+  }
+
+  // ---- F. CÓ GHI DỮ LIỆU (Hieu Nguyen cho phép 15/10/2026): tạo 1 báo giá 下書き 'RECON-Draft' trên trouble test → dò card 作業員
+  //  (編集 / コピー: mở form rồi đóng, không 決定) → 提示 → manager / store dò hộp 差し戻し (không gửi).
+  //  RECON_TROUBLE chưa có → chỉ liệt kê trouble ứng viên (đọc). RECON_APPROVER = tài khoản duyệt (mặc định 02:approveType1).
+  if (process.env.RECON_PART === 'F') {
+    const d = new TroubleDetailScreen(page);
+    const html = async (name: string, loc: ReturnType<Page['locator']>) => {
+      fs.mkdirSync(OUT, { recursive: true });
+      fs.writeFileSync(path.join(OUT, `F-${name}.html`), await loc.evaluate((x) => x.outerHTML, undefined, { timeout: 10_000 }).catch((x) => String(x)));
+    };
+    const name = process.env.RECON_EST || 'RECON-Draft';
+    if (!process.env.RECON_SKIP_ADMIN) await snap(page, 'F-admin-login', () => loginAs(page, '99', { save: false }));
+    if (!process.env.RECON_TROUBLE) {
+      await snap(page, 'F-list', async () => {
+        await page.goto('/admin/troubles');
+        await content.locator('tbody tr').first().waitFor({ timeout: 30_000 });
+        await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+        const rows = await content.locator('tbody tr').evaluateAll((trs) => trs.map((tr) =>
+          `${tr.querySelector('a[href*="/detail"]')?.getAttribute('href') ?? '-'} | ${(tr.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 200)}`));
+        notes.push(...rows.map((r) => `  ${r}`));
+      });
+    } else {
+      const est = d.estimateModal.locator('tr.estimation-row').filter({ has: page.locator('td', { hasText: new RegExp(`^\\s*${name}\\s*$`) }) }).first();
+      const expand = async () => {
+        if (!/is-expanded/.test((await est.getAttribute('class')) ?? '')) await est.getByText(/メニュー展開/).first().click();
+        await expect(est).toHaveClass(/is-expanded/);
+      };
+      const goTrouble = async () => {
+        await page.goto(`/admin/troubles/${process.env.RECON_TROUBLE}/detail`);
+        await content.getByText('番号').first().waitFor({ timeout: 30_000 });
+        await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+      };
+      if (!process.env.RECON_SKIP_ADMIN) {
+        await snap(page, 'F-detail', goTrouble);
+        await snap(page, 'F-open-estimates', async () => { await d.openQuickAction(); await d.openEstimateFromStatus(); });
+        await snap(page, 'F-new-draft', async () => {
+          if (await est.isVisible().catch(() => false)) { notes.push(`  '${name}' đã có — dùng lại`); return; }
+          const e = new E2E(page, 0);
+          await e.newEstimate(name, Number(process.env.RECON_TOTAL || 50_000));
+        });
+        await snap(page, 'F-draft-expand', expand);
+        await html('F-draft-modal', d.estimateModal);
+        for (const b of ['編集', 'コピー']) {
+          const btn = clickables(d.estimateModal.locator('.group-worker'), new RegExp(`^\\s*${b}\\s*$`)).first();
+          if (!(await btn.isVisible().catch(() => false))) { notes.push(`F không thấy nút card 作業員 '${b}' (下書き)`); continue; }
+          await snap(page, `F-${b}-form`, async () => { await btn.click(); await d.estimateForm.locator('input[name="title"]').waitFor({ timeout: 15_000 }); });
+          await html(`F-${b}-form`, d.estimateForm);
+          notes.push(`  ${b}: title='${await d.estimateForm.locator('input[name="title"]').inputValue().catch(() => '?')}'`);
+          await snap(page, `F-${b}-close`, async () => {
+            const close = clickables(d.estimateForm, /^\s*(閉じる|キャンセル|戻る)\s*$/).first();
+            if (await close.isVisible().catch(() => false)) await close.click(); else await d.estimateForm.locator('.close, [aria-label="Close"], [aria-label="閉じる"]').first().click();
+            const discard = page.locator('.modal.show').filter({ hasText: /破棄/ }).last();
+            if (await discard.waitFor({ timeout: 3_000 }).then(() => true, () => false)) {
+              await html(`F-${b}-discard`, discard);
+              await clickables(discard, /^\s*(はい|OK|破棄)\s*$/).first().click();
+            }
+            await expect(d.estimateForm).toBeHidden({ timeout: 10_000 });
+            await expect(d.estimateModal).toBeVisible();
+          });
+          await snap(page, `F-${b}-reexpand`, expand);
+        }
+        await snap(page, 'F-submit', () => d.submitEstimates([name]));
+        notes.push(`  sau 提示: '${(await est.locator('.badge').innerText().catch(() => '?')).trim()}'`);
+        await snap(page, 'F-submitted-expand', expand);
+        await html('F-submitted-modal', d.estimateModal);
+        await page.goto('/').catch(() => undefined);   // không 保存 状態変更
+
+      }
+      if (process.env.RECON_SET_FLOW) {   // bước cuối của 提示 trong TC: 状態変更 → 見積承認待ち → 保存 (継続 dùng continuationFlowStatus)
+        await snap(page, 'F-flow-login', () => loginAs(page, '99', { save: false }));
+        await snap(page, 'F-flow-save', async () => {
+          await goTrouble(); await d.openQuickAction();
+          if (await d.statusModal.locator('select[name="continuationFlowStatus"]').isVisible().catch(() => false)) await d.setContinuationFlow('見積承認待ち');
+          else await d.setFlow('見積承認待ち');
+          await d.saveStatus();
+        });
+      }
+      for (const ap of (process.env.RECON_APPROVER || '02:approveType1').split(',') as Parameters<typeof loginAs>[1][]) {
+      const tag = ap.replace(':', '-');
+      await snap(page, `F-approver-login-${tag}`, () => loginAs(page, ap, { save: false }));
+      await snap(page, `F-approver-detail-${tag}`, goTrouble);
+      await snap(page, `F-approver-estimates-${tag}`, async () => { if (ap === '99') { await d.openQuickAction(); await d.openEstimateFromStatus(); } else await d.openEstimates(); });
+      await snap(page, `F-approver-expand-${tag}`, expand);
+      await html(`F-approver-modal-${tag}`, d.estimateModal);
+      await snap(page, `F-reject-box-${tag}`, async () => {
+        await clickables(d.estimateModal.locator('.group-manager'), /^\s*差し戻し\s*$/).first().click();
+        await page.locator('.modal.show').filter({ visible: true }).filter({ has: page.locator('textarea') }).first().waitFor({ timeout: 15_000 });
+      });
+      await html(`F-reject-box-${tag}`, page.locator('.modal.show').filter({ visible: true }).filter({ has: page.locator('textarea') }).last());
+      if (process.env.RECON_REJECT) {   // Hieu Nguyen cho phép 15/10/2026: gửi 差し戻し thật để dò hộp 決定 sau '差し戻し実行'
+        const box = page.locator('.modal.show').filter({ hasText: '見積もりを差し戻す' }).last();
+        await snap(page, `F-reject-send-${tag}`, async () => {
+          await box.locator('textarea[name="reason"]').fill('Automation reject');
+          await clickables(box, /^\s*差し戻し実行\s*$/).first().click();
+          await page.locator('.modal.show').filter({ visible: true }).filter({ has: clickables(page, /^\s*決定\s*$/) }).filter({ hasNot: page.locator('textarea') }).last().waitFor({ timeout: 15_000 });
+        });
+        await html(`F-reject-confirm-${tag}`, page.locator('.modal.show').filter({ visible: true }).filter({ hasNot: page.locator('textarea') }).last());
+        await snap(page, `F-reject-decide-${tag}`, async () => {
+          await clickables(page.locator('.modal.show').filter({ visible: true }).last(), /^\s*決定\s*$/).first().click();
+          await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+        });
+        await html(`F-reject-after-${tag}`, page.locator('.modal.show').filter({ visible: true }).last());
+        await snap(page, `F-reject-ok-${tag}`, () => d.reopenAfterOk());
+        notes.push(`  sau 差し戻し: '${(await est.locator('.badge').innerText().catch(() => '?')).trim()}'`);
+      }
+      await page.goto('/').catch(() => undefined);   // KHÔNG gửi 差し戻し
+      }
+    }
+  }
+
+  // ---- S. CÓ GHI DỮ LIỆU (Hieu Nguyen cho phép 16/10/2026): tạo tài sản RECON_ASSET (mặc định 'TEST AUTOMATION') cho store RECON_STORE
+  //  (mặc định 'LINKSYS STORE00006') ở 資産情報 › /admin/asset-management/<chainId>/create — dữ liệu cần có trước cho E2E-38.
+  if (process.env.RECON_PART === 'S') {
+    const asset = process.env.RECON_ASSET || 'TEST AUTOMATION';
+    const store = process.env.RECON_STORE || 'LINKSYS STORE00006';
+    const html = async (name: string, loc: ReturnType<Page['locator']>) => {
+      fs.mkdirSync(OUT, { recursive: true });
+      fs.writeFileSync(path.join(OUT, `S-${name}.html`), await loc.evaluate((x) => x.outerHTML, undefined, { timeout: 10_000 }).catch((x) => String(x)));
+    };
+    await snap(page, 'S-login', () => loginAs(page, '99', { save: false }));
+    await snap(page, 'S-form', async () => {
+      await page.goto(`/admin/asset-management/${process.env.RECON_CHAIN_ID || '1856'}/create`);
+      await content.getByRole('textbox', { name: '名称を入力' }).waitFor({ timeout: 30_000 });
+    });
+    await snap(page, 'S-name', () => content.getByRole('textbox', { name: '名称を入力' }).fill(asset));
+    await snap(page, 'S-store-modal', async () => {
+      await clickables(content, /チェーン店舗選択/).first().click();
+      await page.locator('.modal.show').filter({ visible: true }).last().waitFor({ timeout: 15_000 });
+      await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+    });
+    const box = page.locator('.modal.show').filter({ visible: true }).last();
+    await html('store-modal', box);
+    await snap(page, 'S-store-pick', async () => {
+      const name = box.locator('input[name="storeName"], input[name="name"]').first();
+      if (await name.isVisible().catch(() => false)) { await name.fill(store); await clickables(box, /^\s*検索\s*$/).first().click(); }
+      const row = box.locator('tbody tr').filter({ has: page.locator('td', { hasText: new RegExp(`^\\s*${store}\\b`) }) }).first();
+      await row.waitFor({ timeout: 20_000 });
+      await html('store-row', row);
+      const pick = clickables(row, /^\s*選択\s*$/).first();
+      if (await pick.isVisible().catch(() => false)) await pick.click(); else await row.locator('td').nth(1).click();
+      await expect(content).toContainText(store, { timeout: 15_000 });
+    });
+    await html('form-filled', content);
+    await snap(page, 'S-save', async () => {
+      await clickables(content, /^\s*保存\s*$/).first().click();
+      const confirm = page.locator('.modal.show').filter({ visible: true }).filter({ has: clickables(page, /^\s*決定\s*$/) }).last();
+      if (await confirm.waitFor({ timeout: 5_000 }).then(() => true, () => false)) { await html('save-confirm', confirm); await clickables(confirm, /^\s*決定\s*$/).first().click(); }
+      const ok = page.locator('.modal.show').filter({ visible: true }).filter({ has: clickables(page, /^\s*OK\s*$/) }).last();
+      if (await ok.waitFor({ timeout: 30_000 }).then(() => true, () => false)) { await html('save-ok', ok); await clickables(ok, /^\s*OK\s*$/).first().click(); }
+      await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+      notes.push(`  sau 保存: ${page.url()}`);
+    });
+  }
+
+  // ---- U. Mở 1 URL bất kỳ bằng tài khoản RECON_WHO (mặc định 99) và chụp: RECON_PART=U RECON_URL=/admin/... npm run recon:e2e
+  if (process.env.RECON_PART === 'U') {
+    const who = (process.env.RECON_WHO || '99') as Parameters<typeof loginAs>[1];
+    await snap(page, 'U-login', () => loginAs(page, who, { save: false }));
+    await snap(page, 'U-page', async () => {
+      await page.goto(process.env.RECON_URL || '/');
+      await content.locator('td, th').first().waitFor({ timeout: 30_000 });
+      await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+    });
   }
 
   fs.writeFileSync(path.join(OUT, '_summary.txt'), notes.join('\n') + '\n');

@@ -31,12 +31,13 @@ export class TroubleNaviWebview {
     return this.frame.locator('div.flex', { has: this.frame.locator('h5', { hasText: new RegExp(`^${label}$`) }) }).last().locator('.ant-select');
   }
   hasSelect(label: string): Locator { return this.frame.locator('h5', { hasText: new RegExp(`^${label}$`) }); }
-  /** Mở dropdown của label và chọn option thứ index (mặc định đầu tiên). Trả về chữ đã chọn. */
-  async pick(label: string, index = 0): Promise<string> {
+  /** Mở dropdown của label và chọn option thứ index (mặc định đầu tiên) hoặc option có đúng chữ. Trả về chữ đã chọn. */
+  async pick(label: string, which: number | string = 0): Promise<string> {
     const sel = this.select(label);
     await expect(sel).not.toHaveClass(/ant-select-disabled/, { timeout: 15_000 });
     const list = await sel.locator('input[role=combobox]').getAttribute('aria-controls');
-    const opt = this.frame.locator('.ant-select-dropdown', { has: this.frame.locator(`[id="${list}"]`) }).locator('.ant-select-item-option').nth(index);
+    const opts = this.frame.locator('.ant-select-dropdown', { has: this.frame.locator(`[id="${list}"]`) }).locator('.ant-select-item-option');
+    const opt = typeof which === 'number' ? opts.nth(which) : opts.filter({ hasText: new RegExp(`^\\s*${which}\\s*$`) }).first();
     await expect(async () => {
       await sel.locator('.ant-select-selector').dispatchEvent('mousedown');
       await expect(opt).toBeVisible({ timeout: 2_000 });

@@ -1,7 +1,7 @@
 # Test case — E2E-31 · ★KEY: encryption integrity / write→read across continue
 - Project: qnavi · Scope Key: e2e-suite · Sheet prefix: E2E31
-- Source: projects/qnavi/spec/e2e-suite.md › E2E-31 (gốc: raw/Test suite for automation_E2E.xlsx, "Expanded v2"). Luồng thao tác: raw/Automation Test AI - Format Main Case.csv, TC LOCKED phase007. Quyết định: QUESTIONS.md lượt 1–8 + quy tắc R1–R20, T1–T5, rev 4–6 (14/10/2026). Môi trường tham chiếu: toridoll-test.
-- State: LOCKED · Revision: 6 · Approved by / at: Hieu Nguyen / 14/10/2026
+- Source: projects/qnavi/spec/e2e-suite.md › E2E-31 (gốc: raw/Test suite for automation_E2E.xlsx, "Expanded v2"). Luồng thao tác: raw/Automation Test AI - Format Main Case.csv, TC LOCKED phase007. Quyết định: QUESTIONS.md lượt 1–9 + quy tắc R1–R20, T1–T5, rev 4–7 (15/10/2026). Môi trường tham chiếu: toridoll-test.
+- State: LOCKED · Revision: 12 · Approved by / at: Hieu Nguyen / 16/10/2026
 - Môi trường: tuỳ biến khi chạy (Q9).
 - Ngoại lệ D05: 1 file = 1 kịch bản nối tiếp NEW → CONTINUE → 完了; mỗi TC = 1 giai đoạn. 'Verify:' = điểm kiểm giữa chừng.
 - Quy ước chung: báo giá do Admin (99) tạo thay worker trên CMS; worker = linksysworker; FIX = 限度額 (税込) đọc ở TC-001, không sửa; ≤ FIX → tự duyệt cả New và Continue; 承認タイプ theo cấu hình store; báo cáo = đổi trạng thái trên CMS; bỏ 日程承認.

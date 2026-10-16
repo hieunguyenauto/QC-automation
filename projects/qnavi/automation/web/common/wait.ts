@@ -84,6 +84,13 @@ export async function waitApisIdle(page: Page, label: string, quietMs = 1_000): 
   let quietSince = m.size ? 0 : Date.now();
   while (Date.now() - t0 < max) {
     if (page.isClosed()) return;
+    // Request treo quá max (server không bao giờ trả lời): ghi perf 1 lần rồi bỏ khỏi danh sách, không chặn mọi lần chờ sau.
+    for (const [r, start] of m) {
+      if (Date.now() - start < max) continue;
+      m.delete(r);
+      const description = `${label}: bỏ chờ ${r.method()} ${new URL(r.url()).pathname} (treo > ${max / 1000}s)`;
+      try { test.info().annotations.push({ type: 'perf', description }); } catch { /* ngoài test */ }
+    }
     if (m.size) quietSince = 0;
     else if (!quietSince) quietSince = Date.now();
     else if (Date.now() - quietSince >= quietMs) break;

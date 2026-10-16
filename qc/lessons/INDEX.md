@@ -17,6 +17,7 @@
 - D15 Màn master-edit có 2 tầng lưu (modal thêm dòng → '保存' của trang): TC phải ghi đủ cả 2 tầng và kiểm dữ liệu còn sau reload. (design/2026-10-13-two-level-save.md)
 - D16 Lưu xong mà app hiện hộp thoại hoàn tất (…が完了しました。 + 'OK'): Steps phải ghi "Verify: dialog '<message>' → 'OK'" trước bước tiếp theo. (design/2026-10-13-save-done-dialog.md)
 - D17 Luồng lấy từ CSV / app mobile: đối chiếu màn CMS web (catalog / recon) trước khi LOCK; mỗi nhánh điều kiện (ON / OFF, category, ≤ / > FIX…) có bước và trạng thái kỳ vọng riêng, không dùng chung 1 template khi sinh TC bằng script. (design/2026-10-14-e2e-branch-flow-template.md)
+- D18 TC theo trạng thái báo giá / 承認タイプ: trước khi LOCK dò thật nút ở từng trạng thái (下書き / 承認待ち / 差し戻し / 取り下げ…), trạng thái sau mỗi hành động, điều kiện tự duyệt đầy đủ (税込 / 税抜, min_amount theo Lv, urgent, nhiều báo giá); Verify đặt ở role nhìn thấy được. (design/2026-10-16-estimate-state-actions.md)
 - D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
 
 ## Excel / công cụ

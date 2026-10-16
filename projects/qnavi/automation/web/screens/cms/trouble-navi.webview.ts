@@ -74,11 +74,28 @@ export class TroubleNaviWebview {
     await expect(r).toBeVisible({ timeout: 30_000 });
     await r.check({ force: false });
   }
-  /** '依頼する' [cần kiểm trên app thật]. */
-  async submit(): Promise<void> {
+  /** '依頼する' → POST /troubles (multipart; catalog trouble-frontend.md › /job › Submit). Trả về trouble VỪA tạo lấy từ response
+   *  (onSuccess dùng data.number) — không đoán theo danh sách: người khác tạo cùng lúc sẽ lấy nhầm. Không có number → lấy từ chữ
+   *  '依頼番号は N です'. Response có id + number (chạy thật toridoll-test 16/10/2026: 223470136, id 44008). */
+  async submit(): Promise<{ id?: string; number: string }> {
     const btn = this.frame.getByRole('button', { name: '依頼する' });
     await expect(btn).toBeEnabled({ timeout: 30_000 });
+    const created = this.page.waitForResponse(
+      (r) => r.request().method() === 'POST' && /\/troubles\/?$/.test(new URL(r.url()).pathname), { timeout: 180_000 });
     await btn.click();
+    const res = await created;
+    expect(res.ok(), `POST /troubles → HTTP ${res.status()}`).toBe(true);
+    const json = await res.json().catch(() => null);
+    const body = json?.data ?? json;
+    const id = body?.id != null ? String(body.id) : undefined;
+    let number = body?.number != null ? String(body.number) : undefined;
+    if (!number) {
+      const done = this.frame.getByText(/依頼番号は\s*\d+/).first();
+      await expect(done).toBeVisible({ timeout: 60_000 });
+      number = (await done.innerText()).match(/依頼番号は\s*(\d+)/)?.[1];
+    }
+    expect(number, 'Không lấy được 依頼番号 của trouble vừa tạo').toBeTruthy();
+    return { id, number: number! };
   }
   /** Màn hoàn tất: '依頼番号' nếu webview hiện (regex số) [cần kiểm trên app thật]. */
   async doneText(): Promise<string> {
@@ -86,7 +103,9 @@ export class TroubleNaviWebview {
     await expect(back).toBeVisible({ timeout: 60_000 });
     return this.frame.locator('body').innerText();
   }
+  /** 'トップ画面に戻る' → TC: "Verify: Dashboard" — CMS về trang chủ /admin (home của 01 / 02, data/roles.ts). */
   async backToTop(): Promise<void> {
     await this.frame.getByText('トップ画面に戻る').first().click();
+    await expect(this.page, "TC: 'トップ画面に戻る' → Verify: Dashboard").toHaveURL(/\/admin\/?(\?.*)?$/, { timeout: 30_000 });
   }
 }

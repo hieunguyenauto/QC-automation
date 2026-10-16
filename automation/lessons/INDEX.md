@@ -41,6 +41,8 @@
 - R38 Modal có dữ liệu từ API riêng (支払情報 ← /payments): chờ đúng response đó rồi mới kiểm nội dung; modal hiện ≠ dữ liệu đã có. (web/2026-10-16-cms-modal-own-api.md)
 - R39 Dữ liệu gắn với trouble (tài sản, báo cáo): dò xem hiển thị thẳng hay qua modal; modal mở để kiểm thì đóng trong cùng bước (kịch bản serial). (web/2026-10-16-cms-detail-related-data-modal.md)
 - R40 Nút header '見積もり' chỉ có khi còn báo giá đã nộp (sau 取り下げ承認 / 却下 → mất với 01 / 02): kiểm trạng thái báo giá bằng 99 / 98 qua 状態変更. (web/2026-10-16-cms-estimate-header-hidden-after-cancel.md)
+- R41 Bản ghi do test tạo (trouble, báo giá…): lấy id / mã từ response API của chính thao tác tạo (vd POST /troubles khi bấm 依頼する) hoặc chữ app hiện ngay sau khi tạo; không lấy "dòng mới nhất" của danh sách — người khác tạo cùng lúc / dữ liệu cũ sẽ bị lấy nhầm. (web/2026-10-16-e2e-created-id-from-response.md)
+- R42 Spec sinh tự động chỉ sửa qua generator (cả thay đổi hàng loạt bằng script); sinh lại xong xem git diff — có thay đổi ngoài khuôn vừa sửa thì dừng, đưa vào generator trước. (web/2026-10-16-generated-spec-hand-edit-lost.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

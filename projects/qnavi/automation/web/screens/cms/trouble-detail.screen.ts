@@ -271,6 +271,8 @@ export class TroubleDetailScreen extends BaseScreen {
     await this.estimateAction('manager', action).click();
     const box = this.page.locator('.modal.show').filter({ visible: true }).filter({ has: this.page.locator('textarea, input[type="text"]') })
       .filter({ hasText: /取り下げを(却下|承認)する/ }).last();
+    // TC rev 8: '取り下げ却下' BẮT BUỘC có hộp lý do (dò thật); '取り下げ承認' có thể không có (R8-3).
+    if (action === '取り下げ却下') await expect(box, "hộp '取り下げを却下する'").toBeVisible({ timeout: 15_000 });
     if (await box.waitFor({ timeout: 5_000 }).then(() => true, () => false)) {
       await box.locator('textarea, input[type="text"]').first().fill(reason);
       await click(box, action);
@@ -322,8 +324,11 @@ export class TroubleDetailScreen extends BaseScreen {
   /** Xoá dòng mặc định (出張費 / 現場調査費) của form 見積もり. [chưa dò: nút 削除 ở dòng — thấy trong form 2026-10-12] */
   async deleteDefaultRows(): Promise<void> {
     const rows = this.estimateForm.locator('tbody tr').filter({ hasText: /出張費|現場調査費/ });
-    while (await rows.count()) {
+    // R30: dòng mặc định tải async → chờ hiện rồi mới đếm; count() = 0 ngay khi mở form không được coi là "không có dòng".
+    await expect(rows.first(), 'form 見積もり: dòng mặc định 出張費 / 現場調査費').toBeVisible({ timeout: 15_000 });
+    for (let n = await rows.count(); n > 0; n--) {
       await click(rows.first(), '削除');
+      await expect(rows).toHaveCount(n - 1);
     }
   }
   /** Ô 店舗向け 単価 của dòng hạng mục cuối (input[name="items.N.amount"]). */

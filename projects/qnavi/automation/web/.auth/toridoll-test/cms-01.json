@@ -1,0 +1,79 @@
+{
+  "cookies": [
+    {
+      "name": "_ga",
+      "value": "GA1.1.223910985.1792131998",
+      "domain": ".picontechnology.com",
+      "path": "/",
+      "expires": 1826691998.154724,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_ga_DEJTK1PHZ3",
+      "value": "GS2.1.s1792131998$o1$g0$t1792131999$j59$l0$h0",
+      "domain": ".picontechnology.com",
+      "path": "/",
+      "expires": 1826691999.731441,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://cms-toridoll-test.qnavi.picontechnology.com",
+      "localStorage": [
+        {
+          "name": "aws.cognito.identity-id.ap-northeast-1:c924cda5-95c1-44d9-a38e-77600171feae",
+          "value": "ap-northeast-1:be4fddc2-7a4c-c5f3-94d2-23d784beeb36"
+        },
+        {
+          "name": "token",
+          "value": "eyJraWQiOiJJaStJZFJVZmN2OHc0UmJ2Q2E4MGpmdWgreHorcVg4QlVhMXptbEZBeldVPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIwNzA0OWFlOC1kMDgxLTcwYzUtMDUxYi01YWZiYjQ4YmE5MWIiLCJpc3MiOiJodHRwczovL2NvZ25pdG8taWRwLmFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb20vYXAtbm9ydGhlYXN0LTFfcmJxc1d3SjNKIiwiY2xpZW50X2lkIjoiMmdwbW1mMDMzdWYyYnJyOGZodTJocjBvNmMiLCJvcmlnaW5fanRpIjoiYWIwYTBmZmYtM2VmNC00ZDg4LWFiNTctNGU5M2Y1ZTQ5YmM5IiwiZXZlbnRfaWQiOiI1YWJiZDg1ZC1kN2JjLTRkZTAtOWIwOC04OWM1Yjg0OTk0MWQiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzkyMTMyMDc5LCJleHAiOjE3OTIyMTg0NzksImlhdCI6MTc5MjEzMjA3OSwianRpIjoiMjhlODc1OTEtNWYyNi00NDdlLWJhZDctN2I5YTI4YTgzOWVhIiwidXNlcm5hbWUiOiJsaW5rc3lzbWFuYWdlcjAwMDAxIn0.QLf_vSOzhhnY5mh5KGn-Mugo7ERnKCQHcBORGPsRT5qdLTjBPr5MDEX0y52rbQG0BSdEzutlKzuzEAFagHoFM5P8PTS0g98LPmdeArZzIKxnwllSqNG_T3i9oyFaATz-OjC-IbA8TYvQ9GUI26CyDhZvREkDK9eri0E70kQiQtjCWg_aA7Pxc4hnP8hEX2jn9QuQcFqRclwkUyqbVagmvFc1T_eLl1nNYU9c1xEoQp8N9DdDeFeoOEXgj65wnUH6zbaHJ6yvcDAPgDNpW6iGQg5IVqOfLw1ToKXiRlwuU7J0unXwBpclGCX2P7rMa23zL8ezIQwJaBhzzqSnSH_lYw"
+        },
+        {
+          "name": "aws.cognito.identity-providers.ap-northeast-1:c924cda5-95c1-44d9-a38e-77600171feae",
+          "value": "cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_rbqsWwJ3J"
+        },
+        {
+          "name": "CognitoIdentityServiceProvider.2gpmmf033uf2brr8fhu2hr0o6c.linksysmanager00001.idToken",
+          "value": "eyJraWQiOiJwWmZtcER1YS8wc09la2gxdDI4SS9td015WERBbmVUeTZRUjcvclV5TTBVPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIwNzA0OWFlOC1kMDgxLTcwYzUtMDUxYi01YWZiYjQ4YmE5MWIiLCJpc3MiOiJodHRwczovL2NvZ25pdG8taWRwLmFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb20vYXAtbm9ydGhlYXN0LTFfcmJxc1d3SjNKIiwiY29nbml0bzp1c2VybmFtZSI6ImxpbmtzeXNtYW5hZ2VyMDAwMDEiLCJvcmlnaW5fanRpIjoiYWIwYTBmZmYtM2VmNC00ZDg4LWFiNTctNGU5M2Y1ZTQ5YmM5IiwiYXVkIjoiMmdwbW1mMDMzdWYyYnJyOGZodTJocjBvNmMiLCJldmVudF9pZCI6IjVhYmJkODVkLWQ3YmMtNGRlMC05YjA4LTg5YzViODQ5OTQxZCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNzkyMTMyMDc5LCJuYW1lIjoiTElOS1NZUyBNQU5BR0VSMDAwMDEiLCJleHAiOjE3OTIyMTg0NzksImN1c3RvbTpyb2xlIjoiMDEiLCJpYXQiOjE3OTIxMzIwNzksImp0aSI6IjRjYjgwN2FjLTQxMWEtNDFjOC04YWM3LWVhZTU1NDFjNGUwNyIsImVtYWlsIjoiMDAwMDFsaW5rc3lzbWFuYWdlckBwaWNvbnRlY2hub2xvZ3kuY29tIn0.kBRUaa_2vLSLK0hyKBxzp_8nDs5oQhEGfISK-X01GLDgLsbAmTQfaOcXowj4AWUUv3D8GlfSNCsGHHQR3lSK_1MZV6K1jyFCwQCaAbYvc1kD967QCwOUeerCAANaThVpjXqmCWLOT_eKRmWYjl6x91LwSGsTSWhjl13VjV0bF5KGU7lRjefS91vYWvVFjuC1MILaSsCsX5HqkuwAdQjm7t36v9xqU26Df2B-rWcOz_OQbZhCTy1SEpEjXze5rVAUMZFhWvucc2AeSA31cRXVR62Pv5OrQqUt2FHtjf_3k3WpRIWl5u3z8a2knpbYht3XoVpuM3cLPlE2msq1olcBPA"
+        },
+        {
+          "name": "CognitoIdentityServiceProvider.2gpmmf033uf2brr8fhu2hr0o6c.linksysmanager00001.refreshToken",
+          "value": "eyJjdHkiOiJKV1QiLCJlbmMiOiJBMjU2R0NNIiwiYWxnIjoiUlNBLU9BRVAifQ.JJe0x5P7u6PvPJpUJnJyzF8GZRKfQ9lp5PA3IiJx-_LvjURTSz64jdNpM1SWbuLJ3TmW4JuJuqOh-NtHJMaqYytK-91LbDO3-WZOruvrIyahAR5c4S8w8w68Ph889NREzioQ0ugXnRtvKQcoyPc2JqTWli4OImQ_PEIKfo9QqkjhzP-f8BYaeOdp2ANgM08N08TDZgcJJtgPxrI7b_XwhR1DlVdbJ19c4hcG1ItzRrBuWJZpJO7WUuDT1T1vpevwVXfH7Z7jvyJ6u6iWW_S-SLKFYD6ArQZIp7_DMkrWd5WfwGe86sg4VYSDh-jn0lUNCyeFdficy364PERvAI1RFA.LBWzKxh4qRFz2aZV.zczuZaPLLib7AIH81-TPk4UZ_2LGdTeai341fKiiEAFE2GH_fn4fHokgUoe79uWY3fwY2dBLQK6nTsqDOY1shiBFRGHA-9dyOpuxwUUwa-fxicQbo33NhEDcdvJF2_neN1oTiQHJ1Ch4bh72wu6cf2wAns26jjsRqjPptc451cuLRuh9tp8i4OgcDpBL_TGhgIRydVO5jOBYaMmCEVmAPm5iUz901ou4w3DZpccIEe8CPiFw3LnXa5Qpvx8YQtZTQLXqJ0Q-Zges6CCgkwo42uv9sgnHdWw-bTEavFdcMjpBPK3FOnzT0o0TG7YEtfC9L8CxMz7-pcyVqpIC5hJyHUmXMvNPCZTISfON18SGA78bdw3WyLXKGdThYetyBL0M5jA5kQZv7dl3BsIoKKIoLHdPZwSw24AcuxgCfgaLQZBtlT5iIV2QSBsQmbVNRVgcDdO35Sz5z7yZ4hUaBcVFbhsEYyqEtWWpDioxS4IRFoUzl-OAFS8k6Gn26uoCwrzb4Y-Cq9K2RWPB3X_zmnfiIvZJyc8Z89PFYN2PmGNkb1h9gamisd2s1fKjwHe2IpXBtLyL1C6J6Pq6v_wY8KjYZ1hAD9zruwdYJe0cNkzwRuvl2ttwBkoDjSxwULVf3KWQHwzKpb40i9xwWoCb_VR41_plSSjzjaYS6ijf__T2DKikbTP806UgyoAzb4lebTbI50nMSzgzv415QZRKeTMjcHvYgP8QHsbMHOamKy-AwroKYnI7UN8rWpD_qS16jjx_MuVY94pErxJl0g-4fn9ApXG7hdJLs7OkDnLPZ27p-44UB7PcKCrikEJhLKVMFGNpnRTfjQmjg8sMHeXv7PBJ8uo118_mw56Yr4DiizgdHQd4qQNklpMjKz_aD_bPuD5nsnTABDo8A173KiRMIBNTiX8IjggHie9We7hawQLgKK3Skhj3PtBkfe3R6KpheQX4gK2jZsZZJZiS92_-4l4cg1Uamj2aWvilDbtYgqRxl2uk5Q6RZQb2aij4gDtGfZjjMqm-wP8cVDe8tMsbAnqfkBaeYr5SbFfARdpiM3y8dmWbR3v9IFiBqQBLO4qQGXm42x6uJF7ZjRxuUJDrkqhngcy-PWAG5vrMjYUxhKpEcHXKeE8W22XDanstQ2VX_LLZ2C58sdp0ELiLC6Vzu32GcKvHteeEhieuTu_D6evbqwVdvJw2q45r9RREzw9yasJ9mQ_SvEAqYOdOxTk8zV50NB38qhs3_Kek_14vM0KeVH83fhFeWeL1jPaecHhIm1b4W_LhNw9nhftyfkAt3tB2Kv3OJyb_gSDXDZeLFb8b.HijGuzhy5u4L6qCTdahztQ"
+        },
+        {
+          "name": "CognitoIdentityServiceProvider.2gpmmf033uf2brr8fhu2hr0o6c.linksysmanager00001.clockDrift",
+          "value": "-292"
+        },
+        {
+          "name": "FIREBASE_TOKEN_EXPIRY",
+          "value": "1792135680311"
+        },
+        {
+          "name": "CognitoIdentityServiceProvider.2gpmmf033uf2brr8fhu2hr0o6c.linksysmanager00001.accessToken",
+          "value": "eyJraWQiOiJJaStJZFJVZmN2OHc0UmJ2Q2E4MGpmdWgreHorcVg4QlVhMXptbEZBeldVPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiIwNzA0OWFlOC1kMDgxLTcwYzUtMDUxYi01YWZiYjQ4YmE5MWIiLCJpc3MiOiJodHRwczovL2NvZ25pdG8taWRwLmFwLW5vcnRoZWFzdC0xLmFtYXpvbmF3cy5jb20vYXAtbm9ydGhlYXN0LTFfcmJxc1d3SjNKIiwiY2xpZW50X2lkIjoiMmdwbW1mMDMzdWYyYnJyOGZodTJocjBvNmMiLCJvcmlnaW5fanRpIjoiYWIwYTBmZmYtM2VmNC00ZDg4LWFiNTctNGU5M2Y1ZTQ5YmM5IiwiZXZlbnRfaWQiOiI1YWJiZDg1ZC1kN2JjLTRkZTAtOWIwOC04OWM1Yjg0OTk0MWQiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzkyMTMyMDc5LCJleHAiOjE3OTIyMTg0NzksImlhdCI6MTc5MjEzMjA3OSwianRpIjoiMjhlODc1OTEtNWYyNi00NDdlLWJhZDctN2I5YTI4YTgzOWVhIiwidXNlcm5hbWUiOiJsaW5rc3lzbWFuYWdlcjAwMDAxIn0.QLf_vSOzhhnY5mh5KGn-Mugo7ERnKCQHcBORGPsRT5qdLTjBPr5MDEX0y52rbQG0BSdEzutlKzuzEAFagHoFM5P8PTS0g98LPmdeArZzIKxnwllSqNG_T3i9oyFaATz-OjC-IbA8TYvQ9GUI26CyDhZvREkDK9eri0E70kQiQtjCWg_aA7Pxc4hnP8hEX2jn9QuQcFqRclwkUyqbVagmvFc1T_eLl1nNYU9c1xEoQp8N9DdDeFeoOEXgj65wnUH6zbaHJ6yvcDAPgDNpW6iGQg5IVqOfLw1ToKXiRlwuU7J0unXwBpclGCX2P7rMa23zL8ezIQwJaBhzzqSnSH_lYw"
+        },
+        {
+          "name": "admin_info",
+          "value": "{\"id\":98332,\"loginId\":\"linksysmanager00001\",\"name\":\"LINKSYS MANAGER00001\",\"phone\":\"0488598088\",\"email\":\"00001linksysmanager@picontechnology.com\",\"role\":\"01\",\"lastLoginAt\":\"2026-10-16 15:27:59\",\"aliasKeyName\":\"cmVhZF9rZXk=\",\"chainSystemId\":1856,\"chainStoreManagerId\":16817,\"companyName\":\"Linksys Chain System\",\"isAllowPayment\":true}"
+        },
+        {
+          "name": "CognitoIdentityServiceProvider.2gpmmf033uf2brr8fhu2hr0o6c.linksysmanager00001.signInDetails",
+          "value": "{\"loginId\":\"linksysmanager00001\",\"authFlowType\":\"USER_SRP_AUTH\"}"
+        },
+        {
+          "name": "CognitoIdentityServiceProvider.2gpmmf033uf2brr8fhu2hr0o6c.LastAuthUser",
+          "value": "linksysmanager00001"
+        },
+        {
+          "name": "FIREBASE_TOKEN",
+          "value": "eyJhbGciOiAiUlMyNTYiLCAidHlwIjogIkpXVCIsICJraWQiOiAiNDk5NTNkZGI2MDJjZjEwNDZjYjFlZjM1OWRiYWQ2YWFhMDNhYTg2NyJ9.eyJpc3MiOiAiZmlyZWJhc2UtYWRtaW5zZGstZ2M5aWFAcW5hdmktYjkwZTIuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCAic3ViIjogImZpcmViYXNlLWFkbWluc2RrLWdjOWlhQHFuYXZpLWI5MGUyLmlhbS5nc2VydmljZWFjY291bnQuY29tIiwgImF1ZCI6ICJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGVhcGlzLmNvbS9nb29nbGUuaWRlbnRpdHkuaWRlbnRpdHl0b29sa2l0LnYxLklkZW50aXR5VG9vbGtpdCIsICJ1aWQiOiAiMDcwNDlhZTgtZDA4MS03MGM1LTA1MWItNWFmYmI0OGJhOTFiIiwgImlhdCI6IDE3OTIxMzIwODAsICJleHAiOiAxNzkyMTM1NjgwLCAiY2xhaW1zIjogeyJyb2xlIjogInVzZXIiLCAic291cmNlIjogImNvZ25pdG9fZXhjaGFuZ2UiLCAiY29nbml0b191c2VybmFtZSI6ICJsaW5rc3lzbWFuYWdlcjAwMDAxIiwgImNyZWF0ZWRfYXQiOiAiMjAyNi0wNS0yNVQwMzo1NTowNy41OTE2MzkrMDA6MDAiLCAicHJvdmlkZXIiOiAicW5hdmkiLCAiY3VzdG9tOnJvbGUiOiAiMDEiLCAiZXhjaGFuZ2VfdGltZSI6ICIyMDI2LTEwLTE2VDA2OjI4OjAwLjMzNjg4NiswMDowMCIsICJlbWFpbF92ZXJpZmllZCI6IGZhbHNlfX0.akBkEPZWQ_E1EPblmaUaMWYCWKQw7wEwvgKetKEEiRS_joIz-UztHpP9YTgTGQra6FRYjCQfTPUPR0tOeSE8Q-YFnMnILqzyPsQy5o3q6UKIgbZKm-qL6SQcIvri_fbf4oZIzzRqo4y_BS4l2pSwZFCfF7OgwMZegWAvtWwTINe2EbtO8D8L5rTstkQqjW-W6VkAyLXMjfx8QAQfj_nINuzBzvnnFjty2jYK2RG2YHz_X_wUJ93BZqLjT5eMXw-3lPxo3waAXY1ZZKhkpHFYQAUMJugSXGmqLLT_z72WoluO5EVSQOGZxw8-jN_3BxyGI8s2n0Lk77ApGjXBK0icWg"
+        }
+      ]
+    }
+  ]
+}

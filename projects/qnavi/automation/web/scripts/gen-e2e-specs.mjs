@@ -134,11 +134,11 @@ function handler(r, g) {
           'await e.navi.requestAsIsButton().click();',
         ],
         ['await e.navi.uploadPhoto(data.files.fault);', 'await e.navi.sendDetail(e.note);'],
-        ["await e.navi.chooseTiming('至急');", 'await e.navi.submit();'],
+        ["await e.navi.chooseTiming('至急');", 'await e.submitTrouble(t);   // R14: id / 番号 từ response POST /troubles'],
         [
           "test.info().annotations.push({ type: 'webview-done', description: (await e.navi.doneText()).slice(0, 300) });",
           'await e.navi.backToTop();',
-          'await e.recordNewest(t, STORE);   // R14',
+          'await e.openCreated(t, STORE);',
         ],
       ],
       exp: [

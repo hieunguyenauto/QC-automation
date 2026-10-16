@@ -3,7 +3,7 @@ import path from 'path';
 import { expect, test, type Page } from '@playwright/test';
 import dataRaw from '../data/e2e-suite.json';
 import { loginAs, logout, type Who } from './session';
-import { click, minimizeChat, modal, rowOf } from './ui';
+import { click, minimizeChat, modal, rowOf, valueOf } from './ui';
 import { waitApisIdle } from './wait';
 import { CmsLayout } from '../screens/cms/layout.screen';
 import { ChainSystemScreen } from '../screens/cms/chain-system.screen';
@@ -16,7 +16,7 @@ import { envData } from './env-names';
 const data = envData(dataRaw);
 
 /**
- * Bước dùng chung của bộ E2E suite (TC: projects/qnavi/qc/test-cases/e2e-suite/, LOCKED rev 7).
+ * Bước dùng chung của bộ E2E suite (TC: projects/qnavi/qc/test-cases/e2e-suite/, LOCKED; rev từng file kiểm bằng assertTcRevision).
  * Mỗi hàm = 1 cụm thao tác lặp lại giữa các case; spec gọi trong test.step đặt tên đúng bước của TC.
  * Locator chỉ ở screens/. Tài khoản: common/session.ts (data/e2e-suite.json › stores / managers).
  */
@@ -114,13 +114,19 @@ export class E2E {
     else await expect(this.navi.hasSelect('資産'), "no field '資産' because シサンNAVI OFF").toHaveCount(0);
     await this.navi.next();
   }
-  /** Sau 'トップ画面に戻る': trouble mới nhất của store ở 進行中のトラブル一覧 (webview không trả id) [cần kiểm trên app thật]. */
-  async recordNewest(t: Trouble, k: StoreKey): Promise<void> {
-    await this.layout.menu('進行中のトラブル一覧');
-    await this.list.openTrouble(storeName(k));
-    await this.detail.expectOpened();
-    t.id = this.page.url().match(/troubles\/(\d+)\/detail/)?.[1];
-    t.number = await this.detail.number();
+  /** '依頼する' + ghi NGAY trouble vừa tạo (id / 番号 từ response POST /troubles — R14). Không lấy "dòng mới nhất" của danh sách:
+   *  người khác tạo cùng lúc / trouble cũ của store sẽ bị lấy nhầm. */
+  async submitTrouble(t: Trouble): Promise<void> {
+    const c = await this.navi.submit();
+    t.id = c.id; t.number = c.number;
+    test.info().annotations.push({ type: 'trouble-created', description: `${c.number}${c.id ? ` (id ${c.id})` : ''}` });
+  }
+  /** Sau 'トップ画面に戻る': mở đúng trouble đã ghi, kiểm 番号 khớp và store đúng. */
+  async openCreated(t: Trouble, k: StoreKey): Promise<void> {
+    const number = t.number;
+    await this.openTrouble(t);
+    expect(await this.detail.number(), '番号 của trouble đã mở = 依頼番号 vừa tạo').toBe(number);
+    await this.detail.expectInfo('店舗名', storeName(k));
   }
 
   // ---------- mở trouble ----------
@@ -154,6 +160,14 @@ export class E2E {
     await this.detail.expectOpened(t.id);
     t.id ??= this.page.url().match(/troubles\/(\d+)\/detail/)?.[1];
     t.number ??= await this.detail.number();
+  }
+
+  /** 作業項目（小） của trouble (chi tiết, chờ ô có giá trị — R03). */
+  async smallItemOf(t: Trouble): Promise<string> {
+    await this.openTrouble(t);
+    const cell = valueOf(this.detail.content, '作業項目（小）');
+    await expect(cell).not.toHaveText(/^\s*$/, { timeout: 30_000 });
+    return (await cell.innerText()).trim();
   }
 
   // ---------- trạng thái ----------
@@ -242,7 +256,7 @@ export class E2E {
     await box.locator('.rating-star', { hasText: '感動' }).locator('[data-index] img').click();
     await box.locator('textarea[name="description"]').fill(this.note);
     await click(box, '作業完了確認');
-    await d.decide('作業依頼の決済状態を保存します');
+    await d.decide(data.messages.paymentConfirm);
     await d.ok(data.messages.paymentSaved);
   }
 

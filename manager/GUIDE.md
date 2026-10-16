@@ -1524,6 +1524,8 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - R38 Modal có dữ liệu từ API riêng (支払情報 ← /payments): chờ đúng response đó rồi mới kiểm nội dung; modal hiện ≠ dữ liệu đã có. (web/2026-10-16-cms-modal-own-api.md)
 - R39 Dữ liệu gắn với trouble (tài sản, báo cáo): dò xem hiển thị thẳng hay qua modal; modal mở để kiểm thì đóng trong cùng bước (kịch bản serial). (web/2026-10-16-cms-detail-related-data-modal.md)
 - R40 Nút header '見積もり' chỉ có khi còn báo giá đã nộp (sau 取り下げ承認 / 却下 → mất với 01 / 02): kiểm trạng thái báo giá bằng 99 / 98 qua 状態変更. (web/2026-10-16-cms-estimate-header-hidden-after-cancel.md)
+- R41 Bản ghi do test tạo (trouble, báo giá…): lấy id / mã từ response API của chính thao tác tạo (vd POST /troubles khi bấm 依頼する) hoặc chữ app hiện ngay sau khi tạo; không lấy "dòng mới nhất" của danh sách — người khác tạo cùng lúc / dữ liệu cũ sẽ bị lấy nhầm. (web/2026-10-16-e2e-created-id-from-response.md)
+- R42 Spec sinh tự động chỉ sửa qua generator (cả thay đổi hàng loạt bằng script); sinh lại xong xem git diff — có thay đổi ngoài khuôn vừa sửa thì dừng, đưa vào generator trước. (web/2026-10-16-generated-spec-hand-edit-lost.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->
@@ -1539,6 +1541,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D27 | 2026-10-16 | Automation: trouble do test tạo lấy id / 番号 từ response POST /troubles của chính lần bấm 依頼する (submitTrouble / openCreated), bỏ recordNewest (dòng mới nhất của danh sách); spec sinh tự động chỉ sửa qua generator | Người dùng: người khác tạo trouble cùng lúc thì recordNewest lấy nhầm; sửa tay spec sinh (N() / envData) bị mất khi sinh lại | screens/cms/trouble-navi.webview.ts, common/e2e-suite.ts, scripts/gen-e2e-specs.mjs, tests/cms/e2e-suite/, automation/lessons/INDEX.md (R41, R42) |
 | D26 | 2026-10-16 | Automation E2E-02…39: spec sinh từ TC LOCKED bằng scripts/gen-e2e-specs.mjs (đọc được như E2E-01, không sửa tay, tự dừng khi TC đổi rev); kiểm TC ↔ code bằng `npm run gen:e2e -- --check` | Người dùng muốn mỗi E2E là 1 file spec đầy đủ, dễ đọc; 1 khuôn / loại TC giữ 562 TC đồng bộ với TC khi đổi revision | projects/qnavi/automation/web/scripts/gen-e2e-specs.mjs, tests/cms/e2e-suite/, README.md |
 | D25 | 2026-10-15 | Automation: kiểm TC ↔ code / recon E2E luôn chạy E2E_DRY=1 (không đụng app), chạy thật không DRY; mọi spec trong e2e-suite phải hiểu E2E_DRY (không chạy khô được → skip cả file) | Lệnh dry-run cả thư mục đã chạy thật E2E-01 (spec viết riêng không hiểu DRY), tạo trouble trên toridoll-test | tests/cms/e2e-suite/E2E-00.spec.ts, E2E-01.spec.ts, automation/lessons/INDEX.md (R36) |
 | D24 | 2026-10-13 | Automation: hộp lỗi app do môi trường chậm (「表示に時間がかかっております」) chỉ bấm OK + ghi env-warning, code KHÔNG tự reload / retry (chỉ reload khi TC ghi F5); API nặng sau login đợi response thực tế, chậm quá ngưỡng ghi PERFORMANCE để check sau, không fail TC | Người dùng thật không gặp lỗi vì đợi trang tải xong; reload / retry che lỗi hiệu năng; perf est-test chập chờn không được chặn cả kịch bản | screens/cms/layout.screen.ts, common/session.ts, common/env.ts, common/qc-reporter.ts, automation/lessons/INDEX.md (R18) |
@@ -1573,6 +1576,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] E2E-01 đối chiếu TC rev 13: tạo trouble lấy id / 番号 từ response POST /troubles (submitTrouble / openCreated, bỏ recordNewest — E2E-01 + 23 spec sinh + khuôn generator); thêm kiểm còn thiếu theo TC (no '稟議承認中', 作業項目 trong 支払情報, '作業完了確認' biến mất, cả 2 trouble 完了, 店舗名); E2E-01 assertTcRevision; deleteDefaultRows chờ dòng mặc định (R30); env toridoll-test name 'dev' → 'toridoll-test' (.auth/toridoll-test/); lesson automation R41, R42
 - [auto] Tên theo môi trường: common/env-names.ts (N, NR, envData) + env/<ENV>.json › rename; est-test: Arabica Coffee VietNam / Arabica Store<N> / ARABICA WORKER / arabica…; 674 chuỗi Linksys trong spec / data được bọc tự động
 - [auto] est-test đổi sang tài khoản arabica… (adminTest2, arabicasubadmin, arabicamanager1–5, arabicastore1–9, arabicaworkercompany; worker arabicaworker1/2); mật khẩu riêng theo môi trường <ENV>_CMS_<role>_PASSWORD; npm run recon:names (dò tên hiển thị theo môi trường)
 - [auto] E2E suite chạy thật toridoll-test 15–16/10: 36/37 kịch bản (E2E-02…39) pass; E2E-14 chờ chạy lại theo TC rev 12. Spec E2E-02…39 sinh từ TC (scripts/gen-e2e-specs.mjs, npm run gen:e2e; bỏ common/e2e-case.ts); waitApisIdle bỏ request treo; reporter che mật khẩu trong snapshot; 98 thao tác báo giá qua 状態変更; chờ /payments; kiểm tài sản qua 資産一覧; recon-e2e thêm RECON_PART=E / F / S (S tạo tài sản 'TEST AUTOMATION'); lesson automation R37–R40, mở rộng R34
@@ -1628,4 +1632,3 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - test-viewpoint: viewpoint có trục biến thiên, 1 VP → nhiều TC; gộp VP case-by-case (D09)
 - Luồng thiết kế 6 bước + Context pack; gộp decisions thành 1 file docs/decisions.md (D08, D07)
 
-## [0.1.0] - 2026-10-09

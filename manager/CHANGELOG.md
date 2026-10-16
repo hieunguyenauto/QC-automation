@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] E2E-01 đối chiếu TC rev 13: tạo trouble lấy id / 番号 từ response POST /troubles (submitTrouble / openCreated, bỏ recordNewest — E2E-01 + 23 spec sinh + khuôn generator); thêm kiểm còn thiếu theo TC (no '稟議承認中', 作業項目 trong 支払情報, '作業完了確認' biến mất, cả 2 trouble 完了, 店舗名); E2E-01 assertTcRevision; deleteDefaultRows chờ dòng mặc định (R30); env toridoll-test name 'dev' → 'toridoll-test' (.auth/toridoll-test/); lesson automation R41, R42
 - [auto] Tên theo môi trường: common/env-names.ts (N, NR, envData) + env/<ENV>.json › rename; est-test: Arabica Coffee VietNam / Arabica Store<N> / ARABICA WORKER / arabica…; 674 chuỗi Linksys trong spec / data được bọc tự động
 - [auto] est-test đổi sang tài khoản arabica… (adminTest2, arabicasubadmin, arabicamanager1–5, arabicastore1–9, arabicaworkercompany; worker arabicaworker1/2); mật khẩu riêng theo môi trường <ENV>_CMS_<role>_PASSWORD; npm run recon:names (dò tên hiển thị theo môi trường)
 - [auto] E2E suite chạy thật toridoll-test 15–16/10: 36/37 kịch bản (E2E-02…39) pass; E2E-14 chờ chạy lại theo TC rev 12. Spec E2E-02…39 sinh từ TC (scripts/gen-e2e-specs.mjs, npm run gen:e2e; bỏ common/e2e-case.ts); waitApisIdle bỏ request treo; reporter che mật khẩu trong snapshot; 98 thao tác báo giá qua 状態変更; chờ /payments; kiểm tài sản qua 資産一覧; recon-e2e thêm RECON_PART=E / F / S (S tạo tài sản 'TEST AUTOMATION'); lesson automation R37–R40, mở rộng R34

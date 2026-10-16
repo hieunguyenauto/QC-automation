@@ -73,12 +73,12 @@ tc('E2E03-TC-002', 'NEW · chainstore manager creates trouble (トラブルナ�
   });
   await step("7. Select radio '至急' → click '依頼する'", async () => {
     await e.navi.chooseTiming('至急');
-    await e.navi.submit();
+    await e.submitTrouble(t);   // R14: id / 番号 từ response POST /troubles
   });
   await step("8. Click 'トップ画面に戻る' → Verify: Dashboard; record 依頼番号", async () => {
     test.info().annotations.push({ type: 'webview-done', description: (await e.navi.doneText()).slice(0, 300) });
     await e.navi.backToTop();
-    await e.recordNewest(t, STORE);   // R14
+    await e.openCreated(t, STORE);
   });
   await step(N("Expected: Trouble is created for 'LINKSYS STORE00008': '問い合わせ中' / '受注待ち', 業者 '未確定', 見積書 '未提出'"), async () => {
     await d.expectBadges('問い合わせ中', '受注待ち');

@@ -81,8 +81,9 @@
     "workerPrice": "1000"
   },
   "messages": {
-    "_note": "Không có trong spec/messages.md — nguồn: TC LOCKED e2e-suite rev 3 / e2e-trouble-flow (app thật 2026-10-12)",
+    "_note": "Không có trong spec/messages.md — nguồn: TC LOCKED e2e-suite rev 3 / e2e-trouble-flow (app thật 2026-10-12); QC (Hieu Nguyen) xác nhận dùng theo app thật 16/10/2026",
     "submitOne": "以下1件の見積を店舗へ提出しますか",
+    "paymentConfirm": "作業依頼の決済状態を保存します",
     "paymentSaved": "作業依頼の決済状態の保存が完了しました。"
   },
   "asset": {

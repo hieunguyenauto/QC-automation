@@ -1,5 +1,5 @@
 {
-  "name": "dev",
+  "name": "toridoll-test",
   "cmsBaseUrl": "https://cms-toridoll-test.qnavi.picontechnology.com",
   "actionTimeoutMs": 15000,
   "navigationTimeoutMs": 30000,

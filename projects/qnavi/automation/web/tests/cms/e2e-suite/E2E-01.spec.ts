@@ -1,14 +1,15 @@
 import { test, expect } from '@playwright/test';
 import dataRaw from '../../../data/e2e-suite.json';
 import { serialScenario } from '../../../common/scenario';
-import { E2E, storeName, storePriceFor, storeWho, yen, type Trouble } from '../../../common/e2e-suite';
+import { E2E, assertTcRevision, storeName, storePriceFor, storeWho, yen, type Trouble } from '../../../common/e2e-suite';
 import { minimizeChat, rowOf } from '../../../common/ui';
 import { waitApisIdle } from '../../../common/wait';
 import { N, envData } from '../../../common/env-names';
 const data = envData(dataRaw);
 
 /**
- * E2E-01 · Type01 direct / approver=Chain Store — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md (LOCKED rev 7).
+ * E2E-01 · Type01 direct / approver=Chain Store — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md (LOCKED rev 13).
+ * Spec viết tay (không sinh bằng gen:e2e): TC đổi rev → assertTcRevision dừng, cập nhật code + số rev ở beforeAll.
  * 1 test() = 1 TC, test.step đặt tên theo cột Steps. Chạy nối tiếp trên 1 trình duyệt; TC fail → TC sau skip.
  * Chạy lẻ: ENV=toridoll-test npm run suite -- E2E-01.spec.ts
  * Chạy tiếp trên trouble có sẵn: E2E_TROUBLE_ID=<id> … --grep "TC-00[3-9]|TC-01"
@@ -23,7 +24,7 @@ const t2: Trouble = { id: process.env.E2E_TROUBLE2_ID || undefined };
 let FIX = Number(process.env.E2E_FIX || 0);
 const sc = serialScenario(() => [t.number ? `NEW ${t.number} (id ${t.id})` : '', t2.number ? `CONT ${t2.number} (id ${t2.id})` : '', FIX ? `FIX ${FIX}` : '']);
 let e: E2E;
-test.beforeAll(() => { e = new E2E(sc.page, 1); });
+test.beforeAll(() => { assertTcRevision('projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md', 13); e = new E2E(sc.page, 1); });
 const step = test.step;
 const tc = (id: string, title: string, role: string, body: () => Promise<void>, timeout = 300_000) =>
   test(`${id} ${title}`, { tag: [`@${id}`, `@role-${role}`] }, async () => { test.setTimeout(timeout); await body(); });
@@ -52,7 +53,7 @@ tc(`${P}-TC-002`, 'NEW · chainstore creates trouble (トラブルナビ)', '02'
   await step("4. Select '中項目', '小項目', '症状' (no '資産') → '次へ'", () => e.naviPickAll(false));
   await step("5. Click 'このまま依頼する' → click 'このまま依頼する' again", async () => {
     await n.requestAsIsButton().click();
-    // TC: bấm 2 lần. Recon 14/10 (toridoll-test): sau lần 1 vào thẳng chat /job/ → kiểm lần 2 theo TC.
+    // TC: bấm 2 lần — sau lần 1 vẫn còn nút (chạy thật toridoll-test 16/10/2026).
     await expect(n.requestAsIsButton(), "TC bước 5: nút 'このまま依頼する' lần 2").toBeVisible({ timeout: 15_000 });
     await n.requestAsIsButton().click();
   });
@@ -62,13 +63,13 @@ tc(`${P}-TC-002`, 'NEW · chainstore creates trouble (トラブルナビ)', '02'
   });
   await step("7. Select radio '至急' → '依頼する'", async () => {
     await n.chooseTiming('至急');
-    await n.submit();
+    await e.submitTrouble(t);   // R14: id / 番号 từ response POST /troubles (không lấy "mới nhất" của danh sách)
   });
   await step("8. 'トップ画面に戻る' → Verify: Dashboard; record 依頼番号", async () => {
     const text = await n.doneText();
     test.info().annotations.push({ type: 'webview-done', description: text.slice(0, 300) });
     await n.backToTop();
-    await e.recordNewest(t, STORE);   // R14
+    await e.openCreated(t, STORE);   // đúng trouble vừa tạo: 番号 khớp + 店舗名 (Expected: for 'LINKSYS STORE00006')
   });
   await step(`Expected: trouble of '${storeName(STORE)}': 問い合わせ中 / 受注待ち, 業者 未確定, 見積書 未提出`, async () => {
     await e.detail.expectBadges('問い合わせ中', '受注待ち');
@@ -119,8 +120,9 @@ tc(`${P}-TC-006`, 'NEW · ≤ FIX → auto approve (no approver)', '99', async (
     await sc.page.reload(); await waitApisIdle(sc.page, 'F5'); await d.expectOpened(t.id);
     await d.openQuickAction(); await d.openEstimateFromStatus();
   });
-  await step(`Expected: '${name}' = '承認済み' automatically; '対応中' / '作業中'`, async () => {
+  await step(`Expected: '${name}' = '承認済み' automatically; '対応中' / '作業中'; no '稟議承認中'`, async () => {
     await d.expectEstimateStatus(name, '承認済み');
+    await expect(d.estimateModal, "no '稟議承認中'").not.toContainText('稟議承認中');
     await d.closeEstimateModal(); await d.closeStatus();
     await d.expectBadges('対応中', '作業中');
   });
@@ -129,7 +131,7 @@ tc(`${P}-TC-006`, 'NEW · ≤ FIX → auto approve (no approver)', '99', async (
 tc(`${P}-TC-007`, 'NEW · 作業完了 → 報告済 (02-08 → 02-09)', '99', async () => {
   await step('Pre-condition: Admin, trouble opened', async () => { await e.switchTo('99'); await e.openTrouble(t); });
   await step("1. '作業完了' → Verify: badge '作業完了'", () => e.moveFlow('作業完了'));
-  await step("2-3. '報告済' → 報告書 編集 (day 1 / 2, 'automation', photos) → 完了 → 保存 → 決定 → OK", () => e.report());
+  await step("2-3. '報告済' → 報告書 編集 (day 1 / 2, '${e.note}', photos) → 完了 → 保存 → 決定 → OK", () => e.report());
   await step("Expected: '対応中' / '報告済'", () => e.detail.expectBadges('対応中', '報告済'));
 });
 
@@ -138,18 +140,27 @@ tc(`${P}-TC-008`, 'NEW · Chain Store 確認・決済 → 完了', '02', async (
   await step(N(`1. Logout → login ChainStore 'linksysstore${STORE}' → open trouble → minimize chat`), async () => {
     await e.switchTo(storeWho(STORE)); await e.openTrouble(t); await minimizeChat(sc.page);
   });
-  await step(`2-3. '作業完了確認' → 支払情報 (${data.estimate.item}, ${yen(FIX - 1)}) → '感動' → comment → 決定 → OK`, () => e.payment(yen(FIX - 1)));
-  await step("Expected: '完了' / '報告済'", () => e.detail.expectBadges('完了', '報告済'));
+  await step(`2. '作業完了確認' → Verify: '支払情報' with 作業項目 '${data.estimate.item}' and total ${yen(FIX - 1)}`, () => e.paymentOpen(data.estimate.item, yen(FIX - 1)));
+  await step(`3. '感動' → '${e.note}' → '作業完了確認' → '決定' → Verify: '${data.messages.paymentSaved}' → 'OK'`, () => e.paymentSubmit());
+  await step("Expected: '完了' / '報告済', '作業完了確認' disappears", async () => {
+    await e.detail.expectBadges('完了', '報告済');
+    await expect(e.detail.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
+  });
 });
 
 tc(`${P}-TC-009`, "CONTINUE · subadmin creates 継続依頼 '_2'", '98', async () => {
   test.skip(!t.number, 'Chưa có 依頼番号 NEW');
+  let srcSmall = '';
   await step("1. Logout → login SubAdmin (98) → '作業依頼登録' → '継続依頼' → '次へ'", async () => {
-    await e.switchTo('98'); await e.layout.menu('作業依頼登録'); await e.create.start('継続依頼');
+    await e.switchTo('98');
+    srcSmall = await e.smallItemOf(t);   // 作業項目（小） của trouble gốc
+    await e.layout.menu('作業依頼登録'); await e.create.start('継続依頼');
   });
-  await step('2. 作業依頼選択 → NEW trouble → Verify: store filled', async () => {
+  await step('2. 作業依頼選択 → NEW trouble → Verify: store and 作業項目 filled from the original', async () => {
     await e.create.pickContinuationSource(t.number!);
     await expect(e.create.content).toContainText(storeName(STORE));
+    await expect(e.create.content).toContainText(`番号: ${t.number}`);
+    await expect(e.create.content, '作業項目 filled from the original').toContainText(srcSmall);
   });
   await step("3. '決定して問合わせ' → '決定' → 'OK'", async () => {
     await e.create.submitContinuation();
@@ -160,6 +171,7 @@ tc(`${P}-TC-009`, "CONTINUE · subadmin creates 継続依頼 '_2'", '98', async 
   });
   await step(`Expected: '${t.number}_2': '対応中' / '見積待ち'`, async () => {
     expect(t2.number).toBe(`${t.number}_2`);
+    await e.detail.expectInfo('店舗名', storeName(STORE));
     await e.detail.expectBadges('対応中', '見積待ち');
   });
 });
@@ -191,8 +203,9 @@ tc(`${P}-TC-012`, 'CONTINUE · ≤ FIX → auto approve (no approver)', '99', as
     await sc.page.reload(); await waitApisIdle(sc.page, 'F5'); await d.expectOpened(t2.id);
     await d.openQuickAction(); await d.openEstimateFromStatus();
   });
-  await step(`Expected: '${name}' = '承認済み'; '対応中' / '見積承認済'`, async () => {
+  await step(`Expected: '${name}' = '承認済み'; '対応中' / '見積承認済'; no '稟議承認中'`, async () => {
     await d.expectEstimateStatus(name, '承認済み');
+    await expect(d.estimateModal, "no '稟議承認中'").not.toContainText('稟議承認中');
     await d.closeEstimateModal(); await d.closeStatus();
     await d.expectBadges('対応中', '見積承認済');
   });
@@ -212,7 +225,14 @@ tc(`${P}-TC-014`, 'CONTINUE · 報告済 (02-90)', '99', async () => {
 
 tc(`${P}-TC-015`, 'CONTINUE · Chain Store 確認・決済 → 完了', '02', async () => {
   needFix();
-  await step(N(`1. Logout → login 'linksysstore${STORE}' → open '_2'`), async () => { await e.switchTo(storeWho(STORE)); await e.openTrouble(t2); });
-  await step(`2-3. '作業完了確認' → 支払情報 (${yen(FIX - 1)}) → 感動 → comment → 決定 → OK`, () => e.payment(yen(FIX - 1)));
-  await step("Expected: '_2' '完了' / '報告済'", () => e.detail.expectBadges('完了', '報告済'));
+  await step(N(`1. Logout → login 'linksysstore${STORE}' → open '_2'`), async () => {
+    await e.switchTo(storeWho(STORE)); await e.openTrouble(t2); await minimizeChat(sc.page);
+  });
+  await step(`2. '作業完了確認' → Verify: '支払情報' total ${yen(FIX - 1)}`, () => e.paymentOpen(yen(FIX - 1)));
+  await step(`3. '感動' → '${e.note}' → '作業完了確認' → '決定' → 'OK'`, () => e.paymentSubmit());
+  await step("Expected: '_2' '完了' / '報告済'; both troubles 完了", async () => {
+    await e.detail.expectBadges('完了', '報告済');
+    await e.openTrouble(t);
+    await e.detail.expectBadges('完了');
+  });
 });

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { expect, test, type Page } from '@playwright/test';
-import data from '../data/e2e-suite.json';
+import dataRaw from '../data/e2e-suite.json';
 import { loginAs, logout, type Who } from './session';
 import { click, minimizeChat, modal, rowOf } from './ui';
 import { waitApisIdle } from './wait';
@@ -12,6 +12,8 @@ import { TroubleDetailScreen } from '../screens/cms/trouble-detail.screen';
 import { TroubleEditScreen } from '../screens/cms/trouble-edit.screen';
 import { TroubleListScreen } from '../screens/cms/trouble-list.screen';
 import { TroubleNaviWebview } from '../screens/cms/trouble-navi.webview';
+import { envData } from './env-names';
+const data = envData(dataRaw);
 
 /**
  * Bước dùng chung của bộ E2E suite (TC: projects/qnavi/qc/test-cases/e2e-suite/, LOCKED rev 7).

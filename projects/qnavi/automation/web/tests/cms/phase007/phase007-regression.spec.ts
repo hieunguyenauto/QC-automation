@@ -1,5 +1,5 @@
 import { test, expect, type Page } from '@playwright/test';
-import data from '../../../data/phase007-regression.json';
+import dataRaw from '../../../data/phase007-regression.json';
 import { serialScenario } from '../../../common/scenario';
 import { credentialsOf, loginAs, markLoggedIn, logout, type Who } from '../../../common/session';
 import { account } from '../../../data/roles';
@@ -16,6 +16,8 @@ import { ChainSystemScreen } from '../../../screens/cms/chain-system.screen';
 import { AssetColumnScreen } from '../../../screens/cms/asset-column.screen';
 import { SubAdminScreen, STORE_CSV_HEADER } from '../../../screens/cms/subadmin.screen';
 import { TaskListScreen, ChatListScreen, AssetInfoScreen } from '../../../screens/cms/task-chat-asset.screen';
+import { N, NR, envData } from '../../../common/env-names';
+const data = envData(dataRaw);
 
 /**
  * TC: projects/qnavi/qc/test-cases/phase007-regression-test-cases.md (rev 6, LOCKED 2026-10-13) — 65 TC, chạy nối tiếp.
@@ -207,7 +209,7 @@ tc('P007-TC-001', 'Login admin', null, async () => {
 
 tc('P007-TC-002', '#2 · 2296 · 店舗別作業項目DL confirm dialog says CSV', '99', async () => {
   await step('1. Menu チェーンシステム情報', () => s.layout.menu('チェーンシステム情報'));
-  await step('2. 社名 Linksys → 検索 → open Linksys Chain System', async () => {
+  await step(N('2. 社名 Linksys → 検索 → open Linksys Chain System'), async () => {
     st.chainId = await s.chain.openChain(data.chain.companyQuery, data.chain.name);
     await expect(s.chain.storeItemDl).toBeVisible();
   });
@@ -295,13 +297,13 @@ tc('P007-TC-006', '#6 · 1706-02 · Enter repeatedly in フィルタ名', '99', 
 
 tc('P007-TC-007', '#7 · 1706-03 · Enter repeatedly in chat search', '99', async () => {
   await step('1. Menu チャット一覧', () => s.layout.menu('チャット一覧'));
-  await step("2. Input 'LINKSYS' in 検索キー", async () => {
+  await step(N("2. Input 'LINKSYS' in 検索キー"), async () => {
     await s.chats.expand();
-    await s.chats.searchKey.fill('LINKSYS');
+    await s.chats.searchKey.fill(N('LINKSYS'));
   });
   let requests = 0;
   await step('3. Press Enter 5 times', async () => {
-    const h = (r: { url(): string; method(): string }) => { if (r.method() === 'GET' && /chat/i.test(r.url()) && /LINKSYS/i.test(decodeURIComponent(r.url()))) requests++; };
+    const h = (r: { url(): string; method(): string }) => { if (r.method() === 'GET' && /chat/i.test(r.url()) && NR(/LINKSYS/i).test(decodeURIComponent(r.url()))) requests++; };
     page.on('request', h);
     for (let k = 0; k < 5; k++) await s.chats.searchKey.press('Enter');
     await page.waitForLoadState('networkidle').catch(() => {});
@@ -414,7 +416,7 @@ tc('P007-TC-014', '#14 · 1388-07 · Import empty CSV → error', '99', async ()
 
 tc('P007-TC-015', '#15 · 1388-08 · Admin sees 症状一覧DL', '99', async () => {
   await step('1. Menu チェーンシステム情報', () => s.layout.menu('チェーンシステム情報'));
-  await step('2. 社名 Linksys → open chain', async () => { st.chainId = await s.chain.openChain(data.chain.companyQuery, data.chain.name); });
+  await step(N('2. 社名 Linksys → open chain'), async () => { st.chainId = await s.chain.openChain(data.chain.companyQuery, data.chain.name); });
   await step("Expected: '症状一覧DL' shown and enabled", async () => {
     await expect(s.chain.symptomDl).toBeVisible();
     await expect(s.chain.symptomDl).toBeEnabled();
@@ -541,7 +543,7 @@ tc('P007-TC-019', '#19 · 2132-02 · Edit keeps from=task', '99', async () => {
 
 tc('P007-TC-020', '#20 · 2132-03 · 戻る returns to 資産詳細 (also after 編集)', '99', async () => {
   let assetUrl = '';
-  await step('1-2. 資産情報 → Linksys → TEST AUTOMATION → 資産詳細', async () => {
+  await step(N('1-2. 資産情報 → Linksys → TEST AUTOMATION → 資産詳細'), async () => {
     await s.layout.menu('資産情報');
     await s.assetInfo.openChain(data.chain.companyQuery, data.chain.name);
     await s.assetInfo.openAsset(data.asset.existingName);
@@ -650,10 +652,10 @@ tc('P007-TC-025', '#25 · 2164-01 · Send long chat message, minimize / reopen',
 // =====================================================================================
 // T1 · 状態 / 見積 / 報告書
 // =====================================================================================
-tc('P007-TC-026', '#27 · 対応中 + assign LINKSYS WORKER (2057-02)', '99', async () => {
+tc('P007-TC-026', N('#27 · 対応中 + assign LINKSYS WORKER (2057-02)'), '99', async () => {
   need(T1, 'T1');
   await step('1. Open T1', async () => { await openTrouble(T1); await minimizeChat(page); });
-  await step('2-5. 対応中, 作業者 linksysworker (制限状態 trống, no 立候補制限中です) → 保存', async () => {
+  await step(N('2-5. 対応中, 作業者 linksysworker (制限状態 trống, no 立候補制限中です) → 保存'), async () => {
     const d = s.detail;
     await d.openQuickAction();
     await d.expectStatus('問い合わせ中');
@@ -668,7 +670,7 @@ tc('P007-TC-026', '#27 · 対応中 + assign LINKSYS WORKER (2057-02)', '99', as
     await expect(d.statusModal).toContainText(data.worker.companyName);
     await d.saveStatus();
   });
-  await step("Expected: '対応中' / '受注待ち', 業者 'LINKSYS WORKER', 訪問日時 '未確定', 見積書 '未提出'", async () => {
+  await step(N("Expected: '対応中' / '受注待ち', 業者 'LINKSYS WORKER', 訪問日時 '未確定', 見積書 '未提出'"), async () => {
     await s.detail.expectBadges('対応中', '受注待ち');
     await s.detail.expectInfo('業者', data.worker.companyName);
     await s.detail.expectInfo('訪問日時', '未確定');
@@ -718,7 +720,7 @@ for (const [n, k] of [[29, 'part'], [30, 'fee']] as const) {
   tc(`P007-TC-0${n}`, `#${n + 1} · 1771-0${n - 28} · Add ${type} item`, '99', async () => {
     need(T1, 'T1');
     const d = s.detail;
-    await step('1. Open T1, 見積承認待ち → 見積もり → 登録 (見積書宛名 = Linksys Chain System)', async () => {
+    await step(N('1. Open T1, 見積承認待ち → 見積もり → 登録 (見積書宛名 = Linksys Chain System)'), async () => {
       await openTrouble(T1);
       await openEstimates('見積承認待ち');
       await d.startNewEstimate();
@@ -1068,7 +1070,7 @@ tc('P007-TC-046', '#47 · SETUP-T2 · Create T2 and move to 到着', '99', async
     await expect(s.detail.content).toContainText(/緊急フラグ\s*不緊急/);
     await minimizeChat(page);
   });
-  await step('2. 対応中 + linksysworker', () => assignWorker());
+  await step(N('2. 対応中 + linksysworker'), () => assignWorker());
   await step('3. 受注 → 移動中 → 到着', () => moveFlow('受注', '移動中', '到着'));
   await step("Expected: T2 '対応中' / '到着'", () => s.detail.expectBadges('対応中', '到着'));
 }, 480_000);
@@ -1380,8 +1382,8 @@ tc('P007-TC-058', '#59 · Logout admin → login manager', null, async () => {
     await s.login.waitAfterLogin();
     markLoggedIn(page, '01');
   });
-  await step("Expected: sidebar 'LINKSYS MANAGER00001', no menu '作業依頼情報'", async () => {
-    await expect(page.locator('.account')).toContainText(account('01')?.displayName || 'LINKSYS MANAGER00001');
+  await step(N("Expected: sidebar 'LINKSYS MANAGER00001', no menu '作業依頼情報'"), async () => {
+    await expect(page.locator('.account')).toContainText(account('01')?.displayName || N('LINKSYS MANAGER00001'));
     await expect(s.layout.sidebar.getByText('作業依頼情報', { exact: true })).toHaveCount(0);
   });
 });
@@ -1452,16 +1454,16 @@ tc('P007-TC-061', '#62 · Manager 作業完了確認', '01', async () => {
     await d.decide('作業依頼の決済状態を保存します');
     await d.ok(M.payOk);
   });
-  await step("Expected: '完了' / '報告済', no 作業完了確認, 決済状況 'LINKSYS MANAGER00001'", async () => {
+  await step(N("Expected: '完了' / '報告済', no 作業完了確認, 決済状況 'LINKSYS MANAGER00001'"), async () => {
     await d.expectBadges('完了', '報告済');
     await expect(d.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
-    await expect(d.content).toContainText(account('01')?.displayName || 'LINKSYS MANAGER00001');
+    await expect(d.content).toContainText(account('01')?.displayName || N('LINKSYS MANAGER00001'));
   });
 });
 
 tc('P007-TC-062', '#63 · 1786-03 · Manager checks 見積承認依頼 tasks of T5', '01', async () => {
   need(T5, 'T5');
-  await step('1. タスク管理 → 全て / 全て / LINKSYS STORE00004 (RINGI)', async () => {
+  await step(N('1. タスク管理 → 全て / 全て / LINKSYS STORE00004 (RINGI)'), async () => {
     await s.layout.menu('タスク管理');
     await s.tasks.search({ number: T5.number, status: '', scope: '', storeName: data.store.ringiName });
   });
@@ -1474,7 +1476,7 @@ tc('P007-TC-062', '#63 · 1786-03 · Manager checks 見積承認依頼 tasks of 
 
 tc('P007-TC-063', '#64 · Logout manager → login subadmin', null, async () => {
   await step('1. ログアウト → 決定', async () => { await loginAs(page, '01'); await logout(page); });
-  await step("2. Login subadmin (98) → 'LINKSYS SUBADMIN', no 資産情報", async () => {
+  await step(N("2. Login subadmin (98) → 'LINKSYS SUBADMIN', no 資産情報"), async () => {
     const c = credentialsOf('98');
     await s.login.waitReady();
     await s.login.loginId.fill(c.loginId);

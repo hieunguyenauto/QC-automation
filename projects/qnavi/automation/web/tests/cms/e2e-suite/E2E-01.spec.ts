@@ -1,9 +1,11 @@
 import { test, expect } from '@playwright/test';
-import data from '../../../data/e2e-suite.json';
+import dataRaw from '../../../data/e2e-suite.json';
 import { serialScenario } from '../../../common/scenario';
 import { E2E, storeName, storePriceFor, storeWho, yen, type Trouble } from '../../../common/e2e-suite';
 import { minimizeChat, rowOf } from '../../../common/ui';
 import { waitApisIdle } from '../../../common/wait';
+import { N, envData } from '../../../common/env-names';
+const data = envData(dataRaw);
 
 /**
  * E2E-01 · Type01 direct / approver=Chain Store — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md (LOCKED rev 7).
@@ -27,9 +29,9 @@ const tc = (id: string, title: string, role: string, body: () => Promise<void>, 
   test(`${id} ${title}`, { tag: [`@${id}`, `@role-${role}`] }, async () => { test.setTimeout(timeout); await body(); });
 const needFix = () => test.skip(!FIX, 'Chưa có FIX (TC-001 chưa chạy) — hoặc đặt E2E_FIX');
 
-tc(`${P}-TC-001`, 'SETUP · LINKSYS STORE00006; 限度額 read', '99', async () => {
+tc(`${P}-TC-001`, N('SETUP · LINKSYS STORE00006; 限度額 read'), '99', async () => {
   await step('Pre-condition: E2E00-TC-001 (トラブルナビ ON, シサンNAVI OFF)', () => e.commonSetup(false));
-  await step("1. Login Admin (99) → チェーンシステム情報 → 'Linksys Chain System'", () => e.openChain());
+  await step(N("1. Login Admin (99) → チェーンシステム情報 → 'Linksys Chain System'"), () => e.openChain());
   let fix: number | null = null;
   await step(`2. Open '${storeName(STORE)}' → Verify: 承認タイプ = '${data.typeLabel['01']}'`, async () => { fix = await e.readStore(STORE, '01'); });
   await step("3. Record '限度額' (税込) as FIX", async () => {
@@ -41,7 +43,7 @@ tc(`${P}-TC-001`, 'SETUP · LINKSYS STORE00006; 限度額 read', '99', async () 
 
 tc(`${P}-TC-002`, 'NEW · chainstore creates trouble (トラブルナビ)', '02', async () => {
   const n = e.navi;
-  await step(`1. Login ChainStore (02) 'linksysstore${STORE}' → Verify: Dashboard`, () => e.switchTo(storeWho(STORE)));
+  await step(N(`1. Login ChainStore (02) 'linksysstore${STORE}' → Verify: Dashboard`), () => e.switchTo(storeWho(STORE)));
   await step(`2. 作業依頼登録 → Step 1 店舗 '${storeName(STORE)}' → 担当者選択 → first row → 次へ`, () => e.createStep1(STORE, false));
   await step(`3. 故障内容 '選択' → '${data.categories.navi}' → Verify: webview 'トラブル相談内容', 大項目 = '${data.categories.navi}'`, async () => {
     await e.create.openTroubleNavi(data.categories.navi);
@@ -77,8 +79,8 @@ tc(`${P}-TC-002`, 'NEW · chainstore creates trouble (トラブルナビ)', '02'
 
 tc(`${P}-TC-003`, 'NEW · Admin: 対応中 + assign worker', '99', async () => {
   await step('1. Login Admin (99) → open trouble (依頼番号)', async () => { await e.switchTo('99'); await e.openTrouble(t); });
-  await step("2-4. 対応中 → 作業者 'linksysworker' → 保存 → 決定 → OK", () => e.assignWorker());
-  await step("Expected: '対応中' / '受注待ち', 業者 'LINKSYS WORKER'", async () => {
+  await step(N("2-4. 対応中 → 作業者 'linksysworker' → 保存 → 決定 → OK"), () => e.assignWorker());
+  await step(N("Expected: '対応中' / '受注待ち', 業者 'LINKSYS WORKER'"), async () => {
     await e.detail.expectBadges('対応中', '受注待ち');
     await e.detail.expectInfo('業者', data.worker.companyName);
   });
@@ -133,7 +135,7 @@ tc(`${P}-TC-007`, 'NEW · 作業完了 → 報告済 (02-08 → 02-09)', '99', a
 
 tc(`${P}-TC-008`, 'NEW · Chain Store 確認・決済 → 完了', '02', async () => {
   needFix();
-  await step(`1. Logout → login ChainStore 'linksysstore${STORE}' → open trouble → minimize chat`, async () => {
+  await step(N(`1. Logout → login ChainStore 'linksysstore${STORE}' → open trouble → minimize chat`), async () => {
     await e.switchTo(storeWho(STORE)); await e.openTrouble(t); await minimizeChat(sc.page);
   });
   await step(`2-3. '作業完了確認' → 支払情報 (${data.estimate.item}, ${yen(FIX - 1)}) → '感動' → comment → 決定 → OK`, () => e.payment(yen(FIX - 1)));
@@ -162,8 +164,8 @@ tc(`${P}-TC-009`, "CONTINUE · subadmin creates 継続依頼 '_2'", '98', async 
   });
 });
 
-tc(`${P}-TC-010`, 'CONTINUE · 作業スタッフ kept (linksysworker)', '98', async () => {
-  await step("1. Open '_2' → Verify: 業者 = 'LINKSYS WORKER'", async () => { await e.switchTo('98'); await e.openTrouble(t2); });
+tc(`${P}-TC-010`, N('CONTINUE · 作業スタッフ kept (linksysworker)'), '98', async () => {
+  await step(N("1. Open '_2' → Verify: 業者 = 'LINKSYS WORKER'"), async () => { await e.switchTo('98'); await e.openTrouble(t2); });
   await step('Expected: worker kept', () => e.detail.expectInfo('業者', data.worker.companyName));
 });
 
@@ -210,7 +212,7 @@ tc(`${P}-TC-014`, 'CONTINUE · 報告済 (02-90)', '99', async () => {
 
 tc(`${P}-TC-015`, 'CONTINUE · Chain Store 確認・決済 → 完了', '02', async () => {
   needFix();
-  await step(`1. Logout → login 'linksysstore${STORE}' → open '_2'`, async () => { await e.switchTo(storeWho(STORE)); await e.openTrouble(t2); });
+  await step(N(`1. Logout → login 'linksysstore${STORE}' → open '_2'`), async () => { await e.switchTo(storeWho(STORE)); await e.openTrouble(t2); });
   await step(`2-3. '作業完了確認' → 支払情報 (${yen(FIX - 1)}) → 感動 → comment → 決定 → OK`, () => e.payment(yen(FIX - 1)));
   await step("Expected: '_2' '完了' / '報告済'", () => e.detail.expectBadges('完了', '報告済'));
 });

@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] Tên theo môi trường: common/env-names.ts (N, NR, envData) + env/<ENV>.json › rename; est-test: Arabica Coffee VietNam / Arabica Store<N> / ARABICA WORKER / arabica…; 674 chuỗi Linksys trong spec / data được bọc tự động
 - [auto] est-test đổi sang tài khoản arabica… (adminTest2, arabicasubadmin, arabicamanager1–5, arabicastore1–9, arabicaworkercompany; worker arabicaworker1/2); mật khẩu riêng theo môi trường <ENV>_CMS_<role>_PASSWORD; npm run recon:names (dò tên hiển thị theo môi trường)
 - [auto] E2E suite chạy thật toridoll-test 15–16/10: 36/37 kịch bản (E2E-02…39) pass; E2E-14 chờ chạy lại theo TC rev 12. Spec E2E-02…39 sinh từ TC (scripts/gen-e2e-specs.mjs, npm run gen:e2e; bỏ common/e2e-case.ts); waitApisIdle bỏ request treo; reporter che mật khẩu trong snapshot; 98 thao tác báo giá qua 状態変更; chờ /payments; kiểm tài sản qua 資産一覧; recon-e2e thêm RECON_PART=E / F / S (S tạo tài sản 'TEST AUTOMATION'); lesson automation R37–R40, mở rộng R34
 - TC e2e-suite rev 8 → 12 (QUESTIONS lượt 10–14): 差し戻し → コピー; 取り下げ却下 có lý do, gốc = 失効; type 04 tự duyệt 税抜 < min_amount; urgent ≤ FIX tự duyệt; '_2' kế thừa 案件区分; Verify sau 取り下げ ở role Admin. Lesson QC D18

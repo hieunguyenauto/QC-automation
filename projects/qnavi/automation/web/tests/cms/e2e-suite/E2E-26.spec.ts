@@ -1,9 +1,11 @@
 import { expect, test } from '@playwright/test';
-import data from '../../../data/e2e-suite.json';
+import dataRaw from '../../../data/e2e-suite.json';
 import { serialScenario } from '../../../common/scenario';
 import { E2E, assertTcRevision, managerWho, storeName, ringiLevels, yen, type Trouble } from '../../../common/e2e-suite';
 import { minimizeChat, rowOf } from '../../../common/ui';
 import { waitApisIdle } from '../../../common/wait';
+import { N, envData } from '../../../common/env-names';
+const data = envData(dataRaw);
 
 /**
  * E2E-26 · Worker Company / creates est (Type04) — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-26-worker-company-test-cases.md (LOCKED rev 12, 15 TC).
@@ -30,10 +32,10 @@ const tc = (id: string, title: string, role: string, body: () => Promise<void>, 
   test(`${id} ${title}`, { tag: [`@${id}`, `@role-${role}`] }, async () => { test.setTimeout(timeout); await body(); });
 const needFix = () => test.skip(!FIX, 'Chưa có FIX (TC-001 chưa chạy) — hoặc đặt E2E_FIX');
 
-tc('E2E26-TC-001', 'SETUP · LINKSYS STORE00004; 限度額 read', '99', async () => {
+tc('E2E26-TC-001', N('SETUP · LINKSYS STORE00004; 限度額 read'), '99', async () => {
   await step('Pre-condition: E2E00-TC-001 passed (シサンNAVI OFF)', async () => { await e.commonSetup(false); });
-  await step("1. Login Admin (99) → Dashboard → menu 'チェーンシステム情報' → search 'Linksys' → open 'Linksys Chain System'", async () => { await e.openChain(); });
-  await step("2. Scroll to store list → open 'LINKSYS STORE00004' → Verify: 承認タイプ = '金額と階層承認 (No順)'", async () => {
+  await step(N("1. Login Admin (99) → Dashboard → menu 'チェーンシステム情報' → search 'Linksys' → open 'Linksys Chain System'"), async () => { await e.openChain(); });
+  await step(N("2. Scroll to store list → open 'LINKSYS STORE00004' → Verify: 承認タイプ = '金額と階層承認 (No順)'"), async () => {
     await e.chain.openStore(storeName(STORE));
     await expect(e.chain.storeValue('限度額')).toBeVisible({ timeout: 20_000 });
     await expect(e.chain.storeValue('承認タイプ')).toContainText('金額と階層承認 (No順)');
@@ -43,14 +45,14 @@ tc('E2E26-TC-001', 'SETUP · LINKSYS STORE00004; 限度額 read', '99', async ()
     expect(fix, '限度額 trống — TC cần FIX').not.toBeNull();
     FIX = fix;
   });
-  await step('Expected: LINKSYS STORE00004 opened; FIX recorded', async () => { expect(FIX).toBeGreaterThan(0); });
+  await step(N('Expected: LINKSYS STORE00004 opened; FIX recorded'), async () => { expect(FIX).toBeGreaterThan(0); });
 });
 
 tc('E2E26-TC-002', 'NEW · chainstore manager creates trouble (web form)', '01', async () => {
   const d = e.detail;
   const c = e.create;
-  await step("1. Login ChainStore Manager 'LINKSYS MANAGER00001' → Verify: Dashboard", async () => { await e.switchTo(managerWho('00001')); });
-  await step("2. Menu '作業依頼登録' → Step 1 'チェーン店舗選択' → search 店名 'LINKSYS STORE00004' → '選択' → '担当者選択' → first row → '選択' → '次へ'", async () => { await e.createStep1(STORE, true); });
+  await step(N("1. Login ChainStore Manager 'LINKSYS MANAGER00001' → Verify: Dashboard"), async () => { await e.switchTo(managerWho('00001')); });
+  await step(N("2. Menu '作業依頼登録' → Step 1 'チェーン店舗選択' → search 店名 'LINKSYS STORE00004' → '選択' → '担当者選択' → first row → '選択' → '次へ'"), async () => { await e.createStep1(STORE, true); });
   await step("3. Step 2 作業項目選択: card 故障内容 '選択' → '操作テスト' → 故障個所 'トイレ（テスト）' → 故障症状 'つまり：大便器（テスト）' (cột gốc トラブルNAVI OFF → category '操作テスト', no webview — C4)", async () => {
     await c.openCategory(0); await c.chooseCategory(data.categories.noNavi);
     await c.openCategory(1); await c.chooseCategory(data.categories.medium);
@@ -70,7 +72,7 @@ tc('E2E26-TC-002', 'NEW · chainstore manager creates trouble (web form)', '01',
     }
     await minimizeChat(sc.page);
   });
-  await step("Expected: Trouble is created for 'LINKSYS STORE00004': '問い合わせ中' / '受注待ち', 業者 '未確定', 見積書 '未提出'", async () => {
+  await step(N("Expected: Trouble is created for 'LINKSYS STORE00004': '問い合わせ中' / '受注待ち', 業者 '未確定', 見積書 '未提出'"), async () => {
     expect(t.id ?? t.number, 'Không lấy được id / 依頼番号 của trouble vừa tạo').toBeTruthy();
     await e.openTrouble(t);
     await d.expectBadges('問い合わせ中', '受注待ち');
@@ -86,7 +88,7 @@ tc('E2E26-TC-003', 'NEW · Admin: 対応中 + assign worker', '99', async () => 
     await d.openQuickAction();
     await d.setStatus('対応中');
   });
-  await step("3. Edit icon '作業者' → search 社名 'linksys' → '選択' row 'linksysworker' → Verify: 作業者 'LINKSYS WORKER'", async () => {
+  await step(N("3. Edit icon '作業者' → search 社名 'linksys' → '選択' row 'linksysworker' → Verify: 作業者 'LINKSYS WORKER'"), async () => {
     await d.editRow('作業者');
     await d.expandSearch();
     await d.searchWorker(data.worker.companyQuery);
@@ -94,7 +96,7 @@ tc('E2E26-TC-003', 'NEW · Admin: 対応中 + assign worker', '99', async () => 
     await expect(d.statusModal).toContainText(data.worker.companyName);
   });
   await step("4. '保存' → '決定' → 'OK'", async () => { await d.saveStatus(); });
-  await step("Expected: Badge '対応中' / '受注待ち', 業者 'LINKSYS WORKER'", async () => {
+  await step(N("Expected: Badge '対応中' / '受注待ち', 業者 'LINKSYS WORKER'"), async () => {
     await d.expectBadges('対応中', '受注待ち');
     await d.expectInfo('業者', data.worker.companyName);
   });
@@ -111,7 +113,7 @@ tc('E2E26-TC-004', 'NEW · 受注 → 移動中 → 到着 (02-04)', '99', async
 
 tc('E2E26-TC-005', 'NEW · Create 1 estimate(s) (total = ¥22,001 (税抜 ¥20,001 ≥ Lv1 min_amount ¥20,000)) and 提示', '05', async () => {
   const d = e.detail;
-  await step("1. Login Worker Company (05) 'linksysworkercompany' → open trouble → 'クイック操作' → select '見積承認待ち' → Verify: card 見積もり '必須'", async () => {
+  await step(N("1. Login Worker Company (05) 'linksysworkercompany' → open trouble → 'クイック操作' → select '見積承認待ち' → Verify: card 見積もり '必須'"), async () => {
     await e.open('05', t);
     await d.openQuickAction();
     await d.setFlow('見積承認待ち');
@@ -174,7 +176,7 @@ tc('E2E26-TC-007', 'NEW · 作業完了 → 報告済 (02-08 → 02-09)', '99', 
 
 tc('E2E26-TC-008', 'NEW · CS Admin 確認・決済 → 完了', '01', async () => {
   const d = e.detail;
-  await step("1. Logout → login ChainStore Manager 'LINKSYS MANAGER00004' → open trouble → minimize chat", async () => {
+  await step(N("1. Logout → login ChainStore Manager 'LINKSYS MANAGER00004' → open trouble → minimize chat"), async () => {
     await e.open(managerWho('00004'), t);
     await minimizeChat(sc.page);
   });
@@ -209,16 +211,16 @@ tc('E2E26-TC-009', "CONTINUE · admin creates 継続依頼 '_2'", '99', async ()
     await d.expectOpened(t2.id);
     t2.number = await d.number();
   });
-  await step("Expected: Continue trouble '<依頼番号>_2' is created for 'LINKSYS STORE00004': '対応中' / '見積待ち' (02-10), version New", async () => {
+  await step(N("Expected: Continue trouble '<依頼番号>_2' is created for 'LINKSYS STORE00004': '対応中' / '見積待ち' (02-10), version New"), async () => {
     expect(t2.number).toBe(`${t.number}_2`);
     await d.expectBadges('対応中', '見積待ち');
   });
 });
 
-tc('E2E26-TC-010', 'CONTINUE · 作業スタッフ kept (linksysworker)', '99', async () => {
+tc('E2E26-TC-010', N('CONTINUE · 作業スタッフ kept (linksysworker)'), '99', async () => {
   const d = e.detail;
-  await step("1. Open '_2' → Verify: 業者 = 'LINKSYS WORKER' (inherited) (cột gốc 変更あり — giữ nguyên worker theo N15)", async () => { await e.open('99', t2); });
-  await step("Expected: Worker 'LINKSYS WORKER' is kept from the original trouble", async () => { await d.expectInfo('業者', data.worker.companyName); });
+  await step(N("1. Open '_2' → Verify: 業者 = 'LINKSYS WORKER' (inherited) (cột gốc 変更あり — giữ nguyên worker theo N15)"), async () => { await e.open('99', t2); });
+  await step(N("Expected: Worker 'LINKSYS WORKER' is kept from the original trouble"), async () => { await d.expectInfo('業者', data.worker.companyName); });
 });
 
 tc('E2E26-TC-011', 'CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示', '99', async () => {
@@ -277,7 +279,7 @@ tc('E2E26-TC-014', 'CONTINUE · 報告済 (02-90)', '99', async () => {
 
 tc('E2E26-TC-015', 'CONTINUE · CS Admin 確認・決済 → 完了', '01', async () => {
   const d = e.detail;
-  await step("1. Logout → login ChainStore Manager 'LINKSYS MANAGER00004' → open '_2'", async () => {
+  await step(N("1. Logout → login ChainStore Manager 'LINKSYS MANAGER00004' → open '_2'"), async () => {
     await e.open(managerWho('00004'), t2);
     await minimizeChat(sc.page);
   });

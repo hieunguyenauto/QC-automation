@@ -9,6 +9,7 @@ import { ChainSystemScreen } from '../../screens/cms/chain-system.screen';
 import { TroubleCreateScreen } from '../../screens/cms/trouble-create.screen';
 import { TroubleDetailScreen } from '../../screens/cms/trouble-detail.screen';
 import { E2E } from '../../common/e2e-suite';
+import { N, NR } from '../../common/env-names';
 
 /**
  * RECON E2E suite — KHÔNG lưu dữ liệu. Lấy cây phần tử thật (R01) cho 2 màn chưa có trong screens/:
@@ -68,17 +69,17 @@ test('recon E2E suite screens (read-only)', async ({ browser }) => {
   await snap(page, 'admin-login', () => loginAs(page, '99', { save: false }));
   await snap(page, 'chain-list', () => layout.menu('チェーンシステム情報'));
   await snap(page, 'chain-detail', async () => {
-    await chain.openChain('Linksys', 'Linksys Chain System');
-    await loaded(/LINKSYS STORE0000\d/);
+    await chain.openChain(N('Linksys'), N('Linksys Chain System'));
+    await loaded(NR(/LINKSYS STORE0000\d/));
   });
   const chainUrl = page.url();
   await snap(page, 'chain-edit-form', async () => {
     await clickables(content, /^\s*編集\s*$/).first().click();
     await expect(content.locator('input[placeholder="社名を入力"]')).not.toHaveValue('', { timeout: 30_000 });
   });
-  for (const st of ['LINKSYS STORE00004', 'LINKSYS STORE00005', 'LINKSYS STORE00001', 'LINKSYS STORE00009', 'LINKSYS STORE00006', 'LINKSYS STORE00007', 'LINKSYS STORE00008', 'LINKSYS STORE00002']) {
+  for (const st of [N('LINKSYS STORE00004'), N('LINKSYS STORE00005'), N('LINKSYS STORE00001'), N('LINKSYS STORE00009'), N('LINKSYS STORE00006'), N('LINKSYS STORE00007'), N('LINKSYS STORE00008'), N('LINKSYS STORE00002')]) {
     const key = st.slice(-5);
-    await snap(page, `store-${key}-open-list`, async () => { await page.goto(chainUrl); await loaded(/LINKSYS STORE0000\d/); });
+    await snap(page, `store-${key}-open-list`, async () => { await page.goto(chainUrl); await loaded(NR(/LINKSYS STORE0000\d/)); });
     const ok = await snap(page, `store-${key}-detail`, async () => {
       const row = content.locator('tbody tr').filter({ has: page.locator('td', { hasText: new RegExp(`^\\s*${st}\\b`) }) }).first();
       await row.locator('td').nth(1).click({ timeout: 15_000 });
@@ -98,7 +99,7 @@ test('recon E2E suite screens (read-only)', async ({ browser }) => {
 
   // ---- B. 作業依頼登録 → Step 2 作業項目選択 → thẻ category (webview トラブルナビ?)
   const create = new TroubleCreateScreen(page);
-  if (!process.env.RECON_PART || process.env.RECON_PART === 'B') for (const [who, store, cat] of [['02:approveType1', '', '水'], ['01', 'LINKSYS STORE00004', '操作テスト']] as const) {
+  if (!process.env.RECON_PART || process.env.RECON_PART === 'B') for (const [who, store, cat] of [['02:approveType1', '', '水'], ['01', N('LINKSYS STORE00004'), '操作テスト']] as const) {
     const tag = who.replace(':', '-');
     await snap(page, `${tag}-login`, () => loginAs(page, who, { save: false }));
     await snap(page, `${tag}-create-step1`, async () => { await layout.menu('作業依頼登録'); await loaded('Step 1'); });
@@ -136,8 +137,8 @@ test('recon E2E suite screens (read-only)', async ({ browser }) => {
     await snap(page, 'C-admin-login', () => loginAs(page, '99', { save: false }));
     await snap(page, 'C-chain-edit', async () => {
       await layout.menu('チェーンシステム情報');
-      await chain.openChain('Linksys', 'Linksys Chain System');
-      await loaded(/LINKSYS STORE0000\d/);
+      await chain.openChain(N('Linksys'), N('Linksys Chain System'));
+      await loaded(NR(/LINKSYS STORE0000\d/));
       await clickables(content, /^\s*編集\s*$/).first().click();
       await expect(content.locator('input[placeholder="社名を入力"]')).not.toHaveValue('', { timeout: 30_000 });
       for (const label of ['シサンNAVI', 'トラブルNAVI']) {
@@ -488,7 +489,7 @@ test('recon E2E suite screens (read-only)', async ({ browser }) => {
   //  (mặc định 'LINKSYS STORE00006') ở 資産情報 › /admin/asset-management/<chainId>/create — dữ liệu cần có trước cho E2E-38.
   if (process.env.RECON_PART === 'S') {
     const asset = process.env.RECON_ASSET || 'TEST AUTOMATION';
-    const store = process.env.RECON_STORE || 'LINKSYS STORE00006';
+    const store = process.env.RECON_STORE || N('LINKSYS STORE00006');
     const html = async (name: string, loc: ReturnType<Page['locator']>) => {
       fs.mkdirSync(OUT, { recursive: true });
       fs.writeFileSync(path.join(OUT, `S-${name}.html`), await loc.evaluate((x) => x.outerHTML, undefined, { timeout: 10_000 }).catch((x) => String(x)));

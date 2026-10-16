@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { test, expect, type Page, type BrowserContext } from '@playwright/test';
-import data from '../../../data/e2e-trouble-flow.json';
+import dataRaw from '../../../data/e2e-trouble-flow.json';
 import { account as roleAccount } from '../../../data/roles';
 import { credentialsOf, loginAs, markLoggedIn } from '../../../common/session';
 import { env } from '../../../common/env';
@@ -11,6 +11,8 @@ import { TroubleCreateScreen } from '../../../screens/cms/trouble-create.screen'
 import { TroubleListScreen } from '../../../screens/cms/trouble-list.screen';
 import { TroubleDetailScreen } from '../../../screens/cms/trouble-detail.screen';
 import { TroubleEditScreen } from '../../../screens/cms/trouble-edit.screen';
+import { N, envData } from '../../../common/env-names';
+const data = envData(dataRaw);
 
 /**
  * Kịch bản E2E — TC: projects/qnavi/qc/test-cases/e2e-trouble-flow-test-cases.md (rev 2, E2E-TC-001 … 013).
@@ -289,7 +291,7 @@ test('E2E-TC-004 状態 = 対応中 and assign worker', { tag: ['@E2E-TC-004', '
     await expect(d.statusModal).toContainText(data.worker.companyName);
   });
   await test.step('7. 保存 → 決定 → OK', () => d.saveStatus());
-  await test.step('Expected: 対応中 / 受注待ち, 業者 = LINKSYS WORKER', async () => {
+  await test.step(N('Expected: 対応中 / 受注待ち, 業者 = LINKSYS WORKER'), async () => {
     await d.expectBadges('対応中', '受注待ち');
     await d.expectInfo('業者', data.worker.companyName);
   });

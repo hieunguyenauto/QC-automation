@@ -22,28 +22,28 @@
     },
     "01": {
       "loginId": "arabicamanager1",
-      "displayName": "LINKSYS MANAGER00001",
-      "chainSystem": "Linksys Chain System",
+      "displayName": "ARABICA MANAGER1",
+      "chainSystem": "Arabica Coffee VietNam",
       "note": "ChainStore Manager, dùng ở E2E-TC-011..013. Manager khác: variant credentials('01', 'm2'…'m5'); mật khẩu CMS_01_PASSWORD (dùng chung) hoặc CMS_01_<VARIANT>_PASSWORD",
       "variants": {
         "m2": {
           "loginId": "arabicamanager2",
-          "displayName": "LINKSYS MANAGER00002",
+          "displayName": "ARABICA MANAGER2",
           "note": "est-test (đổi 16/10)"
         },
         "m3": {
           "loginId": "arabicamanager3",
-          "displayName": "LINKSYS MANAGER00003",
+          "displayName": "ARABICA MANAGER3",
           "note": "est-test (đổi 16/10)"
         },
         "m4": {
           "loginId": "arabicamanager4",
-          "displayName": "LINKSYS MANAGER00004",
+          "displayName": "ARABICA MANAGER4",
           "note": "est-test (đổi 16/10)"
         },
         "m5": {
           "loginId": "arabicamanager5",
-          "displayName": "LINKSYS MANAGER00005",
+          "displayName": "ARABICA MANAGER5",
           "note": "est-test (đổi 16/10)"
         }
       }
@@ -54,47 +54,47 @@
       "variants": {
         "toridoll": {
           "loginId": "arabicastore1",
-          "storeName": "LINKSYS STORE00001 (TORIDOLL)",
+          "storeName": "Arabica Store1",
           "note": "Account Toridoll — CÓ encrypt"
         },
         "qnavi": {
           "loginId": "arabicastore2",
-          "storeName": "LINKSYS STORE00002 (QNAVI)",
+          "storeName": "Arabica Store2",
           "note": "Account Qnavi — KHÔNG encrypt"
         },
         "urgent": {
           "loginId": "arabicastore3",
-          "storeName": "LINKSYS STORE00003 (URGENT)",
+          "storeName": "Arabica Store3",
           "note": "Trouble tạo ra luôn là Urgent"
         },
         "ringi": {
           "loginId": "arabicastore4",
-          "storeName": "LINKSYS STORE00004 (RINGI)",
+          "storeName": "Arabica Store4",
           "note": "Có setting Ringi"
         },
         "autoApprove": {
           "loginId": "arabicastore5",
-          "storeName": "LINKSYS STORE00005 (AUTO APPROVE)",
+          "storeName": "Arabica Store5",
           "note": "Có auto approve"
         },
         "approveType1": {
           "loginId": "arabicastore6",
-          "storeName": "LINKSYS STORE00006",
+          "storeName": "Arabica Store6",
           "note": "APPROVE TYPE 1"
         },
         "approveType2": {
           "loginId": "arabicastore7",
-          "storeName": "LINKSYS STORE00007",
+          "storeName": "Arabica Store7",
           "note": "APPROVE TYPE 2"
         },
         "approveType3": {
           "loginId": "arabicastore8",
-          "storeName": "LINKSYS STORE00008",
+          "storeName": "Arabica Store8",
           "note": "APPROVE TYPE 3"
         },
         "ringi0_99": {
           "loginId": "arabicastore9",
-          "storeName": "LINKSYS STORE00009",
+          "storeName": "Arabica Store9",
           "note": "Ringi sử dụng với [0] [99]"
         }
       }
@@ -109,5 +109,74 @@
     "_note": "Tài khoản worker trên est-test (dùng khi gán 作業者 / đổi worker)",
     "write": "arabicaworker1",
     "noKey": "arabicaworker2"
-  }
+  },
+  "_renameNote": "Đổi tên so với toridoll-test (Linksys). Anh Hiếu xác nhận 16/10: chain 'Arabica Coffee VietNam', store 'Arabica Store', worker 'ARABICA WORKER', login arabica…. [CẦN XÁC NHẬN] số thứ tự store (đang đoán 'Arabica Store6'), tên manager / subadmin / worker2 / tên nhân viên worker — sửa ngay trong rename nếu khác.",
+  "rename": [
+    [
+      "linksysworkerqnavi",
+      "arabicaworker2"
+    ],
+    [
+      "linksysworkercompany",
+      "arabicaworkercompany"
+    ],
+    [
+      "linksysworker",
+      "arabicaworker1"
+    ],
+    [
+      "linksyssubadmin",
+      "arabicasubadmin"
+    ],
+    [
+      "linksysstore0*(\\d+)",
+      "arabicastore$1"
+    ],
+    [
+      "linksysmanager0*(\\d+)",
+      "arabicamanager$1"
+    ],
+    [
+      "Linksys Chain System",
+      "Arabica Coffee VietNam"
+    ],
+    [
+      "LINKSYS STORE0*(\\d+)(?: \\([^)]*\\))?",
+      "Arabica Store$1"
+    ],
+    [
+      "LINKSYS MANAGER0*(\\d+)",
+      "ARABICA MANAGER$1"
+    ],
+    [
+      "LINKSYS WORKER",
+      "ARABICA WORKER"
+    ],
+    [
+      "LINKSYS SUBADMIN",
+      "ARABICA SUBADMIN"
+    ],
+    [
+      "linksys worker",
+      "arabica worker"
+    ],
+    [
+      "\\bLinksys\\b",
+      "Arabica"
+    ],
+    [
+      "\\bLINKSYS\\b",
+      "ARABICA"
+    ],
+    [
+      "\\blinksys\\b",
+      "arabica"
+    ]
+  ],
+  "regexRename": [
+    [
+      "LINKSYS STORE0000",
+      "Arabica Store"
+    ]
+  ]
 }

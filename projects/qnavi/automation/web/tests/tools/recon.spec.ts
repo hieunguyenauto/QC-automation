@@ -1,12 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import { test, type Page } from '@playwright/test';
-import data from '../../data/e2e-trouble-flow.json';
+import dataRaw from '../../data/e2e-trouble-flow.json';
 import { credentials } from '../../data/roles';
 import { env } from '../../common/env';
 import { clickables, field, modal } from '../../common/ui';
 import { LoginScreen } from '../../screens/cms/login.screen';
 import { CmsLayout } from '../../screens/cms/layout.screen';
+import { envData } from '../../common/env-names';
+const data = envData(dataRaw);
 
 /**
  * RECON — đi qua các màn hình CMS, KHÔNG lưu dữ liệu, chụp ảnh + cây phần tử (aria snapshot) từng bước

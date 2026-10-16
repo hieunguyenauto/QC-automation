@@ -2,6 +2,7 @@ import { expect } from '@playwright/test';
 import { BaseScreen } from '../base.screen';
 import { waitApisIdle } from '../../common/wait';
 import { acknowledgeOk, click, clickable, clickables, confirmDecide, exact, modalWithButton, valueOf } from '../../common/ui';
+import { NR } from '../../common/env-names';
 
 /**
  * チェーンシステム情報 — catalog: cms-frontend.md › "Chain System".
@@ -65,7 +66,7 @@ export class ChainSystemScreen extends BaseScreen {
   // ----- E2E suite (2026-10-14) -----
   /** Chi tiết chain đã tải xong: bảng チェーン店舗一覧 có store. */
   async expectChainLoaded(): Promise<void> {
-    await expect(this.content.getByText(/LINKSYS STORE0000\d/).first()).toBeVisible({ timeout: 30_000 });
+    await expect(this.content.getByText(NR(/LINKSYS STORE0000\d/)).first()).toBeVisible({ timeout: 30_000 });
   }
   /** 編集 → form 'チェーンシステム編集' đã tải (社名 có giá trị). */
   async openEdit(): Promise<void> {

@@ -925,6 +925,7 @@ Khi đọc / ghi Excel: qc/lessons/INDEX.md mục Excel / công cụ.
 - Đăng nhập trong test: CHỈ dùng <P>/automation/web/common/session.ts (loginAs(page, '02:urgent'), logout, forAccounts([...]) ). Không tự viết hàm login, không ghi loginId / mật khẩu trong spec. Tài khoản: env/<ENV>.json › accounts + .env.
 - Message dùng để expect (data/<scope-key>.json › messages) phải khớp <P>/spec/messages.md; không có trong file → ghi chú nguồn (TC LOCKED / app thật) và báo người dùng.
 - Màn hình mới / chưa chạy qua: BẮT BUỘC dò màn hình thật trước khi viết locator (R01) — Browser pane hoặc npm run recon / recon:e2e. Kết quả dò chỉ ghi vào thư mục tạm reports/_tmp_chk/recon*/ (ghi đè mỗi lần), không tạo thư mục reports/recon-* mới; thứ cần giữ ghi vào screens/ (locator) và automation/lessons/ (bài học). Trích nguồn ghi 'dò thật <ngày>, <môi trường>', không ghi đường dẫn reports/.
+- Tên hiển thị / login ID khác nhau theo môi trường (toridoll-test: Linksys…, est-test: Arabica…): code và data viết theo tên gốc Linksys; chuỗi viết thẳng trong code bọc N('…') / regex bọc NR(/…/), data/*.json nạp qua envData() (common/env-names.ts). Luật đổi tên ở env/<ENV>.json › rename.
 - Sinh / sửa code test: đọc automation/lessons/INDEX.md TRƯỚC; locator chỉ lấy / ghi ở screens/. Sửa xong 1 lỗi test fail → luôn đề xuất lesson (bản nháp: loại, nguyên nhân gốc, rule) cho người dùng duyệt rồi ghi vào automation/lessons/ + INDEX; lỗi do TC sai → lesson phía QC (qc/lessons).
 
 ## Skill dùng trong repo
@@ -1572,6 +1573,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] Tên theo môi trường: common/env-names.ts (N, NR, envData) + env/<ENV>.json › rename; est-test: Arabica Coffee VietNam / Arabica Store<N> / ARABICA WORKER / arabica…; 674 chuỗi Linksys trong spec / data được bọc tự động
 - [auto] est-test đổi sang tài khoản arabica… (adminTest2, arabicasubadmin, arabicamanager1–5, arabicastore1–9, arabicaworkercompany; worker arabicaworker1/2); mật khẩu riêng theo môi trường <ENV>_CMS_<role>_PASSWORD; npm run recon:names (dò tên hiển thị theo môi trường)
 - [auto] E2E suite chạy thật toridoll-test 15–16/10: 36/37 kịch bản (E2E-02…39) pass; E2E-14 chờ chạy lại theo TC rev 12. Spec E2E-02…39 sinh từ TC (scripts/gen-e2e-specs.mjs, npm run gen:e2e; bỏ common/e2e-case.ts); waitApisIdle bỏ request treo; reporter che mật khẩu trong snapshot; 98 thao tác báo giá qua 状態変更; chờ /payments; kiểm tài sản qua 資産一覧; recon-e2e thêm RECON_PART=E / F / S (S tạo tài sản 'TEST AUTOMATION'); lesson automation R37–R40, mở rộng R34
 - TC e2e-suite rev 8 → 12 (QUESTIONS lượt 10–14): 差し戻し → コピー; 取り下げ却下 có lý do, gốc = 失効; type 04 tự duyệt 税抜 < min_amount; urgent ≤ FIX tự duyệt; '_2' kế thừa 案件区分; Verify sau 取り下げ ở role Admin. Lesson QC D18
@@ -1627,4 +1629,3 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - Luồng thiết kế 6 bước + Context pack; gộp decisions thành 1 file docs/decisions.md (D08, D07)
 
 ## [0.1.0] - 2026-10-09
-### Thêm

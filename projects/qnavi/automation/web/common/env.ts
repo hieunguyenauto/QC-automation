@@ -22,6 +22,10 @@ export type EnvConfig = {
   httpCredentials?: { username: string; password: string };
   /** Tài khoản test theo role (không có mật khẩu). Mật khẩu: .env CMS_<role>_PASSWORD. */
   accounts?: Record<string, Account & { variants?: Record<string, Account & { storeName?: string }> }>;
+  /** Luật đổi tên hiển thị / login ID so với tên gốc (Linksys) — xem common/env-names.ts. */
+  rename?: [string, string, string?][];
+  /** Luật đổi chữ trong regex (thay nguyên văn chuỗi) — xem NR() trong common/env-names.ts. */
+  regexRename?: [string, string][];
 };
 
 function loadEnv(): EnvConfig {

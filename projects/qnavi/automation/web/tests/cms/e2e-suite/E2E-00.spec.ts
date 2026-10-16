@@ -1,6 +1,7 @@
 import { test } from '@playwright/test';
 import { serialScenario } from '../../../common/scenario';
 import { E2E } from '../../../common/e2e-suite';
+import { N } from '../../../common/env-names';
 
 /**
  * E2E-00 · Common setup — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-00-common-setup-test-cases.md (LOCKED rev 3).
@@ -14,9 +15,9 @@ const sc = serialScenario();
 
 for (const [id, asset] of [['E2E00-TC-001', false], ['E2E00-TC-002', true]] as const) {
   const v = asset ? 'ON' : 'OFF';
-  test(`${id} COMMON · Linksys: トラブルナビ ON, シサンNAVI ${v}`, { tag: [`@${id}`, '@role-99'] }, async () => {
+  test(N(`${id} COMMON · Linksys: トラブルナビ ON, シサンNAVI ${v}`), { tag: [`@${id}`, '@role-99'] }, async () => {
     const e = new E2E(sc.page, 0);
-    await test.step('1-3. Login Admin (99) → チェーンシステム情報 → Linksys Chain System → Verify トラブルNAVI ON; シサンNAVI = ' + v + ' (set + 保存 nếu khác)',
+    await test.step(N('1-3. Login Admin (99) → チェーンシステム情報 → Linksys Chain System → Verify トラブルNAVI ON; シサンNAVI = ') + v + ' (set + 保存 nếu khác)',
       () => e.commonSetup(asset));
     await test.step(`Expected: トラブルナビ ON / シサンNAVI ${v}`, async () => { /* đã kiểm trong commonSetup */ });
   });

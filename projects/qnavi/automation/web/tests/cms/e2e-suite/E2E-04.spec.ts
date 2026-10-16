@@ -8,7 +8,7 @@ import { N, envData } from '../../../common/env-names';
 const data = envData(dataRaw);
 
 /**
- * E2E-04 · Type04 Ringi / sequential Lv1→3 — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-04-type04-ringi-test-cases.md (LOCKED rev 12, 15 TC).
+ * E2E-04 · Type04 Ringi / sequential Lv1→3 — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-04-type04-ringi-test-cases.md (LOCKED rev 13, 15 TC).
  * FILE SINH TỰ ĐỘNG từ TC — không sửa tay. TC đổi → node scripts/gen-e2e-specs.mjs; cần thao tác mới → sửa khuôn trong script hoặc screens/ / common/.
  * 1 tc() = 1 TC, step = nguyên văn cột Steps. Chạy nối tiếp trên 1 trình duyệt; TC fail → TC sau không chạy.
  * Chạy: ENV=toridoll-test npm run suite -- E2E-04
@@ -23,9 +23,10 @@ const t2: Trouble = { id: process.env.E2E_TROUBLE2_ID || undefined };
 let FIX: number | null | undefined = process.env.E2E_FIX ? Number(process.env.E2E_FIX) : undefined;
 /** Tổng 税込 của từng báo giá tạo trong lần chạy. */
 const totals = new Map<string, number>();
+let srcSmall = '';   // 作業項目（小） của trouble gốc (TC 継続依頼)
 const sc = serialScenario(() => [t.number ? `NEW ${t.number} (id ${t.id})` : '', t2.number ? `CONT ${t2.number} (id ${t2.id})` : '', FIX != null ? `FIX ${FIX}` : '']);
 let e: E2E;
-test.beforeAll(() => { assertTcRevision('projects/qnavi/qc/test-cases/e2e-suite/E2E-04-type04-ringi-test-cases.md', 12); e = new E2E(sc.page, 4); });
+test.beforeAll(() => { assertTcRevision('projects/qnavi/qc/test-cases/e2e-suite/E2E-04-type04-ringi-test-cases.md', 13); e = new E2E(sc.page, 4); });
 const step = test.step;
 const tc = (id: string, title: string, role: string, body: () => Promise<void>, timeout = 300_000) =>
   test(`${id} ${title}`, { tag: [`@${id}`, `@role-${role}`] }, async () => { test.setTimeout(timeout); await body(); });
@@ -143,7 +144,9 @@ tc('E2E04-TC-006', N("NEW · Approve (3 level(s)): ChainStore Manager 'LINKSYS M
   });
   await step("2. '承認する' → '決定' → Verify: '稟議承認中' (not yet '承認済み'); '承認する' disappears for this approver", async () => {
     await d.approveEstimate('E2E04-New');
-    await expect(d.estimateRow('E2E04-New').locator('.badge')).not.toHaveText('承認済み');
+    await d.expectEstimateStatus('E2E04-New', '稟議承認中');
+    await d.openEstimateMenu('E2E04-New');
+    await expect(d.estimateAction('manager', '承認する'), "'承認する' disappears for this approver").toHaveCount(0);
   });
   await step(N("3. Logout → Login ChainStore Manager 'LINKSYS MANAGER00002' → open trouble → '見積もり' → expand 'E2E04-New' → Verify: card 店舗 has '承認する', '差し戻し'"), async () => {
     await e.open(managerWho('00002'), t);
@@ -153,7 +156,9 @@ tc('E2E04-TC-006', N("NEW · Approve (3 level(s)): ChainStore Manager 'LINKSYS M
   });
   await step("4. '承認する' → '決定' → Verify: '稟議承認中' (not yet '承認済み'); '承認する' disappears for this approver", async () => {
     await d.approveEstimate('E2E04-New');
-    await expect(d.estimateRow('E2E04-New').locator('.badge')).not.toHaveText('承認済み');
+    await d.expectEstimateStatus('E2E04-New', '稟議承認中');
+    await d.openEstimateMenu('E2E04-New');
+    await expect(d.estimateAction('manager', '承認する'), "'承認する' disappears for this approver").toHaveCount(0);
   });
   await step(N("5. Logout → Login ChainStore Manager 'LINKSYS MANAGER00003' → open trouble → '見積もり' → expand 'E2E04-New' → Verify: card 店舗 has '承認する', '差し戻し'"), async () => {
     await e.open(managerWho('00003'), t);
@@ -209,12 +214,15 @@ tc('E2E04-TC-009', "CONTINUE · subadmin creates 継続依頼 '_2'", '98', async
   await step("1. Logout → login CMS SubAdmin (98) → menu '作業依頼登録' → radio '継続依頼' → '次へ'", async () => {
     test.skip(!t.number, 'Chưa có 依頼番号 NEW');
     await e.switchTo('98');
+    srcSmall = await e.smallItemOf(t);   // 作業項目（小） của trouble gốc — để kiểm 'filled from the original'
     await e.layout.menu('作業依頼登録');
     await c.start('継続依頼');
   });
   await step("2. '作業依頼選択' → select the NEW trouble → Verify: store and 作業項目 filled from the original", async () => {
     await c.pickContinuationSource(t.number!);
     await expect(c.content).toContainText(storeName(STORE));
+    await expect(c.content).toContainText(`番号: ${t.number}`);
+    await expect(c.content, '作業項目 filled from the original').toContainText(srcSmall);
   });
   await step("3. '決定して問合わせ' → '決定' → 'OK'", async () => {
     await c.submitContinuation();
@@ -223,7 +231,7 @@ tc('E2E04-TC-009', "CONTINUE · subadmin creates 継続依頼 '_2'", '98', async
     await d.expectOpened(t2.id);
     t2.number = await d.number();
   });
-  await step(N("Expected: Continue trouble '<依頼番号>_2' is created for 'LINKSYS STORE00004': '対応中' / '見積待ち' (02-10), version New"), async () => {
+  await step(N("Expected: Continue trouble '<依頼番号>_2' is created for 'LINKSYS STORE00004': '対応中' / '見積待ち' (02-10)"), async () => {
     expect(t2.number).toBe(`${t.number}_2`);
     await d.expectBadges('対応中', '見積待ち');
   });

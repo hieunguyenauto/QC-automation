@@ -7,7 +7,7 @@ import { N, envData } from '../../../common/env-names';
 const data = envData(dataRaw);
 
 /**
- * E2E-24 · Worker(iOS) create → / Admin approve (CMS) — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-24-worker-ios-create-test-cases.md (LOCKED rev 12, 5 TC).
+ * E2E-24 · Worker(iOS) create → / Admin approve (CMS) — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-24-worker-ios-create-test-cases.md (LOCKED rev 13, 5 TC).
  * FILE SINH TỰ ĐỘNG từ TC — không sửa tay. TC đổi → node scripts/gen-e2e-specs.mjs; cần thao tác mới → sửa khuôn trong script hoặc screens/ / common/.
  * 1 tc() = 1 TC, step = nguyên văn cột Steps. Chạy nối tiếp trên 1 trình duyệt; TC fail → TC sau không chạy.
  * Chạy: ENV=toridoll-test npm run suite -- E2E-24
@@ -24,7 +24,7 @@ let FIX: number | null | undefined = process.env.E2E_FIX ? Number(process.env.E2
 const totals = new Map<string, number>();
 const sc = serialScenario(() => [t.number ? `NEW ${t.number} (id ${t.id})` : '', t2.number ? `CONT ${t2.number} (id ${t2.id})` : '', FIX != null ? `FIX ${FIX}` : '']);
 let e: E2E;
-test.beforeAll(() => { assertTcRevision('projects/qnavi/qc/test-cases/e2e-suite/E2E-24-worker-ios-create-test-cases.md', 12); e = new E2E(sc.page, 24); });
+test.beforeAll(() => { assertTcRevision('projects/qnavi/qc/test-cases/e2e-suite/E2E-24-worker-ios-create-test-cases.md', 13); e = new E2E(sc.page, 24); });
 const step = test.step;
 const tc = (id: string, title: string, role: string, body: () => Promise<void>, timeout = 300_000) =>
   test(`${id} ${title}`, { tag: [`@${id}`, `@role-${role}`] }, async () => { test.setTimeout(timeout); await body(); });

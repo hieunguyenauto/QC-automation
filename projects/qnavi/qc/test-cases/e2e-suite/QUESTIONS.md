@@ -1,4 +1,4 @@
-# Câu hỏi — E2E suite · cập nhật 16/10/2026 (lượt 14)
+# Câu hỏi — E2E suite · cập nhật 16/10/2026 (lượt 15)
 **Đã chốt hết — không còn câu mở.** (Q1 chờ chốt chữ sau lần chạy thật)
 Suite sau lượt 9 (TC Revision 7): bỏ case 28 (G11) và case 16 (G14) → còn **37 case**.
 
@@ -6,6 +6,11 @@ Suite sau lượt 9 (TC Revision 7): bỏ case 28 (G11) và case 16 (G14) → c�
 (không còn)
 
 ## B. Đã chốt (không cần trả lời)
+### Lượt 15 (16/10) — rà expected TC ↔ code → TC Revision 13
+| # | Kết quả |
+|---|---|
+| R13-1 | Bỏ 'version New' ở Expected TC 継続依頼: mọi trouble đều New, không kiểm OLD / New (Hieu Nguyen 16/10) |
+
 ### Lượt 14 (16/10) — chạy lại E2E-13 / 14 → TC Revision 12
 | # | Kết quả |
 |---|---|

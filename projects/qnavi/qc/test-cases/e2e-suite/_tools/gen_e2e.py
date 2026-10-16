@@ -7,7 +7,11 @@ HERE = os.path.dirname(__file__)
 C = json.load(open(os.path.join(HERE, 'cases.json')))
 BR = '<br>'
 SKIP = {16, 28}
-LOCK = '- State: LOCKED · Revision: 12 · Approved by / at: Hieu Nguyen / 16/10/2026'
+LOCK = '- State: LOCKED · Revision: 13 · Approved by / at: Hieu Nguyen / 16/10/2026'
+# Rev riêng từng case (đổi chỉ 1 sheet — luật 1 sheet / lần): case → (dòng LOCK, ghi chú rev). Case trong đây dùng khuôn báo giá ghi rõ bước (EST_DETAIL).
+REV = {'E2E-01': ('- State: LOCKED · Revision: 14 · Approved by / at: Hieu Nguyen / 16/10/2026',
+                  "- Rev 14 (16/10/2026): TC-005 / TC-011 ghi rõ 作業会社単価 '1000' + xoá dòng mặc định '出張費' / '現場調査費' + 店舗向け 単価 cho total (税込) = FIX − 1 (đối chiếu code E2E-01).")}
+tax = lambda amt: amt.replace('total', 'total (税込)', 1)
 TYPE_LABEL = {'01': '個人承認', '02': '階層承認（No順）', '03': '金額承認', '04': '金額と階層承認 (No順)'}   # T3: chữ trên app (recon toridoll-test 14/10)
 
 def slug(s):
@@ -205,7 +209,9 @@ def build(d):
         names = [f'{P}-New']; draft = ''
     allnames = names + ([draft] if draft else [])
     s = [f"1. Login {ec} → open trouble → 'クイック操作' → select '見積承認待ち' → Verify: card 見積もり '{'任意' if urgent_new else '必須'}'",
-         f"2. Edit icon '見積もり' → for each of {', '.join(repr(x) for x in allnames)}: '登録' → 見積名 → '追加' → '作業', 作業項目 'Autotest', 単価 so that {amt_n} → '決定' → '決定' (top right) → Verify: row '下書き'"]
+         (f"2. Edit icon '見積もり' → for each of {', '.join(repr(x) for x in allnames)}: '登録' → 見積名 → '追加' → '作業', 作業項目 'Autotest', 作業会社単価 '1000' → '決定' → delete default rows '出張費' / '現場調査費' ('削除') → 店舗向け 単価 so that {tax(amt_n)} → '決定' (top right) → Verify: row '下書き'"
+          if n in REV else
+          f"2. Edit icon '見積もり' → for each of {', '.join(repr(x) for x in allnames)}: '登録' → 見積名 → '追加' → '作業', 作業項目 'Autotest', 単価 so that {amt_n} → '決定' → '決定' (top right) → Verify: row '下書き'")]
     if bulk:
         s.append(f"3. Tick all 3 rows → '提示する' once → Verify: confirmation lists 3 names ('以下3件の見積を店舗へ提出しますか') → '決定' → Verify: all 3 '承認待ち' (push notification not checked — G16)")
     elif len(names) == 1:
@@ -355,7 +361,7 @@ def build(d):
          "2. '作業依頼選択' → select the NEW trouble → Verify: store and 作業項目 filled from the original",
          "3. '決定して問合わせ' → '決定' → 'OK'"]
     add('作業依頼登録 (継続)', f"CONTINUE · {cont_creator} creates 継続依頼 '_2'", '-', s,
-        f"Continue trouble '<依頼番号>_2' is created for '{sname}': '対応中' / '見積待ち' (02-10), version New", cw, q=['N4'] if st == '00005' else [])
+        f"Continue trouble '<依頼番号>_2' is created for '{sname}': '対応中' / '見積待ち' (02-10)", cw, q=['N4'] if st == '00005' else [])
     if urgent_cont and urgent_new:                                     # rev 11 (R11-1): '_2' kế thừa 案件区分 từ NEW urgent → chỉ kiểm, không 保存
         add('Trouble Detail', 'CONTINUE · Urgent inherited: 案件区分 営業停止案件', '-',
             ["1. Login Admin (99) → open '_2' → Verify: 案件区分 = '営業停止案件' (inherited from NEW)"],
@@ -367,7 +373,7 @@ def build(d):
     cnames = [f'{P}-Cont'] if est_c in ('1', '') else [f'{P}-Cont{i}' for i in (1, 2)]
     if len(cnames) > 1: auto_c = False                               # confirm 14/10: nhiều báo giá ≤ FIX → không cái nào tự duyệt
     auto1_c = auto_c is True                                           # rev 4; rev 9 R9-2: urgent cũng tự duyệt ≤ FIX
-    s = [f"1. Login Admin (99) → open '_2' → 'クイック操作' → edit icon '見積もり' → for each of {', '.join(repr(x) for x in cnames)}: '登録', item '作業' 'Autotest', {amt_c} → '決定'",
+    s = [f"1. Login Admin (99) → open '_2' → 'クイック操作' → edit icon '見積もり' → for each of {', '.join(repr(x) for x in cnames)}: '登録', item '作業' 'Autotest'" + (f" (作業会社単価 '1000') → delete default rows '出張費' / '現場調査費' → 店舗向け 単価 so that {tax(amt_c)} → '決定'" if n in REV else f", {amt_c} → '決定'"),
          ("2. Tick → '提示する' → '決定' → Verify: '承認済み' (≤ FIX → tự duyệt ngay khi 提示 — rev 4)" if auto1_c else "2. Tick → '提示する' → '決定' → Verify: '承認待ち'"),
          ("3. '閉じる' → (urgent: skip approval) → '保存' → '決定' → 'OK'" if urgent_cont else "3. '閉じる' → select '見積承認待ち' → '保存' → '決定' → 'OK'")]
     add('Trouble Detail › 見積もり (継続)', f'CONTINUE · Create {len(cnames)} estimate(s) ({amt_c}) and 提示', '-', s,
@@ -423,7 +429,7 @@ def finish(d, n, no, P, v, st, sname, typ, T, dec, notes, amt_n, amt_c, names):
     head = [f"# Test case — {n} · {v}",
             f"- Project: qnavi · Scope Key: e2e-suite · Sheet prefix: {P}",
             f"- Source: projects/qnavi/spec/e2e-suite.md › {n} (gốc: raw/Test suite for automation_E2E.xlsx, \"Expanded v2\"). Luồng thao tác: raw/Automation Test AI - Format Main Case.csv, TC LOCKED phase007. Quyết định: QUESTIONS.md lượt 1–9 + quy tắc R1–R20, T1–T5, rev 4–7 (15/10/2026). Môi trường tham chiếu: toridoll-test.",
-            LOCK,
+            *(REV[n] if n in REV else (LOCK,)),
             "- Môi trường: tuỳ biến khi chạy (Q9).",
             "- Ngoại lệ D05: 1 file = 1 kịch bản nối tiếp NEW → CONTINUE → 完了; mỗi TC = 1 giai đoạn. 'Verify:' = điểm kiểm giữa chừng.",
             "- Quy ước chung: báo giá do Admin (99) tạo thay worker trên CMS; worker = linksysworker; FIX = 限度額 (税込) đọc ở TC-001, không sửa; ≤ FIX → tự duyệt cả New và Continue; 承認タイプ theo cấu hình store; báo cáo = đổi trạng thái trên CMS; bỏ 日程承認."]
@@ -462,7 +468,7 @@ def common_setup():
 rows = [common_setup()] + [build(d) for d in C if int(d['id'].split('-')[1]) not in SKIP]
 json.dump(rows, open(os.path.join(HERE, '_index.json'), 'w'), ensure_ascii=False)
 total = sum(r[3] for r in rows)
-readme = ['# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 12, 16/10/2026)', '',
+readme = ['# E2E suite — 37 kịch bản + common setup (LOCKED · Revision 13, 16/10/2026)', '',
           'Nguồn: projects/qnavi/spec/e2e-suite.md. Quyết định: QUESTIONS.md (lượt 1–9) + quy tắc R1–R20 + T1–T5 + rev 4–7. Sinh bằng _tools/gen_e2e.py.',
           'Bỏ case 16 (G14) và case 28 (G11).', '',
           '## Thứ tự chạy', '- Chạy lẻ từng case: chạy E2E00-TC-001 (シサンNAVI OFF) trước, riêng E2E-37 / E2E-38 chạy E2E00-TC-002 (シサンNAVI ON) trước.',

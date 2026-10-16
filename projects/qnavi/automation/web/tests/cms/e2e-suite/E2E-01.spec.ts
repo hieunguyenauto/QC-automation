@@ -8,7 +8,7 @@ import { N, envData } from '../../../common/env-names';
 const data = envData(dataRaw);
 
 /**
- * E2E-01 · Type01 direct / approver=Chain Store — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md (LOCKED rev 13).
+ * E2E-01 · Type01 direct / approver=Chain Store — TC: projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md (LOCKED rev 14).
  * Spec viết tay (không sinh bằng gen:e2e): TC đổi rev → assertTcRevision dừng, cập nhật code + số rev ở beforeAll.
  * 1 test() = 1 TC, test.step đặt tên theo cột Steps. Chạy nối tiếp trên 1 trình duyệt; TC fail → TC sau skip.
  * Chạy lẻ: ENV=toridoll-test npm run suite -- E2E-01.spec.ts
@@ -24,7 +24,7 @@ const t2: Trouble = { id: process.env.E2E_TROUBLE2_ID || undefined };
 let FIX = Number(process.env.E2E_FIX || 0);
 const sc = serialScenario(() => [t.number ? `NEW ${t.number} (id ${t.id})` : '', t2.number ? `CONT ${t2.number} (id ${t2.id})` : '', FIX ? `FIX ${FIX}` : '']);
 let e: E2E;
-test.beforeAll(() => { assertTcRevision('projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md', 13); e = new E2E(sc.page, 1); });
+test.beforeAll(() => { assertTcRevision('projects/qnavi/qc/test-cases/e2e-suite/E2E-01-type01-direct-test-cases.md', 14); e = new E2E(sc.page, 1); });
 const step = test.step;
 const tc = (id: string, title: string, role: string, body: () => Promise<void>, timeout = 300_000) =>
   test(`${id} ${title}`, { tag: [`@${id}`, `@role-${role}`] }, async () => { test.setTimeout(timeout); await body(); });
@@ -102,7 +102,7 @@ tc(`${P}-TC-005`, 'NEW · Create 1 estimate (total = FIX − 1) and 提示', '99
     await d.setFlow('見積承認待ち');
     await expect(rowOf(d.statusModal, '見積もり')).toContainText('必須');
   });
-  await step(`2. 見積もり → 登録 '${name}' → 作業 '${data.estimate.item}', total = FIX − 1 (${yen(FIX - 1)}) → 決定 → 下書き`, async () => {
+  await step(`2. 見積もり → 登録 '${name}' → 作業 '${data.estimate.item}', 作業会社単価 '${data.estimate.workerPrice}' → 決定 → xoá '出張費' / '現場調査費' → 店舗向け 単価: total (税込) = FIX − 1 (${yen(FIX - 1)}) → 決定 → 下書き`, async () => {
     await d.openEstimateFromStatus();
     await e.newEstimate(name, FIX - 1);
   });
@@ -184,7 +184,7 @@ tc(`${P}-TC-010`, N('CONTINUE · 作業スタッフ kept (linksysworker)'), '98'
 tc(`${P}-TC-011`, 'CONTINUE · Create 1 estimate (total = FIX − 1) and 提示', '99', async () => {
   needFix();
   const d = e.detail; const name = `${P}-Cont`;
-  await step(`1. Admin → open '_2' → クイック操作 → 見積もり → '${name}', total = FIX − 1 → 決定`, async () => {
+  await step(`1. Admin → open '_2' → クイック操作 → 見積もり → '${name}' (作業会社単価 '${data.estimate.workerPrice}') → xoá '出張費' / '現場調査費' → total (税込) = FIX − 1 → 決定`, async () => {
     await e.switchTo('99'); await e.openTrouble(t2);
     await d.openQuickAction(); await d.openEstimateFromStatus();
     await e.newEstimate(name, FIX - 1);

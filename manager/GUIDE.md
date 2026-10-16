@@ -1466,6 +1466,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - D16 Lưu xong mà app hiện hộp thoại hoàn tất (…が完了しました。 + 'OK'): Steps phải ghi "Verify: dialog '<message>' → 'OK'" trước bước tiếp theo. (design/2026-10-13-save-done-dialog.md)
 - D17 Luồng lấy từ CSV / app mobile: đối chiếu màn CMS web (catalog / recon) trước khi LOCK; mỗi nhánh điều kiện (ON / OFF, category, ≤ / > FIX…) có bước và trạng thái kỳ vọng riêng, không dùng chung 1 template khi sinh TC bằng script. (design/2026-10-14-e2e-branch-flow-template.md)
 - D18 TC theo trạng thái báo giá / 承認タイプ: trước khi LOCK dò thật nút ở từng trạng thái (下書き / 承認待ち / 差し戻し / 取り下げ…), trạng thái sau mỗi hành động, điều kiện tự duyệt đầy đủ (税込 / 税抜, min_amount theo Lv, urgent, nhiều báo giá); Verify đặt ở role nhìn thấy được. (design/2026-10-16-estimate-state-actions.md)
+- D19 Form có dòng mặc định / ô app tự tính (báo giá…): Steps ghi rõ dòng mặc định giữ hay xoá, ô nào nhập giá trị nào (作業会社単価 / 店舗向け 単価), tổng theo 税込 hay 税抜 — không chỉ ghi "so that total = …". (design/2026-10-16-estimate-input-every-field.md)
 - D13 Kiểm đúng layer: rule bảo mật / middleware gắn ở route nào thì test đúng route đó + case negative.
 
 ## Excel / công cụ
@@ -1541,6 +1542,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 | ID | Ngày | Quyết định | Lý do | File ảnh hưởng |
 |---|---|---|---|---|
+| D28 | 2026-10-16 | TC e2e-suite: đổi 1 sheet thì sửa qua _tools/gen_e2e.py bằng ngoại lệ REV[case] (rev riêng + khuôn mới cho case đó), không sửa tay file TC sinh ra; LOCK chung giữ cho các case khác. E2E-01 rev 14 (D19) | Luật 1 sheet / lần, nhưng TC sinh bằng script — sửa tay sẽ mất khi sinh lại (cùng bài học R42 phía automation) | projects/qnavi/qc/test-cases/e2e-suite/_tools/gen_e2e.py, E2E-01-type01-direct-test-cases.md, qc/lessons/INDEX.md (D19) |
 | D27 | 2026-10-16 | Automation: trouble do test tạo lấy id / 番号 từ response POST /troubles của chính lần bấm 依頼する (submitTrouble / openCreated), bỏ recordNewest (dòng mới nhất của danh sách); spec sinh tự động chỉ sửa qua generator | Người dùng: người khác tạo trouble cùng lúc thì recordNewest lấy nhầm; sửa tay spec sinh (N() / envData) bị mất khi sinh lại | screens/cms/trouble-navi.webview.ts, common/e2e-suite.ts, scripts/gen-e2e-specs.mjs, tests/cms/e2e-suite/, automation/lessons/INDEX.md (R41, R42) |
 | D26 | 2026-10-16 | Automation E2E-02…39: spec sinh từ TC LOCKED bằng scripts/gen-e2e-specs.mjs (đọc được như E2E-01, không sửa tay, tự dừng khi TC đổi rev); kiểm TC ↔ code bằng `npm run gen:e2e -- --check` | Người dùng muốn mỗi E2E là 1 file spec đầy đủ, dễ đọc; 1 khuôn / loại TC giữ 562 TC đồng bộ với TC khi đổi revision | projects/qnavi/automation/web/scripts/gen-e2e-specs.mjs, tests/cms/e2e-suite/, README.md |
 | D25 | 2026-10-15 | Automation: kiểm TC ↔ code / recon E2E luôn chạy E2E_DRY=1 (không đụng app), chạy thật không DRY; mọi spec trong e2e-suite phải hiểu E2E_DRY (không chạy khô được → skip cả file) | Lệnh dry-run cả thư mục đã chạy thật E2E-01 (spec viết riêng không hiểu DRY), tạo trouble trên toridoll-test | tests/cms/e2e-suite/E2E-00.spec.ts, E2E-01.spec.ts, automation/lessons/INDEX.md (R36) |
@@ -1576,6 +1578,8 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] gen-e2e-specs.mjs sinh N() / envData (tên theo môi trường) — sinh lại không còn mất; E2E-02…39 sinh lại theo TC rev 13 (bỏ 'version New', 継続依頼 kiểm 番号 + 作業項目 gốc, 稟議: '稟議承認中' + '承認する' biến mất)
+- Lesson QC D19 (form có dòng mặc định / ô tự tính: ghi rõ ô nhập, dòng xoá, 税込 / 税抜); TC E2E-01 rev 14 (TC-005 / 011 ghi 作業会社単価 '1000', xoá '出張費' / '現場調査費', 店舗向け 単価) sinh qua gen_e2e.py ngoại lệ REV (D28); spec E2E-01 assertTcRevision 14
 - [auto] E2E-01 đối chiếu TC rev 13: tạo trouble lấy id / 番号 từ response POST /troubles (submitTrouble / openCreated, bỏ recordNewest — E2E-01 + 23 spec sinh + khuôn generator); thêm kiểm còn thiếu theo TC (no '稟議承認中', 作業項目 trong 支払情報, '作業完了確認' biến mất, cả 2 trouble 完了, 店舗名); E2E-01 assertTcRevision; deleteDefaultRows chờ dòng mặc định (R30); env toridoll-test name 'dev' → 'toridoll-test' (.auth/toridoll-test/); lesson automation R41, R42
 - [auto] Tên theo môi trường: common/env-names.ts (N, NR, envData) + env/<ENV>.json › rename; est-test: Arabica Coffee VietNam / Arabica Store<N> / ARABICA WORKER / arabica…; 674 chuỗi Linksys trong spec / data được bọc tự động
 - [auto] est-test đổi sang tài khoản arabica… (adminTest2, arabicasubadmin, arabicamanager1–5, arabicastore1–9, arabicaworkercompany; worker arabicaworker1/2); mật khẩu riêng theo môi trường <ENV>_CMS_<role>_PASSWORD; npm run recon:names (dò tên hiển thị theo môi trường)
@@ -1630,5 +1634,3 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - Tổ chức lại thư mục: manager/ · qc/ · automation/ · projects/<p>/ (D12)
 - Template + skill theo format workbook Qnavi, TC tiếng Anh, Priority 3 mức, đối chiếu 3 nguồn, không đặt VP ID giả (D10)
 - test-viewpoint: viewpoint có trục biến thiên, 1 VP → nhiều TC; gộp VP case-by-case (D09)
-- Luồng thiết kế 6 bước + Context pack; gộp decisions thành 1 file docs/decisions.md (D08, D07)
-

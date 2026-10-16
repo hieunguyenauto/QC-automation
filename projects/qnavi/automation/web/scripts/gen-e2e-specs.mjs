@@ -41,6 +41,8 @@ const q = (s) => {
   const v = String(s).replace(/\\/g, '\\\\');
   return v.includes("'") && !v.includes('"') ? `"${v}"` : `'${v.replace(/'/g, "\\'")}'`;
 };
+/** Chữ hiển thị có tên Linksys (tiêu đề tc / step) → N(…) đổi theo môi trường (common/env-names.ts, env/<ENV>.json › rename). */
+const nq = (s) => (/linksys/i.test(String(s)) ? `N(${q(s)})` : q(s));
 const WHO = [
   [/ChainStore Manager 'LINKSYS MANAGER(\d{5})'/g, (m) => `managerWho('${m[1]}')`, (m) => data.managers[m[1]]],
   [/ChainStore \(02\) 'linksysstore(\d{5})'/g, (m) => `storeWho('${m[1]}')`, (m) => data.stores[m[1]]?.who],
@@ -274,9 +276,11 @@ function handler(r, g) {
             "for (const b of ['承認する', '差し戻し']) await expect(d.estimateAction('manager', b), `card 店舗 has '${b}'`).toBeVisible();"];
         }
         const lines = [`await d.approveEstimate(${q(name)});`];
-        if (/not yet '承認済み'/.test(s)) lines.push(`await expect(d.estimateRow(${q(name)}).locator('.badge')).not.toHaveText('承認済み');`);
+        if (/Verify: '稟議承認中' \(not yet '承認済み'\)/.test(s)) lines.push(`await d.expectEstimateStatus(${q(name)}, '稟議承認中');`);
+        else if (/not yet '承認済み'/.test(s)) lines.push(`await expect(d.estimateRow(${q(name)}).locator('.badge')).not.toHaveText('承認済み');`);
         else if (/Verify: '稟議承認中'/.test(s)) lines.push(`await d.expectEstimateStatus(${q(name)}, '稟議承認中');`);
         else { lines.push(`await d.expectEstimateStatus(${q(name)}, '承認済み');`); g.approved[ph] = name; }
+        if (/'承認する' disappears for this approver/.test(s)) lines.push(`await d.openEstimateMenu(${q(name)});`, "await expect(d.estimateAction('manager', '承認する'), \"'承認する' disappears for this approver\").toHaveCount(0);");
         return lines;
       }),
       exp: ['await d.closeEstimates();', ...badgeLines(r.exp)],
@@ -475,8 +479,11 @@ function handler(r, g) {
     const w = who1(S[0]);
     return {
       steps: [
-        ["test.skip(!t.number, 'Chưa có 依頼番号 NEW');", `await e.switchTo(${w.code});`, "await e.layout.menu('作業依頼登録');", "await c.start('継続依頼');"],
-        ['await c.pickContinuationSource(t.number!);', 'await expect(c.content).toContainText(storeName(STORE));'],
+        ["test.skip(!t.number, 'Chưa có 依頼番号 NEW');", `await e.switchTo(${w.code});`,
+          "srcSmall = await e.smallItemOf(t);   // 作業項目（小） của trouble gốc — để kiểm 'filled from the original'",
+          "await e.layout.menu('作業依頼登録');", "await c.start('継続依頼');"],
+        ['await c.pickContinuationSource(t.number!);', 'await expect(c.content).toContainText(storeName(STORE));',
+          'await expect(c.content).toContainText(`番号: ${t.number}`);', "await expect(c.content, '作業項目 filled from the original').toContainText(srcSmall);"],
         ['await c.submitContinuation();', 'await expect(sc.page).toHaveURL(/\\/admin\\/troubles\\/\\d+\\/detail/, { timeout: 30_000 });',
           't2.id = sc.page.url().match(/troubles\\/(\\d+)\\/detail/)?.[1];   // R14', 'await d.expectOpened(t2.id);', 't2.number = await d.number();'],
       ],
@@ -514,8 +521,8 @@ function handler(r, g) {
 const ind = (lines, n) => lines.map((l) => ' '.repeat(n) + l).join('\n');
 function stepCode(label, lines) {
   return lines.length === 1 && !lines[0].startsWith('const ') && !lines[0].includes('//')
-    ? `  await step(${q(label)}, async () => { ${lines[0]} });`
-    : `  await step(${q(label)}, async () => {\n${ind(lines, 4)}\n  });`;
+    ? `  await step(${nq(label)}, async () => { ${lines[0]} });`
+    : `  await step(${nq(label)}, async () => {\n${ind(lines, 4)}\n  });`;
 }
 
 function generate(c) {
@@ -534,20 +541,22 @@ function generate(c) {
     for (const n of r.steps.filter((s) => !/^\d/.test(s))) body.push(`  test.info().annotations.push({ type: 'tc-note', description: ${q(n)} });`);
     body.push(stepCode(`Expected: ${r.exp}`, h.exp));
     const code = body.join('\n');
-    for (const k of ['closeModal', 'needFix', 'levels', 'totals', 'rowOf', 'minimizeChat', 'modal', 'waitApisIdle', 'storePriceFor', 'taxOf', 'ringiLevels', 'RINGI', 'yen', 'managerWho', 'storeWho', 'storeName', 'data\\.'])
+    for (const k of ['srcSmall', 'closeModal', 'needFix', 'levels', 'totals', 'rowOf', 'minimizeChat', 'modal', 'waitApisIdle', 'storePriceFor', 'taxOf', 'ringiLevels', 'RINGI', 'yen', 'managerWho', 'storeWho', 'storeName', 'data\\.'])
       if (new RegExp(`\\b${k}`).test(code)) used.add(k.replace('\\.', ''));
-    return `tc(${q(r.id)}, ${q(r.func)}, ${q(role)}, async () => {\n${code}\n}${h.timeout ? `, ${String(h.timeout).replace(/(\d)(?=(\d{3})+$)/g, '$1_')}` : ''});`;
+    return `tc(${q(r.id)}, ${nq(r.func)}, ${q(role)}, async () => {\n${code}\n}${h.timeout ? `, ${String(h.timeout).replace(/(\d)(?=(\d{3})+$)/g, '$1_')}` : ''});`;
   });
 
   const suite = ['E2E', 'assertTcRevision', ...['managerWho', 'storeName', 'storePriceFor', 'storeWho', 'taxOf', 'ringiLevels', 'RINGI', 'yen'].filter((k) => used.has(k)), 'type Trouble'];
   const ui = ['closeModal', 'minimizeChat', 'modal', 'rowOf'].filter((k) => used.has(k));
   const head = [
     "import { expect, test } from '@playwright/test';",
-    "import data from '../../../data/e2e-suite.json';",
+    "import dataRaw from '../../../data/e2e-suite.json';",
     "import { serialScenario } from '../../../common/scenario';",
     `import { ${suite.join(', ')} } from '../../../common/e2e-suite';`,
     ...(ui.length ? [`import { ${ui.join(', ')} } from '../../../common/ui';`] : []),
     ...(used.has('waitApisIdle') ? ["import { waitApisIdle } from '../../../common/wait';"] : []),
+    "import { N, envData } from '../../../common/env-names';",
+    'const data = envData(dataRaw);',
     '',
     '/**',
     ` * ${c.title} — TC: ${c.file} (LOCKED rev ${c.rev}, ${c.rows.length} TC).`,
@@ -565,6 +574,7 @@ function generate(c) {
     'let FIX: number | null | undefined = process.env.E2E_FIX ? Number(process.env.E2E_FIX) : undefined;',
     ...(used.has('totals') ? ['/** Tổng 税込 của từng báo giá tạo trong lần chạy. */', 'const totals = new Map<string, number>();'] : []),
     ...(used.has('levels') ? ['let levels = 1;   // số cấp 稟議 cần theo tổng'] : []),
+    ...(used.has('srcSmall') ? ["let srcSmall = '';   // 作業項目（小） của trouble gốc (TC 継続依頼)"] : []),
     "const sc = serialScenario(() => [t.number ? `NEW ${t.number} (id ${t.id})` : '', t2.number ? `CONT ${t2.number} (id ${t2.id})` : '', FIX != null ? `FIX ${FIX}` : '']);",
     'let e: E2E;',
     `test.beforeAll(() => { assertTcRevision(${q(c.file)}, ${c.rev}); e = new E2E(sc.page, ${Number(c.nn)}); });`,

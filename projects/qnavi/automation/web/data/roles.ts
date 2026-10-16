@@ -29,11 +29,14 @@ export function account(role: CmsRole, variant?: string) {
 
 /**
  * loginId: .env CMS_<role>[_<VARIANT>]_ID (ghi đè) → env/<ENV>.json › accounts.
- * password: CHỈ từ .env — CMS_<role>_<VARIANT>_PASSWORD (nếu có) → CMS_<role>_PASSWORD (dùng chung cho role).
+ * password: CHỈ từ .env — ưu tiên theo môi trường trước: <ENV>_CMS_<role>_<VARIANT>_PASSWORD → <ENV>_CMS_<role>_PASSWORD
+ *           (vd EST_TEST_CMS_02_PASSWORD), rồi mới tới CMS_<role>_<VARIANT>_PASSWORD → CMS_<role>_PASSWORD (dùng chung).
  */
 export function credentials(role: CmsRole, variant?: string): { loginId: string; password: string } | null {
   const key = variant ? `CMS_${role}_${variant.toUpperCase()}` : `CMS_${role}`;
   const loginId = (process.env[`${key}_ID`] || (!variant && process.env[`CMS_${role}_ID`]) || account(role, variant)?.loginId || '').trim();
-  const password = (process.env[`${key}_PASSWORD`] || process.env[`CMS_${role}_PASSWORD`] || '').trim();
+  const envKey = env.name.toUpperCase().replace(/[^A-Z0-9]+/g, '_'); // est-test → EST_TEST
+  const password = (process.env[`${envKey}_${key}_PASSWORD`] || process.env[`${envKey}_CMS_${role}_PASSWORD`]
+    || process.env[`${key}_PASSWORD`] || process.env[`CMS_${role}_PASSWORD`] || '').trim();
   return loginId && password ? { loginId, password } : null;
 }

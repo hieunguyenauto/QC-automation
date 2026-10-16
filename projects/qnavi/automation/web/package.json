@@ -14,6 +14,7 @@
     "e2e:headed": "playwright test --project=e2e --headed tests/cms/e2e-trouble-flow/",
     "recon": "playwright test --project=recon --headed tests/tools/recon.spec.ts",
     "recon:e2e": "playwright test --project=recon --headed tests/tools/recon-e2e.spec.ts",
+    "recon:names": "playwright test --project=recon --headed tests/tools/recon-names.spec.ts",
     "open": "playwright test --project=open --headed",
     "summary": "node scripts/summary.mjs",
     "p007": "playwright test --project=e2e tests/cms/phase007/",

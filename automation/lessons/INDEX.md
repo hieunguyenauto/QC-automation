@@ -21,7 +21,7 @@
 - R18 Sau đăng nhập / mở trang có API nặng: đợi API chính trả về thực tế; quá ngưỡng env (apiPerfLimitMs) → ghi cảnh báo 'PERFORMANCE' để check sau, vẫn chạy tiếp. Hộp 「表示に時間がかかっております」: chỉ bấm OK + ghi 'env-warning'; code KHÔNG tự reload / retry (app tự reload thì để app làm); chỉ reload khi TC ghi rõ bước F5. (web/2026-10-13-cms-dashboard-api-wait.md)
 - R19 Drawer / panel trượt đóng nằm ngoài màn hình (input vẫn "visible", nút không bấm được): kiểm trạng thái mở (class show) rồi mới thao tác; nút của drawer có thể nằm ngoài form bên trong. (web/2026-10-13-cms-offscreen-drawer.md)
 - R20 Chọn dòng / thẻ theo tên: khớp đúng ô (td + exact), không dùng hasText của cả dòng — hasText khớp chuỗi con ('Test' ⊂ 'EnterTest'). (web/2026-10-13-cms-hastext-substring.md)
-- R21 Bảng nằm trong form dạng table: tr ngoài cũng chứa nội dung bảng con → lấy tr trong cùng (hasNot tr) hoặc chỉ rõ tbody bằng thuộc tính riêng. (web/2026-10-13-cms-nested-table-rows.md)
+- R21 Bảng nằm trong form dạng table: tr ngoài cũng chứa nội dung bảng con → lấy tr trong cùng (hasNot tr) hoặc chỉ rõ bảng bằng header riêng của nó (vd '項目種別'), không bằng thuộc tính. (web/2026-10-13-cms-nested-table-rows.md)
 - R22 Thao tác có thể đã tự gửi form (Enter, double click): chờ form đóng trước; còn mở sau vài giây mới bấm nút gửi — không kiểm isVisible tức thời rồi click. (web/2026-10-13-cms-enter-submit-race.md)
 - R23 Thẻ có thumbnail + caption: phần bấm được là phần tử role=button (thumbnail), dò thật trước; modal preview lọc bằng class riêng, không bằng tên file (form cha cũng chứa tên). (web/2026-10-13-cms-pdf-thumbnail-click.md)
 - R24 Kịch bản serial: TC kết thúc ở form chưa lưu phải có step 'Cleanup' (không thuộc TC) rời form, để hộp 破棄 không chặn TC sau; không xử lý hộp 破棄 chung. (web/2026-10-13-serial-dirty-form-cleanup.md)
@@ -43,6 +43,7 @@
 - R40 Nút header '見積もり' chỉ có khi còn báo giá đã nộp (sau 取り下げ承認 / 却下 → mất với 01 / 02): kiểm trạng thái báo giá bằng 99 / 98 qua 状態変更. (web/2026-10-16-cms-estimate-header-hidden-after-cancel.md)
 - R41 Bản ghi do test tạo (trouble, báo giá…): lấy id / mã từ response API của chính thao tác tạo (vd POST /troubles khi bấm 依頼する) hoặc chữ app hiện ngay sau khi tạo; không lấy "dòng mới nhất" của danh sách — người khác tạo cùng lúc / dữ liệu cũ sẽ bị lấy nhầm. (web/2026-10-16-e2e-created-id-from-response.md)
 - R42 Spec sinh tự động chỉ sửa qua generator (cả thay đổi hàng loạt bằng script); sinh lại xong xem git diff — có thay đổi ngoài khuôn vừa sửa thì dừng, đưa vào generator trước. (web/2026-10-16-generated-spec-hand-edit-lost.md)
+- R43 Không dựa locator vào attribute nội bộ của thư viện UI (data-rbd-*, id / class tự sinh…) — có thể khác theo môi trường / bản build; ưu tiên chữ hiển thị, header, name của input. Locator chỉ dò trên 1 môi trường thì ghi rõ môi trường trong screens/; chạy môi trường khác fail → dò lại trước khi kết luận app lỗi. (web/2026-10-20-cms-locator-attr-differs-by-env.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->

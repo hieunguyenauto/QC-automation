@@ -111,8 +111,11 @@ export class TroubleDetailScreen extends BaseScreen {
   get estimateForm(): Locator {
     return this.page.locator('.modal.show').filter({ visible: true }).filter({ has: this.page.locator('input[name="title"]') }).last();
   }
-  /** Bảng hạng mục của form 見積もり (form có 2 tbody: thông tin chung + hạng mục kéo thả) — dò thật dev 2026-10-13. */
-  get estimateItemsBody(): Locator { return this.estimateForm.locator('tbody[data-rbd-droppable-id="dnd-create-estimates"]'); }
+  /** Bảng hạng mục của form 見積もり (form có 2 tbody: thông tin chung + hạng mục) — dò thật dev 2026-10-13.
+   *  toridoll-test 2026-10-20: tbody không có data-rbd-droppable-id → lấy theo header '項目種別' (bảng trong cùng), không theo thuộc tính kéo thả. */
+  get estimateItemsBody(): Locator {
+    return this.estimateForm.locator('table').filter({ hasText: '項目種別' }).last().locator('tbody').last();
+  }
   get itemModal(): Locator { return modal(this.page, '作業項目追加'); }
   estimateRow(name: string): Locator {
     return this.estimateModal.locator('tr.estimation-row').filter({ has: this.page.locator('td', { hasText: exact(name) }) }).first();

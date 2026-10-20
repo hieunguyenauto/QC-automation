@@ -7,3 +7,4 @@
 - Cách fix: estimateItemsBody = tbody[data-rbd-droppable-id="dnd-create-estimates"]; assetRows = tr có select types.* và hasNot tr (tr trong cùng); assetTypeSelect(i) lấy theo dòng.
 - Rule rút ra: R21
 - Áp dụng cho: mọi bảng dữ liệu nằm trong form dạng table (CMS chi tiết / sửa / modal).
+- Cập nhật 2026-10-20: estimateItemsBody không dùng data-rbd-droppable-id nữa (không có ở toridoll-test) → theo header '項目種別', xem R43.

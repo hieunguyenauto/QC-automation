@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 ### Thêm
+- [auto] P007-TC-031 fail trên toridoll-test do locator estimateItemsBody dựa data-rbd-droppable-id (chỉ có ở dev) → lấy theo header '項目種別'; TC-016…031 pass 16/16; lesson automation R43, sửa R21
 - [auto] gen-e2e-specs.mjs sinh N() / envData (tên theo môi trường) — sinh lại không còn mất; E2E-02…39 sinh lại theo TC rev 13 (bỏ 'version New', 継続依頼 kiểm 番号 + 作業項目 gốc, 稟議: '稟議承認中' + '承認する' biến mất)
 - Lesson QC D19 (form có dòng mặc định / ô tự tính: ghi rõ ô nhập, dòng xoá, 税込 / 税抜); TC E2E-01 rev 14 (TC-005 / 011 ghi 作業会社単価 '1000', xoá '出張費' / '現場調査費', 店舗向け 単価) sinh qua gen_e2e.py ngoại lệ REV (D28); spec E2E-01 assertTcRevision 14
 - [auto] E2E-01 đối chiếu TC rev 13: tạo trouble lấy id / 番号 từ response POST /troubles (submitTrouble / openCreated, bỏ recordNewest — E2E-01 + 23 spec sinh + khuôn generator); thêm kiểm còn thiếu theo TC (no '稟議承認中', 作業項目 trong 支払情報, '作業完了確認' biến mất, cả 2 trouble 完了, 店舗名); E2E-01 assertTcRevision; deleteDefaultRows chờ dòng mặc định (R30); env toridoll-test name 'dev' → 'toridoll-test' (.auth/toridoll-test/); lesson automation R41, R42

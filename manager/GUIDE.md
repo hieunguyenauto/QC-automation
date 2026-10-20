@@ -1505,7 +1505,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - R18 Sau đăng nhập / mở trang có API nặng: đợi API chính trả về thực tế; quá ngưỡng env (apiPerfLimitMs) → ghi cảnh báo 'PERFORMANCE' để check sau, vẫn chạy tiếp. Hộp 「表示に時間がかかっております」: chỉ bấm OK + ghi 'env-warning'; code KHÔNG tự reload / retry (app tự reload thì để app làm); chỉ reload khi TC ghi rõ bước F5. (web/2026-10-13-cms-dashboard-api-wait.md)
 - R19 Drawer / panel trượt đóng nằm ngoài màn hình (input vẫn "visible", nút không bấm được): kiểm trạng thái mở (class show) rồi mới thao tác; nút của drawer có thể nằm ngoài form bên trong. (web/2026-10-13-cms-offscreen-drawer.md)
 - R20 Chọn dòng / thẻ theo tên: khớp đúng ô (td + exact), không dùng hasText của cả dòng — hasText khớp chuỗi con ('Test' ⊂ 'EnterTest'). (web/2026-10-13-cms-hastext-substring.md)
-- R21 Bảng nằm trong form dạng table: tr ngoài cũng chứa nội dung bảng con → lấy tr trong cùng (hasNot tr) hoặc chỉ rõ tbody bằng thuộc tính riêng. (web/2026-10-13-cms-nested-table-rows.md)
+- R21 Bảng nằm trong form dạng table: tr ngoài cũng chứa nội dung bảng con → lấy tr trong cùng (hasNot tr) hoặc chỉ rõ bảng bằng header riêng của nó (vd '項目種別'), không bằng thuộc tính. (web/2026-10-13-cms-nested-table-rows.md)
 - R22 Thao tác có thể đã tự gửi form (Enter, double click): chờ form đóng trước; còn mở sau vài giây mới bấm nút gửi — không kiểm isVisible tức thời rồi click. (web/2026-10-13-cms-enter-submit-race.md)
 - R23 Thẻ có thumbnail + caption: phần bấm được là phần tử role=button (thumbnail), dò thật trước; modal preview lọc bằng class riêng, không bằng tên file (form cha cũng chứa tên). (web/2026-10-13-cms-pdf-thumbnail-click.md)
 - R24 Kịch bản serial: TC kết thúc ở form chưa lưu phải có step 'Cleanup' (không thuộc TC) rời form, để hộp 破棄 không chặn TC sau; không xử lý hộp 破棄 chung. (web/2026-10-13-serial-dirty-form-cleanup.md)
@@ -1527,6 +1527,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - R40 Nút header '見積もり' chỉ có khi còn báo giá đã nộp (sau 取り下げ承認 / 却下 → mất với 01 / 02): kiểm trạng thái báo giá bằng 99 / 98 qua 状態変更. (web/2026-10-16-cms-estimate-header-hidden-after-cancel.md)
 - R41 Bản ghi do test tạo (trouble, báo giá…): lấy id / mã từ response API của chính thao tác tạo (vd POST /troubles khi bấm 依頼する) hoặc chữ app hiện ngay sau khi tạo; không lấy "dòng mới nhất" của danh sách — người khác tạo cùng lúc / dữ liệu cũ sẽ bị lấy nhầm. (web/2026-10-16-e2e-created-id-from-response.md)
 - R42 Spec sinh tự động chỉ sửa qua generator (cả thay đổi hàng loạt bằng script); sinh lại xong xem git diff — có thay đổi ngoài khuôn vừa sửa thì dừng, đưa vào generator trước. (web/2026-10-16-generated-spec-hand-edit-lost.md)
+- R43 Không dựa locator vào attribute nội bộ của thư viện UI (data-rbd-*, id / class tự sinh…) — có thể khác theo môi trường / bản build; ưu tiên chữ hiển thị, header, name của input. Locator chỉ dò trên 1 môi trường thì ghi rõ môi trường trong screens/; chạy môi trường khác fail → dò lại trước khi kết luận app lỗi. (web/2026-10-20-cms-locator-attr-differs-by-env.md)
 
 ## Mobile
 <!-- M01 <rule> (mobile/<file>.md) -->
@@ -1578,6 +1579,7 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 
 ## [Unreleased]
 ### Thêm
+- [auto] P007-TC-031 fail trên toridoll-test do locator estimateItemsBody dựa data-rbd-droppable-id (chỉ có ở dev) → lấy theo header '項目種別'; TC-016…031 pass 16/16; lesson automation R43, sửa R21
 - [auto] gen-e2e-specs.mjs sinh N() / envData (tên theo môi trường) — sinh lại không còn mất; E2E-02…39 sinh lại theo TC rev 13 (bỏ 'version New', 継続依頼 kiểm 番号 + 作業項目 gốc, 稟議: '稟議承認中' + '承認する' biến mất)
 - Lesson QC D19 (form có dòng mặc định / ô tự tính: ghi rõ ô nhập, dòng xoá, 税込 / 税抜); TC E2E-01 rev 14 (TC-005 / 011 ghi 作業会社単価 '1000', xoá '出張費' / '現場調査費', 店舗向け 単価) sinh qua gen_e2e.py ngoại lệ REV (D28); spec E2E-01 assertTcRevision 14
 - [auto] E2E-01 đối chiếu TC rev 13: tạo trouble lấy id / 番号 từ response POST /troubles (submitTrouble / openCreated, bỏ recordNewest — E2E-01 + 23 spec sinh + khuôn generator); thêm kiểm còn thiếu theo TC (no '稟議承認中', 作業項目 trong 支払情報, '作業完了確認' biến mất, cả 2 trouble 完了, 店舗名); E2E-01 assertTcRevision; deleteDefaultRows chờ dòng mặc định (R30); env toridoll-test name 'dev' → 'toridoll-test' (.auth/toridoll-test/); lesson automation R41, R42
@@ -1633,4 +1635,3 @@ Luật: locator chỉ ở file screen · không waitForTimeout · thao tác ng�
 - handbook.md viết lại theo cấu trúc mới (luồng 6 bước + import + export); bug-history ghi nghĩa cột "Có TC bắt được"
 - Tổ chức lại thư mục: manager/ · qc/ · automation/ · projects/<p>/ (D12)
 - Template + skill theo format workbook Qnavi, TC tiếng Anh, Priority 3 mức, đối chiếu 3 nguồn, không đặt VP ID giả (D10)
-- test-viewpoint: viewpoint có trục biến thiên, 1 VP → nhiều TC; gộp VP case-by-case (D09)

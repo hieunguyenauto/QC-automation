@@ -1,0 +1,226 @@
+- text: Develop TORIDOLL Environment (4.0)
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - button ""
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 進行中のトラブル一覧":
+          - text: 
+          - paragraph: 進行中のトラブル一覧
+      - listitem:
+        - link " グループ管理":
+          - text: 
+          - paragraph: グループ管理
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+  - paragraph: LINKSYS MANAGER00004 （Linksys Chain System）
+- paragraph: "関連案件:"
+- text: 223470096 対応中 報告済 営業停止案件
+- button " 戻る"
+- button " 編集"
+- paragraph: "店舗名:"
+- text: LINKSYS STORE00004 (RINGI)
+- paragraph: "依頼内容確認:"
+- text: 受付
+- paragraph: "業者:"
+- text: LINKSYS WORKER
+- paragraph: "訪問日時:"
+- text: 未確定
+- paragraph: "見積書:"
+- text: ¥18,183
+- paragraph: "報告書有無:"
+- text: 未提出
+- button " 立候補"
+- button " 見積もり"
+- button " 報告書"
+- button " 作業完了確認"
+- button " タスク"
+- table:
+  - rowgroup:
+    - row "作業項目（大） 水":
+      - cell "作業項目（大）"
+      - cell "水"
+    - row "作業項目（中） 厨房":
+      - cell "作業項目（中）"
+      - cell "厨房"
+    - row "作業項目（小） つまり：グリストラップ":
+      - cell "作業項目（小）"
+      - cell "つまり：グリストラップ"
+    - row "番号 223470096":
+      - cell "番号"
+      - cell "223470096"
+    - row "次回番号":
+      - cell "次回番号"
+      - cell:
+        - link:
+          - /url: /admin/troubles//detail
+    - row "詳細 Automation E2E 22 ---------------------- 大項目：水 中項目：厨房（キッチン） 小項目：グリストラップ 症状：詰まり（流れにくい・溢れる）":
+      - cell "詳細"
+      - cell "Automation E2E 22 ---------------------- 大項目：水 中項目：厨房（キッチン） 小項目：グリストラップ 症状：詰まり（流れにくい・溢れる）"
+    - row "画像":
+      - cell "画像"
+      - cell
+    - row "案件区分 営業停止案件":
+      - cell "案件区分"
+      - cell "営業停止案件"
+    - row "緊急フラグ 緊急":
+      - cell "緊急フラグ"
+      - cell "緊急"
+    - row "要望の日付 2026年10月16日 緊急":
+      - cell "要望の日付"
+      - cell "2026年10月16日 緊急"
+    - row "訪問確定日時":
+      - cell "訪問確定日時"
+      - cell
+    - row "作業者 LINKSYS WORKER":
+      - cell "作業者"
+      - cell "LINKSYS WORKER"
+    - row "登録日時 2026年10月16日 11:58:29":
+      - cell "登録日時"
+      - cell "2026年10月16日 11:58:29"
+    - row "更新日時 2026年10月16日 12:00:20":
+      - cell "更新日時"
+      - cell "2026年10月16日 12:00:20"
+- table:
+  - rowgroup:
+    - row "全体状態 対応中":
+      - cell "全体状態"
+      - cell "対応中"
+    - row "依頼種類 新規依頼":
+      - cell "依頼種類"
+      - cell "新規依頼"
+    - row "対応状態 報告済":
+      - cell "対応状態"
+      - cell "報告済"
+    - row "自動マッチング automatching":
+      - cell "自動マッチング"
+      - cell "automatching":
+        - img "automatching"
+    - row "報告書確認状況":
+      - cell "報告書確認状況"
+      - cell
+    - row "決済状況":
+      - cell "決済状況"
+      - cell
+- table:
+  - rowgroup:
+    - row "請求状態 未請求":
+      - cell "請求状態"
+      - cell "未請求"
+    - row "店舗名 LINKSYS STORE00004 (RINGI)":
+      - cell "店舗名"
+      - cell "LINKSYS STORE00004 (RINGI)"
+    - row "住所 〒123-1443 大阪府 15 Le Quang Hoa":
+      - cell "住所"
+      - cell "〒123-1443 大阪府 15 Le Quang Hoa"
+    - row "電話番号(店舗) 0935678278":
+      - cell "電話番号(店舗)"
+      - cell "0935678278"
+    - row "担当者 Hieu":
+      - cell "担当者"
+      - cell "Hieu"
+    - row "電話番号(担当者) 08057882712":
+      - cell "電話番号(担当者)"
+      - cell "08057882712"
+    - row "依頼登録者 LINKSYS MANAGER00001":
+      - cell "依頼登録者"
+      - cell "LINKSYS MANAGER00001"
+    - row "店舗決済者 店舗決済者を表示":
+      - cell "店舗決済者"
+      - cell "店舗決済者を表示":
+        - button "店舗決済者を表示"
+- table:
+  - rowgroup:
+    - row "請求月":
+      - cell "請求月"
+      - cell
+    - row "支払月":
+      - cell "支払月"
+      - cell
+    - row "BM番号":
+      - cell "BM番号"
+      - cell
+    - row "メモ欄（店舗）":
+      - cell "メモ欄（店舗）"
+      - cell
+- img
+- dialog:
+  - document:
+    - heading "支払情報" [level=3]
+    - paragraph: 2026年10月16日 12:0:54
+    - text: "故障内容 : 故障内容 : 故障個所 : 故障症状 :"
+    - heading [level=2]
+    - heading "（税込）" [level=5]
+    - paragraph: 上記金額で決済いたします。 よろしければ「作業完了確認」ボタンを押してください。
+    - paragraph: "支払方法 : 請求書払い"
+    - heading "作業項目一覧" [level=6]
+    - heading [level=6]
+    - paragraph
+    - separator
+    - heading "今回のメンテナンス作業はいかがでしたでしょうか？ご意見をお聞かせください。" [level=6]
+    - text: 不満
+    - img
+    - text: やや不満
+    - img
+    - text: 満足
+    - img
+    - text: 非常に満足
+    - img
+    - text: 感動
+    - img
+    - textbox "対応が良かった、時間に遅れたなど、コメントをお願いいたします。"
+    - button "閉じる"
+    - button "作業完了確認"
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - button "利用規約"
+    - listitem:
+      - button "プライバシーポリシー"

@@ -172,7 +172,7 @@ tc('E2E13-TC-006', 'NEW · 取り下げ申請 → 承認 → 再提示', '99', a
     await d.editEstimate('E2E13-New');
     await d.decideEstimate('E2E13-New');
     await d.submitEstimates(['E2E13-New'], /^(再承認待ち|承認待ち)$/);
-    test.info().annotations.push({ type: 'observed-status', description: `Q1 (lượt 9): sau 取り下げ承認 → 提示, 'E2E13-New' = '${(await d.estimateRow('E2E13-New').locator('.badge').innerText()).trim()}'` });
+    test.info().annotations.push({ type: 'observed-status', description: `Q1 (lượt 9): sau 取り下げ承認 → 提示, 'E2E13-New' = '${(await d.estimateBadge('E2E13-New').innerText()).trim()}'` });
   });
   await step('Expected: Estimate goes 取り下げ申請中 → 下書き → 承認待ち again (approve type unchanged — C6)', async () => {
     await d.expectEstimateStatus('E2E13-New', /^(再承認待ち|承認待ち)$/);
@@ -238,7 +238,7 @@ tc('E2E13-TC-009', 'NEW · Store Manager 確認・決済 → 完了', '01', asyn
   await step("3. Star '感動' → comment 'Automation E2E 13' → '作業完了確認' → '決定' → Verify: '作業依頼の決済状態の保存が完了しました。' → 'OK'", async () => { await e.paymentSubmit(); });
   await step("Expected: Badge '完了' / '報告済', '作業完了確認' disappears; NEW trouble = 完了", async () => {
     await d.expectBadges('完了', '報告済');
-    await expect(d.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
+    await expect(d.workCompleteConfirmButton).toHaveCount(0);
   });
 });
 

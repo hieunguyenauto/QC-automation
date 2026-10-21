@@ -1,0 +1,437 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]: Develop TORIDOLL Environment (4.0)
+  - navigation [ref=e4]:
+    - list [ref=e5]:
+      - listitem [ref=e6]:
+        - button "" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]: 
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e13] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e14]
+          - button "" [ref=e16] [cursor=pointer]:
+            - generic [ref=e17]: 
+      - listitem [ref=e18]:
+        - button "" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+      - listitem [ref=e22]:
+        - button "フィルタ" [ref=e23] [cursor=pointer]:
+          - generic [ref=e25]: フィルタ
+      - listitem [ref=e26]:
+        - button "パスワード変更" [ref=e27] [cursor=pointer]
+      - listitem [ref=e28]:
+        - button "ログアウト" [ref=e29] [cursor=pointer]
+  - complementary [ref=e30]:
+    - link "Qnavi管理画面" [ref=e31] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e33]:
+      - menu [ref=e34]:
+        - listitem [ref=e35]: メニュー
+        - listitem [ref=e36]:
+          - link " 作業依頼情報" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]: 
+            - paragraph [ref=e39]: 作業依頼情報
+        - listitem [ref=e40]:
+          - link " チャット一覧" [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: 
+            - paragraph [ref=e43]: チャット一覧
+        - listitem [ref=e45]:
+          - link " タスク管理" [ref=e46] [cursor=pointer]:
+            - generic [ref=e47]: 
+            - paragraph [ref=e48]: タスク管理
+        - listitem [ref=e49]:
+          - link " 作業員情報" [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]: 
+            - paragraph [ref=e52]: 作業員情報
+        - listitem [ref=e53]:
+          - link " 作業会社情報" [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 
+            - paragraph [ref=e56]: 作業会社情報
+    - paragraph [ref=e58]: LINKYSYS WORKER COMPANY
+  - generic [ref=e61]:
+    - generic [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - paragraph [ref=e65]: "関連案件:"
+          - generic [ref=e67]: "223470100"
+        - generic [ref=e68]:
+          - generic [ref=e69]: 対応中
+          - generic [ref=e70]: 到着
+        - generic [ref=e71]:
+          - button " 戻る" [ref=e72] [cursor=pointer]:
+            - generic [ref=e73]: 
+            - text: 戻る
+          - button " クイック操作" [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: 
+            - text: クイック操作
+          - button " 編集" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+            - text: 編集
+      - generic [ref=e79]:
+        - paragraph [ref=e80]: "店舗名:"
+        - generic [ref=e81]: LINKSYS STORE00004 (RINGI)
+      - generic [ref=e82]:
+        - generic [ref=e83]:
+          - paragraph [ref=e84]: "依頼内容確認:"
+          - generic [ref=e85]: 受付
+        - generic [ref=e86]:
+          - paragraph [ref=e87]: "業者:"
+          - generic [ref=e89]: LINKSYS WORKER
+        - generic [ref=e90]:
+          - paragraph [ref=e91]: "訪問日時:"
+          - generic [ref=e92]: 未確定
+        - generic [ref=e93]:
+          - paragraph [ref=e94]: "見積書:"
+          - generic [ref=e95]: 未提出
+        - generic [ref=e96]:
+          - paragraph [ref=e97]: "報告書有無:"
+          - generic [ref=e98]: 未提出
+      - generic [ref=e99]:
+        - button " 見積もり" [ref=e100] [cursor=pointer]:
+          - generic [ref=e101]: 
+          - text: 見積もり
+        - button " 報告書" [ref=e102] [cursor=pointer]:
+          - generic [ref=e103]: 
+          - text: 報告書
+        - button " タスク" [ref=e104] [cursor=pointer]:
+          - generic [ref=e105]: 
+          - text: タスク
+    - generic [ref=e107]:
+      - table [ref=e109]:
+        - rowgroup [ref=e110]:
+          - row "作業項目（大） 操作テスト" [ref=e111]:
+            - cell "作業項目（大）" [ref=e112]:
+              - generic [ref=e114]: 作業項目（大）
+            - cell "操作テスト" [ref=e115]
+          - row "作業項目（中） トイレ（テスト）" [ref=e116]:
+            - cell "作業項目（中）" [ref=e117]:
+              - generic [ref=e119]: 作業項目（中）
+            - cell "トイレ（テスト）" [ref=e120]
+          - row "作業項目（小） つまり：大便器（テスト）" [ref=e121]:
+            - cell "作業項目（小）" [ref=e122]:
+              - generic [ref=e124]: 作業項目（小）
+            - cell "つまり：大便器（テスト）" [ref=e125]
+          - row "番号 223470100" [ref=e126]:
+            - cell "番号" [ref=e127]:
+              - generic [ref=e129]: 番号
+            - cell "223470100" [ref=e130]
+          - row "詳細 Automation E2E 26" [ref=e131]:
+            - cell "詳細" [ref=e132]:
+              - generic [ref=e134]: 詳細
+            - cell "Automation E2E 26" [ref=e135]:
+              - generic [ref=e136]: Automation E2E 26
+          - row "画像" [ref=e137]:
+            - cell "画像" [ref=e138]:
+              - generic [ref=e140]: 画像
+            - cell [ref=e141]
+          - row "案件区分 通常案件" [ref=e142]:
+            - cell "案件区分" [ref=e143]:
+              - generic [ref=e145]: 案件区分
+            - cell "通常案件" [ref=e146]:
+              - generic [ref=e147]: 通常案件
+          - row "緊急フラグ 緊急" [ref=e148]:
+            - cell "緊急フラグ" [ref=e149]:
+              - generic [ref=e151]: 緊急フラグ
+            - cell "緊急" [ref=e152]:
+              - generic [ref=e153]: 緊急
+          - row "要望の日付 2026年10月16日 緊急" [ref=e154]:
+            - cell "要望の日付" [ref=e155]:
+              - generic [ref=e157]: 要望の日付
+            - cell "2026年10月16日 緊急" [ref=e158]
+          - row "訪問確定日時" [ref=e159]:
+            - cell "訪問確定日時" [ref=e160]:
+              - generic [ref=e162]: 訪問確定日時
+            - cell [ref=e163]
+          - row "作業者 LINKSYS WORKER" [ref=e164]:
+            - cell "作業者" [ref=e165]:
+              - generic [ref=e167]: 作業者
+            - cell "LINKSYS WORKER" [ref=e168]
+          - row "登録日時 2026年10月16日 12:14:56" [ref=e169]:
+            - cell "登録日時" [ref=e170]:
+              - generic [ref=e172]: 登録日時
+            - cell "2026年10月16日 12:14:56" [ref=e173]
+          - row "更新日時 2026年10月16日 12:15:39" [ref=e174]:
+            - cell "更新日時" [ref=e175]:
+              - generic [ref=e177]: 更新日時
+            - cell "2026年10月16日 12:15:39" [ref=e178]
+          - row "依頼内容確認 依頼の内容を確認しました" [ref=e179]:
+            - cell "依頼内容確認" [ref=e180]:
+              - generic [ref=e182]: 依頼内容確認
+            - cell "依頼の内容を確認しました" [ref=e183]:
+              - generic [ref=e184]:
+                - checkbox "依頼の内容を確認しました" [ref=e185]
+                - generic [ref=e186]: 依頼の内容を確認しました
+      - table [ref=e188]:
+        - rowgroup [ref=e189]:
+          - row "全体状態 対応中" [ref=e190]:
+            - cell "全体状態" [ref=e191]:
+              - generic [ref=e193]: 全体状態
+            - cell "対応中" [ref=e194]:
+              - generic [ref=e195]: 対応中
+          - row "依頼種類 新規依頼" [ref=e196]:
+            - cell "依頼種類" [ref=e197]:
+              - generic [ref=e199]: 依頼種類
+            - cell "新規依頼" [ref=e200]:
+              - generic [ref=e201]: 新規依頼
+          - row "対応状態 到着" [ref=e202]:
+            - cell "対応状態" [ref=e203]:
+              - generic [ref=e205]: 対応状態
+            - cell "到着" [ref=e206]:
+              - generic [ref=e207]: 到着
+          - row "自動マッチング automatching" [ref=e208]:
+            - cell "自動マッチング" [ref=e209]:
+              - generic [ref=e211]: 自動マッチング
+            - cell "automatching" [ref=e212]:
+              - img "automatching" [ref=e213]
+          - row "報告書確認状況" [ref=e214]:
+            - cell "報告書確認状況" [ref=e215]:
+              - generic [ref=e217]: 報告書確認状況
+            - cell [ref=e218]
+          - row "決済状況" [ref=e219]:
+            - cell "決済状況" [ref=e220]:
+              - generic [ref=e222]: 決済状況
+            - cell [ref=e223]
+      - table [ref=e225]:
+        - rowgroup [ref=e226]:
+          - row "店舗名 LINKSYS STORE00004 (RINGI)" [ref=e227]:
+            - cell "店舗名" [ref=e228]:
+              - generic [ref=e230]: 店舗名
+            - cell "LINKSYS STORE00004 (RINGI)" [ref=e231]
+          - row "住所 〒123-1443 大阪府 15 Le Quang Hoa" [ref=e232]:
+            - cell "住所" [ref=e233]:
+              - generic [ref=e235]: 住所
+            - cell "〒123-1443 大阪府 15 Le Quang Hoa" [ref=e236]
+          - row "電話番号(店舗) 0935678278" [ref=e237]:
+            - cell "電話番号(店舗)" [ref=e238]:
+              - generic [ref=e240]: 電話番号(店舗)
+            - cell "0935678278" [ref=e241]
+          - row "担当者 Hieu" [ref=e242]:
+            - cell "担当者" [ref=e243]:
+              - generic [ref=e245]: 担当者
+            - cell "Hieu" [ref=e246]
+          - row "電話番号(担当者) 08057882712" [ref=e247]:
+            - cell "電話番号(担当者)" [ref=e248]:
+              - generic [ref=e250]: 電話番号(担当者)
+            - cell "08057882712" [ref=e251]
+          - row "依頼登録者 LINKSYS MANAGER00001" [ref=e252]:
+            - cell "依頼登録者" [ref=e253]:
+              - generic [ref=e255]: 依頼登録者
+            - cell "LINKSYS MANAGER00001" [ref=e256]
+          - row "店舗決済者 店舗決済者を表示" [ref=e257]:
+            - cell "店舗決済者" [ref=e258]:
+              - generic [ref=e260]: 店舗決済者
+            - cell "店舗決済者を表示" [ref=e261]:
+              - button "店舗決済者を表示" [ref=e262] [cursor=pointer]
+      - table [ref=e264]:
+        - rowgroup [ref=e265]:
+          - row "メモ欄（店舗）" [ref=e266]:
+            - cell "メモ欄（店舗）" [ref=e267]:
+              - generic [ref=e269]: メモ欄（店舗）
+            - cell [ref=e270]
+    - generic [ref=e271]:
+      - img [ref=e273] [cursor=pointer]
+      - generic [ref=e274]:
+        - generic [ref=e275]:
+          - paragraph [ref=e276]: チャット
+          - generic [ref=e277] [cursor=pointer]: 
+        - generic [ref=e280]:
+          - generic [ref=e284]:
+            - generic [ref=e285]: 
+            - generic [ref=e286]: メッセージがありません。
+          - generic [ref=e287]:
+            - paragraph [ref=e288]: 宛先
+            - generic [ref=e293]:
+              - generic [ref=e294]:
+                - generic [ref=e295]: 宛先を選択してください
+                - combobox [ref=e297]
+              - img [ref=e301]
+          - textbox "メッセージを入力してください。" [ref=e305]
+          - generic [ref=e306]:
+            - button "" [ref=e307] [cursor=pointer]:
+              - generic [ref=e308]: 
+            - button "" [disabled] [ref=e309]:
+              - generic [ref=e310]: 
+    - dialog [ref=e311]:
+      - document [ref=e312]:
+        - generic [ref=e313]:
+          - button "閉じる" [ref=e314] [cursor=pointer]: ×
+          - generic [ref=e315]:
+            - heading "状態変更" [level=4] [ref=e317]
+            - table [ref=e320]:
+              - rowgroup [ref=e321]:
+                - row "依頼種類 新規依頼" [ref=e322]:
+                  - cell "依頼種類" [ref=e323]:
+                    - generic [ref=e325]: 依頼種類
+                  - cell "新規依頼" [ref=e326]:
+                    - heading "新規依頼" [level=5] [ref=e328]
+                - row "状態 対応中" [ref=e329]:
+                  - cell "状態" [ref=e330]:
+                    - generic [ref=e332]: 状態
+                  - cell "対応中" [ref=e333]:
+                    - combobox [ref=e335]:
+                      - option "問い合わせ中"
+                      - option "対応中" [selected]
+                      - option "完了"
+                - row "対応中の状態（新規） 見積承認待ち" [ref=e336]:
+                  - cell "対応中の状態（新規）" [ref=e337]:
+                    - generic [ref=e339]: 対応中の状態（新規）
+                  - cell "見積承認待ち" [ref=e340]:
+                    - combobox [ref=e342]:
+                      - option "受注待ち"
+                      - option "受注"
+                      - option "移動中"
+                      - option "到着"
+                      - option "見積承認待ち" [selected]
+                      - option "見積拒否"
+                      - option "作業中"
+                      - option "作業完了"
+                      - option "報告済"
+                      - option "承認済み"
+                - row "作業者 必須 LINKSYS WORKER 〒123-1443 大阪府 Osaka prefecture 0935789268 " [ref=e343]:
+                  - cell "作業者 必須" [ref=e344]:
+                    - generic [ref=e346]: 作業者
+                    - generic [ref=e347]: 必須
+                  - cell "LINKSYS WORKER 〒123-1443 大阪府 Osaka prefecture 0935789268 " [ref=e348]:
+                    - generic [ref=e351]:
+                      - generic [ref=e352]:
+                        - heading "LINKSYS WORKER" [level=4] [ref=e353]
+                        - generic [ref=e354]:
+                          - text: 〒123-1443 大阪府 Osaka prefecture
+                          - text: "0935789268"
+                      - generic [ref=e357] [cursor=pointer]: 
+                - row "訪問予定日時 任意 訪問予定日時選択 " [ref=e358]:
+                  - cell "訪問予定日時 任意" [ref=e359]:
+                    - generic [ref=e361]: 訪問予定日時
+                    - generic [ref=e362]: 任意
+                  - cell "訪問予定日時選択 " [ref=e363]:
+                    - generic [ref=e366]:
+                      - generic [ref=e367]:
+                        - heading "訪問予定日時選択" [level=4] [ref=e368]
+                        - heading [level=5] [ref=e370]
+                      - generic [ref=e373] [cursor=pointer]: 
+                - 'row "見積もり 必須 見積名 : E2E26-New 合計 : ￥18,183 税込 : ￥20,001 労働者合計 : ￥1,000 見積書 :  PDFダウンロード " [ref=e374]':
+                  - cell "見積もり 必須" [ref=e375]:
+                    - generic [ref=e377]: 見積もり
+                    - generic [ref=e378]: 必須
+                  - 'cell "見積名 : E2E26-New 合計 : ￥18,183 税込 : ￥20,001 労働者合計 : ￥1,000 見積書 :  PDFダウンロード " [ref=e379]':
+                    - generic [ref=e382]:
+                      - generic [ref=e383]:
+                        - heading [level=4]
+                        - generic [ref=e384]:
+                          - paragraph [ref=e385]: "見積名 : E2E26-New"
+                          - paragraph [ref=e386]: "合計 : ￥18,183"
+                          - paragraph [ref=e387]: "税込 : ￥20,001"
+                          - paragraph [ref=e388]: "労働者合計 : ￥1,000"
+                          - paragraph [ref=e389]:
+                            - text: "見積書 :"
+                            - button " PDFダウンロード" [ref=e391] [cursor=pointer]:
+                              - generic [ref=e392]: 
+                              - text: PDFダウンロード
+                      - generic [ref=e395] [cursor=pointer]: 
+            - generic [ref=e396]:
+              - button "キャンセル" [ref=e397] [cursor=pointer]
+              - button " 保存" [ref=e398] [cursor=pointer]:
+                - generic [ref=e399]: 
+                - text: 保存
+    - dialog [ref=e400]:
+      - document [ref=e401]:
+        - generic [ref=e403]:
+          - generic [ref=e404]:
+            - heading "見積もり" [level=4] [ref=e405]
+            - button "閉じる" [ref=e408] [cursor=pointer]
+          - table [ref=e410]:
+            - rowgroup [ref=e411]:
+              - row "見積もり -" [ref=e412]:
+                - cell "見積もり" [ref=e413]:
+                  - generic [ref=e415]: 見積もり
+                - cell "-" [ref=e416]
+              - row "見積書宛名 -" [ref=e417]:
+                - cell "見積書宛名" [ref=e418]:
+                  - generic [ref=e420]: 見積書宛名
+                - cell "-" [ref=e421]
+              - row "合計 -" [ref=e422]:
+                - cell "合計" [ref=e423]:
+                  - generic [ref=e425]: 合計
+                - cell "-" [ref=e426]
+              - row "税込 -" [ref=e427]:
+                - cell "税込" [ref=e428]:
+                  - generic [ref=e430]: 税込
+                - cell "-" [ref=e431]
+              - row "労働者合計 -" [ref=e432]:
+                - cell "労働者合計" [ref=e433]:
+                  - generic [ref=e435]: 労働者合計
+                - cell "-" [ref=e436]
+              - row "見積有効期限 -" [ref=e437]:
+                - cell "見積有効期限" [ref=e438]:
+                  - generic [ref=e440]: 見積有効期限
+                - cell "-" [ref=e441]
+              - row "特記事項 -" [ref=e442]:
+                - cell "特記事項" [ref=e443]:
+                  - generic [ref=e445]: 特記事項
+                - cell "-" [ref=e446]
+          - generic [ref=e447]:
+            - heading "見積一覧" [level=4] [ref=e449]
+            - generic [ref=e450]:
+              - button " 提示する" [ref=e451] [cursor=pointer]:
+                - generic [ref=e452]: 
+                - text: 提示する
+              - button " 登録" [ref=e453] [cursor=pointer]:
+                - generic [ref=e454]: 
+                - text: 登録
+          - generic [ref=e455]:
+            - table [ref=e456]:
+              - rowgroup [ref=e457]:
+                - row "No 見積名 金額（税抜き） 金額（税込み） 状態 ダウンロード 操作" [ref=e458]:
+                  - cell [ref=e459]:
+                    - checkbox [disabled] [ref=e461]
+                  - cell "No" [ref=e462]:
+                    - generic [ref=e465]: "No"
+                  - cell "見積名" [ref=e466]:
+                    - generic [ref=e469]: 見積名
+                  - cell "金額（税抜き）" [ref=e470]:
+                    - generic [ref=e473]: 金額（税抜き）
+                  - cell "金額（税込み）" [ref=e474]:
+                    - generic [ref=e477]: 金額（税込み）
+                  - cell "状態" [ref=e478]:
+                    - generic [ref=e481]: 状態
+                  - cell "ダウンロード" [ref=e482]:
+                    - generic [ref=e485]: ダウンロード
+                  - cell "操作" [ref=e486]:
+                    - generic [ref=e489]: 操作
+              - rowgroup [ref=e490]:
+                - row "1 E2E26-New ￥18,183 ￥20,001 承認済み  Excel  PDF メニュー展開 ▼" [ref=e491] [cursor=pointer]:
+                  - cell [ref=e492]:
+                    - checkbox [disabled] [ref=e494]
+                  - cell "1" [ref=e495]
+                  - cell "E2E26-New" [ref=e496]
+                  - cell "￥18,183" [ref=e497]
+                  - cell "￥20,001" [ref=e498]
+                  - cell "承認済み" [ref=e499]:
+                    - generic [ref=e500]: 承認済み
+                  - cell " Excel  PDF" [ref=e501]:
+                    - button " Excel" [ref=e502]:
+                      - generic [ref=e503]: 
+                      - text: Excel
+                    - button " PDF" [ref=e504]:
+                      - generic [ref=e505]: 
+                      - text: PDF
+                  - cell "メニュー展開 ▼" [ref=e506]:
+                    - generic [ref=e507]:
+                      - text: メニュー展開
+                      - generic [ref=e508]: ▼
+            - status [ref=e509]
+  - contentinfo [ref=e510]:
+    - generic [ref=e511]:
+      - strong [ref=e512]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e514]:
+      - listitem [ref=e515]:
+        - button "利用規約" [ref=e516] [cursor=pointer]
+      - listitem [ref=e517]:
+        - button "プライバシーポリシー" [ref=e518] [cursor=pointer]
+  - text: 
+```

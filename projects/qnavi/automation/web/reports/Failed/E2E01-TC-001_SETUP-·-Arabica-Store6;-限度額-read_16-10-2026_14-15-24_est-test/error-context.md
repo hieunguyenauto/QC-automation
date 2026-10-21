@@ -1,0 +1,460 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - navigation [ref=e3]:
+    - list [ref=e4]:
+      - listitem [ref=e5]:
+        - button "" [ref=e6] [cursor=pointer]:
+          - generic [ref=e7]: 
+    - list [ref=e8]:
+      - listitem [ref=e9]:
+        - generic [ref=e10]:
+          - generic [ref=e12] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e13]
+          - button "" [ref=e15] [cursor=pointer]:
+            - generic [ref=e16]: 
+      - listitem [ref=e17]:
+        - link " サポート" [ref=e18] [cursor=pointer]:
+          - /url: https://globar.notion.site/Q-ORDER-1c2daf8bd905804182fdceff93352190
+          - generic [ref=e19]: 
+          - text: サポート
+      - listitem [ref=e21]:
+        - button "フィルタ" [ref=e22] [cursor=pointer]:
+          - generic [ref=e24]: フィルタ
+      - listitem [ref=e25]:
+        - button "パスワード変更" [ref=e26] [cursor=pointer]
+      - listitem [ref=e27]:
+        - button "ログアウト" [ref=e28] [cursor=pointer]
+  - complementary [ref=e29]:
+    - link "Qnavi管理画面" [ref=e30] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e32]:
+      - menu [ref=e33]:
+        - listitem [ref=e34]: メニュー
+        - listitem [ref=e35]:
+          - link " ホーム" [ref=e36] [cursor=pointer]:
+            - generic [ref=e37]: 
+            - paragraph [ref=e38]: ホーム
+        - listitem [ref=e39]:
+          - link " 作業依頼情報" [ref=e40] [cursor=pointer]:
+            - generic [ref=e41]: 
+            - paragraph [ref=e42]: 作業依頼情報
+        - listitem [ref=e43]:
+          - link " 作業依頼登録" [ref=e44] [cursor=pointer]:
+            - generic [ref=e45]: 
+            - paragraph [ref=e46]: 作業依頼登録
+        - listitem [ref=e47]:
+          - link " 個人事業主情報" [ref=e48] [cursor=pointer]:
+            - generic [ref=e49]: 
+            - paragraph [ref=e50]: 個人事業主情報
+        - listitem [ref=e51]:
+          - link " チェーンシステム情報" [ref=e52] [cursor=pointer]:
+            - generic [ref=e53]: 
+            - paragraph [ref=e54]: チェーンシステム情報
+        - listitem [ref=e55]:
+          - link " 作業項目情報" [ref=e56] [cursor=pointer]:
+            - generic [ref=e57]: 
+            - paragraph [ref=e58]: 作業項目情報
+        - listitem [ref=e59]:
+          - link " 代理店情報" [ref=e60] [cursor=pointer]:
+            - generic [ref=e61]: 
+            - paragraph [ref=e62]: 代理店情報
+        - listitem [ref=e63]:
+          - link " お知らせ管理" [ref=e64] [cursor=pointer]:
+            - generic [ref=e65]: 
+            - paragraph [ref=e66]: お知らせ管理
+        - listitem [ref=e67]:
+          - link " チャット一覧" [ref=e68] [cursor=pointer]:
+            - generic [ref=e69]: 
+            - paragraph [ref=e70]: チャット一覧
+        - listitem [ref=e71]:
+          - link " タスク管理" [ref=e72] [cursor=pointer]:
+            - generic [ref=e73]: 
+            - paragraph [ref=e74]: タスク管理
+        - listitem [ref=e75]:
+          - link " 見積用作業項目情報" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+            - paragraph [ref=e78]: 見積用作業項目情報
+        - listitem [ref=e79]:
+          - link " サブアドミン情報" [ref=e80] [cursor=pointer]:
+            - generic [ref=e81]: 
+            - paragraph [ref=e82]: サブアドミン情報
+        - listitem [ref=e83]:
+          - link " 作業員情報" [ref=e84] [cursor=pointer]:
+            - generic [ref=e85]: 
+            - paragraph [ref=e86]: 作業員情報
+        - listitem [ref=e87]:
+          - link " 作業会社情報" [ref=e88] [cursor=pointer]:
+            - generic [ref=e89]: 
+            - paragraph [ref=e90]: 作業会社情報
+        - listitem [ref=e91]:
+          - link " Q&A管理" [ref=e92] [cursor=pointer]:
+            - generic [ref=e93]: 
+            - paragraph [ref=e94]: Q&A管理
+        - listitem [ref=e95]:
+          - link " 資産管理項目マスター" [ref=e96] [cursor=pointer]:
+            - generic [ref=e97]: 
+            - paragraph [ref=e98]: 資産管理項目マスター
+        - listitem [ref=e99]:
+          - link " 資産情報" [ref=e100] [cursor=pointer]:
+            - generic [ref=e101]: 
+            - paragraph [ref=e102]: 資産情報
+        - listitem [ref=e103]:
+          - link " システム設定" [ref=e104] [cursor=pointer]:
+            - generic [ref=e105]: 
+            - paragraph [ref=e106]: システム設定
+        - listitem [ref=e107]:
+          - link " GlobaR管理者情報" [ref=e108] [cursor=pointer]:
+            - generic [ref=e109]: 
+            - paragraph [ref=e110]: GlobaR管理者情報
+    - paragraph [ref=e112]: Qナビ担当者 （株式会社グローバー）
+  - generic [ref=e116]:
+    - generic [ref=e118]:
+      - generic [ref=e119]:
+        - heading "チェーンシステム詳細" [level=4] [ref=e120]
+        - generic [ref=e122]:
+          - button " 戻る" [ref=e123] [cursor=pointer]:
+            - generic [ref=e124]: 
+            - text: 戻る
+          - button " カスタム属性管理" [ref=e125] [cursor=pointer]:
+            - generic [ref=e126]: 
+            - text: カスタム属性管理
+          - button " 編集" [ref=e127] [cursor=pointer]:
+            - generic [ref=e128]: 
+            - text: 編集
+      - table [ref=e130]:
+        - rowgroup [ref=e131]:
+          - row "チェーンシステム名（社名） Arabica Coffee VietNam" [ref=e132]:
+            - cell "チェーンシステム名（社名）" [ref=e133]:
+              - generic [ref=e135]: チェーンシステム名（社名）
+            - cell "Arabica Coffee VietNam" [ref=e136]
+          - row "電話番号 0935789268" [ref=e137]:
+            - cell "電話番号" [ref=e138]:
+              - generic [ref=e140]: 電話番号
+            - cell "0935789268" [ref=e141]
+          - row "住所" [ref=e142]:
+            - cell "住所" [ref=e143]:
+              - generic [ref=e145]: 住所
+            - cell [ref=e146]
+          - row "登録日時 2026年10月15日 18:58:40" [ref=e147]:
+            - cell "登録日時" [ref=e148]:
+              - generic [ref=e150]: 登録日時
+            - cell "2026年10月15日 18:58:40" [ref=e151]
+          - row "継続依頼表示設定 継続依頼をまとめる" [ref=e152]:
+            - cell "継続依頼表示設定" [ref=e153]:
+              - generic [ref=e155]: 継続依頼表示設定
+            - cell "継続依頼をまとめる" [ref=e156]
+          - row "自動マッチング automatching" [ref=e157]:
+            - cell "自動マッチング" [ref=e158]:
+              - generic [ref=e160]: 自動マッチング
+            - cell "automatching" [ref=e161]:
+              - img "automatching" [ref=e162]
+          - row "シサンNAVI asset" [ref=e163]:
+            - cell "シサンNAVI" [ref=e164]:
+              - generic [ref=e166]: シサンNAVI
+            - cell "asset" [ref=e167]:
+              - img "asset" [ref=e168]
+          - row "トラブルNAVI chatbot" [ref=e169]:
+            - cell "トラブルNAVI" [ref=e170]:
+              - generic [ref=e172]: トラブルNAVI
+            - cell "chatbot" [ref=e173]:
+              - img "chatbot" [ref=e174]
+      - generic [ref=e175]:
+        - button " 戻る" [ref=e176] [cursor=pointer]:
+          - generic [ref=e177]: 
+          - text: 戻る
+        - button " 編集" [ref=e178] [cursor=pointer]:
+          - generic [ref=e179]: 
+          - text: 編集
+    - generic [ref=e180]:
+      - button "チェーン店舗一覧" [disabled] [ref=e182]
+      - button "チェーン店管理者一覧" [ref=e184] [cursor=pointer]
+    - generic [ref=e185]:
+      - generic [ref=e186]:
+        - heading " 検索条件" [level=4] [ref=e187] [cursor=pointer]:
+          - generic [ref=e188]: 
+          - text: 検索条件
+        - button " 検索条件解除" [ref=e189] [cursor=pointer]:
+          - generic [ref=e190]: 
+          - text: 検索条件解除
+        - generic [ref=e191]:
+          - button " 症状一覧DL" [ref=e192] [cursor=pointer]:
+            - generic [ref=e193]: 
+            - text: 症状一覧DL
+          - button " カスタム属性DL" [ref=e194] [cursor=pointer]:
+            - generic [ref=e195]: 
+            - text: カスタム属性DL
+          - button " カスタム属性の一括更新" [ref=e196] [cursor=pointer]:
+            - generic [ref=e197]: 
+            - text: カスタム属性の一括更新
+          - button " 店舗別作業項目DL" [ref=e198] [cursor=pointer]:
+            - generic [ref=e199]: 
+            - text: 店舗別作業項目DL
+          - button " 店舗別作業項目登録" [ref=e200] [cursor=pointer]:
+            - generic [ref=e201]: 
+            - text: 店舗別作業項目登録
+          - button " Excel一覧 DL" [ref=e202] [cursor=pointer]:
+            - generic [ref=e203]: 
+            - text: Excel一覧 DL
+          - button " 一括登録" [ref=e204] [cursor=pointer]:
+            - generic [ref=e205]: 
+            - text: 一括登録
+          - button " 登録" [ref=e206] [cursor=pointer]:
+            - generic [ref=e207]: 
+            - text: 登録
+      - text:     
+      - paragraph [ref=e211]: 全 9 件中 1 件目 〜 9 件目を表示
+      - generic [ref=e212]:
+        - table [ref=e213]:
+          - rowgroup [ref=e214]:
+            - row "No 店名  電話番号  メール  郵便番号  都道府県  住所  支払い方法  ログインID  許可したいIPアドレス  前回ログイン日時  m  登録日時  操作" [ref=e215]:
+              - cell "No" [ref=e216]:
+                - generic [ref=e219]: "No"
+              - cell "店名 " [ref=e220]:
+                - generic [ref=e222] [cursor=pointer]:
+                  - generic [ref=e223]: 店名
+                  - generic [ref=e224]: 
+              - cell "電話番号 " [ref=e225]:
+                - generic [ref=e227] [cursor=pointer]:
+                  - generic [ref=e228]: 電話番号
+                  - generic [ref=e229]: 
+              - cell "メール " [ref=e230]:
+                - generic [ref=e232] [cursor=pointer]:
+                  - generic [ref=e233]: メール
+                  - generic [ref=e234]: 
+              - cell "郵便番号 " [ref=e235]:
+                - generic [ref=e237] [cursor=pointer]:
+                  - generic [ref=e238]: 郵便番号
+                  - generic [ref=e239]: 
+              - cell "都道府県 " [ref=e240]:
+                - generic [ref=e242] [cursor=pointer]:
+                  - generic [ref=e243]: 都道府県
+                  - generic [ref=e244]: 
+              - cell "住所 " [ref=e245]:
+                - generic [ref=e247] [cursor=pointer]:
+                  - generic [ref=e248]: 住所
+                  - generic [ref=e249]: 
+              - cell "支払い方法 " [ref=e250]:
+                - generic [ref=e252] [cursor=pointer]:
+                  - generic [ref=e253]: 支払い方法
+                  - generic [ref=e254]: 
+              - cell "ログインID " [ref=e255]:
+                - generic [ref=e257] [cursor=pointer]:
+                  - generic [ref=e258]: ログインID
+                  - generic [ref=e259]: 
+              - cell "許可したいIPアドレス " [ref=e260]:
+                - generic [ref=e262] [cursor=pointer]:
+                  - generic [ref=e263]: 許可したいIPアドレス
+                  - generic [ref=e264]: 
+              - cell "前回ログイン日時 " [ref=e265]:
+                - generic [ref=e267] [cursor=pointer]:
+                  - generic [ref=e268]: 前回ログイン日時
+                  - generic [ref=e269]: 
+              - cell "m " [ref=e270]:
+                - generic [ref=e272] [cursor=pointer]:
+                  - generic [ref=e273]: m
+                  - generic [ref=e274]: 
+              - cell "登録日時 " [ref=e275]:
+                - generic [ref=e277] [cursor=pointer]:
+                  - generic [ref=e278]: 登録日時
+                  - generic [ref=e279]: 
+              - cell "操作" [ref=e280]:
+                - generic [ref=e283]: 操作
+          - rowgroup [ref=e284]:
+            - row "1 Arabica Store 9 (Ringi) [0] [99] 0935273056 arabicastore9@yopmail.com 100-0009 東京都 Tokyo Chiyoda 9-9-9 Arabica Store 9 請求書払い arabicastore9 automatching 2026年10月16日 11:41  編集" [ref=e285] [cursor=pointer]:
+              - cell "1" [ref=e286]
+              - cell "Arabica Store 9 (Ringi) [0] [99]" [ref=e287]
+              - cell "0935273056" [ref=e288]
+              - cell "arabicastore9@yopmail.com" [ref=e289]
+              - cell "100-0009" [ref=e290]
+              - cell "東京都" [ref=e291]
+              - cell "Tokyo Chiyoda 9-9-9 Arabica Store 9" [ref=e292]
+              - cell "請求書払い" [ref=e293]
+              - cell "arabicastore9" [ref=e294]
+              - cell [ref=e295]
+              - cell [ref=e296]
+              - cell "automatching" [ref=e297]:
+                - img "automatching" [ref=e298]
+              - cell "2026年10月16日 11:41" [ref=e299]
+              - cell " 編集" [ref=e300]:
+                - button " 編集" [ref=e301]:
+                  - generic [ref=e302]: 
+                  - text: 編集
+            - row "2 Arabica Store 8 (Approve Type 3) [4] [5] 0935273056 arabicastore8@yopmail.com 100-0008 東京都 Tokyo Chiyoda 8-8-8 Arabica Store 8 請求書払い arabicastore8 automatching 2026年10月16日 11:41  編集" [ref=e303] [cursor=pointer]:
+              - cell "2" [ref=e304]
+              - cell "Arabica Store 8 (Approve Type 3) [4] [5]" [ref=e305]
+              - cell "0935273056" [ref=e306]
+              - cell "arabicastore8@yopmail.com" [ref=e307]
+              - cell "100-0008" [ref=e308]
+              - cell "東京都" [ref=e309]
+              - cell "Tokyo Chiyoda 8-8-8 Arabica Store 8" [ref=e310]
+              - cell "請求書払い" [ref=e311]
+              - cell "arabicastore8" [ref=e312]
+              - cell [ref=e313]
+              - cell [ref=e314]
+              - cell "automatching" [ref=e315]:
+                - img "automatching" [ref=e316]
+              - cell "2026年10月16日 11:41" [ref=e317]
+              - cell " 編集" [ref=e318]:
+                - button " 編集" [ref=e319]:
+                  - generic [ref=e320]: 
+                  - text: 編集
+            - row "3 Arabica Store 7 (Approve Type 2) [1] [$2] 0935273056 arabicastore7@yopmail.com 100-0007 東京都 Tokyo Chiyoda 7-7-7 Arabica Store 7 請求書払い arabicastore7 automatching 2026年10月16日 11:41  編集" [ref=e321] [cursor=pointer]:
+              - cell "3" [ref=e322]
+              - cell "Arabica Store 7 (Approve Type 2) [1] [$2]" [ref=e323]
+              - cell "0935273056" [ref=e324]
+              - cell "arabicastore7@yopmail.com" [ref=e325]
+              - cell "100-0007" [ref=e326]
+              - cell "東京都" [ref=e327]
+              - cell "Tokyo Chiyoda 7-7-7 Arabica Store 7" [ref=e328]
+              - cell "請求書払い" [ref=e329]
+              - cell "arabicastore7" [ref=e330]
+              - cell [ref=e331]
+              - cell [ref=e332]
+              - cell "automatching" [ref=e333]:
+                - img "automatching" [ref=e334]
+              - cell "2026年10月16日 11:41" [ref=e335]
+              - cell " 編集" [ref=e336]:
+                - button " 編集" [ref=e337]:
+                  - generic [ref=e338]: 
+                  - text: 編集
+            - row "4 Arabica Store 6 (Approve Type 1) [3] [5] 0935273056 arabicastore6@yopmail.com 100-0006 東京都 Tokyo Chiyoda 6-6-6 Arabica Store 6 請求書払い arabicastore6 automatching 2026年10月16日 11:41  編集" [ref=e339] [cursor=pointer]:
+              - cell "4" [ref=e340]
+              - cell "Arabica Store 6 (Approve Type 1) [3] [5]" [ref=e341]
+              - cell "0935273056" [ref=e342]
+              - cell "arabicastore6@yopmail.com" [ref=e343]
+              - cell "100-0006" [ref=e344]
+              - cell "東京都" [ref=e345]
+              - cell "Tokyo Chiyoda 6-6-6 Arabica Store 6" [ref=e346]
+              - cell "請求書払い" [ref=e347]
+              - cell "arabicastore6" [ref=e348]
+              - cell [ref=e349]
+              - cell [ref=e350]
+              - cell "automatching" [ref=e351]:
+                - img "automatching" [ref=e352]
+              - cell "2026年10月16日 11:41" [ref=e353]
+              - cell " 編集" [ref=e354]:
+                - button " 編集" [ref=e355]:
+                  - generic [ref=e356]: 
+                  - text: 編集
+            - row "5 Arabica Store 5 (Auto Approve) 0935273056 arabicastore5@yopmail.com 100-0005 東京都 Tokyo Chiyoda 5-5-5 Arabica Store 5 請求書払い arabicastore5 automatching 2026年10月16日 11:41  編集" [ref=e357] [cursor=pointer]:
+              - cell "5" [ref=e358]
+              - cell "Arabica Store 5 (Auto Approve)" [ref=e359]
+              - cell "0935273056" [ref=e360]
+              - cell "arabicastore5@yopmail.com" [ref=e361]
+              - cell "100-0005" [ref=e362]
+              - cell "東京都" [ref=e363]
+              - cell "Tokyo Chiyoda 5-5-5 Arabica Store 5" [ref=e364]
+              - cell "請求書払い" [ref=e365]
+              - cell "arabicastore5" [ref=e366]
+              - cell [ref=e367]
+              - cell [ref=e368]
+              - cell "automatching" [ref=e369]:
+                - img "automatching" [ref=e370]
+              - cell "2026年10月16日 11:41" [ref=e371]
+              - cell " 編集" [ref=e372]:
+                - button " 編集" [ref=e373]:
+                  - generic [ref=e374]: 
+                  - text: 編集
+            - row "6 Arabica Store 4 (Ringi) 0935273056 arabicastore4@yopmail.com 100-0004 東京都 Tokyo Chiyoda 4-4-4 Arabica Store 4 請求書払い arabicastore4 automatching 2026年10月16日 11:41  編集" [ref=e375] [cursor=pointer]:
+              - cell "6" [ref=e376]
+              - cell "Arabica Store 4 (Ringi)" [ref=e377]
+              - cell "0935273056" [ref=e378]
+              - cell "arabicastore4@yopmail.com" [ref=e379]
+              - cell "100-0004" [ref=e380]
+              - cell "東京都" [ref=e381]
+              - cell "Tokyo Chiyoda 4-4-4 Arabica Store 4" [ref=e382]
+              - cell "請求書払い" [ref=e383]
+              - cell "arabicastore4" [ref=e384]
+              - cell [ref=e385]
+              - cell [ref=e386]
+              - cell "automatching" [ref=e387]:
+                - img "automatching" [ref=e388]
+              - cell "2026年10月16日 11:41" [ref=e389]
+              - cell " 編集" [ref=e390]:
+                - button " 編集" [ref=e391]:
+                  - generic [ref=e392]: 
+                  - text: 編集
+            - row "7 Arabica Store 3 (Urgent) 0935273056 arabicastore3@yopmail.com 100-0003 東京都 Tokyo Chiyoda 3-3-3 Arabica Store 3 請求書払い arabicastore3 automatching 2026年10月16日 11:41  編集" [ref=e393] [cursor=pointer]:
+              - cell "7" [ref=e394]
+              - cell "Arabica Store 3 (Urgent)" [ref=e395]
+              - cell "0935273056" [ref=e396]
+              - cell "arabicastore3@yopmail.com" [ref=e397]
+              - cell "100-0003" [ref=e398]
+              - cell "東京都" [ref=e399]
+              - cell "Tokyo Chiyoda 3-3-3 Arabica Store 3" [ref=e400]
+              - cell "請求書払い" [ref=e401]
+              - cell "arabicastore3" [ref=e402]
+              - cell [ref=e403]
+              - cell [ref=e404]
+              - cell "automatching" [ref=e405]:
+                - img "automatching" [ref=e406]
+              - cell "2026年10月16日 11:41" [ref=e407]
+              - cell " 編集" [ref=e408]:
+                - button " 編集" [ref=e409]:
+                  - generic [ref=e410]: 
+                  - text: 編集
+            - row "8 Arabica Store 2 (Qnavi) 0935273056 arabicastore2@yopmail.com 100-0002 東京都 Tokyo Chiyoda 2-2-2 Arabica Store 2 請求書払い arabicastore2 automatching 2026年10月16日 11:40  編集" [ref=e411] [cursor=pointer]:
+              - cell "8" [ref=e412]
+              - cell "Arabica Store 2 (Qnavi)" [ref=e413]
+              - cell "0935273056" [ref=e414]
+              - cell "arabicastore2@yopmail.com" [ref=e415]
+              - cell "100-0002" [ref=e416]
+              - cell "東京都" [ref=e417]
+              - cell "Tokyo Chiyoda 2-2-2 Arabica Store 2" [ref=e418]
+              - cell "請求書払い" [ref=e419]
+              - cell "arabicastore2" [ref=e420]
+              - cell [ref=e421]
+              - cell [ref=e422]
+              - cell "automatching" [ref=e423]:
+                - img "automatching" [ref=e424]
+              - cell "2026年10月16日 11:40" [ref=e425]
+              - cell " 編集" [ref=e426]:
+                - button " 編集" [ref=e427]:
+                  - generic [ref=e428]: 
+                  - text: 編集
+            - row "9 Arabica Store 1 (Toridoll) 0935273056 arabicastore1@yopmail.com 100-0001 東京都 Tokyo Chiyoda 1-1-1 Arabica Store 1 請求書払い arabicastore1 automatching 2026年10月16日 11:40  編集" [ref=e429] [cursor=pointer]:
+              - cell "9" [ref=e430]
+              - cell "Arabica Store 1 (Toridoll)" [ref=e431]
+              - cell "0935273056" [ref=e432]
+              - cell "arabicastore1@yopmail.com" [ref=e433]
+              - cell "100-0001" [ref=e434]
+              - cell "東京都" [ref=e435]
+              - cell "Tokyo Chiyoda 1-1-1 Arabica Store 1" [ref=e436]
+              - cell "請求書払い" [ref=e437]
+              - cell "arabicastore1" [ref=e438]
+              - cell [ref=e439]
+              - cell [ref=e440]
+              - cell "automatching" [ref=e441]:
+                - img "automatching" [ref=e442]
+              - cell "2026年10月16日 11:40" [ref=e443]
+              - cell " 編集" [ref=e444]:
+                - button " 編集" [ref=e445]:
+                  - generic [ref=e446]: 
+                  - text: 編集
+        - status [ref=e447]
+      - navigation [ref=e448]:
+        - list [ref=e449]:
+          - listitem [ref=e450]:
+            - generic: 最初
+          - listitem [ref=e451]:
+            - generic: 前
+          - listitem [ref=e452]:
+            - generic [ref=e453]: "1"
+          - listitem [ref=e454]:
+            - generic: 次
+          - listitem [ref=e455]:
+            - generic: 最後
+  - contentinfo [ref=e456]:
+    - generic [ref=e457]:
+      - strong [ref=e458]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e460]:
+      - listitem [ref=e461]:
+        - link "利用規約" [ref=e462] [cursor=pointer]:
+          - /url: https://dev.terms.picontechnology.com/
+      - listitem [ref=e463]:
+        - button "プライバシーポリシー" [ref=e464] [cursor=pointer]
+  - text: 
+```

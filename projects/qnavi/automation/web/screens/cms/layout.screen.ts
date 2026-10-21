@@ -62,6 +62,14 @@ export class CmsLayout {
 
   get sidebar() { return this.page.getByRole('complementary'); }
   get content() { return this.page.locator('.content-wrapper').first(); }
+  /** Tên tài khoản ở cuối sidebar ('.account p'). */
+  get accountName() { return this.page.locator('.account'); }
+  /** Mục menu sidebar theo tên đúng nguyên văn (để kiểm có / không có). */
+  menuItem(name: string) { return this.sidebar.getByText(name, { exact: true }); }
+  /** Hộp lỗi đang mở (chứa chữ エラー). */
+  get errorDialog() { return this.page.locator('.modal.show').filter({ hasText: /エラー/ }); }
+  /** Message hiển thị ở bất kỳ đâu trên trang (chữ lấy từ spec/messages.md). */
+  message(text: string | RegExp) { return this.page.getByText(text); }
   get quickSearch() { return this.page.getByRole('textbox', { name: '依頼番号 または 店舗名でEnter' }); }
 
   /** Bấm menu sidebar theo tên (vd 作業依頼登録, 進行中のトラブル一覧). Danh sách trouble: role 99 = '作業依頼情報' (không có

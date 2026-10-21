@@ -1,0 +1,500 @@
+{
+  "config": {
+    "configFile": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/playwright.config.ts",
+    "rootDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/junit.xml"
+        }
+      ],
+      [
+        "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/common/qc-reporter.ts",
+        {
+          "reportsRoot": "reports",
+          "runDir": "reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test",
+          "stamp": "16-10-2026_06-45-20",
+          "envName": "est-test",
+          "baseUrl": "https://cms-test.estimation.qnavi.picontechnology.com"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "setup",
+        "name": "setup",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/common\\/auth\\.setup\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "cms",
+        "name": "cms",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/cms\\/smoke\\/.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [
+          "/tests\\/cms\\/smoke\\//"
+        ],
+        "testMatch": [
+          "/tests\\/cms\\/.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "open",
+        "name": "open",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/open\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web/reports/_tmp_chk/E2E-01_16-10-2026_06-45-20_est-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "recon",
+        "name": "recon",
+        "testDir": "/sessions/rcw-013yqvykzh3biwmvo5cy9hq1/mnt/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/recon.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "tests/cms/e2e-suite/E2E-01.spec.ts",
+      "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E01-TC-001 SETUP · Arabica Store6; 限度額 read",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-001",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-205fa62b7a2e0c7a39ea",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-002 NEW · chainstore creates trouble (トラブルナビ)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-002",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-1a9c1e7ac88f6fc83cfe",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-003 NEW · Admin: 対応中 + assign worker",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-003",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-48a1bd0c1a0154d70873",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-004",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-0fb7930be7754279595d",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-005 NEW · Create 1 estimate (total = FIX − 1) and 提示",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-005",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-4e36e7d0993058c26908",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-006 NEW · ≤ FIX → auto approve (no approver)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-006",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-aea40fa5a3274729905b",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-007",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-aff0920149e600abd9e5",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-008 NEW · Chain Store 確認・決済 → 完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-008",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-880df9896a10c5443b54",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-009 CONTINUE · subadmin creates 継続依頼 '_2'",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-009",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-4d485fe6c88d0de6c8c2",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-010 CONTINUE · 作業スタッフ kept (arabicaworker1)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-010",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-2a2ffabad6256bcb1202",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-011 CONTINUE · Create 1 estimate (total = FIX − 1) and 提示",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-011",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-542a817c919129800046",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-012",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-dd97550ff13bfe6c4cf7",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-013",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-3ae0a2cf8136ab0375d8",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-014 CONTINUE · 報告済 (02-90)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-014",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-01bdc5c1ad1b341969cb",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-015 CONTINUE · Chain Store 確認・決済 → 完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-015",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-bcd2e27e9799945c8087",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 29,
+          "column": 7
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T06:45:20.302Z",
+    "duration": 259.1529999999999,
+    "expected": 0,
+    "skipped": 15,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

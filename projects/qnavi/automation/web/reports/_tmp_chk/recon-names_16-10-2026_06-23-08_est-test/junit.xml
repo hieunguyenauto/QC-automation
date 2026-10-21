@@ -1,0 +1,8 @@
+<testsuites id="" name="" tests="1" failures="0" skipped="1" errors="0" time="0.31647300000000006">
+<testsuite name="tests/tools/recon-names.spec.ts" timestamp="2026-10-16T06:23:08.745Z" hostname="recon" tests="1" failures="0" skipped="1" time="0" errors="0">
+<testcase name="recon tên hiển thị (read-only)" classname="tests/tools/recon-names.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

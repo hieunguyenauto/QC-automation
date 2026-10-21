@@ -1,0 +1,3 @@
+(tab mới) about:blank
+01 U-login: LỖI locator.click: Timeout 8000ms exceeded.
+02 U-page: LỖI locator.waitFor: Timeout 30000ms exceeded.

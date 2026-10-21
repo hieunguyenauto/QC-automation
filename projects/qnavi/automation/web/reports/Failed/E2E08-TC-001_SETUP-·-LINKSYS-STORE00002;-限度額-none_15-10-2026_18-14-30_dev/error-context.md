@@ -1,0 +1,231 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]: Develop TORIDOLL Environment (4.0)
+  - navigation [ref=e4]:
+    - list [ref=e5]:
+      - listitem [ref=e6]:
+        - button "" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]: 
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e13] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e14]
+          - button "" [ref=e16] [cursor=pointer]:
+            - generic [ref=e17]: 
+      - listitem [ref=e19]:
+        - button "フィルタ" [ref=e20] [cursor=pointer]:
+          - generic [ref=e22]: フィルタ
+      - listitem [ref=e23]:
+        - button "パスワード変更" [ref=e24] [cursor=pointer]
+      - listitem [ref=e25]:
+        - button "ログアウト" [ref=e26] [cursor=pointer]
+  - complementary [ref=e27]:
+    - link "Qnavi管理画面" [ref=e28] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e30]:
+      - menu [ref=e31]:
+        - listitem [ref=e32]: メニュー
+        - listitem [ref=e33]:
+          - link " ホーム" [ref=e34] [cursor=pointer]:
+            - generic [ref=e35]: 
+            - paragraph [ref=e36]: ホーム
+        - listitem [ref=e37]:
+          - link " 作業依頼情報" [ref=e38] [cursor=pointer]:
+            - generic [ref=e39]: 
+            - paragraph [ref=e40]: 作業依頼情報
+        - listitem [ref=e41]:
+          - link " 作業依頼登録" [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]: 
+            - paragraph [ref=e44]: 作業依頼登録
+        - listitem [ref=e45]:
+          - link " 個人事業主情報" [ref=e46] [cursor=pointer]:
+            - generic [ref=e47]: 
+            - paragraph [ref=e48]: 個人事業主情報
+        - listitem [ref=e49]:
+          - link " チェーンシステム情報" [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]: 
+            - paragraph [ref=e52]: チェーンシステム情報
+        - listitem [ref=e53]:
+          - link " 作業項目情報" [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 
+            - paragraph [ref=e56]: 作業項目情報
+        - listitem [ref=e57]:
+          - link " 代理店情報" [ref=e58] [cursor=pointer]:
+            - generic [ref=e59]: 
+            - paragraph [ref=e60]: 代理店情報
+        - listitem [ref=e61]:
+          - link " お知らせ管理" [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: 
+            - paragraph [ref=e64]: お知らせ管理
+        - listitem [ref=e65]:
+          - link " チャット一覧" [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]: 
+            - paragraph [ref=e68]: チャット一覧
+        - listitem [ref=e69]:
+          - link " タスク管理" [ref=e70] [cursor=pointer]:
+            - generic [ref=e71]: 
+            - paragraph [ref=e72]: タスク管理
+        - listitem [ref=e73]:
+          - link " 見積用作業項目情報" [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: 
+            - paragraph [ref=e76]: 見積用作業項目情報
+        - listitem [ref=e77]:
+          - link " サブアドミン情報" [ref=e78] [cursor=pointer]:
+            - generic [ref=e79]: 
+            - paragraph [ref=e80]: サブアドミン情報
+        - listitem [ref=e81]:
+          - link " 作業員情報" [ref=e82] [cursor=pointer]:
+            - generic [ref=e83]: 
+            - paragraph [ref=e84]: 作業員情報
+        - listitem [ref=e85]:
+          - link " 作業会社情報" [ref=e86] [cursor=pointer]:
+            - generic [ref=e87]: 
+            - paragraph [ref=e88]: 作業会社情報
+        - listitem [ref=e89]:
+          - link " Q&A管理" [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]: 
+            - paragraph [ref=e92]: Q&A管理
+        - listitem [ref=e93]:
+          - link " 資産管理項目マスター" [ref=e94] [cursor=pointer]:
+            - generic [ref=e95]: 
+            - paragraph [ref=e96]: 資産管理項目マスター
+        - listitem [ref=e97]:
+          - link " 資産情報" [ref=e98] [cursor=pointer]:
+            - generic [ref=e99]: 
+            - paragraph [ref=e100]: 資産情報
+        - listitem [ref=e101]:
+          - link " システム設定" [ref=e102] [cursor=pointer]:
+            - generic [ref=e103]: 
+            - paragraph [ref=e104]: システム設定
+        - listitem [ref=e105]:
+          - link " GlobaR管理者情報" [ref=e106] [cursor=pointer]:
+            - generic [ref=e107]: 
+            - paragraph [ref=e108]: GlobaR管理者情報
+    - paragraph [ref=e110]: Qナビ担当者 （株式会社グローバー）
+  - generic [ref=e114]:
+    - generic [ref=e115]:
+      - heading " 検索条件" [level=4] [ref=e116] [cursor=pointer]:
+        - generic [ref=e117]: 
+        - text: 検索条件
+      - button " 検索条件解除" [ref=e118] [cursor=pointer]:
+        - generic [ref=e119]: 
+        - text: 検索条件解除
+      - generic [ref=e120]:
+        - button " Excel一覧 DL" [ref=e121] [cursor=pointer]:
+          - generic [ref=e122]: 
+          - text: Excel一覧 DL
+        - button " 登録" [ref=e123] [cursor=pointer]:
+          - generic [ref=e124]: 
+          - text: 登録
+    - generic [ref=e127]:
+      - generic [ref=e128]:
+        - generic [ref=e130]:
+          - generic [ref=e131]: 社名
+          - textbox "社名" [ref=e133]:
+            - /placeholder: 社名を入力
+            - text: Linksys
+        - generic [ref=e135]:
+          - generic [ref=e136]: 電話番号
+          - textbox "電話番号" [ref=e137]:
+            - /placeholder: 電話番号を入力
+        - generic [ref=e139]:
+          - generic [ref=e140]: 住所
+          - textbox "住所" [ref=e142]:
+            - /placeholder: 住所を入力
+        - generic [ref=e144]:
+          - generic [ref=e145]: 店舗数
+          - textbox "店舗数" [ref=e146]:
+            - /placeholder: 店舗数を入力
+        - generic [ref=e148]:
+          - generic [ref=e149]: 登録日時(From)
+          - generic [ref=e150]:
+            - textbox "YYYY/MM/DD HH:mm" [ref=e153]
+            - generic [ref=e156] [cursor=pointer]: 
+        - generic [ref=e158]:
+          - generic [ref=e159]: 登録日時(To)
+          - generic [ref=e160]:
+            - textbox "YYYY/MM/DD HH:mm" [ref=e163]
+            - generic [ref=e166] [cursor=pointer]: 
+        - generic [ref=e168]:
+          - generic [ref=e169]: 表示件数（最大1000件まで）
+          - textbox "表示件数（最大1000件まで）" [ref=e170]:
+            - /placeholder: ""
+            - text: "20"
+      - button " 検索" [disabled] [ref=e172]:
+        - generic [ref=e173]: 
+        - text: 検索
+    - paragraph [ref=e177]: 全 1 件中 1 件目 〜 1 件目を表示
+    - generic [ref=e178]:
+      - table [ref=e179]:
+        - rowgroup [ref=e180]:
+          - row "No 社名  電話番号  住所 m 店舗数  管理者数  登録日時  操作" [ref=e181]:
+            - cell "No" [ref=e182]:
+              - generic [ref=e185]: "No"
+            - cell "社名 " [ref=e186]:
+              - generic [ref=e188] [cursor=pointer]:
+                - generic [ref=e189]: 社名
+                - generic [ref=e190]: 
+            - cell "電話番号 " [ref=e191]:
+              - generic [ref=e193] [cursor=pointer]:
+                - generic [ref=e194]: 電話番号
+                - generic [ref=e195]: 
+            - cell "住所" [ref=e196]:
+              - generic [ref=e199]: 住所
+            - cell "m" [ref=e200]:
+              - generic [ref=e203]: m
+            - cell "店舗数 " [ref=e204]:
+              - generic [ref=e206] [cursor=pointer]:
+                - generic [ref=e207]: 店舗数
+                - generic [ref=e208]: 
+            - cell "管理者数 " [ref=e209]:
+              - generic [ref=e211] [cursor=pointer]:
+                - generic [ref=e212]: 管理者数
+                - generic [ref=e213]: 
+            - cell "登録日時 " [ref=e214]:
+              - generic [ref=e216] [cursor=pointer]:
+                - generic [ref=e217]: 登録日時
+                - generic [ref=e218]: 
+            - cell "操作" [ref=e219]:
+              - generic [ref=e222]: 操作
+        - rowgroup [ref=e223]:
+          - row "1 Linksys Chain System 01234567869 automatching 11 1006 2026年05月22日 10:14  編集" [ref=e224] [cursor=pointer]:
+            - cell "1" [ref=e225]
+            - cell "Linksys Chain System" [ref=e226]
+            - cell "01234567869" [ref=e227]
+            - cell [ref=e228]
+            - cell "automatching" [ref=e229]:
+              - img "automatching" [ref=e230]
+            - cell "11" [ref=e231]
+            - cell "1006" [ref=e232]
+            - cell "2026年05月22日 10:14" [ref=e233]
+            - cell " 編集" [ref=e234]:
+              - button " 編集" [ref=e236]:
+                - generic [ref=e237]: 
+                - text: 編集
+      - status [ref=e238]
+    - navigation [ref=e239]:
+      - list [ref=e240]:
+        - listitem [ref=e241]:
+          - generic: 最初
+        - listitem [ref=e242]:
+          - generic: 前
+        - listitem [ref=e243]:
+          - generic [ref=e244]: "1"
+        - listitem [ref=e245]:
+          - generic: 次
+        - listitem [ref=e246]:
+          - generic: 最後
+  - contentinfo [ref=e247]:
+    - generic [ref=e248]:
+      - strong [ref=e249]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e251]:
+      - listitem [ref=e252]:
+        - button "利用規約" [ref=e253] [cursor=pointer]
+      - listitem [ref=e254]:
+        - button "プライバシーポリシー" [ref=e255] [cursor=pointer]
+  - text: 
+```

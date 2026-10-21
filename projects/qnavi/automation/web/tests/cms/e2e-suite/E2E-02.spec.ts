@@ -152,7 +152,7 @@ tc('E2E02-TC-006', N("NEW · Approve (2 level(s)): ChainStore Manager 'LINKSYS M
   });
   await step("2. '承認する' → '決定' → Verify: not yet '承認済み' (next level must approve)", async () => {
     await d.approveEstimate('E2E02-New');
-    await expect(d.estimateRow('E2E02-New').locator('.badge')).not.toHaveText('承認済み');
+    await expect(d.estimateBadge('E2E02-New')).not.toHaveText('承認済み');
   });
   await step(N("3. Logout → Login ChainStore Manager 'LINKSYS MANAGER00002' → open trouble → '見積もり' → expand 'E2E02-New' → Verify: card 店舗 has '承認する', '差し戻し'"), async () => {
     await e.open(managerWho('00002'), t);
@@ -198,7 +198,7 @@ tc('E2E02-TC-008', 'NEW · CS Admin 確認・決済 → 完了', '01', async () 
   await step("3. Star '感動' → comment 'Automation E2E 02' → '作業完了確認' → '決定' → Verify: '作業依頼の決済状態の保存が完了しました。' → 'OK'", async () => { await e.paymentSubmit(); });
   await step("Expected: Badge '完了' / '報告済', '作業完了確認' disappears; NEW trouble = 完了", async () => {
     await d.expectBadges('完了', '報告済');
-    await expect(d.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
+    await expect(d.workCompleteConfirmButton).toHaveCount(0);
   });
 });
 

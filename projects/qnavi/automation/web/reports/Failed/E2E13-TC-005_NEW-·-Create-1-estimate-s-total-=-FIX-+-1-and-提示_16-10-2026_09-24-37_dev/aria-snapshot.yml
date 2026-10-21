@@ -1,0 +1,378 @@
+- text: Develop TORIDOLL Environment (4.0)
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼情報":
+          - text: 
+          - paragraph: 作業依頼情報
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 個人事業主情報":
+          - text: 
+          - paragraph: 個人事業主情報
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " 作業項目情報":
+          - text: 
+          - paragraph: 作業項目情報
+      - listitem:
+        - link " 代理店情報":
+          - text: 
+          - paragraph: 代理店情報
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " 見積用作業項目情報":
+          - text: 
+          - paragraph: 見積用作業項目情報
+      - listitem:
+        - link " サブアドミン情報":
+          - text: 
+          - paragraph: サブアドミン情報
+      - listitem:
+        - link " 作業員情報":
+          - text: 
+          - paragraph: 作業員情報
+      - listitem:
+        - link " 作業会社情報":
+          - text: 
+          - paragraph: 作業会社情報
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " 資産管理項目マスター":
+          - text: 
+          - paragraph: 資産管理項目マスター
+      - listitem:
+        - link " 資産情報":
+          - text: 
+          - paragraph: 資産情報
+      - listitem:
+        - link " システム設定":
+          - text: 
+          - paragraph: システム設定
+      - listitem:
+        - link " GlobaR管理者情報":
+          - text: 
+          - paragraph: GlobaR管理者情報
+  - paragraph: Qナビ担当者 （株式会社グローバー）
+- paragraph: "関連案件:"
+- text: 223470089 対応中 到着
+- button " 戻る"
+- button " クイック操作"
+- button " 編集"
+- paragraph: "店舗名:"
+- text: LINKSYS STORE00004 (RINGI)
+- paragraph: "依頼内容確認:"
+- text: 受付
+- paragraph: "業者:"
+- link "LINKSYS WORKER":
+  - /url: /admin/workers/3044/detail
+- paragraph: "訪問日時:"
+- text: 未確定
+- paragraph: "見積書:"
+- text: 未提出
+- paragraph: "報告書有無:"
+- text: 未提出
+- button " 履歴"
+- button " 立候補"
+- button " 報告書"
+- button " タスク"
+- table:
+  - rowgroup:
+    - row "作業項目（大） 操作テスト":
+      - cell "作業項目（大）"
+      - cell "操作テスト"
+    - row "作業項目（中） トイレ（テスト）":
+      - cell "作業項目（中）"
+      - cell "トイレ（テスト）"
+    - row "作業項目（小） つまり：大便器（テスト）":
+      - cell "作業項目（小）"
+      - cell "つまり：大便器（テスト）"
+    - row "番号 223470089":
+      - cell "番号"
+      - cell "223470089"
+    - row "詳細 Automation E2E 13":
+      - cell "詳細"
+      - cell "Automation E2E 13"
+    - row "画像":
+      - cell "画像"
+      - cell
+    - row "案件区分 通常案件":
+      - cell "案件区分"
+      - cell "通常案件"
+    - row "緊急フラグ 緊急":
+      - cell "緊急フラグ"
+      - cell "緊急"
+    - row "要望の日付 2026年10月16日 緊急":
+      - cell "要望の日付"
+      - cell "2026年10月16日 緊急"
+    - row "訪問確定日時":
+      - cell "訪問確定日時"
+      - cell
+    - row "作業者 LINKSYS WORKER":
+      - cell "作業者"
+      - cell "LINKSYS WORKER":
+        - link "LINKSYS WORKER":
+          - /url: /admin/workers/3044/detail
+    - row "登録日時 2026年10月16日 11:25:09":
+      - cell "登録日時"
+      - cell "2026年10月16日 11:25:09"
+    - row "更新日時 2026年10月16日 11:25:38":
+      - cell "更新日時"
+      - cell "2026年10月16日 11:25:38"
+    - row "依頼内容確認 依頼の内容を確認しました":
+      - cell "依頼内容確認"
+      - cell "依頼の内容を確認しました":
+        - checkbox "依頼の内容を確認しました"
+        - text: 依頼の内容を確認しました
+- table:
+  - rowgroup:
+    - row "操作モード設定 操作可能モード（ロックなし）":
+      - cell "操作モード設定"
+      - cell "操作可能モード（ロックなし）"
+    - row "全体状態 対応中":
+      - cell "全体状態"
+      - cell "対応中"
+    - row "依頼種類 新規依頼":
+      - cell "依頼種類"
+      - cell "新規依頼"
+    - row "対応状態 到着":
+      - cell "対応状態"
+      - cell "到着"
+    - row "自動マッチング automatching":
+      - cell "自動マッチング"
+      - cell "automatching":
+        - img "automatching"
+    - row "報告書確認状況":
+      - cell "報告書確認状況"
+      - cell
+    - row "決済状況":
+      - cell "決済状況"
+      - cell
+- table:
+  - rowgroup:
+    - row "請求状態 未請求":
+      - cell "請求状態"
+      - cell "未請求"
+    - row "社名 Linksys Chain System":
+      - cell "社名"
+      - cell "Linksys Chain System"
+    - row "店舗名 LINKSYS STORE00004 (RINGI)":
+      - cell "店舗名"
+      - cell "LINKSYS STORE00004 (RINGI)"
+    - row "住所 〒123-1443 大阪府 15 Le Quang Hoa":
+      - cell "住所"
+      - cell "〒123-1443 大阪府 15 Le Quang Hoa"
+    - row "電話番号(店舗) 0935678278":
+      - cell "電話番号(店舗)"
+      - cell "0935678278"
+    - row "担当者 Hieu":
+      - cell "担当者"
+      - cell "Hieu"
+    - row "電話番号(担当者) 08057882712":
+      - cell "電話番号(担当者)"
+      - cell "08057882712"
+    - row "依頼登録者 Qナビ担当者（株式会社グローバー）":
+      - cell "依頼登録者"
+      - cell "Qナビ担当者（株式会社グローバー）"
+    - row "店舗決済者 店舗決済者を表示":
+      - cell "店舗決済者"
+      - cell "店舗決済者を表示":
+        - button "店舗決済者を表示"
+- table:
+  - rowgroup:
+    - row "請求月":
+      - cell "請求月"
+      - cell
+    - row "支払月":
+      - cell "支払月"
+      - cell
+    - row "BM番号":
+      - cell "BM番号"
+      - cell
+    - row "メモ欄（店舗）":
+      - cell "メモ欄（店舗）"
+      - cell
+    - row "メモ欄":
+      - cell "メモ欄"
+      - cell
+- table:
+  - rowgroup:
+    - row "作業員評価":
+      - cell "作業員評価"
+      - cell
+    - row "お客様からのコメント":
+      - cell "お客様からのコメント"
+      - cell
+- img
+- paragraph: チャット
+- button "未読に戻す"
+- text:   メッセージがありません。
+- paragraph: 宛先
+- text: 宛先を選択してください
+- combobox
+- textbox "メッセージを入力してください。"
+- button ""
+- button "" [disabled]
+- dialog:
+  - document:
+    - button "閉じる"
+    - heading "状態変更" [level=4]
+    - table:
+      - rowgroup:
+        - row "依頼種類 新規依頼":
+          - cell "依頼種類"
+          - cell "新規依頼":
+            - heading "新規依頼" [level=5]
+        - row "状態 対応中":
+          - cell "状態"
+          - cell "対応中":
+            - combobox:
+              - option "問い合わせ中"
+              - option "対応中" [selected]
+              - option "完了"
+        - row "対応中の状態（新規） 見積承認待ち":
+          - cell "対応中の状態（新規）"
+          - cell "見積承認待ち":
+            - combobox:
+              - option "受注待ち"
+              - option "受注"
+              - option "移動中"
+              - option "到着"
+              - option "見積承認待ち" [selected]
+              - option "見積拒否"
+              - option "作業中"
+              - option "作業完了"
+              - option "報告済"
+              - option "承認済み"
+        - row "作業者 必須 LINKSYS WORKER 〒123-1443 大阪府 Osaka prefecture 0935789268 ":
+          - cell "作業者 必須"
+          - cell "LINKSYS WORKER 〒123-1443 大阪府 Osaka prefecture 0935789268 ":
+            - heading "LINKSYS WORKER" [level=4]
+            - text: 〒123-1443 大阪府 Osaka prefecture 0935789268 
+        - row "訪問予定日時 任意 訪問予定日時選択 ":
+          - cell "訪問予定日時 任意"
+          - cell "訪問予定日時選択 ":
+            - heading "訪問予定日時選択" [level=4]
+            - heading [level=5]
+            - text: 
+        - 'row "見積もり 必須 見積名 : E2E13-New 合計 : ￥18,183 税込 : ￥20,001 労働者合計 : ￥1,000 見積書 :  PDFダウンロード "':
+          - cell "見積もり 必須"
+          - 'cell "見積名 : E2E13-New 合計 : ￥18,183 税込 : ￥20,001 労働者合計 : ￥1,000 見積書 :  PDFダウンロード "':
+            - heading [level=4]
+            - paragraph: "見積名 : E2E13-New"
+            - paragraph: "合計 : ￥18,183"
+            - paragraph: "税込 : ￥20,001"
+            - paragraph: "労働者合計 : ￥1,000"
+            - paragraph:
+              - text: "見積書 :"
+              - button " PDFダウンロード"
+            - text: 
+    - button "キャンセル"
+    - button " 保存"
+- dialog:
+  - document:
+    - heading "見積もり" [level=4]
+    - button "閉じる"
+    - table:
+      - rowgroup:
+        - row "見積もり -":
+          - cell "見積もり"
+          - cell "-"
+        - row "見積書宛名 -":
+          - cell "見積書宛名"
+          - cell "-"
+        - row "合計 -":
+          - cell "合計"
+          - cell "-"
+        - row "税込 -":
+          - cell "税込"
+          - cell "-"
+        - row "労働者合計 -":
+          - cell "労働者合計"
+          - cell "-"
+        - row "見積有効期限 -":
+          - cell "見積有効期限"
+          - cell "-"
+        - row "特記事項 -":
+          - cell "特記事項"
+          - cell "-"
+    - heading "見積一覧" [level=4]
+    - button " 提示する"
+    - button " 登録"
+    - table:
+      - rowgroup:
+        - row "No 見積名 金額（税抜き） 金額（税込み） 状態 ダウンロード 操作":
+          - cell:
+            - checkbox [disabled]
+          - cell "No"
+          - cell "見積名"
+          - cell "金額（税抜き）"
+          - cell "金額（税込み）"
+          - cell "状態"
+          - cell "ダウンロード"
+          - cell "操作"
+      - rowgroup:
+        - row "1 E2E13-New ￥18,183 ￥20,001 承認済み  Excel  PDF メニュー展開 ▼":
+          - cell:
+            - checkbox [disabled]
+          - cell "1"
+          - cell "E2E13-New"
+          - cell "￥18,183"
+          - cell "￥20,001"
+          - cell "承認済み"
+          - cell " Excel  PDF":
+            - button " Excel"
+            - button " PDF"
+          - cell "メニュー展開 ▼"
+    - status
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - button "利用規約"
+    - listitem:
+      - button "プライバシーポリシー"

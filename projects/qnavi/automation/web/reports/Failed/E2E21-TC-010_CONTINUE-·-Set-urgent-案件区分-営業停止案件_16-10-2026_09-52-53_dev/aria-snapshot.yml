@@ -1,0 +1,253 @@
+- text: Develop TORIDOLL Environment (4.0)
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼情報":
+          - text: 
+          - paragraph: 作業依頼情報
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 個人事業主情報":
+          - text: 
+          - paragraph: 個人事業主情報
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " 作業項目情報":
+          - text: 
+          - paragraph: 作業項目情報
+      - listitem:
+        - link " 代理店情報":
+          - text: 
+          - paragraph: 代理店情報
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " 見積用作業項目情報":
+          - text: 
+          - paragraph: 見積用作業項目情報
+      - listitem:
+        - link " サブアドミン情報":
+          - text: 
+          - paragraph: サブアドミン情報
+      - listitem:
+        - link " 作業員情報":
+          - text: 
+          - paragraph: 作業員情報
+      - listitem:
+        - link " 作業会社情報":
+          - text: 
+          - paragraph: 作業会社情報
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " 資産管理項目マスター":
+          - text: 
+          - paragraph: 資産管理項目マスター
+      - listitem:
+        - link " 資産情報":
+          - text: 
+          - paragraph: 資産情報
+      - listitem:
+        - link " システム設定":
+          - text: 
+          - paragraph: システム設定
+      - listitem:
+        - link " GlobaR管理者情報":
+          - text: 
+          - paragraph: GlobaR管理者情報
+  - paragraph: Qナビ担当者 （株式会社グローバー）
+- heading "作業依頼編集" [level=4]
+- button " 戻る"
+- button " 保存" [disabled]
+- table:
+  - rowgroup:
+    - row "請求状態 未請求 請求済":
+      - cell "請求状態"
+      - cell "未請求 請求済":
+        - button "未請求"
+        - button "請求済"
+    - row "社名 Linksys Chain System":
+      - cell "社名"
+      - cell "Linksys Chain System"
+    - row "店舗名 LINKSYS STORE00006 (APPROVE TYPE 1) [5]":
+      - cell "店舗名"
+      - cell "LINKSYS STORE00006 (APPROVE TYPE 1) [5]"
+    - row "住所 〒123-1443 大阪府 15 Le Quang Hoa":
+      - cell "住所"
+      - cell "〒123-1443 大阪府 15 Le Quang Hoa"
+    - row "電話番号(店舗) 0935678278":
+      - cell "電話番号(店舗)"
+      - cell "0935678278"
+    - row "担当者 Hieu":
+      - cell "担当者"
+      - cell "Hieu"
+    - row "電話番号(担当者) 08057882712":
+      - cell "電話番号(担当者)"
+      - cell "08057882712"
+    - row "依頼登録者 LINKSYS STORE00006 (APPROVE TYPE 1) [5]":
+      - cell "依頼登録者"
+      - cell "LINKSYS STORE00006 (APPROVE TYPE 1) [5]"
+    - row "店舗決済者 店舗決済者を表示":
+      - cell "店舗決済者"
+      - cell "店舗決済者を表示":
+        - button "店舗決済者を表示"
+- table:
+  - rowgroup:
+    - row "請求月 ":
+      - cell "請求月"
+      - cell "":
+        - textbox "YYYY/MM"
+        - text: 
+    - row "支払月 ":
+      - cell "支払月"
+      - cell "":
+        - textbox "YYYY/MM"
+        - text: 
+    - row "BM番号":
+      - cell "BM番号"
+      - cell:
+        - textbox "BM番号を入力"
+    - row "メモ欄（店舗）":
+      - cell "メモ欄（店舗）"
+      - cell:
+        - textbox "メモ欄（店舗）を入力"
+    - row "メモ欄":
+      - cell "メモ欄"
+      - cell:
+        - textbox "メモ欄を入力"
+- table:
+  - rowgroup:
+    - row "作業項目（大） 水":
+      - cell "作業項目（大）"
+      - cell "水"
+    - row "作業項目（中） 厨房":
+      - cell "作業項目（中）"
+      - cell "厨房"
+    - row "作業項目（小） つまり：グリストラップ":
+      - cell "作業項目（小）"
+      - cell "つまり：グリストラップ"
+    - row "番号 223470095_2":
+      - cell "番号"
+      - cell "223470095_2"
+    - row "前回番号 223470095":
+      - cell "前回番号"
+      - cell "223470095":
+        - link "223470095":
+          - /url: /admin/troubles/43937/detail
+    - row "詳細 ※ Automation E2E 21 ---------------------- 大項目：水 中項目：厨房（キッチン） 小項目：グリストラップ 症状：詰まり（流れにくい・溢れる）":
+      - cell "詳細 ※"
+      - cell "Automation E2E 21 ---------------------- 大項目：水 中項目：厨房（キッチン） 小項目：グリストラップ 症状：詰まり（流れにくい・溢れる）":
+        - textbox "詳細を入力": Automation E2E 21 ---------------------- 大項目：水 中項目：厨房（キッチン） 小項目：グリストラップ 症状：詰まり（流れにくい・溢れる）
+    - row "画像  写真を削除  写真を選択  写真を選択  追加":
+      - cell "画像"
+      - cell " 写真を削除  写真を選択  写真を選択  追加":
+        - img
+        - button " 写真を削除"
+        - button " 写真を選択"
+        - img
+        - button " 写真を選択"
+        - text:  追加
+    - row "案件区分 営業停止案件 通常案件":
+      - cell "案件区分"
+      - cell "営業停止案件 通常案件":
+        - button "営業停止案件"
+        - button "通常案件"
+    - row "緊急フラグ 緊急 変更":
+      - cell "緊急フラグ"
+      - cell "緊急"
+      - cell "変更":
+        - button "変更"
+    - row "要望の日付 2026年10月16日 緊急":
+      - cell "要望の日付"
+      - cell "2026年10月16日 緊急"
+    - row "訪問予定候補日時":
+      - cell "訪問予定候補日時"
+      - cell
+    - row "訪問確定日時 変更":
+      - cell "訪問確定日時"
+      - cell
+      - cell "変更":
+        - button "変更"
+    - row "作業者 LINKSYS WORKER":
+      - cell "作業者"
+      - cell "LINKSYS WORKER"
+    - row "登録日時 2026年10月16日 11:56:37":
+      - cell "登録日時"
+      - cell "2026年10月16日 11:56:37"
+    - row "更新日時 2026年10月16日 11:56:37":
+      - cell "更新日時"
+      - cell "2026年10月16日 11:56:37"
+- table:
+  - rowgroup:
+    - row "操作モード設定 操作可能モード（ロックなし） 操作可能モード（ロック）":
+      - cell "操作モード設定"
+      - cell "操作可能モード（ロックなし） 操作可能モード（ロック）":
+        - radio "操作可能モード（ロックなし）" [checked]
+        - paragraph: 操作可能モード（ロックなし）
+        - radio "操作可能モード（ロック）"
+        - paragraph: 操作可能モード（ロック）
+    - row "全体状態 対応中 変更":
+      - cell "全体状態"
+      - cell "対応中"
+      - cell "変更":
+        - button "変更"
+    - row "完了状態":
+      - cell "完了状態"
+      - cell
+    - row "依頼種類 継続依頼":
+      - cell "依頼種類"
+      - cell "継続依頼"
+    - row "対応状態 見積待ち":
+      - cell "対応状態"
+      - cell "見積待ち"
+- button " 戻る"
+- button " 保存" [disabled]
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - button "利用規約"
+    - listitem:
+      - button "プライバシーポリシー"

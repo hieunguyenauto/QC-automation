@@ -529,6 +529,32 @@ test('recon E2E suite screens (read-only)', async ({ browser }) => {
     });
   }
 
+  // ---- K. 継続依頼 (CHỈ ĐỌC): 98 → 作業依頼登録 → 継続依頼 → chọn trouble gốc RECON_NUMBER → chụp form (không bấm 決定して問合わせ);
+  //  mở chi tiết trouble gốc RECON_ID và '_2' RECON_ID2 để xem 作業項目 / version.
+  if (process.env.RECON_PART === 'K') {
+    const create = new TroubleCreateScreen(page);
+    const html = async (name: string, loc: ReturnType<Page['locator']>) => {
+      fs.mkdirSync(OUT, { recursive: true });
+      fs.writeFileSync(path.join(OUT, `K-${name}.html`), await loc.evaluate((x) => x.outerHTML, undefined, { timeout: 10_000 }).catch((x) => String(x)));
+    };
+    await snap(page, 'K-login-98', () => loginAs(page, '98', { save: false }));
+    notes.push(`  sau login 98: ${page.url()}`);
+    await snap(page, 'K-cont-form', async () => {
+      await layout.menu('作業依頼登録'); await create.start('継続依頼');
+      await create.pickContinuationSource(process.env.RECON_NUMBER || '223470078');
+      await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+    });
+    await html('cont-form', content);
+    for (const id of [process.env.RECON_ID || '43907', process.env.RECON_ID2 || '43908']) {
+      await snap(page, `K-detail-${id}`, async () => {
+        await page.goto(`/admin/troubles/${id}/detail`);
+        await content.getByText('番号').first().waitFor({ timeout: 30_000 });
+        await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
+      });
+      await html(`detail-${id}`, content);
+    }
+  }
+
   // ---- U. Mở 1 URL bất kỳ bằng tài khoản RECON_WHO (mặc định 99) và chụp: RECON_PART=U RECON_URL=/admin/... npm run recon:e2e
   if (process.env.RECON_PART === 'U') {
     const who = (process.env.RECON_WHO || '99') as Parameters<typeof loginAs>[1];

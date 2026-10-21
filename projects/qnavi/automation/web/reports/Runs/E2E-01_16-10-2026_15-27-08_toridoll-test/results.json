@@ -1,0 +1,1202 @@
+{
+  "config": {
+    "configFile": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/playwright.config.ts",
+    "rootDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web",
+    "forbidOnly": true,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/junit.xml"
+        }
+      ],
+      [
+        "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/common/qc-reporter.ts",
+        {
+          "reportsRoot": "reports",
+          "runDir": "reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test",
+          "stamp": "16-10-2026_15-27-08",
+          "envName": "toridoll-test",
+          "baseUrl": "https://cms-toridoll-test.qnavi.picontechnology.com"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "setup",
+        "name": "setup",
+        "testDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/common\\/auth\\.setup\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "cms",
+        "name": "cms",
+        "testDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/cms\\/smoke\\/.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "e2e",
+        "name": "e2e",
+        "testDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [
+          "/tests\\/cms\\/smoke\\//"
+        ],
+        "testMatch": [
+          "/tests\\/cms\\/.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "open",
+        "name": "open",
+        "testDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/open\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      },
+      {
+        "outputDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web/reports/Runs/E2E-01_16-10-2026_15-27-08_toridoll-test/artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "recon",
+        "name": "recon",
+        "testDir": "/Users/hieunt/work/qc-automation/projects/qnavi/automation/web",
+        "testIgnore": [],
+        "testMatch": [
+          "/tests\\/tools\\/recon.*\\.spec\\.ts/"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.0",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "tests/cms/e2e-suite/E2E-01.spec.ts",
+      "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E2E01-TC-001 SETUP · LINKSYS STORE00006; 限度額 read",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-001",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19752,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Pre-condition: E2E00-TC-001 (トラブルナビ ON, シサンNAVI OFF)",
+                      "duration": 13521
+                    },
+                    {
+                      "title": "1. Login Admin (99) → チェーンシステム情報 → 'Linksys Chain System'",
+                      "duration": 5789
+                    },
+                    {
+                      "title": "2. Open 'LINKSYS STORE00006' → Verify: 承認タイプ = '個人承認'",
+                      "duration": 432
+                    },
+                    {
+                      "title": "3. Record '限度額' (税込) as FIX",
+                      "duration": 0
+                    },
+                    {
+                      "title": "Expected: store opened; FIX recorded",
+                      "duration": 1
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:27:08.300Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-2c490010aaed1785e86d",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-002 NEW · chainstore creates trouble (トラブルナビ)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-002",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 480000,
+              "annotations": [
+                {
+                  "type": "trouble-created",
+                  "description": "223470136 (id 44008)"
+                },
+                {
+                  "type": "webview-done",
+                  "description": "作業依頼\nAIアシスタント\n2026/10/16(金) 17:28\n連絡先担当者を選択してください。\n連絡先担当者を選択\nLINKSYS STORE00006 (APPROVE TYPE 1) [5]\n2026/10/16(金) 17:28\n【連絡先担当者】\nHieu\nAIアシスタント\n2026/10/16(金) 17:28\n最低３枚\n写真撮影にご協力ください！\nトラブルの事象を早期に把握するために、写真は非常に重要です。\n・故障箇所の全体写真\n・故障箇所のアップ写真\n・機器の全体が見える写真\n・機器の型番シール\n・その他角度を変えた写真\n写真が撮れない\n写真を撮影する\nLINKSYS STO"
+                },
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 52980,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Login ChainStore (02) 'linksysstore00006' → Verify: Dashboard",
+                      "duration": 25503
+                    },
+                    {
+                      "title": "2. 作業依頼登録 → Step 1 店舗 'LINKSYS STORE00006' → 担当者選択 → first row → 次へ",
+                      "duration": 3834
+                    },
+                    {
+                      "title": "3. 故障内容 '選択' → '水' → Verify: webview 'トラブル相談内容', 大項目 = '水'",
+                      "duration": 3026
+                    },
+                    {
+                      "title": "4. Select '中項目', '小項目', '症状' (no '資産') → '次へ'",
+                      "duration": 609
+                    },
+                    {
+                      "title": "5. Click 'このまま依頼する' → click 'このまま依頼する' again",
+                      "duration": 1663
+                    },
+                    {
+                      "title": "6. Upload 'hieu6.jpg', input 'Automation E2E 01' → next (icon)",
+                      "duration": 6573
+                    },
+                    {
+                      "title": "7. Select radio '至急' → '依頼する'",
+                      "duration": 7346
+                    },
+                    {
+                      "title": "8. 'トップ画面に戻る' → Verify: Dashboard; record 依頼番号",
+                      "duration": 4410
+                    },
+                    {
+                      "title": "Expected: trouble of 'LINKSYS STORE00006': 問い合わせ中 / 受注待ち, 業者 未確定, 見積書 未提出",
+                      "duration": 13
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:27:28.933Z",
+                  "annotations": [
+                    {
+                      "type": "trouble-created",
+                      "description": "223470136 (id 44008)"
+                    },
+                    {
+                      "type": "webview-done",
+                      "description": "作業依頼\nAIアシスタント\n2026/10/16(金) 17:28\n連絡先担当者を選択してください。\n連絡先担当者を選択\nLINKSYS STORE00006 (APPROVE TYPE 1) [5]\n2026/10/16(金) 17:28\n【連絡先担当者】\nHieu\nAIアシスタント\n2026/10/16(金) 17:28\n最低３枚\n写真撮影にご協力ください！\nトラブルの事象を早期に把握するために、写真は非常に重要です。\n・故障箇所の全体写真\n・故障箇所のアップ写真\n・機器の全体が見える写真\n・機器の型番シール\n・その他角度を変えた写真\n写真が撮れない\n写真を撮影する\nLINKSYS STO"
+                    },
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-1a9c1e7ac88f6fc83cfe",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-003 NEW · Admin: 対応中 + assign worker",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-003",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "perf",
+                  "description": "Dashboard GET /api/home: trả về sau 56.9s (ngưỡng 30s)"
+                },
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19786,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Login Admin (99) → open trouble (依頼番号)",
+                      "duration": 12754
+                    },
+                    {
+                      "title": "2-4. 対応中 → 作業者 'linksysworker' → 保存 → 決定 → OK",
+                      "duration": 7008
+                    },
+                    {
+                      "title": "Expected: '対応中' / '受注待ち', 業者 'LINKSYS WORKER'",
+                      "duration": 20
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:28:21.918Z",
+                  "annotations": [
+                    {
+                      "type": "perf",
+                      "description": "Dashboard GET /api/home: trả về sau 56.9s (ngưỡng 30s)"
+                    },
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-48a1bd0c1a0154d70873",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-004",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15673,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Pre-condition: Admin, trouble opened",
+                      "duration": 2358
+                    },
+                    {
+                      "title": "1. 受注",
+                      "duration": 4521
+                    },
+                    {
+                      "title": "2. 移動中",
+                      "duration": 4389
+                    },
+                    {
+                      "title": "3. 到着",
+                      "duration": 4394
+                    },
+                    {
+                      "title": "Expected: '対応中' / '到着'",
+                      "duration": 9
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:28:41.711Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-0fb7930be7754279595d",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-005 NEW · Create 1 estimate (total = FIX − 1) and 提示",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-005",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14762,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Admin → open trouble → クイック操作 → '見積承認待ち' → Verify: 見積もり '必須'",
+                      "duration": 2660
+                    },
+                    {
+                      "title": "2. 見積もり → 登録 'E2E01-New' → 作業 'Autotest', total = FIX − 1 (￥19,999) → 決定 → 下書き",
+                      "duration": 3502
+                    },
+                    {
+                      "title": "3. Tick → 提示する → '以下1件の見積を店舗へ提出しますか' → 決定 → Verify: '承認済み' (≤ FIX tự duyệt)",
+                      "duration": 4001
+                    },
+                    {
+                      "title": "4. '閉じる' → '保存' → '決定' → 'OK'",
+                      "duration": 4575
+                    },
+                    {
+                      "title": "Expected: 見積書 = 税抜 of the approved estimate (¥18,181), 'E2E01-New' = '承認済み'",
+                      "duration": 10
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:28:57.390Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-4e36e7d0993058c26908",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-006 NEW · ≤ FIX → auto approve (no approver)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-006",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6357,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Reload trouble → '見積もり'",
+                      "duration": 5297
+                    },
+                    {
+                      "title": "Expected: 'E2E01-New' = '承認済み' automatically; '対応中' / '作業中'; no '稟議承認中'",
+                      "duration": 1057
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:29:12.159Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-aea40fa5a3274729905b",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-007",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15151,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Pre-condition: Admin, trouble opened",
+                      "duration": 2361
+                    },
+                    {
+                      "title": "1. '作業完了' → Verify: badge '作業完了'",
+                      "duration": 4383
+                    },
+                    {
+                      "title": "2-3. '報告済' → 報告書 編集 (day 1 / 2, '${e.note}', photos) → 完了 → 保存 → 決定 → OK",
+                      "duration": 8387
+                    },
+                    {
+                      "title": "Expected: '対応中' / '報告済'",
+                      "duration": 16
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:29:18.521Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-aff0920149e600abd9e5",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-008 NEW · Chain Store 確認・決済 → 完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-008",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 37987,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Logout → login ChainStore 'linksysstore00006' → open trouble → minimize chat",
+                      "duration": 29636
+                    },
+                    {
+                      "title": "2. '作業完了確認' → Verify: '支払情報' with 作業項目 'Autotest' and total ￥19,999",
+                      "duration": 1068
+                    },
+                    {
+                      "title": "3. '感動' → 'Automation E2E 01' → '作業完了確認' → '決定' → Verify: '作業依頼の決済状態の保存が完了しました。' → 'OK'",
+                      "duration": 7250
+                    },
+                    {
+                      "title": "Expected: '完了' / '報告済', '作業完了確認' disappears",
+                      "duration": 29
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:29:33.678Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-880df9896a10c5443b54",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-009 CONTINUE · subadmin creates 継続依頼 '_2'",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-009",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 42609,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Logout → login SubAdmin (98) → '作業依頼登録' → '継続依頼' → '次へ'",
+                      "duration": 32117
+                    },
+                    {
+                      "title": "2. 作業依頼選択 → NEW trouble → Verify: store and 作業項目 filled from the original",
+                      "duration": 2035
+                    },
+                    {
+                      "title": "3. '決定して問合わせ' → '決定' → 'OK'",
+                      "duration": 8441
+                    },
+                    {
+                      "title": "Expected: '223470136_2': '対応中' / '見積待ち'",
+                      "duration": 12
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:30:11.672Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-4d485fe6c88d0de6c8c2",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-010",
+            "role-98"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3375,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Open '_2' → Verify: 業者 = 'LINKSYS WORKER'",
+                      "duration": 3364
+                    },
+                    {
+                      "title": "Expected: worker kept",
+                      "duration": 8
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:30:54.287Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-819d5aa2fd87a837d401",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-011 CONTINUE · Create 1 estimate (total = FIX − 1) and 提示",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-011",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "perf",
+                  "description": "Dashboard GET /api/home: trả về sau 87.9s (ngưỡng 30s)"
+                },
+                {
+                  "type": "perf",
+                  "description": "Dashboard GET /api/home: trả về sau 49.7s (ngưỡng 30s)"
+                },
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24592,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Admin → open '_2' → クイック操作 → 見積もり → 'E2E01-Cont', total = FIX − 1 → 決定",
+                      "duration": 16131
+                    },
+                    {
+                      "title": "2. Tick → '提示する' → '決定' → Verify: '承認済み' (≤ FIX tự duyệt)",
+                      "duration": 4003
+                    },
+                    {
+                      "title": "3. '閉じる' → '見積承認待ち' → '保存' → '決定' → 'OK'",
+                      "duration": 4441
+                    },
+                    {
+                      "title": "Expected: '対応中', estimate '承認済み'",
+                      "duration": 8
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:30:57.668Z",
+                  "annotations": [
+                    {
+                      "type": "perf",
+                      "description": "Dashboard GET /api/home: trả về sau 87.9s (ngưỡng 30s)"
+                    },
+                    {
+                      "type": "perf",
+                      "description": "Dashboard GET /api/home: trả về sau 49.7s (ngưỡng 30s)"
+                    },
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-542a817c919129800046",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-012",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Reload '_2' → '見積もり'",
+                      "duration": 5217
+                    },
+                    {
+                      "title": "Expected: 'E2E01-Cont' = '承認済み'; '対応中' / '見積承認済'; no '稟議承認中'",
+                      "duration": 1061
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:31:22.267Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-dd97550ff13bfe6c4cf7",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-013",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24572,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Pre-condition: Admin, _2 opened",
+                      "duration": 2550
+                    },
+                    {
+                      "title": "1. 日程確定",
+                      "duration": 4705
+                    },
+                    {
+                      "title": "2. 移動中",
+                      "duration": 4456
+                    },
+                    {
+                      "title": "3. 到着",
+                      "duration": 4502
+                    },
+                    {
+                      "title": "4. 作業中",
+                      "duration": 3964
+                    },
+                    {
+                      "title": "5. 作業完了",
+                      "duration": 4383
+                    },
+                    {
+                      "title": "Expected: '対応中' / '作業完了'",
+                      "duration": 10
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:31:28.555Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-3ae0a2cf8136ab0375d8",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-014 CONTINUE · 報告済 (02-90)",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-014",
+            "role-99"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11313,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "Pre-condition: Admin, _2 opened",
+                      "duration": 2461
+                    },
+                    {
+                      "title": "1. '報告済' → 報告書 編集 → 完了 → 保存 → 決定 → OK",
+                      "duration": 8833
+                    },
+                    {
+                      "title": "Expected: '対応中' / '報告済'",
+                      "duration": 15
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:31:53.132Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-01bdc5c1ad1b341969cb",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        },
+        {
+          "title": "E2E01-TC-015 CONTINUE · Chain Store 確認・決済 → 完了",
+          "ok": true,
+          "tags": [
+            "E2E01-TC-015",
+            "role-02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [
+                {
+                  "type": "trouble",
+                  "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                },
+                {
+                  "type": "perf",
+                  "description": "Dashboard GET /api/home: không trả về trong 120s (ngưỡng 30s)"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "e2e",
+              "projectName": "e2e",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 42524,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "1. Logout → login 'linksysstore00006' → open '_2'",
+                      "duration": 29720
+                    },
+                    {
+                      "title": "2. '作業完了確認' → Verify: '支払情報' total ￥19,999",
+                      "duration": 1059
+                    },
+                    {
+                      "title": "3. '感動' → 'Automation E2E 01' → '作業完了確認' → '決定' → 'OK'",
+                      "duration": 7618
+                    },
+                    {
+                      "title": "Expected: '_2' '完了' / '報告済'; both troubles 完了",
+                      "duration": 4122
+                    }
+                  ],
+                  "startTime": "2026-10-16T08:32:04.451Z",
+                  "annotations": [
+                    {
+                      "type": "trouble",
+                      "description": "NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000"
+                    },
+                    {
+                      "type": "perf",
+                      "description": "Dashboard GET /api/home: không trả về trong 120s (ngưỡng 30s)"
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ae319fb7141c52127c2d-bcd2e27e9799945c8087",
+          "file": "tests/cms/e2e-suite/E2E-01.spec.ts",
+          "line": 30,
+          "column": 7
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T08:27:08.052Z",
+    "duration": 339261.661,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

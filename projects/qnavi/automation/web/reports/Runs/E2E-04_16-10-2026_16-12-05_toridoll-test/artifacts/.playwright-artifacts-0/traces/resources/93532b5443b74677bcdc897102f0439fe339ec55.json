@@ -1,0 +1,17 @@
+{
+  "kind": "identitytoolkit#GetAccountInfoResponse",
+  "users": [
+    {
+      "localId": "4754ea88-5001-70dd-3fee-d94a98b75b0f",
+      "email": "linksyssubadmin@yopmail.com",
+      "displayName": "linksyssubadmin",
+      "validSince": "1781497723",
+      "disabled": false,
+      "lastLoginAt": "1792142258704",
+      "createdAt": "1780633387480",
+      "customAuth": true,
+      "customAttributes": "{\"role\": \"user\", \"source\": \"cognito\", \"cognito_username\": \"linksyssubadmin\", \"created_at\": \"2026-06-05T04:23:07.370495+00:00\", \"provider\": \"qnavi\"}",
+      "lastRefreshAt": "2026-10-16T09:17:38.704Z"
+    }
+  ]
+}

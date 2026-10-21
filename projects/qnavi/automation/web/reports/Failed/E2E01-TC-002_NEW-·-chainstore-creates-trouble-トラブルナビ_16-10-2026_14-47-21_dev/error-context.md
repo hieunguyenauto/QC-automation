@@ -1,0 +1,79 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]: Develop TORIDOLL Environment (4.0)
+  - navigation [ref=e4]:
+    - list [ref=e5]:
+      - listitem [ref=e6]:
+        - button "" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]: 
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e13] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e14]
+          - button "" [ref=e16] [cursor=pointer]:
+            - generic [ref=e17]: 
+      - listitem [ref=e18]:
+        - button "" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+      - listitem [ref=e23]:
+        - button "フィルタ" [ref=e24] [cursor=pointer]:
+          - generic [ref=e26]: フィルタ
+      - listitem [ref=e27]:
+        - button "パスワード変更" [ref=e28] [cursor=pointer]
+      - listitem [ref=e29]:
+        - button "ログアウト" [ref=e30] [cursor=pointer]
+  - complementary [ref=e31]:
+    - link "Qnavi管理画面" [ref=e32] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e34]:
+      - menu [ref=e35]:
+        - listitem [ref=e36]: メニュー
+        - listitem [ref=e37]:
+          - link " ホーム" [ref=e38] [cursor=pointer]:
+            - generic [ref=e39]: 
+            - paragraph [ref=e40]: ホーム
+        - listitem [ref=e41]:
+          - link " 作業依頼登録" [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]: 
+            - paragraph [ref=e44]: 作業依頼登録
+        - listitem [ref=e45]:
+          - link " 進行中のトラブル一覧" [ref=e46] [cursor=pointer]:
+            - generic [ref=e47]: 
+            - paragraph [ref=e48]: 進行中のトラブル一覧
+        - listitem [ref=e49]:
+          - link " 店舗詳細設定" [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]: 
+            - paragraph [ref=e52]: 店舗詳細設定
+        - listitem [ref=e53]:
+          - link " チャット一覧" [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 
+            - paragraph [ref=e56]: チャット一覧
+        - listitem [ref=e57]:
+          - link " タスク管理" [ref=e58] [cursor=pointer]:
+            - generic [ref=e59]: 
+            - paragraph [ref=e60]: タスク管理
+        - listitem [ref=e61]:
+          - link " Q&A管理" [ref=e62] [cursor=pointer]:
+            - generic [ref=e63]: 
+            - paragraph [ref=e64]: Q&A管理
+        - listitem [ref=e65]:
+          - link " お知らせ管理" [ref=e66] [cursor=pointer]:
+            - generic [ref=e67]: 
+            - paragraph [ref=e68]: お知らせ管理
+    - paragraph [ref=e71]: LINKSYS STORE00006 (APPROVE TYPE 1) [5] （Linksys Chain System）
+  - iframe [ref=e77]:
+    
+  - contentinfo [ref=e78]:
+    - generic [ref=e79]:
+      - strong [ref=e80]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e82]:
+      - listitem [ref=e83]:
+        - button "利用規約" [ref=e84] [cursor=pointer]
+      - listitem [ref=e85]:
+        - button "プライバシーポリシー" [ref=e86] [cursor=pointer]
+  - text: 
+```

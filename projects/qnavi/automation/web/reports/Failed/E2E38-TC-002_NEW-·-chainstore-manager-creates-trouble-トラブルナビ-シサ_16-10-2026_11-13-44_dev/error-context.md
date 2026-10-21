@@ -1,0 +1,155 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]: Develop TORIDOLL Environment (4.0)
+  - navigation [ref=e4]:
+    - list [ref=e5]:
+      - listitem [ref=e6]:
+        - button "" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]: 
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e13] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e14]
+          - button "" [ref=e16] [cursor=pointer]:
+            - generic [ref=e17]: 
+      - listitem [ref=e18]:
+        - button "" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+      - listitem [ref=e23]:
+        - button "フィルタ" [ref=e24] [cursor=pointer]:
+          - generic [ref=e26]: フィルタ
+      - listitem [ref=e27]:
+        - button "パスワード変更" [ref=e28] [cursor=pointer]
+      - listitem [ref=e29]:
+        - button "ログアウト" [ref=e30] [cursor=pointer]
+  - complementary [ref=e31]:
+    - link "Qnavi管理画面" [ref=e32] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e34]:
+      - menu [ref=e35]:
+        - listitem [ref=e36]: メニュー
+        - listitem [ref=e37]:
+          - link " ホーム" [ref=e38] [cursor=pointer]:
+            - generic [ref=e39]: 
+            - paragraph [ref=e40]: ホーム
+        - listitem [ref=e41]:
+          - link " 作業依頼登録" [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]: 
+            - paragraph [ref=e44]: 作業依頼登録
+        - listitem [ref=e45]:
+          - link " 進行中のトラブル一覧" [ref=e46] [cursor=pointer]:
+            - generic [ref=e47]: 
+            - paragraph [ref=e48]: 進行中のトラブル一覧
+        - listitem [ref=e49]:
+          - link " グループ管理" [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]: 
+            - paragraph [ref=e52]: グループ管理
+        - listitem [ref=e53]:
+          - link " チェーンシステム情報" [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 
+            - paragraph [ref=e56]: チェーンシステム情報
+        - listitem [ref=e57]:
+          - link " チャット一覧" [ref=e58] [cursor=pointer]:
+            - generic [ref=e59]: 
+            - paragraph [ref=e60]: チャット一覧
+        - listitem [ref=e62]:
+          - link " タスク管理" [ref=e63] [cursor=pointer]:
+            - generic [ref=e64]: 
+            - paragraph [ref=e65]: タスク管理
+        - listitem [ref=e66]:
+          - link " Q&A管理" [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]: 
+            - paragraph [ref=e69]: Q&A管理
+        - listitem [ref=e70]:
+          - link " 資産管理項目マスター" [ref=e71] [cursor=pointer]:
+            - generic [ref=e72]: 
+            - paragraph [ref=e73]: 資産管理項目マスター
+        - listitem [ref=e74]:
+          - link " 資産情報" [ref=e75] [cursor=pointer]:
+            - generic [ref=e76]: 
+            - paragraph [ref=e77]: 資産情報
+        - listitem [ref=e78]:
+          - link " お知らせ管理" [ref=e79] [cursor=pointer]:
+            - generic [ref=e80]: 
+            - paragraph [ref=e81]: お知らせ管理
+    - paragraph [ref=e84]: LINKSYS MANAGER00005 （Linksys Chain System）
+  - iframe [ref=e90]:
+    - generic [active] [ref=f1e1]:
+      - generic [ref=f1e5]:
+        - generic [ref=f1e7]:
+          - heading "トラブル相談内容" [level=1] [ref=f1e9]
+          - button "close" [ref=f1e10] [cursor=pointer]:
+            - img "close" [ref=f1e12]
+        - generic [ref=f1e13]:
+          - paragraph [ref=f1e14]: お困り事のカテゴリーを選択してください
+          - generic [ref=f1e16]:
+            - generic [ref=f1e17] [cursor=pointer]:
+              - generic [ref=f1e18]:
+                - radio "事象を入力して選択"
+              - text: 事象を入力して選択
+            - generic [ref=f1e19] [cursor=pointer]:
+              - generic [ref=f1e20]:
+                - radio "カテゴリから選ぶ" [checked]
+              - text: カテゴリから選ぶ
+          - generic [ref=f1e21]:
+            - generic [ref=f1e22]:
+              - heading "大項目" [level=5] [ref=f1e23]
+              - generic [ref=f1e24] [cursor=pointer]:
+                - generic [ref=f1e25]:
+                  - combobox [ref=f1e27]
+                  - generic "水" [ref=f1e28]
+                - generic:
+                  - img
+            - generic [ref=f1e29]:
+              - heading "中項目" [level=5] [ref=f1e30]
+              - generic [ref=f1e31] [cursor=pointer]:
+                - generic [ref=f1e32]:
+                  - combobox [ref=f1e34]
+                  - generic "厨房（キッチン）" [ref=f1e35]
+                - generic:
+                  - img
+            - generic [ref=f1e36]:
+              - heading "小項目" [level=5] [ref=f1e37]
+              - generic [ref=f1e38] [cursor=pointer]:
+                - generic [ref=f1e39]:
+                  - combobox [ref=f1e41]
+                  - generic "グリストラップ" [ref=f1e42]
+                - generic:
+                  - img
+            - generic [ref=f1e43]:
+              - heading "症状" [level=5] [ref=f1e44]
+              - generic [ref=f1e45] [cursor=pointer]:
+                - generic [ref=f1e46]:
+                  - combobox [ref=f1e48]
+                  - generic "詰まり（流れにくい・溢れる）" [ref=f1e49]
+                - generic:
+                  - img
+            - generic [ref=f1e50]:
+              - heading "資産" [level=5] [ref=f1e51]
+              - generic [ref=f1e52] [cursor=pointer]:
+                - generic [ref=f1e53]:
+                  - combobox [expanded] [ref=f1e57]:
+                    - listbox:
+                      - option "Automation Asset": "3952508"
+                  - generic: 選択してください
+                - generic:
+                  - img
+          - button "次へ" [ref=f1e60] [cursor=pointer]:
+            - generic [ref=f1e61]: 次へ
+      - alert [ref=f1e62]
+      - generic "Automation Asset" [ref=f1e70] [cursor=pointer]:
+        - generic [ref=f1e71]: Automation Asset
+  - contentinfo [ref=e91]:
+    - generic [ref=e92]:
+      - strong [ref=e93]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e95]:
+      - listitem [ref=e96]:
+        - button "利用規約" [ref=e97] [cursor=pointer]
+      - listitem [ref=e98]:
+        - button "プライバシーポリシー" [ref=e99] [cursor=pointer]
+  - text: 
+```

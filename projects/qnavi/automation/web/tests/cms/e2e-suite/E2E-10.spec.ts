@@ -188,7 +188,7 @@ tc('E2E10-TC-008', 'NEW · Store Manager 確認・決済 → 完了', '01', asyn
   await step("3. Star '感動' → comment 'Automation E2E 10' → '作業完了確認' → '決定' → Verify: '作業依頼の決済状態の保存が完了しました。' → 'OK'", async () => { await e.paymentSubmit(); });
   await step("Expected: Badge '完了' / '報告済', '作業完了確認' disappears; NEW trouble = 完了", async () => {
     await d.expectBadges('完了', '報告済');
-    await expect(d.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
+    await expect(d.workCompleteConfirmButton).toHaveCount(0);
   });
 });
 

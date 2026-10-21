@@ -1,0 +1,51 @@
+859
+[[1,[{
+  "targetChange": {
+    "targetChangeType": "ADD",
+    "targetIds": [
+      2
+    ]
+  }
+}
+]],[2,[{
+  "targetChange": {
+    "targetChangeType": "CURRENT",
+    "targetIds": [
+      2
+    ],
+    "resumeToken": "CgkIo/uHtZq+lwM=",
+    "readTime": "2026-10-16T09:18:44.399523Z"
+  }
+}
+]],[3,[{
+  "targetChange": {
+    "resumeToken": "CgkIo/uHtZq+lwM=",
+    "readTime": "2026-10-16T09:18:44.399523Z"
+  }
+}
+]],[4,[{
+  "targetChange": {
+    "targetChangeType": "RESET",
+    "targetIds": [
+      2
+    ],
+    "resumeToken": "CgA="
+  }
+}
+]],[5,[{
+  "targetChange": {
+    "targetChangeType": "CURRENT",
+    "targetIds": [
+      2
+    ],
+    "resumeToken": "CgkI0b2QtZq+lwM=",
+    "readTime": "2026-10-16T09:18:44.539089Z"
+  }
+}
+]],[6,[{
+  "targetChange": {
+    "resumeToken": "CgkI0b2QtZq+lwM=",
+    "readTime": "2026-10-16T09:18:44.539089Z"
+  }
+}
+]],[7,["noop"]]]

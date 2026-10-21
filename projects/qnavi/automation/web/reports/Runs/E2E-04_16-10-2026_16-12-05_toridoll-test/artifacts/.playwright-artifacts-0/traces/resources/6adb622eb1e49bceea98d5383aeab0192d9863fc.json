@@ -1,0 +1,17 @@
+{
+  "kind": "identitytoolkit#GetAccountInfoResponse",
+  "users": [
+    {
+      "localId": "07049ae8-d081-70c5-051b-5afbb48ba91b",
+      "email": "00001linksysmanager@picontechnology.com",
+      "displayName": "linksysmanager00001",
+      "validSince": "1779684099",
+      "disabled": false,
+      "lastLoginAt": "1792141958254",
+      "createdAt": "1779681307052",
+      "customAuth": true,
+      "customAttributes": "{\"role\": \"user\", \"source\": \"cognito\", \"cognito_username\": \"linksysmanager00001\", \"created_at\": \"2026-05-25T03:55:07.591639+00:00\", \"provider\": \"qnavi\", \"custom:role\": \"01\"}",
+      "lastRefreshAt": "2026-10-16T09:12:38.254Z"
+    }
+  ]
+}

@@ -1,0 +1,723 @@
+import fs from 'fs';
+import path from 'path';
+import { expect, test } from '@playwright/test';
+import data from '../data/e2e-suite.json';
+import { serialScenario } from './scenario';
+import { E2E, managerWho, storeName, storePriceFor, storeWho, yen, type StoreKey, type Trouble } from './e2e-suite';
+import { minimizeChat, modal, rowOf } from './ui';
+import { waitApisIdle } from './wait';
+import type { Who } from './session';
+
+/**
+ * Chạy 1 kịch bản E2E suite (E2E-02 … E2E-39) TRỰC TIẾP từ file TC LOCKED:
+ *   projects/qnavi/qc/test-cases/e2e-suite/E2E-NN-*-test-cases.md
+ * TC sinh từ cùng 1 khuôn (_tools/gen_e2e.py) → mỗi loại TC (cột Function) = 1 handler bên dưới; tên test.step = nguyên văn cột Steps.
+ * Tham số lấy từ chính chữ trong TC: tài khoản ('LINKSYS MANAGER00002', 'linksysstore00001', (98)…), tên báo giá ('E2E12-New1'),
+ * số tiền ('total = FIX + 1', '¥49,999'…), trạng thái mong đợi trong 'Verify:' / Expected.
+ * Số bước handler ≠ số bước TC → test fail ngay (TC đổi mà code chưa theo → báo, không đoán).
+ * TC không thuộc loại nào → fail 'Chưa có handler' (thêm handler, không sửa TC).
+ *
+ * Chạy lẻ: ENV=toridoll-test npm run suite -- E2E-02
+ * Kiểm khớp TC ↔ code (không mở app): E2E_DRY=1 E2E_VIDEO=off npm run suite -- tests/cms/e2e-suite/
+ * Chạy tiếp trên trouble có sẵn: E2E_TROUBLE_ID=<id NEW> E2E_TROUBLE2_ID=<id _2> E2E_FIX=<限度額> … --grep "TC-00[6-9]|TC-01"
+ */
+const TC_DIR = path.resolve(__dirname, '../../../qc/test-cases/e2e-suite');
+
+export type TcRow = { id: string; func: string; pre: string; steps: string[]; exp: string; role: string };
+
+export function loadCase(no: number): { file: string; rev: string; rows: TcRow[] } {
+  const nn = String(no).padStart(2, '0');
+  const file = fs.readdirSync(TC_DIR).find((f) => f.startsWith(`E2E-${nn}-`) && f.endsWith('-test-cases.md'));
+  if (!file) throw new Error(`Không có file TC E2E-${nn} trong ${TC_DIR}`);
+  const text = fs.readFileSync(path.join(TC_DIR, file), 'utf8');
+  const st = text.match(/State: (\w+) · Revision: (\d+)/);
+  if (st?.[1] !== 'LOCKED') throw new Error(`${file}: State ≠ LOCKED — automation chỉ chạy TC LOCKED`);
+  const rows = text.split('\n').filter((l) => l.startsWith(`| E2E${nn}-TC-`)).map((l) => {
+    const c = l.replace(/^\|\s*/, '').replace(/\s*\|\s*$/, '').split(' | ').map((x) => x.trim());
+    return { id: c[0], func: c[4], pre: c[5], steps: c[6].split('<br>'), exp: c[7], role: c[8] };
+  });
+  return { file: `projects/qnavi/qc/test-cases/e2e-suite/${file}`, rev: st[2], rows };
+}
+
+// ---------- đọc tham số từ chữ của TC ----------
+const WHO: [RegExp, (m: RegExpMatchArray) => Who][] = [
+  [/ChainStore Manager 'LINKSYS MANAGER(\d{5})'/g, (m) => managerWho(m[1] as keyof typeof data.managers)],
+  [/ChainStore \(02\) 'linksysstore(\d{5})'/g, (m) => storeWho(m[1] as StoreKey)],
+  [/SubAdmin \(98\)/g, () => '98'],
+  [/Worker Company \(05\)/g, () => '05'],
+  [/(?<!Sub)Admin \(99\)/g, () => '99'],
+];
+/** Tài khoản theo thứ tự xuất hiện trong chữ. */
+export function whosIn(text: string): Who[] {
+  const found: { i: number; who: Who }[] = [];
+  for (const [re, f] of WHO) for (const m of text.matchAll(re)) found.push({ i: m.index ?? 0, who: f(m) });
+  return found.sort((a, b) => a.i - b.i).map((x) => x.who);
+}
+const who1 = (text: string): Who => {
+  const w = whosIn(text)[0];
+  if (!w) throw new Error(`TC không ghi tài khoản: ${text}`);
+  return w;
+};
+/** Tên báo giá ('E2E12-New1', 'E2E14-New-copy'…), không lặp. */
+export const namesIn = (text: string) => [...new Set([...text.matchAll(/'(E2E\d{2}-(?:New|Cont)[\w-]*)'/g)].map((m) => m[1]))];
+/** Cặp (báo giá, trạng thái) trong Expected: "'A' = 'X'; 'B', 'C' = 'Y'; 'D' stays '下書き'". */
+export function statusesIn(text: string): [string, string][] {
+  const out: [string, string][] = [];
+  let pending: string[] = [];
+  for (const m of text.matchAll(/'([^']+)'/g)) {
+    if (/^E2E\d{2}-/.test(m[1])) pending.push(m[1]);
+    else if (pending.length) { for (const n of pending) out.push([n, m[1]]); pending = []; }
+  }
+  return out;
+}
+/** Badge trong Expected: "Badge '対応中' / '見積承認待ち'", "badge stays '対応中' / '作業中'". */
+export function badgesIn(text: string): string[] {
+  const m = text.match(/[Bb]adge(?: stays)? '([^']+)'(?: \/ '([^']+)')?/);
+  return m ? [m[1], m[2]].filter(Boolean) : [];
+}
+/** Tổng 税込 của báo giá theo chữ TC. */
+export function totalIn(text: string, fix: number | null | undefined): number {
+  const needFix = () => {
+    test.skip(!fix, 'Chưa có FIX (TC-001 chưa chạy) — hoặc đặt E2E_FIX');
+    return fix!;
+  };
+  if (/within ¥10,000–¥20,000/.test(text)) return Math.min(20_000, Math.max(needFix() + 1, 15_000));
+  const yenM = text.match(/total = ¥([\d,]+)/);
+  if (yenM) return Number(yenM[1].replace(/,/g, ''));
+  if (/FIX − 1/.test(text)) return needFix() - 1;
+  if (/FIX \+ 1/.test(text)) return needFix() + 1;
+  if (/FIX \(boundary\)/.test(text)) return needFix();
+  throw new Error(`Không đọc được số tiền trong TC: ${text}`);
+}
+/** Số cấp 稟議 cần (N1 / C5): tổng ≥ ngưỡng Lv nào thì cần Lv đó (Lv1 ¥20,000 · Lv2 ¥30,000 · Lv3 ¥40,000 · Lv4 ¥50,000). */
+export const ringiLevels = (total: number) => Math.max(1, [20_000, 30_000, 40_000, 50_000].filter((x) => total >= x).length);
+const RINGI = ['00001', '00002', '00003', '00004'] as const;
+const taxOf = (storePrice: number) => Math.floor(storePrice * 1.1 + 1e-9);
+
+type Phase = 'new' | 'cont';
+/** E2E_DRY=1: chỉ kiểm mọi TC có handler + số bước khớp TC, không thao tác app (vd sau khi TC đổi revision). */
+const DRY = !!process.env.E2E_DRY;
+const dryE2E = (): E2E => {
+  const p: unknown = new Proxy(() => p, { get: (_t, k) => (k === 'then' ? undefined : p), apply: () => p });
+  return p as E2E;
+};
+type Handler = { pre?: () => Promise<void>; steps: (() => Promise<void>)[]; exp: () => Promise<void>; timeout?: number };
+
+/** Đăng ký toàn bộ TC của kịch bản E2E-NN (serial, 1 trình duyệt). */
+export function runCase(no: number): void {
+  const { file, rows } = loadCase(no);
+  test.describe.configure({ mode: 'serial' });
+  const t: Trouble = { id: process.env.E2E_TROUBLE_ID || undefined };
+  const t2: Trouble = { id: process.env.E2E_TROUBLE2_ID || undefined };
+  const store = rows[0].func.match(/LINKSYS STORE(\d{5})/)?.[1] as StoreKey;
+  if (!store || !(store in data.stores)) throw new Error(`${file}: TC-001 không có store hợp lệ (${rows[0].func})`);
+  let FIX: number | null | undefined = process.env.E2E_FIX ? Number(process.env.E2E_FIX) : undefined;
+  const totals = new Map<string, number>();
+  const approved: Record<Phase, string | undefined> = { new: undefined, cont: undefined };
+  const lastSubmitted: Record<Phase, string | undefined> = { new: undefined, cont: undefined };
+  const sc = serialScenario(() => [t.number ? `NEW ${t.number} (id ${t.id})` : '', t2.number ? `CONT ${t2.number} (id ${t2.id})` : '', FIX != null ? `FIX ${FIX}` : '']);
+  let e: E2E;
+  test.beforeAll(() => { if (!DRY) e = new E2E(sc.page, no); });
+
+  const note = (type: string, description: string) => test.info().annotations.push({ type, description });
+  const trouble = (ph: Phase) => (ph === 'cont' ? t2 : t);
+  /** Tổng của báo giá được duyệt ở phase (không có → báo giá vừa 提示). */
+  const payTotal = (ph: Phase) => {
+    const n = approved[ph] ?? lastSubmitted[ph];
+    return n ? totals.get(n) : undefined;
+  };
+  const markApproved = (ph: Phase, name: string) => { approved[ph] = name; };
+  const open = async (who: Who, ph: Phase) => {
+    // Modal báo giá còn mở che nút ログアウト (dò thật 15/10/2026: 'intercepts pointer events') → đóng trước khi đổi tài khoản.
+    if (await e.detail.estimateModal.isVisible().catch(() => false)) await e.detail.closeEstimates();
+    await e.switchTo(who); await e.openTrouble(trouble(ph));
+  };
+  /** Mở 見積一覧 để thao tác: 99 phải qua クイック操作 → 状態変更 (modal header của 99 không có nút, dò thật 15/10/2026); role khác dùng header. */
+  const openEstimatesAs = async (who: Who) => {
+    if (who === '99') { await e.detail.openQuickAction(); await e.detail.openEstimateFromStatus(); } else await e.detail.openEstimates();
+  };
+  const expectBadges = async (text: string) => { const b = badgesIn(text); if (b.length) await e.detail.expectBadges(...b); };
+  const expectStatuses = async (text: string) => { for (const [n, s] of statusesIn(text)) await e.detail.expectEstimateStatus(n, s); };
+  /** Rev 7 (lượt 9 Q5 / Q6): urgent — tới 02-08 / 02-80 Admin quay lại duyệt báo giá còn '承認待ち'. */
+  const lateApprove = async (ph: Phase, name: string) => {
+    await e.detail.openQuickAction(); await e.detail.openEstimateFromStatus();
+    await e.detail.approveEstimate(name);
+    await e.detail.expectEstimateStatus(name, '承認済み');
+    markApproved(ph, name);
+    await e.detail.closeEstimates();
+  };
+  const approvedStatus = (s: string) => /Verify: '承認済み'/.test(s) || /Verify: .*'承認済み' \(/.test(s);
+
+  function handler(r: TcRow): Handler {
+    const d = e.detail;
+    const c = e.create;
+    const f = r.func;
+    const ph: Phase = f.startsWith('CONTINUE') ? 'cont' : 'new';
+    const S = r.steps.filter((s) => /^\d/.test(s));
+
+    // ---- TC-001 SETUP: đọc store + 限度額 ----
+    if (/^SETUP · /.test(f)) return {
+      pre: () => e.commonSetup(/シサンNAVI ON/.test(r.pre)),
+      steps: [
+        () => e.openChain(),
+        async () => {
+          await e.chain.openStore(storeName(store));
+          await expect(e.chain.storeValue('限度額')).toBeVisible({ timeout: 20_000 });
+          const ty = S[1].match(/承認タイプ = '([^']+)'/);
+          if (ty) await expect(e.chain.storeValue('承認タイプ')).toContainText(ty[1]);
+          else if (/no 承認タイプ/.test(S[1])) await expect(e.chain.storeValue('承認タイプ'), "store không có dòng '承認タイプ'").toHaveCount(0);
+          else if (/auto approve/.test(S[1])) {
+            // Hieu Nguyen confirm 15/10/2026: 'auto approve is set' = chi tiết store có '限度額' (dò thật toridoll-test, STORE00005 id 73585:
+            // '￥20,000（継続依頼にも適用する：適用する）'). Không có mục riêng tên auto approve.
+            await expect(e.chain.storeValue('限度額'), "auto approve: '限度額' có giá trị").toContainText(/[¥￥]\s*[\d,]+/);
+          }
+        },
+        async () => {
+          const fix = await e.chain.limitAmount();
+          if (/is empty/.test(S[2])) { expect(fix, "'限度額' phải trống").toBeNull(); FIX = null; }
+          else { expect(fix, '限度額 trống — TC cần FIX').not.toBeNull(); FIX = fix; }
+        },
+      ],
+      exp: async () => { if (/no 限度額/.test(r.exp)) expect(FIX).toBeNull(); else expect(FIX).toBeGreaterThan(0); },
+    };
+
+    // ---- NEW: tạo trouble bằng webview トラブルNAVI ----
+    if (/creates trouble \(トラブルナビ/.test(f)) {
+      const who = who1(S[0]);
+      const asset = /'資産' \(field shown/.test(S[3]);
+      return {
+        timeout: 480_000,
+        steps: [
+          async () => { await e.switchTo(who); },
+          () => e.createStep1(store, who.startsWith('01')),
+          async () => { await c.openTroubleNavi(data.categories.navi); await e.navi.expectOpened(data.categories.navi); },
+          async () => {
+            for (const l of ['中項目', '小項目', '症状']) await e.navi.pick(l);
+            if (asset) await e.navi.pick('資産', data.asset.navi);
+            else await expect(e.navi.hasSelect('資産'), "no field '資産' because シサンNAVI OFF").toHaveCount(0);
+            await e.navi.next();
+          },
+          async () => {
+            await e.navi.requestAsIsButton().click();
+            // TC: bấm 2 lần (E2E-01 recon 14/10: sau lần 1 vẫn còn nút).
+            await expect(e.navi.requestAsIsButton(), "TC bước 5: nút 'このまま依頼する' lần 2").toBeVisible({ timeout: 15_000 });
+            await e.navi.requestAsIsButton().click();
+          },
+          async () => { await e.navi.uploadPhoto(data.files.fault); await e.navi.sendDetail(e.note); },
+          async () => { await e.navi.chooseTiming('至急'); await e.navi.submit(); },
+          async () => {
+            note('webview-done', (await e.navi.doneText()).slice(0, 300));
+            await e.navi.backToTop();
+            await e.recordNewest(t, store);   // R14
+          },
+        ],
+        exp: async () => {
+          await d.expectBadges('問い合わせ中', '受注待ち');
+          await d.expectInfo('業者', '未確定');
+          await d.expectInfo('見積書', '未提出');
+          if (asset) await expect(d.content).toContainText(data.asset.navi);
+        },
+      };
+    }
+
+    // ---- NEW: tạo trouble bằng web form (操作テスト) ----
+    if (/creates trouble \(web form/.test(f)) {
+      const who = who1(S[0]);
+      const asset = S.some((s) => /新しい機器を登録する/.test(s));
+      const steps: (() => Promise<void>)[] = [async () => { await e.switchTo(who); }];
+      if (who === '99') {
+        steps.push(async () => { await e.layout.menu('作業依頼登録'); await c.startNew(); });
+        steps.push(async () => {
+          await c.openChainStoreSearch();
+          await c.expandSearch('店名');
+          await c.fillSearch('社名', data.chain.companyQuery);
+          await c.fillSearch('店名', storeName(store));
+          await c.search();
+          await c.pickStore(storeName(store));
+          await c.openStaff();
+          await c.pickFirstStaff();
+          await c.next('作業項目選択');
+        });
+      } else {
+        steps.push(() => e.createStep1(store, who.startsWith('01')));
+      }
+      steps.push(async () => {
+        await c.openCategory(0); await c.chooseCategory(data.categories.noNavi);
+        await c.openCategory(1); await c.chooseCategory(data.categories.medium);
+        await c.openCategory(2); await c.chooseCategory(data.categories.small);
+      });
+      if (asset) steps.push(async () => {
+        await c.tickHasAsset();
+        await c.openAssetSelect();
+        await c.assets.openRegister();
+        await c.assets.fillField('名称', data.asset.name);
+        await c.assets.fillField('型式', data.asset.model);
+        await c.assets.fillField('製造番号', data.asset.serial);
+        await c.assets.uploadImage(0, data.files.asset);
+        await c.assets.save();
+        expect(await c.assets.selectRows(data.asset.name, 1)).toBe(1);
+        await c.assets.decide();
+        await expect(c.content).toContainText(data.asset.name);
+      });
+      steps.push(async () => {
+        await c.next('故障詳細');
+        await c.uploadFaultImage(0, data.files.fault);
+        await c.fillFaultDetail(e.note);
+      });
+      steps.push(async () => {
+        Object.assign(t, await c.submitWithDateFallback());   // R14
+        if (!t.id || !t.number) {
+          await d.expectOpened(t.id);
+          t.id ??= sc.page.url().match(/troubles\/(\d+)\/detail/)?.[1];
+          t.number ??= await d.number();
+        }
+        await minimizeChat(sc.page);
+      });
+      return {
+        timeout: 480_000, steps,
+        exp: async () => {
+          expect(t.id ?? t.number, 'Không lấy được id / 依頼番号 của trouble vừa tạo').toBeTruthy();
+          await e.openTrouble(t);
+          await d.expectBadges('問い合わせ中', '受注待ち');
+          await d.expectInfo('業者', '未確定');
+          await d.expectInfo('見積書', '未提出');
+          if (asset) await expect(d.content).toContainText(data.asset.name);
+        },
+      };
+    }
+
+    // ---- urgent: 案件区分 営業停止案件 ----
+    if (/Set urgent: 案件区分 営業停止案件/.test(f)) return {
+      steps: [
+        async () => { await open('99', ph); await d.headerButton('編集'); await e.edit.expectOpened(); },
+        async () => { await e.edit.setCaseType('営業停止案件'); await e.edit.save(); },
+      ],
+      exp: async () => { await e.openTrouble(trouble(ph)); await expect(rowOf(d.content, '案件区分')).toContainText('営業停止案件'); },
+    };
+
+    // ---- NEW: 対応中 + worker ----
+    if (/Admin: 対応中 \+ assign worker/.test(f)) return {
+      steps: [
+        () => open('99', 'new'),
+        async () => { await d.openQuickAction(); await d.setStatus('対応中'); },
+        async () => {
+          await d.editRow('作業者');
+          await d.expandSearch();
+          await d.searchWorker(data.worker.companyQuery);
+          await d.pickWorker(data.worker.loginId);
+          await expect(d.statusModal).toContainText(data.worker.companyName);
+        },
+        () => d.saveStatus(),
+      ],
+      exp: async () => { await d.expectBadges('対応中', '受注待ち'); await d.expectInfo('業者', data.worker.companyName); },
+    };
+
+    if (/NEW · 受注 → 移動中 → 到着/.test(f)) return {
+      pre: () => open('99', 'new'),
+      steps: ['受注', '移動中', '到着'].map((l) => () => e.moveFlow(l)),
+      exp: () => d.expectBadges('対応中', '到着'),
+    };
+
+    // ---- NEW: tạo báo giá + 提示 ----
+    if (/^NEW · Create \d+ estimate/.test(f)) {
+      const who = who1(S[0]);
+      const names = namesIn(S[1]);
+      const sub = /Tick all/.test(S[2]) ? names : namesIn(S[2].split(';')[0]).filter((n) => names.includes(n));
+      const card = S[0].match(/見積もり '(必須|任意)'/)?.[1] ?? '必須';
+      const status = approvedStatus(S[2]) ? '承認済み' : '承認待ち';
+      let total = 0;
+      return {
+        steps: [
+          async () => {
+            total = totalIn(f, FIX);
+            await open(who, 'new');
+            await d.openQuickAction();
+            await d.setFlow('見積承認待ち');
+            await expect(rowOf(d.statusModal, '見積もり')).toContainText(card);
+          },
+          async () => {
+            await d.openEstimateFromStatus();
+            for (const n of names) { await e.newEstimate(n, total); totals.set(n, total); }
+          },
+          async () => {
+            await d.submitEstimates(sub, status);
+            lastSubmitted.new = sub[0];
+            if (status === '承認済み') markApproved('new', sub[0]);
+            for (const n of names.filter((x) => !sub.includes(x))) await d.expectEstimateStatus(n, '下書き');
+          },
+          async () => {
+            await d.closeEstimateModal();
+            if (/select '作業中'/.test(S[3])) await d.setFlow('作業中');
+            await d.saveStatus();
+          },
+        ],
+        exp: async () => {
+          await expectBadges(r.exp);
+          if (/見積書 = 税抜/.test(r.exp)) await d.expectInfo('見積書', new RegExp(`[¥￥]\\s*${Number(storePriceFor(total)).toLocaleString('en-US')}`));
+          if (/見積書 'あり'/.test(r.exp)) await d.expectInfo('見積書', 'あり');
+        },
+      };
+    }
+
+    // ---- CONTINUE: tạo báo giá + 提示 ----
+    if (/^CONTINUE · Create \d+ estimate/.test(f)) {
+      const names = namesIn(S[0]);
+      const status = approvedStatus(S[1]) ? '承認済み' : '承認待ち';
+      return {
+        steps: [
+          async () => {
+            const total = totalIn(f, FIX);
+            await open('99', 'cont');
+            await d.openQuickAction();
+            await d.openEstimateFromStatus();
+            for (const n of names) { await e.newEstimate(n, total); totals.set(n, total); }
+          },
+          async () => {
+            await d.submitEstimates(names, status);
+            lastSubmitted.cont = names[0];
+            if (status === '承認済み') markApproved('cont', names[0]);
+          },
+          async () => {
+            await d.closeEstimateModal();
+            if (/select '見積承認待ち'/.test(S[2])) await d.setContinuationFlow('見積承認待ち');
+            await d.saveStatus();
+          },
+        ],
+        exp: () => expectBadges(r.exp),
+      };
+    }
+
+    // ---- duyệt từng cấp (người duyệt ghi rõ trong TC) ----
+    if (/· Approve \(\d+ level/.test(f)) {
+      const name = namesIn(S[0])[0];
+      return {
+        steps: S.map((s) => (/Login/.test(s)
+          ? async () => {
+            await open(who1(s), ph);
+            await openEstimatesAs(who1(s));
+            await d.openEstimateMenu(name);
+            for (const b of ['承認する', '差し戻し']) await expect(d.estimateAction('manager', b), `card 店舗 has '${b}'`).toBeVisible();
+          }
+          : async () => {
+            await d.approveEstimate(name);
+            if (/not yet '承認済み'/.test(s)) await expect(d.estimateRow(name).locator('.badge')).not.toHaveText('承認済み');
+            else if (/Verify: '稟議承認中'/.test(s)) await d.expectEstimateStatus(name, '稟議承認中');
+            else { await d.expectEstimateStatus(name, '承認済み'); markApproved(ph, name); }
+          })),
+        exp: async () => { await d.closeEstimates(); await expectBadges(r.exp); },
+      };
+    }
+
+    // ---- 稟議 type 04: manager tuần tự theo số tiền ----
+    if (/Approve type 04 \(稟議, sequential managers\)/.test(f)) {
+      const name = namesIn(S[1])[0];
+      let n = 1;
+      const approveAs = async (lv: number) => {
+        await open(managerWho(RINGI[lv]), ph);
+        await openEstimatesAs(managerWho(RINGI[lv]));
+        await d.approveEstimate(name);
+      };
+      return {
+        timeout: 480_000,
+        steps: [
+          async () => {
+            const total = totals.get(name);
+            test.skip(total == null, `Không biết tổng của '${name}' (TC tạo báo giá chưa chạy trong lần này)`);
+            n = ringiLevels(total!);
+            note('ringi', `${yen(total!)} → cần Lv1–Lv${n}`);
+          },
+          async () => { await approveAs(0); await d.expectEstimateStatus(name, n > 1 ? '稟議承認中' : '承認済み'); },
+          async () => {
+            if (n === 1) note('ringi', 'Chỉ cần Lv1 — không có Lv tiếp');
+            for (let lv = 1; lv < n; lv++) {
+              await approveAs(lv);
+              await expect(d.estimateAction('manager', '承認する'), `'承認する' disappears for Lv${lv + 1}`).toHaveCount(0, { timeout: 15_000 });
+            }
+            await d.expectEstimateStatus(name, '承認済み');
+            markApproved(ph, name);
+          },
+        ],
+        exp: async () => { await d.closeEstimates(); await expectBadges(r.exp); },
+      };
+    }
+
+    // ---- 稟議 type 04: Admin duyệt thay từng cấp ----
+    if (/Admin approves on behalf of each Lv/.test(f)) {
+      const name = namesIn(S[0])[0];
+      let n = 1;
+      return {
+        steps: [
+          async () => {
+            const total = totals.get(name);
+            test.skip(total == null, `Không biết tổng của '${name}'`);
+            n = ringiLevels(total!);
+            note('ringi', `${yen(total!)} → cần Lv1–Lv${n}`);
+            await open('99', ph);
+            await openEstimatesAs('99');
+            await d.openEstimateMenu(name);
+          },
+          async () => { await d.approveEstimate(name); if (n > 1) await d.expectEstimateStatus(name, '稟議承認中'); },
+          async () => {
+            for (let lv = 1; lv < n; lv++) await d.approveEstimate(name);   // R29: kiểm ở cuối
+            await d.expectEstimateStatus(name, '承認済み');
+            markApproved(ph, name);
+          },
+        ],
+        exp: async () => { await d.closeEstimates(); await expectBadges(r.exp); },
+      };
+    }
+
+    // ---- ≤ FIX tự duyệt ----
+    if (/≤ FIX → auto approve/.test(f)) {
+      const name = namesIn(r.exp)[0];
+      return {
+        steps: [async () => {
+          await open('99', ph);
+          await sc.page.reload(); await waitApisIdle(sc.page, 'F5'); await d.expectOpened(trouble(ph).id);
+          await d.openQuickAction(); await d.openEstimateFromStatus();
+        }],
+        exp: async () => {
+          await d.expectEstimateStatus(name, '承認済み');
+          await expect(d.estimateModal, "no '稟議承認中'").not.toContainText('稟議承認中');
+          markApproved(ph, name);
+          await d.closeEstimates();
+          await expectBadges(r.exp);
+        },
+      };
+    }
+
+    // ---- các báo giá khác → 失効 ----
+    if (/Other estimates? → 失効/.test(f)) return {
+      steps: [async () => {
+        await open('99', ph);
+        await sc.page.reload(); await waitApisIdle(sc.page, 'F5'); await d.expectOpened(trouble(ph).id);
+        await d.openQuickAction(); await d.openEstimateFromStatus();
+      }],
+      exp: async () => { await expectStatuses(r.exp); await d.closeEstimates(); },
+    };
+
+    // ---- 差し戻し → 再編集 → 再提示 ----
+    if (/差し戻し → 再編集 → 再提示/.test(f)) {
+      const name = namesIn(S[0])[0];
+      return {
+        steps: [
+          async () => { await open(who1(S[0]), ph); await openEstimatesAs(who1(S[0])); await d.openEstimateMenu(name); },
+          async () => { await d.rejectEstimate(name, data.text.reject); await d.expectEstimateStatus(name, '差し戻し'); },
+          async () => {
+            await open('99', ph);
+            await d.openQuickAction(); await d.openEstimateFromStatus();
+            await d.editEstimate(name);
+            const p = (await d.storeUnitPrice()) + 1;
+            await d.setStoreUnitPrice(String(p));
+            await d.decideEstimate(name);
+            totals.set(name, taxOf(p));
+            await d.submitEstimates([name], '再承認待ち');
+            lastSubmitted[ph] = name;
+          },
+        ],
+        exp: async () => { await d.expectEstimateStatus(name, '再承認待ち'); await d.closeEstimates(); },
+      };
+    }
+
+    // ---- 取り下げ申請 → 承認 / 却下 ----
+    if (/取り下げ申請 → /.test(f)) {
+      const name = namesIn(S[0])[0];
+      const ap = who1(S[1]);
+      const approve = /承認 → 再提示/.test(f);
+      const copy = `${name}-copy`;
+      return {
+        steps: [
+          async () => {
+            await open('99', ph);
+            await d.openQuickAction(); await d.openEstimateFromStatus();
+            await d.requestCancel(name, data.text.cancel);
+            await d.expectEstimateStatus(name, '取り下げ申請中');
+          },
+          async () => {
+            await open(ap, ph);
+            await openEstimatesAs(ap);
+            await d.openEstimateMenu(name);
+            await d.estimateAction('manager', approve ? '取り下げ承認' : '取り下げ却下').click();
+            await d.decide();
+            await d.reopenAfterOk();
+            if (approve) await d.expectEstimateStatus(name, '下書き');
+            else {
+              await d.expectEstimateStatus(name, '取り下げ却下');
+              await expect(d.estimateAction('manager', '承認する')).toHaveCount(0);
+            }
+          },
+          async () => {
+            await open('99', ph);
+            await d.openQuickAction(); await d.openEstimateFromStatus();
+            if (approve) {
+              await d.editEstimate(name);
+              await d.decideEstimate(name);
+              await d.submitEstimates([name], /^(再承認待ち|承認待ち)$/);
+              note('observed-status', `Q1 (lượt 9): sau 取り下げ承認 → 提示, '${name}' = '${(await d.estimateRow(name).locator('.badge').innerText()).trim()}'`);
+              lastSubmitted[ph] = name;
+            } else {
+              await d.openEstimateMenu(name);
+              await expect(d.estimateAction('worker', '取り下げ申請'), "only 'コピー' is available").toHaveCount(0);
+              await d.copyEstimate(name);
+              await d.fillEstimateName(copy);
+              await d.decideEstimate(copy);
+              totals.set(copy, totals.get(name) ?? 0);
+              await d.submitEstimates([copy], '承認待ち');
+              lastSubmitted[ph] = copy;
+            }
+          },
+        ],
+        exp: async () => {
+          if (approve) await d.expectEstimateStatus(name, /^(再承認待ち|承認待ち)$/);
+          else { await d.expectEstimateStatus(name, '取り下げ却下'); await d.expectEstimateStatus(copy, '承認待ち'); }
+          await d.closeEstimates();
+        },
+      };
+    }
+
+    // ---- urgent: Admin duyệt 1 báo giá → các cái khác 失効 ----
+    if (/Urgent: Admin approves 1 estimate/.test(f)) {
+      const name = namesIn(S[0])[0];
+      return {
+        steps: [
+          async () => { await open('99', ph); await openEstimatesAs('99'); await d.approveEstimate(name); markApproved(ph, name); },
+          async () => { await waitApisIdle(sc.page, '承認'); },
+        ],
+        exp: async () => { await expectStatuses(r.exp); await d.closeEstimates(); await expectBadges(r.exp); },
+      };
+    }
+
+    // ---- tạo + 提示 báo giá mới sau khi đã duyệt ----
+    if (/Re-submit AFTER approved/.test(f)) {
+      const nn = namesIn(S[0])[0];
+      if (!/auto/.test(S[1])) throw new Error(`Chưa có handler cho re-submit cần người duyệt: ${S[1]}`);
+      return {
+        steps: [
+          async () => {
+            const total = totalIn(S[0], FIX);
+            await open('99', ph);
+            await d.openQuickAction(); await d.openEstimateFromStatus();
+            await e.newEstimate(nn, total); totals.set(nn, total);
+            await d.submitEstimates([nn]);
+          },
+          async () => { await d.expectEstimateStatus(nn, '承認済み'); markApproved(ph, nn); },
+        ],
+        exp: async () => { await expectStatuses(r.exp); await d.closeEstimates(); },
+      };
+    }
+
+    // ---- store read-key xem báo giá đã tự duyệt ----
+    if (/Read-key store views/.test(f)) {
+      const name = namesIn(S[0])[0];
+      return {
+        steps: [async () => {
+          await open(who1(S[0]), ph);
+          await d.openEstimates();
+          await d.openEstimateMenu(name);
+          const total = totals.get(name);
+          if (total != null) await expect(d.estimateRow(name), 'amounts shown in clear').toContainText(yen(total));
+          for (const b of ['承認する', '差し戻し']) await expect(d.estimateAction('manager', b)).toHaveCount(0);
+        }],
+        exp: async () => { await expect(d.estimateRow(name)).not.toContainText('***'); await d.closeEstimates(); },
+      };
+    }
+
+    // ---- NEW: 作業完了 → 報告済 ----
+    if (/^NEW · 作業完了 → 報告済/.test(f)) {
+      const late = S.find((s) => /At 02-08: .*'承認する'/.test(s));
+      const pdf = S.some((s) => /attach PDF/.test(s)) ? data.files.pdf : undefined;
+      return {
+        steps: [
+          async () => { await open('99', 'new'); await e.moveFlow('作業完了'); },
+          ...(late ? [() => lateApprove('new', namesIn(late)[0])] : []),
+          async () => { await d.openQuickAction(); await d.setFlow('報告済'); await e.reportForm(pdf); },
+          () => d.saveStatus(),
+        ],
+        exp: async () => {
+          await d.expectBadges('対応中', '報告済');
+          if (late) { await d.openEstimates(); await expectStatuses(r.exp); await d.closeEstimates(); }
+          if (pdf) { await d.headerButton('報告書'); await expect(modal(sc.page, '報告書')).toContainText(pdf); }
+        },
+      };
+    }
+
+    // ---- 作業完了確認 / thanh toán ----
+    if (/確認・決済 → 完了/.test(f)) {
+      const who = who1(S[0]);
+      return {
+        steps: [
+          async () => { await open(who, ph); await minimizeChat(sc.page); },
+          async () => { const tot = payTotal(ph); await e.paymentOpen(data.estimate.item, tot != null ? yen(tot) : ''); },
+          () => e.paymentSubmit(),
+        ],
+        exp: async () => {
+          await d.expectBadges('完了', '報告済');
+          if (ph === 'new') await expect(d.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
+          else { await e.openTrouble(t); await d.expectBadges('完了'); }
+        },
+      };
+    }
+
+    // ---- CONTINUE: tạo 継続依頼 ----
+    if (/creates 継続依頼 '_2'/.test(f)) {
+      const who = who1(S[0]);
+      return {
+        steps: [
+          async () => {
+            test.skip(!t.number, 'Chưa có 依頼番号 NEW');
+            await e.switchTo(who); await e.layout.menu('作業依頼登録'); await c.start('継続依頼');
+          },
+          async () => { await c.pickContinuationSource(t.number!); await expect(c.content).toContainText(storeName(store)); },
+          async () => {
+            await c.submitContinuation();
+            await expect(sc.page).toHaveURL(/\/admin\/troubles\/\d+\/detail/, { timeout: 30_000 });
+            t2.id = sc.page.url().match(/troubles\/(\d+)\/detail/)?.[1];   // R14
+            await d.expectOpened(t2.id);
+            t2.number = await d.number();
+          },
+        ],
+        exp: async () => { expect(t2.number).toBe(`${t.number}_2`); await d.expectBadges('対応中', '見積待ち'); },
+      };
+    }
+
+    if (/CONTINUE · 作業スタッフ kept/.test(f)) return {
+      steps: [() => open(who1(r.role), 'cont')],
+      exp: () => d.expectInfo('業者', data.worker.companyName),
+    };
+
+    if (/CONTINUE · 日程確定 → 移動中/.test(f)) return {
+      steps: [
+        async () => { await open('99', 'cont'); await e.moveFlow('日程確定', true); },
+        async () => { for (const l of ['移動中', '到着', '作業中', '作業完了']) await e.moveFlow(l, true); },
+        ...(S[2] ? [() => lateApprove('cont', namesIn(S[2])[0])] : []),
+      ],
+      exp: async () => {
+        await d.expectBadges('対応中', '作業完了');
+        if (S[2]) { await d.openEstimates(); await expectStatuses(r.exp); await d.closeEstimates(); }
+      },
+    };
+
+    if (/CONTINUE · 報告済/.test(f)) return {
+      steps: [async () => { await open('99', 'cont'); await e.report(true); }],
+      exp: () => d.expectBadges('対応中', '報告済'),
+    };
+
+    throw new Error(`Chưa có handler cho loại TC: '${f}'`);
+  }
+
+  for (const r of rows) {
+    const role = (whosIn(r.role)[0] ?? '99').split(':')[0];
+    test(`${r.id} ${r.func}`, { tag: [`@${r.id}`, `@role-${role}`] }, async () => {
+      if (DRY) e = dryE2E();
+      const h = handler(r);
+      test.setTimeout(h.timeout ?? 300_000);
+      const numbered = r.steps.filter((s) => /^\d/.test(s));
+      expect(h.steps.length, `Handler có ${h.steps.length} bước ≠ TC ${numbered.length} bước (${file})`).toBe(numbered.length);
+      if (DRY) return;
+      if (h.pre) await test.step(`Pre-condition: ${r.pre}`, h.pre);
+      for (const [i, s] of numbered.entries()) await test.step(s, h.steps[i]);
+      for (const n of r.steps.filter((s) => !/^\d/.test(s))) note('tc-note', n);
+      await test.step(`Expected: ${r.exp}`, h.exp);
+    });
+  }
+}

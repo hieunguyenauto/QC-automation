@@ -284,7 +284,7 @@ test('E2E-TC-004 状態 = 対応中 and assign worker', { tag: ['@E2E-TC-004', '
   });
   await test.step(`5. 社名: ${data.worker.companyQuery} → 検索`, async () => {
     await d.searchWorker(data.worker.companyQuery);
-    await expect(d.searchModal.locator('tbody tr').first()).toContainText(new RegExp(data.worker.companyQuery, 'i'));
+    await expect(d.searchResultRows.first()).toContainText(new RegExp(data.worker.companyQuery, 'i'));
   });
   await test.step(`6. 選択 ${data.worker.loginId} → 作業者 = ${data.worker.companyName}`, async () => {
     await d.pickWorker(data.worker.loginId);
@@ -371,9 +371,8 @@ test('E2E-TC-007 取り下げ申請 → 取り下げ承認 → 承認', { tag: [
   });
   await test.step('3. 取り下げ申請 → reason → 申請を送信 → 決定 → 取り下げ申請中', async () => {
     await d.estimateAction('worker', '取り下げ申請').click();
-    const req = modal(page, '申請を送信');
-    await req.locator('textarea[name="reason"]').fill(data.estimate.cancelReason);
-    await click(req, '申請を送信');
+    await d.cancelRequestReason.fill(data.estimate.cancelReason);
+    await click(d.cancelRequestModal, '申請を送信');
     await d.decide(data.estimate.cancelReason);
     await d.expectEstimateStatus(name, '取り下げ申請中');
   });
@@ -425,15 +424,15 @@ test('E2E-TC-009 報告済 and input 報告書', { tag: ['@E2E-TC-009', '@role-9
   await test.step('2. Edit icon on 報告書 → 編集', async () => {
     await d.editRow('報告書');
     await click(d.reportModal, '編集');
-    await expect(d.reportModal.locator('input[name="start"]')).toBeVisible();
+    await expect(d.reportDate('start')).toBeVisible();
   });
   await test.step('3. 開始 = day 1, 終了 = day 2', async () => {
     await d.pickDay('start', 1);
     await d.pickDay('end', 2);
-    await expect(d.reportModal.locator('input[name="start"]')).toHaveValue(input('01'));
-    await expect(d.reportModal.locator('input[name="end"]')).toHaveValue(input('02'));
+    await expect(d.reportDate('start')).toHaveValue(input('01'));
+    await expect(d.reportDate('end')).toHaveValue(input('02'));
   });
-  await test.step(`4. 原因と発生起因: ${r.cause}`, () => d.reportModal.locator('textarea[name="reason"]').fill(r.cause));
+  await test.step(`4. 原因と発生起因: ${r.cause}`, () => d.reportCause.fill(r.cause));
   await test.step('5. Upload 作業前 / 作業後 photos', async () => {
     await d.uploadReportPhoto('作業前の写真', r.beforeImage);
     await d.uploadReportPhoto('作業後の写真', r.afterImage);
@@ -474,8 +473,8 @@ test('E2E-TC-010 Admin views 報告書 and downloads', { tag: ['@E2E-TC-010', '@
     await expectRow(d.reportModal, '原因と発生起因', data.report.cause);
   });
   await test.step('3. Verify photos and asset', async () => {
-    await expect(rowOf(d.reportModal, '作業前の写真').locator('img').first()).toBeVisible();
-    await expect(rowOf(d.reportModal, '作業後の写真').locator('img').first()).toBeVisible();
+    await expect(d.reportPhotos('作業前の写真').first()).toBeVisible();
+    await expect(d.reportPhotos('作業後の写真').first()).toBeVisible();
     await expect(d.reportModal).toContainText(data.report.assetName);
   });
   await test.step('4. Excelダウンロード → .xlsx', async () => {
@@ -505,7 +504,7 @@ test('E2E-TC-011 Logout, login as chain store manager', { tag: ['@E2E-TC-011', '
   });
   // Browser thật 2026-10-12: tên user ở sidebar '.account p'.
   const name = roleAccount('01')?.displayName || data.manager.dashboardName;
-  await test.step(`Expected: dashboard shows ${name}`, () => expect(page.locator('.account')).toContainText(name));
+  await test.step(`Expected: dashboard shows ${name}`, () => expect(s.layout.accountName).toContainText(name));
 });
 
 test('E2E-TC-012 Manager views estimate and history', { tag: ['@E2E-TC-012', '@role-01'] }, async () => {
@@ -539,7 +538,7 @@ test('E2E-TC-012 Manager views estimate and history', { tag: ['@E2E-TC-012', '@r
 test('E2E-TC-013 Manager 作業完了確認', { tag: ['@E2E-TC-013', '@role-01'] }, async () => {
   const d = s.detail;
   await pre(async () => { await ensureRole('01'); await ensureTroubleOpened(); });
-  const box = modal(page, '支払情報');
+  const box = d.paymentModal;
   await test.step('1. Header 作業完了確認 → 支払情報', async () => {
     await d.headerButton('作業完了確認');
     for (const t of [data.categories.large, data.categories.medium, data.categories.small, data.estimate.totalTax]) {
@@ -548,12 +547,12 @@ test('E2E-TC-013 Manager 作業完了確認', { tag: ['@E2E-TC-013', '@role-01']
   });
   // Browser thật 2026-10-12: 5 ô .rating-star (不満…感動), mỗi ô có <div data-index=N><img></div>; chọn → cả 5 ảnh đổi src.
   await test.step('2. Click 感動 → 5 stars selected', async () => {
-    const stars = box.locator('.rating-star img');
+    const stars = d.ratingStarImages;
     const empty = await stars.first().getAttribute('src');
-    await box.locator('.rating-star', { hasText: '感動' }).locator('[data-index] img').click();
+    await d.rate('感動');
     for (let i = 0; i < 5; i++) await expect(stars.nth(i)).not.toHaveAttribute('src', empty ?? '');
   });
-  await test.step('3. Input comment', () => box.locator('textarea[name="description"]').fill(data.payment.comment));
+  await test.step('3. Input comment', () => d.paymentComment.fill(data.payment.comment));
   await test.step('4. Click 作業完了確認 → confirm', async () => {
     await click(box, '作業完了確認');
   });

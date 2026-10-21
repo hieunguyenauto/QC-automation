@@ -277,7 +277,7 @@ function handler(r, g) {
         }
         const lines = [`await d.approveEstimate(${q(name)});`];
         if (/Verify: '稟議承認中' \(not yet '承認済み'\)/.test(s)) lines.push(`await d.expectEstimateStatus(${q(name)}, '稟議承認中');`);
-        else if (/not yet '承認済み'/.test(s)) lines.push(`await expect(d.estimateRow(${q(name)}).locator('.badge')).not.toHaveText('承認済み');`);
+        else if (/not yet '承認済み'/.test(s)) lines.push(`await expect(d.estimateBadge(${q(name)})).not.toHaveText('承認済み');`);
         else if (/Verify: '稟議承認中'/.test(s)) lines.push(`await d.expectEstimateStatus(${q(name)}, '稟議承認中');`);
         else { lines.push(`await d.expectEstimateStatus(${q(name)}, '承認済み');`); g.approved[ph] = name; }
         if (/'承認する' disappears for this approver/.test(s)) lines.push(`await d.openEstimateMenu(${q(name)});`, "await expect(d.estimateAction('manager', '承認する'), \"'承認する' disappears for this approver\").toHaveCount(0);");
@@ -380,7 +380,7 @@ function handler(r, g) {
           ...(approve ? [
             `await d.expectEstimateStatus(${q(name)}, '下書き');`,
             `await d.editEstimate(${q(name)});`, `await d.decideEstimate(${q(name)});`, `await d.submitEstimates([${q(name)}], /^(再承認待ち|承認待ち)$/);`,
-            `test.info().annotations.push({ type: 'observed-status', description: \`Q1 (lượt 9): sau 取り下げ承認 → 提示, '${name}' = '\${(await d.estimateRow(${q(name)}).locator('.badge').innerText()).trim()}'\` });`,
+            `test.info().annotations.push({ type: 'observed-status', description: \`Q1 (lượt 9): sau 取り下げ承認 → 提示, '${name}' = '\${(await d.estimateBadge(${q(name)}).innerText()).trim()}'\` });`,
           ] : [
             `await d.expectEstimateStatus(${q(name)}, '失効');   // R12-1: sau 取り下げ却下 báo giá gốc = 失効`,
             `await d.openEstimateMenu(${q(name)});`, "await expect(d.estimateAction('manager', '承認する')).toHaveCount(0);",
@@ -469,7 +469,7 @@ function handler(r, g) {
       ],
       exp: [
         "await d.expectBadges('完了', '報告済');",
-        ...(ph === 'new' ? ["await expect(d.content.locator('button', { hasText: /^\\s*作業完了確認\\s*$/ })).toHaveCount(0);"]
+        ...(ph === 'new' ? ["await expect(d.workCompleteConfirmButton).toHaveCount(0);"]
           : ['await e.openTrouble(t);', "await d.expectBadges('完了');"]),
       ],
     };

@@ -1,0 +1,167 @@
+- text: Develop TORIDOLL Environment (4.0)
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼情報":
+          - text: 
+          - paragraph: 作業依頼情報
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 個人事業主情報":
+          - text: 
+          - paragraph: 個人事業主情報
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " 作業項目情報":
+          - text: 
+          - paragraph: 作業項目情報
+      - listitem:
+        - link " 代理店情報":
+          - text: 
+          - paragraph: 代理店情報
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " 見積用作業項目情報":
+          - text: 
+          - paragraph: 見積用作業項目情報
+      - listitem:
+        - link " サブアドミン情報":
+          - text: 
+          - paragraph: サブアドミン情報
+      - listitem:
+        - link " 作業員情報":
+          - text: 
+          - paragraph: 作業員情報
+      - listitem:
+        - link " 作業会社情報":
+          - text: 
+          - paragraph: 作業会社情報
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " 資産管理項目マスター":
+          - text: 
+          - paragraph: 資産管理項目マスター
+      - listitem:
+        - link " 資産情報":
+          - text: 
+          - paragraph: 資産情報
+      - listitem:
+        - link " システム設定":
+          - text: 
+          - paragraph: システム設定
+      - listitem:
+        - link " GlobaR管理者情報":
+          - text: 
+          - paragraph: GlobaR管理者情報
+  - paragraph: Qナビ担当者 （株式会社グローバー）
+- heading " 検索条件" [level=4]
+- button " 検索条件解除"
+- button " Excel一覧 DL"
+- button " 登録"
+- text: 社名
+- textbox "社名":
+  - /placeholder: 社名を入力
+  - text: Linksys
+- text: 電話番号
+- textbox "電話番号":
+  - /placeholder: 電話番号を入力
+- text: 住所
+- textbox "住所":
+  - /placeholder: 住所を入力
+- text: 店舗数
+- textbox "店舗数":
+  - /placeholder: 店舗数を入力
+- text: 登録日時(From)
+- textbox "YYYY/MM/DD HH:mm"
+- text:  登録日時(To)
+- textbox "YYYY/MM/DD HH:mm"
+- text:  表示件数（最大1000件まで）
+- textbox "表示件数（最大1000件まで）":
+  - /placeholder: ""
+  - text: "20"
+- button " 検索" [disabled]
+- paragraph: 全 1 件中 1 件目 〜 1 件目を表示
+- table:
+  - rowgroup:
+    - row "No 社名  電話番号  住所 m 店舗数  管理者数  登録日時  操作":
+      - cell "No"
+      - cell "社名 "
+      - cell "電話番号 "
+      - cell "住所"
+      - cell "m"
+      - cell "店舗数 "
+      - cell "管理者数 "
+      - cell "登録日時 "
+      - cell "操作"
+  - rowgroup:
+    - row "1 Linksys Chain System 01234567869 automatching 11 1006 2026年05月22日 10:14  編集":
+      - cell "1"
+      - cell "Linksys Chain System"
+      - cell "01234567869"
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "11"
+      - cell "1006"
+      - cell "2026年05月22日 10:14"
+      - cell " 編集":
+        - button " 編集"
+- status
+- navigation:
+  - list:
+    - listitem: 最初
+    - listitem: 前
+    - listitem: "1"
+    - listitem: 次
+    - listitem: 最後
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - button "利用規約"
+    - listitem:
+      - button "プライバシーポリシー"

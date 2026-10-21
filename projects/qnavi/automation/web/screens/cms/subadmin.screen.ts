@@ -101,4 +101,11 @@ export class SubAdminScreen extends BaseScreen {
     await this.content.locator('input[type="file"]').setInputFiles({ name: fileName, mimeType: 'text/csv', buffer: Buffer.from(content, 'utf8') });
     await click(this.content, 'アップロード');
   }
+
+  /** Ô input đầu tiên của form (form 登録 đã mở). */
+  get formFirstInput() { return this.content.locator('input').first(); }
+  /** Bấm vào nhóm (cột 3) ở bảng nhóm của màn chi tiết subadmin → /presets/<id>/detail. */
+  async openGroup(group: string): Promise<void> {
+    await this.content.locator('tbody tr', { hasText: group }).first().locator('td').nth(2).click();
+  }
 }

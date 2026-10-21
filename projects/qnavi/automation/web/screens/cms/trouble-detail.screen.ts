@@ -24,6 +24,9 @@ export class TroubleDetailScreen extends BaseScreen {
 
   readonly content = this.page.locator('.content-wrapper').first();
   readonly assets = new AssetSelectDialog(this.page);
+  /** Nút header 作業完了確認 (khớp nguyên văn, tránh trùng chữ trong nội dung). */
+  get workCompleteConfirmButton(): Locator { return this.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ }); }
+  get quickActionButton(): Locator { return this.content.locator('button', { hasText: 'クイック操作' }); }
 
   /** Đã vào màn chi tiết VÀ dữ liệu đã tải (ô 番号 có số; trước đó các ô trống, クイック操作 bị disable). */
   async expectOpened(id?: string): Promise<void> {
@@ -49,6 +52,8 @@ export class TroubleDetailScreen extends BaseScreen {
 
   // ---------- 状態変更 ----------
   get statusModal(): Locator { return modal(this.page, '状態変更'); }
+  /** Dòng của 1 mục trong modal 状態変更 (cha của ô giá trị) — để kiểm nhãn 必須 / 任意. */
+  statusRow(label: string): Locator { return valueOf(this.statusModal, label).locator('xpath=..'); }
 
   async openQuickAction(): Promise<Locator> {
     await click(this.content, 'クイック操作');
@@ -83,6 +88,7 @@ export class TroubleDetailScreen extends BaseScreen {
 
   // ----- 作業者 (検索条件) -----
   get searchModal(): Locator { return modal(this.page, '検索条件'); }
+  get searchResultRows(): Locator { return this.searchModal.locator('tbody tr'); }
   async expandSearch(): Promise<void> {
     const box = this.searchModal;
     if (!(await field(box, '電話番号').isVisible().catch(() => false))) await box.getByText('検索条件', { exact: true }).first().click();
@@ -120,8 +126,24 @@ export class TroubleDetailScreen extends BaseScreen {
   estimateRow(name: string): Locator {
     return this.estimateModal.locator('tr.estimation-row').filter({ has: this.page.locator('td', { hasText: exact(name) }) }).first();
   }
+  /** Badge trạng thái của dòng 見積 trong 見積一覧. */
+  estimateBadge(name: string): Locator { return this.estimateRow(name).locator('.badge'); }
+  /** Dòng 見積 trong 1 hộp bất kỳ (見積一覧 / 見積もり管理), khớp đúng tên ở ô td (hasText khớp chuỗi con: 'Test' khớp 'EnterTest'). */
+  estimateRowIn(box: Locator, name: string): Locator {
+    return box.locator('tr.estimation-row').filter({ has: this.page.locator('td', { hasText: exact(name) }) }).first();
+  }
+  /** Các dòng 見積 có chứa chữ (vd trạng thái '下書き'). */
+  estimateRowsWithText(box: Locator, text: string | RegExp): Locator { return box.locator('tr.estimation-row', { hasText: text }); }
+  /** Hộp 見積もり管理 (nút header 見積もり, role 01). */
+  get estimateManageModal(): Locator { return modal(this.page, '見積もり管理'); }
+  /** Card 店舗 (quản lý) trong 見積一覧. */
+  get managerCard(): Locator { return this.estimateModal.locator('.group-manager'); }
+  /** Ô 見積書宛名 của form 見積もり. */
+  get estimateCompanyName(): Locator { return this.estimateForm.locator('input[name="companyName"]'); }
+  /** Ô label của các hạng mục trong form 見積もり. */
+  get estimateItemLabels(): Locator { return this.estimateForm.locator('textarea[name$=".label"]'); }
   async expectEstimateStatus(name: string, status: string | RegExp): Promise<void> {
-    await expect(this.estimateRow(name).locator('.badge')).toHaveText(status, { timeout: 15_000 });
+    await expect(this.estimateBadge(name)).toHaveText(status, { timeout: 15_000 });
   }
 
   async openEstimateFromStatus(): Promise<void> {
@@ -256,12 +278,14 @@ export class TroubleDetailScreen extends BaseScreen {
     await this.decide(/差し戻しをおこないますか/);
     await this.reopenAfterOk();
   }
+  get cancelRequestModal(): Locator { return modal(this.page, '申請を送信'); }
+  get cancelRequestReason(): Locator { return this.cancelRequestModal.locator('textarea[name="reason"]'); }
   /** Card 作業員: 取り下げ申請 → lý do → 申請を送信 → 決定 (P007-TC-033). */
   async requestCancel(name: string, reason: string): Promise<void> {
     await this.openEstimateMenu(name);
     await this.estimateAction('worker', '取り下げ申請').click();
-    const req = modal(this.page, '申請を送信');
-    await req.locator('textarea[name="reason"]').fill(reason);
+    const req = this.cancelRequestModal;
+    await this.cancelRequestReason.fill(reason);
     await click(req, '申請を送信');
     await this.decide(/以下の理由で取り下げ申請を行いますか/);
     await this.reopenAfterOk();
@@ -365,6 +389,9 @@ export class TroubleDetailScreen extends BaseScreen {
   get chatBox(): Locator { return this.page.locator('.chat-popover__content.open'); }
   get chatInput(): Locator { return this.page.locator('.chat-popover textarea[name="content"]'); }
   get chatMessages(): Locator { return this.page.locator('.chat-popover #chat'); }
+  get chatSendButton(): Locator { return this.page.locator('.chat-popover button.cf-send'); }
+  /** Icon nổi của chat khi đã thu nhỏ. */
+  get chatTrigger(): Locator { return this.page.locator('.chat-popover .popover-trigger'); }
   async openChat(): Promise<void> {
     if (!(await this.chatBox.isVisible().catch(() => false))) await this.page.locator('.chat-popover .popover-trigger').dispatchEvent('click');
     await expect(this.chatBox).toBeVisible();
@@ -383,10 +410,20 @@ export class TroubleDetailScreen extends BaseScreen {
   //  select[name=status] 未提出/提出済, textarea[name=symptom|reason|content|notice], dropzone ảnh, 修理対象資産選択, キャンセル/完了).
   //  Lọc theo '施工業者' vì modal 状態変更 cũng có chữ '報告書'.
   get reportModal(): Locator { return modal(this.page, '施工業者'); }
+  /** Ô ngày 開始 / 終了 (react-datepicker, giá trị 'YYYY/MM/DD 00:00'). */
+  reportDate(name: 'start' | 'end'): Locator { return this.reportModal.locator(`input[name="${name}"]`); }
+  /** Ô 原因と発生起因. */
+  get reportCause(): Locator { return this.reportModal.locator('textarea[name="reason"]'); }
+  /** Ảnh đã tải của 1 dòng (作業前の写真 / 作業後の写真). */
+  reportPhotos(label: string): Locator { return valueOf(this.reportModal, label).locator('img'); }
+  /** Hộp con tải PDF 'N / 5' (modal lồng, loại modal 報告書 có '施工業者' — R09). */
+  get pdfUploadBox(): Locator {
+    return this.page.locator('.modal.show').filter({ hasText: /\d+\s*\/\s*5/ }).filter({ hasNotText: '施工業者' }).last();
+  }
 
   /** react-datepicker: option "Choose 2026年10月1日木曜日"; nút 現在 / クリア / 閉じる; giá trị input 'YYYY/MM/DD 00:00'. */
   async pickDay(name: 'start' | 'end', day: number): Promise<void> {
-    await this.reportModal.locator(`input[name="${name}"]`).click();
+    await this.reportDate(name).click();
     const picker = this.page.locator('.react-datepicker').filter({ visible: true }).last();
     await picker.getByRole('option', { name: new RegExp(`^Choose \\d+年\\d+月${day}日`) }).first().click();
     const close = picker.locator('button', { hasText: exact('閉じる') });
@@ -406,7 +443,7 @@ export class TroubleDetailScreen extends BaseScreen {
     await click(box, '完了');
     expect((await uploaded).ok()).toBe(true);
     await expect(box).toBeHidden();
-    await expect(valueOf(this.reportModal, label).locator('img').first()).toBeVisible();
+    await expect(this.reportPhotos(label).first()).toBeVisible();
   }
   /** 状態 của 報告書 (select[name=status]: 01 未提出 / 02 提出済). */
   async setReportStatus(label: '未提出' | '提出済'): Promise<void> {
@@ -420,7 +457,9 @@ export class TroubleDetailScreen extends BaseScreen {
     return this.reportModal.locator('tr').filter({ has: this.page.locator('select[name^="types."]') }).filter({ hasNot: this.page.locator('tr') });
   }
   /** Dropdown 対応区分 của dòng tài sản thứ i (theo dòng, không theo thứ tự phần tử). */
-  assetTypeSelect(i: number): Locator { return this.assetRows.nth(i).locator('select[name^="types."]').first(); }
+  /** Mọi dropdown 対応区分 trong dòng tài sản thứ i (để kiểm mỗi dòng đúng 1 dropdown). */
+  assetRowSelects(i: number): Locator { return this.assetRows.nth(i).locator('select[name^="types."]'); }
+  assetTypeSelect(i: number): Locator { return this.assetRowSelects(i).first(); }
   /**
    * PDF 報告書: input[type=file accept=pdf] trong .dropzone của dòng 'PDFファイル' → hộp con 'N / 5' → 完了.
    * Hộp con PDF (dò thật 2026-10-15, toridoll-test, role 99): '.modal.show.app-pdf-upload-modal' — thẻ file (.btn-close-card + tên),
@@ -473,4 +512,18 @@ export class TroubleDetailScreen extends BaseScreen {
   // ---------- chung ----------
   async ok(text?: string | RegExp) { await acknowledgeOk(this.page, text); }
   async decide(text?: string | RegExp) { await confirmDecide(this.page, text); }
+
+  // ---------- 資産一覧 (header) ----------
+  get assetListModal(): Locator { return modal(this.page); }
+  get assetListSelects(): Locator { return this.assetListModal.locator('select'); }
+
+  // ---------- 支払情報 (header 作業完了確認, role 01) ----------
+  // Browser thật 2026-10-12: 5 ô .rating-star (不満…感動), mỗi ô có <div data-index=N><img></div>; chọn → cả 5 ảnh đổi src.
+  get paymentModal(): Locator { return modal(this.page, '支払情報'); }
+  get ratingStars(): Locator { return this.paymentModal.locator('.rating-star'); }
+  get ratingStarImages(): Locator { return this.paymentModal.locator('.rating-star img'); }
+  async rate(label: string): Promise<void> {
+    await this.paymentModal.locator('.rating-star', { hasText: label }).locator('[data-index] img').click();
+  }
+  get paymentComment(): Locator { return this.paymentModal.locator('textarea[name="description"]'); }
 }

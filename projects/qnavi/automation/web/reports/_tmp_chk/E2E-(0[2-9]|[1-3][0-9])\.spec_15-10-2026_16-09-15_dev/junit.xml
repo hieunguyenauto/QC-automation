@@ -1,0 +1,2254 @@
+<testsuites id="" name="" tests="545" failures="0" skipped="545" errors="0" time="0.15483999999999998">
+<testsuite name="tests/cms/e2e-suite/E2E-02.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E02-TC-001 SETUP · LINKSYS STORE00007; 限度額 read" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-006 NEW · Approve (2 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos; → ChainStore Manager &apos;LINKSYS MANAGER00002&apos;" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E02-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-02.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-03.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E03-TC-001 SETUP · LINKSYS STORE00008; 限度額 read" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-005 NEW · Create 1 estimate(s) (total within ¥10,000–¥20,000 (range of MANAGER00004) and &gt; FIX) and 提示" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-006 NEW · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00004&apos;" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E03-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-03.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-04.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E04-TC-001 SETUP · LINKSYS STORE00004; 限度額 read" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-002 NEW · chainstore manager creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-005 NEW · Create 1 estimate(s) (total = ¥49,999) and 提示" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-006 NEW · Approve (3 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos; → ChainStore Manager &apos;LINKSYS MANAGER00002&apos; → ChainStore Manager &apos;LINKSYS MANAGER00003&apos;" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E04-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-04.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-05.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E05-TC-001 SETUP · LINKSYS STORE00005; 限度額 read" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-005 NEW · Create 1 estimate(s) (total = ¥4,999 (≤ FIX ¥20,000)) and 提示" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-011 CONTINUE · Create 1 estimate(s) (total = ¥4,999 (≤ FIX ¥20,000)) and 提示" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E05-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-05.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-06.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E06-TC-001 SETUP · LINKSYS STORE00008; 限度額 read" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-005 NEW · Create 1 estimate(s) (total = ¥9,999,999) and 提示" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-006 NEW · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00005&apos;" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E06-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-06.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-07.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E07-TC-001 SETUP · LINKSYS STORE00009; 限度額 read" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-006 NEW · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos; (Lv0)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-008 NEW · CS Admin (Level 0) 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E07-TC-015 CONTINUE · CS Admin (Level 0) 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-07.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-08.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E08-TC-001 SETUP · LINKSYS STORE00002; 限度額 none" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-005 NEW · Create 1 estimate(s) (total = ¥10,000 (store has no 限度額)) and 提示" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-006 NEW · Approve (1 level(s)): ChainStore (02) &apos;linksysstore00002&apos;" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-011 CONTINUE · Create 1 estimate(s) (total = ¥10,000 (store has no 限度額)) and 提示" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-012 CONTINUE · Approve (1 level(s)): ChainStore (02) &apos;linksysstore00002&apos;" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E08-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-08.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-09.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E09-TC-001 SETUP · LINKSYS STORE00005; 限度額 read" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-002 NEW · chainstore manager creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-006 NEW · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos;" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX + 1 (cột gốc &quot;no limit&quot;; STORE00005 vẫn có FIX — N17)) and 提示" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-012 CONTINUE · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos;" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E09-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-09.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-10.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E10-TC-001 SETUP · LINKSYS STORE00005; 限度額 read" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-006 NEW · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos;" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-008 NEW · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-012 CONTINUE · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos;" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E10-TC-015 CONTINUE · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-10.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-11.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E11-TC-001 SETUP · LINKSYS STORE00004; 限度額 read" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-005 NEW · Create 1 estimate(s) (total = FIX (boundary)) and 提示" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX (boundary)) and 提示" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E11-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-11.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-12.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="E2E12-TC-001 SETUP · LINKSYS STORE00007; 限度額 read" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-005 NEW · Create 2 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-006 NEW · 差し戻し → 再編集 → 再提示" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-007 NEW · Approve (2 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos; → ChainStore Manager &apos;LINKSYS MANAGER00002&apos;" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-008 NEW · Other estimates → 失効 after approval" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-009 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-010 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-011 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-012 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-013 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-014 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-015 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-016 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E12-TC-017 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-12.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-13.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="E2E13-TC-001 SETUP · LINKSYS STORE00004; 限度額 read" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-006 NEW · 取り下げ申請 → 承認 → 再提示" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-007 NEW · Approve type 04 (稟議, sequential managers)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-009 NEW · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-013 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-014 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-015 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E13-TC-016 CONTINUE · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-13.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-14.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="E2E14-TC-001 SETUP · LINKSYS STORE00008; 限度額 read" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-005 NEW · Create 1 estimate(s) (total within ¥10,000–¥20,000 (range of MANAGER00004) and &gt; FIX) and 提示" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-006 NEW · 取り下げ申請 → 却下 → コピー → 新規提示" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-007 NEW · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00004&apos;" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-009 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-013 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-014 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-015 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E14-TC-016 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-14.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-15.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="E2E15-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-007 NEW · Re-submit AFTER approved" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-009 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-013 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-014 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-015 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E15-TC-016 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-15.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-17.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="E2E17-TC-001 SETUP · LINKSYS STORE00004; 限度額 read" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-005 NEW · Create 4 estimates (total = FIX + 1), 提示 3, keep 1 下書き" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-006 NEW · Approve type 04 (稟議, sequential managers)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-007 NEW · Other estimates → 失効 after approval" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-009 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-012 CONTINUE · Create 2 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-013 CONTINUE · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos; (Lv1)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-014 CONTINUE · Other estimate → 失効" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-015 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-016 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E17-TC-017 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-17.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-18.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="E2E18-TC-001 SETUP · LINKSYS STORE00007; 限度額 read" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-005 NEW · Create 3 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-006 NEW · Approve (2 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos; → ChainStore Manager &apos;LINKSYS MANAGER00002&apos;" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-007 NEW · Other estimates → 失効 after approval" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-009 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-013 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-014 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-015 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E18-TC-016 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-18.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-19.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E19-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-003 NEW · Set urgent: 案件区分 営業停止案件" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-004 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-005 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-006 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E19-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-19.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-20.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E20-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-006 NEW · Approve (1 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00005&apos;" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-010 CONTINUE · Set urgent: 案件区分 営業停止案件" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E20-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-20.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-21.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E21-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-003 NEW · Set urgent: 案件区分 営業停止案件" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-004 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-005 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-006 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-010 CONTINUE · Set urgent: 案件区分 営業停止案件" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E21-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-21.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-22.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="E2E22-TC-001 SETUP · LINKSYS STORE00004; 限度額 read" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-003 NEW · Set urgent: 案件区分 営業停止案件" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-004 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-005 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-006 NEW · Create 4 estimates (total = FIX + 1), 提示 3, keep 1 下書き" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-007 NEW · Urgent: Admin approves 1 estimate → others 失効" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-009 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-013 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-014 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-015 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E22-TC-016 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-22.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-23.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E23-TC-001 SETUP · LINKSYS STORE00007; 限度額 read" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-002 NEW · chainstore manager creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-006 NEW · Approve (2 level(s)): ChainStore Manager &apos;LINKSYS MANAGER00001&apos; → ChainStore Manager &apos;LINKSYS MANAGER00002&apos;" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-010 CONTINUE · Set urgent: 案件区分 営業停止案件" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E23-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-23.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-24.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="5" failures="0" skipped="5" time="0" errors="0">
+<testcase name="E2E24-TC-001 SETUP · LINKSYS STORE00007; 限度額 read" classname="tests/cms/e2e-suite/E2E-24.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E24-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-24.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E24-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-24.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E24-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-24.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E24-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-24.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-25.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E25-TC-001 SETUP · LINKSYS STORE00008; 限度額 read" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-005 NEW · Create 1 estimate(s) (total within ¥10,000–¥20,000 (range of MANAGER00004) and &gt; FIX) and 提示" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-006 NEW · Approve (1 level(s)): CMS SubAdmin (98)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-008 NEW · Sub Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E25-TC-015 CONTINUE · Sub Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-25.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-26.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E26-TC-001 SETUP · LINKSYS STORE00004; 限度額 read" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-002 NEW · chainstore manager creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-006 NEW · Approve type 04 (稟議): Admin approves on behalf of each Lv" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-008 NEW · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-009 CONTINUE · admin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E26-TC-015 CONTINUE · CS Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-26.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-27.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E27-TC-001 SETUP · LINKSYS STORE00005; 限度額 read" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX + 1 (cột gốc &quot;no limit&quot;; STORE00005 vẫn có FIX — N17)) and 提示" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-012 CONTINUE · Approve (1 level(s)): ChainStore (02) &apos;linksysstore00005&apos;" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E27-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-27.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-29.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="E2E29-TC-001 SETUP · LINKSYS STORE00001; 限度額 read" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-005 NEW · Create 2 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-006 NEW · 差し戻し → 再編集 → 再提示" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-007 NEW · Approve (1 level(s)): ChainStore (02) &apos;linksysstore00001&apos;" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-008 NEW · Other estimates → 失効 after approval" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-009 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-010 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-011 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-012 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-013 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-014 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-015 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-016 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E29-TC-017 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-29.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-30.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E30-TC-001 SETUP · LINKSYS STORE00001; 限度額 read" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-006 NEW · Approve (1 level(s)): CMS SubAdmin (98)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-008 NEW · Sub Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E30-TC-015 CONTINUE · Sub Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-30.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-31.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="E2E31-TC-001 SETUP · LINKSYS STORE00001; 限度額 read" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-007 NEW · Read-key store views auto-approved estimate" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-009 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-013 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-014 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-015 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E31-TC-016 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-31.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-32.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E32-TC-001 SETUP · LINKSYS STORE00001; 限度額 read" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-005 NEW · Create 1 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-006 NEW · Approve (1 level(s)): ChainStore (02) &apos;linksysstore00001&apos;" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-009 CONTINUE · admin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E32-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-32.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-33.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="17" failures="0" skipped="17" time="0" errors="0">
+<testcase name="E2E33-TC-001 SETUP · LINKSYS STORE00001; 限度額 read" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-005 NEW · Create 2 estimate(s) (total = FIX + 1) and 提示" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-006 NEW · 差し戻し → 再編集 → 再提示" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-007 NEW · Approve (1 level(s)): ChainStore (02) &apos;linksysstore00001&apos;" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-008 NEW · Other estimates → 失効 after approval" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-009 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-010 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-011 CONTINUE · admin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-012 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-013 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-014 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-015 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-016 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E33-TC-017 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-33.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-34.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="16" failures="0" skipped="16" time="0" errors="0">
+<testcase name="E2E34-TC-001 SETUP · LINKSYS STORE00001; 限度額 read" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-007 NEW · Read-key store views auto-approved estimate" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-008 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-009 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-010 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-011 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-012 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-013 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-014 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-015 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E34-TC-016 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-34.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-35.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E35-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-002 NEW · admin creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-008 NEW · Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E35-TC-015 CONTINUE · Admin 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-35.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-36.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E36-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E36-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-36.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-37.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E37-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-002 NEW · chainstore manager creates trouble (web form, シサンNAVI)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-008 NEW · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E37-TC-015 CONTINUE · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-37.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-38.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E38-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-002 NEW · chainstore manager creates trouble (トラブルナビ, シサンNAVI)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-008 NEW · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E38-TC-015 CONTINUE · Store Manager 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-38.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="tests/cms/e2e-suite/E2E-39.spec.ts" timestamp="2026-10-15T09:09:15.450Z" hostname="e2e" tests="15" failures="0" skipped="15" time="0" errors="0">
+<testcase name="E2E39-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-002 NEW · chainstore creates trouble (web form)" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-005 NEW · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09) + PDF attachment" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-011 CONTINUE · Create 1 estimate(s) (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了 (02-50 → 02-80)" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="E2E39-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-39.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

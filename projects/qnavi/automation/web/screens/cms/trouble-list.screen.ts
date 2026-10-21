@@ -50,9 +50,11 @@ export class TroubleListScreen extends BaseScreen {
   // '表示設定' → modal '表示設定': checkbox #reportPdf (報告書PDF), #reportExcel (報告書Excel)…, nút 初期値にリセット / 設定.
   // Vùng tìm kiếm .filter-advance (trong drawer '高度な検索', phải mở trước): input[name=number] (作業依頼の番号), 検索.
   get saveFilterModal() { return modal(this.page, '表示条件を保存'); }
+  /** Ô フィルタ名 trong modal 表示条件を保存. */
+  get saveFilterName() { return this.saveFilterModal.locator('input[name="name"]'); }
   async openSaveFilter(): Promise<void> {
     await click(this.page.locator('.content-wrapper'), '表示条件を保存');
-    await expect(this.saveFilterModal.locator('input[name="name"]')).toBeVisible();
+    await expect(this.saveFilterName).toBeVisible();
   }
   async headerFilterNames(): Promise<string[]> {
     await this.page.locator('a.nav-link', { hasText: /^\s*フィルタ\s*$/ }).first().click();
@@ -103,6 +105,11 @@ export class TroubleListScreen extends BaseScreen {
     const idx = await this.table.locator('thead th').evaluateAll((ths, h) => ths.findIndex((t) => (t.textContent || '').trim() === h), header);
     if (idx < 0) throw new Error(`Không thấy cột '${header}' trong 作業依頼一覧`);
     return this.rowOf(number).locator('td').nth(idx);
+  }
+
+  /** Link / nút tải trong ô của cột header ở dòng có 依頼番号 number (vd 報告書PDF, 報告書Excel). */
+  async downloadLink(number: string, header: string) {
+    return (await this.cellOf(number, header)).locator('a, button').first();
   }
 
   /** Mở trouble đầu tiên (mới nhất) có đủ các chữ trong texts → màn hình chi tiết. */

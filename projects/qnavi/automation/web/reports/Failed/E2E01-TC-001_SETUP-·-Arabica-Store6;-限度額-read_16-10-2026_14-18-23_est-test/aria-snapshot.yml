@@ -1,0 +1,337 @@
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - link " サポート":
+        - /url: https://globar.notion.site/Q-ORDER-1c2daf8bd905804182fdceff93352190
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼情報":
+          - text: 
+          - paragraph: 作業依頼情報
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 個人事業主情報":
+          - text: 
+          - paragraph: 個人事業主情報
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " 作業項目情報":
+          - text: 
+          - paragraph: 作業項目情報
+      - listitem:
+        - link " 代理店情報":
+          - text: 
+          - paragraph: 代理店情報
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " 見積用作業項目情報":
+          - text: 
+          - paragraph: 見積用作業項目情報
+      - listitem:
+        - link " サブアドミン情報":
+          - text: 
+          - paragraph: サブアドミン情報
+      - listitem:
+        - link " 作業員情報":
+          - text: 
+          - paragraph: 作業員情報
+      - listitem:
+        - link " 作業会社情報":
+          - text: 
+          - paragraph: 作業会社情報
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " 資産管理項目マスター":
+          - text: 
+          - paragraph: 資産管理項目マスター
+      - listitem:
+        - link " 資産情報":
+          - text: 
+          - paragraph: 資産情報
+      - listitem:
+        - link " システム設定":
+          - text: 
+          - paragraph: システム設定
+      - listitem:
+        - link " GlobaR管理者情報":
+          - text: 
+          - paragraph: GlobaR管理者情報
+  - paragraph: Qナビ担当者 （株式会社グローバー）
+- heading "チェーンシステム詳細" [level=4]
+- button " 戻る"
+- button " カスタム属性管理"
+- button " 編集"
+- table:
+  - rowgroup:
+    - row "チェーンシステム名（社名） Arabica Coffee VietNam":
+      - cell "チェーンシステム名（社名）"
+      - cell "Arabica Coffee VietNam"
+    - row "電話番号 0935789268":
+      - cell "電話番号"
+      - cell "0935789268"
+    - row "住所":
+      - cell "住所"
+      - cell
+    - row "登録日時 2026年10月15日 18:58:40":
+      - cell "登録日時"
+      - cell "2026年10月15日 18:58:40"
+    - row "継続依頼表示設定 02":
+      - cell "継続依頼表示設定"
+      - cell "02"
+    - row "自動マッチング automatching":
+      - cell "自動マッチング"
+      - cell "automatching":
+        - img "automatching"
+    - row "シサンNAVI asset":
+      - cell "シサンNAVI"
+      - cell "asset":
+        - img "asset"
+    - row "トラブルNAVI chatbot":
+      - cell "トラブルNAVI"
+      - cell "chatbot":
+        - img "chatbot"
+- button " 戻る"
+- button " 編集"
+- button "チェーン店舗一覧" [disabled]
+- button "チェーン店管理者一覧"
+- heading " 検索条件" [level=4]
+- button " 検索条件解除"
+- button " 症状一覧DL"
+- button " カスタム属性DL"
+- button " カスタム属性の一括更新"
+- button " 店舗別作業項目DL"
+- button " 店舗別作業項目登録"
+- button " Excel一覧 DL"
+- button " 一括登録"
+- button " 登録"
+- paragraph: 全 9 件中 1 件目 〜 9 件目を表示
+- table:
+  - rowgroup:
+    - row "No 店名  電話番号  メール  郵便番号  都道府県  住所  支払い方法  ログインID  許可したいIPアドレス  前回ログイン日時  m  登録日時  操作":
+      - cell "No"
+      - cell "店名 "
+      - cell "電話番号 "
+      - cell "メール "
+      - cell "郵便番号 "
+      - cell "都道府県 "
+      - cell "住所 "
+      - cell "支払い方法 "
+      - cell "ログインID "
+      - cell "許可したいIPアドレス "
+      - cell "前回ログイン日時 "
+      - cell "m "
+      - cell "登録日時 "
+      - cell "操作"
+  - rowgroup:
+    - row "1 Arabica Store 9 (Ringi) [0] [99] 0935273056 arabicastore9@yopmail.com 100-0009 13 Tokyo Chiyoda 9-9-9 Arabica Store 9 00 arabicastore9 automatching 2026年10月16日 11:41  編集":
+      - cell "1"
+      - cell "Arabica Store 9 (Ringi) [0] [99]"
+      - cell "0935273056"
+      - cell "arabicastore9@yopmail.com"
+      - cell "100-0009"
+      - cell "13"
+      - cell "Tokyo Chiyoda 9-9-9 Arabica Store 9"
+      - cell "00"
+      - cell "arabicastore9"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:41"
+      - cell " 編集":
+        - button " 編集"
+    - row "2 Arabica Store 8 (Approve Type 3) [4] [5] 0935273056 arabicastore8@yopmail.com 100-0008 13 Tokyo Chiyoda 8-8-8 Arabica Store 8 00 arabicastore8 automatching 2026年10月16日 11:41  編集":
+      - cell "2"
+      - cell "Arabica Store 8 (Approve Type 3) [4] [5]"
+      - cell "0935273056"
+      - cell "arabicastore8@yopmail.com"
+      - cell "100-0008"
+      - cell "13"
+      - cell "Tokyo Chiyoda 8-8-8 Arabica Store 8"
+      - cell "00"
+      - cell "arabicastore8"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:41"
+      - cell " 編集":
+        - button " 編集"
+    - row "3 Arabica Store 7 (Approve Type 2) [1] [$2] 0935273056 arabicastore7@yopmail.com 100-0007 13 Tokyo Chiyoda 7-7-7 Arabica Store 7 00 arabicastore7 automatching 2026年10月16日 11:41  編集":
+      - cell "3"
+      - cell "Arabica Store 7 (Approve Type 2) [1] [$2]"
+      - cell "0935273056"
+      - cell "arabicastore7@yopmail.com"
+      - cell "100-0007"
+      - cell "13"
+      - cell "Tokyo Chiyoda 7-7-7 Arabica Store 7"
+      - cell "00"
+      - cell "arabicastore7"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:41"
+      - cell " 編集":
+        - button " 編集"
+    - row "4 Arabica Store 6 (Approve Type 1) [3] [5] 0935273056 arabicastore6@yopmail.com 100-0006 13 Tokyo Chiyoda 6-6-6 Arabica Store 6 00 arabicastore6 automatching 2026年10月16日 11:41  編集":
+      - cell "4"
+      - cell "Arabica Store 6 (Approve Type 1) [3] [5]"
+      - cell "0935273056"
+      - cell "arabicastore6@yopmail.com"
+      - cell "100-0006"
+      - cell "13"
+      - cell "Tokyo Chiyoda 6-6-6 Arabica Store 6"
+      - cell "00"
+      - cell "arabicastore6"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:41"
+      - cell " 編集":
+        - button " 編集"
+    - row "5 Arabica Store 5 (Auto Approve) 0935273056 arabicastore5@yopmail.com 100-0005 13 Tokyo Chiyoda 5-5-5 Arabica Store 5 00 arabicastore5 automatching 2026年10月16日 11:41  編集":
+      - cell "5"
+      - cell "Arabica Store 5 (Auto Approve)"
+      - cell "0935273056"
+      - cell "arabicastore5@yopmail.com"
+      - cell "100-0005"
+      - cell "13"
+      - cell "Tokyo Chiyoda 5-5-5 Arabica Store 5"
+      - cell "00"
+      - cell "arabicastore5"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:41"
+      - cell " 編集":
+        - button " 編集"
+    - row "6 Arabica Store 4 (Ringi) 0935273056 arabicastore4@yopmail.com 100-0004 13 Tokyo Chiyoda 4-4-4 Arabica Store 4 00 arabicastore4 automatching 2026年10月16日 11:41  編集":
+      - cell "6"
+      - cell "Arabica Store 4 (Ringi)"
+      - cell "0935273056"
+      - cell "arabicastore4@yopmail.com"
+      - cell "100-0004"
+      - cell "13"
+      - cell "Tokyo Chiyoda 4-4-4 Arabica Store 4"
+      - cell "00"
+      - cell "arabicastore4"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:41"
+      - cell " 編集":
+        - button " 編集"
+    - row "7 Arabica Store 3 (Urgent) 0935273056 arabicastore3@yopmail.com 100-0003 13 Tokyo Chiyoda 3-3-3 Arabica Store 3 00 arabicastore3 automatching 2026年10月16日 11:41  編集":
+      - cell "7"
+      - cell "Arabica Store 3 (Urgent)"
+      - cell "0935273056"
+      - cell "arabicastore3@yopmail.com"
+      - cell "100-0003"
+      - cell "13"
+      - cell "Tokyo Chiyoda 3-3-3 Arabica Store 3"
+      - cell "00"
+      - cell "arabicastore3"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:41"
+      - cell " 編集":
+        - button " 編集"
+    - row "8 Arabica Store 2 (Qnavi) 0935273056 arabicastore2@yopmail.com 100-0002 13 Tokyo Chiyoda 2-2-2 Arabica Store 2 00 arabicastore2 automatching 2026年10月16日 11:40  編集":
+      - cell "8"
+      - cell "Arabica Store 2 (Qnavi)"
+      - cell "0935273056"
+      - cell "arabicastore2@yopmail.com"
+      - cell "100-0002"
+      - cell "13"
+      - cell "Tokyo Chiyoda 2-2-2 Arabica Store 2"
+      - cell "00"
+      - cell "arabicastore2"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:40"
+      - cell " 編集":
+        - button " 編集"
+    - row "9 Arabica Store 1 (Toridoll) 0935273056 arabicastore1@yopmail.com 100-0001 13 Tokyo Chiyoda 1-1-1 Arabica Store 1 00 arabicastore1 automatching 2026年10月16日 11:40  編集":
+      - cell "9"
+      - cell "Arabica Store 1 (Toridoll)"
+      - cell "0935273056"
+      - cell "arabicastore1@yopmail.com"
+      - cell "100-0001"
+      - cell "13"
+      - cell "Tokyo Chiyoda 1-1-1 Arabica Store 1"
+      - cell "00"
+      - cell "arabicastore1"
+      - cell
+      - cell
+      - cell "automatching":
+        - img "automatching"
+      - cell "2026年10月16日 11:40"
+      - cell " 編集":
+        - button " 編集"
+- status
+- navigation:
+  - list:
+    - listitem: 最初
+    - listitem: 前
+    - listitem: "1"
+    - listitem: 次
+    - listitem: 最後
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - link "利用規約":
+        - /url: https://dev.terms.picontechnology.com/
+    - listitem:
+      - button "プライバシーポリシー"

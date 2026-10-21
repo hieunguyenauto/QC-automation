@@ -249,4 +249,11 @@ export class TroubleCreateScreen extends BaseScreen {
     } catch { /* response không phải JSON */ }
     return { id, number };
   }
+
+  /** Nút 次へ (role hoặc chữ nguyên văn). */
+  get nextButton() {
+    return this.content.getByRole('button', { name: '次へ' }).or(this.content.locator('button', { hasText: /^\s*次へ\s*$/ })).first();
+  }
+  /** Nút 至急 (chỉ bật trong giờ làm việc — P7). */
+  get urgentButton() { return this.content.locator('button', { hasText: /^\s*至急\s*$/ }).first(); }
 }

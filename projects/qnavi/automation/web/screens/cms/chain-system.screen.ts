@@ -102,4 +102,7 @@ export class ChainSystemScreen extends BaseScreen {
     const m = t.match(/￥\s*([\d,]+)/);
     return m ? Number(m[1].replace(/,/g, '')) : null;
   }
+
+  /** Nút 症状一覧DL (role 01 không thấy). */
+  get symptomDownloadButton() { return this.content.locator('button', { hasText: '症状一覧DL' }); }
 }

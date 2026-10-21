@@ -1,0 +1,78 @@
+- text: Develop TORIDOLL Environment (4.0)
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - button ""
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 進行中のトラブル一覧":
+          - text: 
+          - paragraph: 進行中のトラブル一覧
+      - listitem:
+        - link " グループ管理":
+          - text: 
+          - paragraph: グループ管理
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " 資産管理項目マスター":
+          - text: 
+          - paragraph: 資産管理項目マスター
+      - listitem:
+        - link " 資産情報":
+          - text: 
+          - paragraph: 資産情報
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+  - paragraph: LINKSYS MANAGER00005 （Linksys Chain System）
+- iframe
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - button "利用規約"
+    - listitem:
+      - button "プライバシーポリシー"

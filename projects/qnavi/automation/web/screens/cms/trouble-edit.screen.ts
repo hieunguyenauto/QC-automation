@@ -103,4 +103,7 @@ export class TroubleEditScreen extends BaseScreen {
     await clickable(this.content, '戻る').click();
     await expect(this.page).toHaveURL(/\/detail/);
   }
+
+  /** Nút 変更 ở dòng có nhãn label (vd '作業項目（大）'). */
+  changeButtonOf(label: string) { return this.content.locator('tr', { hasText: label }).first().locator('button', { hasText: '変更' }); }
 }

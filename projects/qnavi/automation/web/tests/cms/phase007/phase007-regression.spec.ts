@@ -3,7 +3,7 @@ import dataRaw from '../../../data/phase007-regression.json';
 import { serialScenario } from '../../../common/scenario';
 import { credentialsOf, loginAs, markLoggedIn, logout, type Who } from '../../../common/session';
 import { account } from '../../../data/roles';
-import { click, closeModal, exact, minimizeChat, modal, modalWithButton, acknowledgeOk, confirmDecide, valueOf } from '../../../common/ui';
+import { checkedOption, click, closeModal, exact, minimizeChat, modal, modalWithButton, acknowledgeOk, confirmDecide, valueOf } from '../../../common/ui';
 import { LoginScreen } from '../../../screens/cms/login.screen';
 import { CmsLayout, waitDashboardApi } from '../../../screens/cms/layout.screen';
 import { env } from '../../../common/env';
@@ -73,9 +73,6 @@ function tc(id: string, title: string, who: Who | null, body: () => Promise<void
     await body();
   });
 }
-/** Dòng 見積 theo đúng tên ở ô td (hasText khớp chuỗi con: 'Test' khớp cả 'EnterTest'). */
-const estimationRow = (box: ReturnType<typeof modal>, name: string) =>
-  box.locator('tr.estimation-row').filter({ has: page.locator('td', { hasText: exact(name) }) }).first();
 const need = (t: T, name: string) => test.skip(!t.id, `Chưa có ${name} (TC tạo ${name} chưa chạy / fail)`);
 async function openTrouble(t: T): Promise<void> {
   await page.goto(`/admin/troubles/${t.id}/detail`); await waitApisIdle(page, 'goto');
@@ -168,7 +165,7 @@ async function openReportForm(): Promise<void> {
   await d.setFlow('報告済');
   await d.editRow('報告書');
   await click(d.reportModal, '編集');
-  await expect(d.reportModal.locator('input[name="start"]')).toBeVisible();
+  await expect(d.reportDate('start')).toBeVisible();
 }
 async function cancelReportForm(): Promise<void> {
   await click(s.detail.reportModal, 'キャンセル');
@@ -282,9 +279,9 @@ tc('P007-TC-006', '#6 · 1706-02 · Enter repeatedly in フィルタ名', '99', 
   st.filter = `AT_Filter_${stamp}`;
   await step('1. Menu 作業依頼情報', () => s.layout.menu('作業依頼情報'));
   await step('2. 表示条件を保存 → フィルタ名', () => s.list.openSaveFilter());
-  await step(`3. Input ${st.filter}`, () => s.list.saveFilterModal.locator('input[name="name"]').fill(st.filter!));
+  await step(`3. Input ${st.filter}`, () => s.list.saveFilterName.fill(st.filter!));
   await step('4. Press Enter 5 times', async () => {
-    const f = s.list.saveFilterModal.locator('input[name="name"]');
+    const f = s.list.saveFilterName;
     for (let k = 0; k < 5; k++) await f.press('Enter').catch(() => {}); // modal có thể đã đóng sau Enter đầu
     await expect(s.list.saveFilterModal).toBeHidden({ timeout: 15_000 });
   });
@@ -311,7 +308,7 @@ tc('P007-TC-007', '#7 · 1706-03 · Enter repeatedly in chat search', '99', asyn
   });
   await step('Expected: ~1 search request, no error dialog', async () => {
     expect(requests, 'số request tìm kiếm').toBeLessThanOrEqual(1);
-    await expect(page.locator('.modal.show').filter({ hasText: /エラー/ })).toHaveCount(0);
+    await expect(s.layout.errorDialog).toHaveCount(0);
   });
 });
 
@@ -332,7 +329,7 @@ tc('P007-TC-009', '#9 · 1388-02 · Add subadmin form has no 症状グループ'
   await step('1. Menu サブアドミン情報', () => s.layout.menu('サブアドミン情報'));
   await step('2. 登録', () => click(s.sub.content, '登録'));
   await step("Expected: no '症状グループ' / 'チェーン店舗一覧'", async () => {
-    await expect(s.sub.content.locator('input').first()).toBeVisible();
+    await expect(s.sub.formFirstInput).toBeVisible();
     await expect(s.sub.content).not.toContainText('症状グループ');
     await expect(s.sub.content).not.toContainText('チェーン店舗一覧');
   });
@@ -384,7 +381,7 @@ tc('P007-TC-013', '#13 · 1388-06 · Import store CSV (追加のみ)', '99', asy
   await step('1. AT_Group detail → 紐付け店舗一括登録 CSVアップロード → 追加のみ', async () => {
     await s.layout.menu('サブアドミン情報');
     await s.sub.openDetail(data.subadmin.loginId);
-    await s.sub.content.locator('tbody tr', { hasText: st.group! }).first().locator('td').nth(2).click();
+    await s.sub.openGroup(st.group!);
     await expect(page).toHaveURL(/\/presets\/\d+\/detail/);
     await s.sub.openImportStore();
     await expect(s.sub.addOnlyRadio).toBeChecked();
@@ -403,7 +400,7 @@ tc('P007-TC-014', '#14 · 1388-07 · Import empty CSV → error', '99', async ()
   await step('1. Open 紐付け店舗一括登録 of AT_Group', async () => {
     await s.layout.menu('サブアドミン情報');
     await s.sub.openDetail(data.subadmin.loginId);
-    await s.sub.content.locator('tbody tr', { hasText: st.group! }).first().locator('td').nth(2).click();
+    await s.sub.openGroup(st.group!);
     await s.sub.openImportStore();
   });
   await step('2-3. store_empty.csv (chỉ dòng tiêu đề) → アップロード', () => s.sub.upload('store_empty.csv', `${STORE_CSV_HEADER}\n`));
@@ -432,7 +429,7 @@ tc('P007-TC-016', '#16 · Create T1 (605-28)', '99', async () => {
     createUntilCategories(data.store.query, data.store.name));
   await step('6. Tick 対象資産 → 修理対象資産選択 (次へ disabled before choosing)', async () => {
     await c.tickHasAsset();
-    await expect(c.content.getByRole('button', { name: '次へ' }).or(c.content.locator('button', { hasText: /^\s*次へ\s*$/ })).first()).toBeDisabled();
+    await expect(c.nextButton).toBeDisabled();
     await c.openAssetSelect();
   });
   await step('7. 新しい機器を登録する → 605-28: AT_Timer_YM / YMD / YMDH on 資産登録', async () => {
@@ -487,9 +484,9 @@ tc('P007-TC-017', '#17 · Trouble detail of T1 (605-34)', '99', async () => {
   });
   await step('2. 資産一覧 → asset row, no dropdown (605-34)', async () => {
     await d.headerButton('資産一覧');
-    const box = modal(page);
+    const box = d.assetListModal;
     for (const v of [data.asset.name, data.asset.model, data.asset.serial, '対応区分']) await expect(box).toContainText(v);
-    await expect(box.locator('select')).toHaveCount(0);
+    await expect(d.assetListSelects).toHaveCount(0);
     await closeModal(box);
   });
   await step('3-4. 編集 → 変更 (作業項目（大）) → 保存 → OK', async () => {
@@ -498,7 +495,7 @@ tc('P007-TC-017', '#17 · Trouble detail of T1 (605-34)', '99', async () => {
     await s.edit.setFirstAssetResponseType();
   });
   await step("Expected: saved without '修理対象資産を選択してください。', detail shown", async () => {
-    await expect(page.getByText(M.assetRequired)).toHaveCount(0);
+    await expect(s.layout.message(M.assetRequired)).toHaveCount(0);
     await s.edit.back();
     await d.expectOpened(T1.id);
   });
@@ -621,7 +618,7 @@ tc('P007-TC-024', '#24 · 2285-02 · 資産チェック ON with ≥1 asset can b
   });
   await step('3. 変更 (作業項目（大）) → 保存 → OK', () => s.edit.setFirstAssetResponseType());
   await step(`Expected: saved without '${M.assetRequired}', detail shown`, async () => {
-    await expect(page.getByText(M.assetRequired)).toHaveCount(0);
+    await expect(s.layout.message(M.assetRequired)).toHaveCount(0);
     await s.edit.back();
   });
 });
@@ -636,13 +633,13 @@ tc('P007-TC-025', '#25 · 2164-01 · Send long chat message, minimize / reopen',
     await expect.poll(() => d.chatInput.evaluate((e) => (e as HTMLElement).offsetHeight)).toBeGreaterThan(h0);
   });
   await step('3. Send → input empty, message shown', async () => {
-    await page.locator('.chat-popover button.cf-send').click();
+    await d.chatSendButton.click();
     await expect(d.chatInput).toHaveValue('');
     await expect(d.chatMessages).toContainText('AUTOMATION LONG TEXT', { timeout: 15_000 });
   });
   await step('4. Minimize (−) → only floating icon', async () => {
     await d.minimizeChatByIcon();
-    await expect(page.locator('.chat-popover .popover-trigger')).toBeVisible();
+    await expect(d.chatTrigger).toBeVisible();
   });
   await step('5. Click chat icon', () => d.openChat());
   await step("Expected: chat still shows 'AUTOMATION LONG TEXT'", () => expect(d.chatMessages).toContainText('AUTOMATION LONG TEXT'));
@@ -665,7 +662,7 @@ tc('P007-TC-026', N('#27 · 対応中 + assign LINKSYS WORKER (2057-02)'), '99',
     await d.expandSearch();
     await d.searchWorker(data.worker.companyQuery);
     for (const h of ['ログインID', '社名', '制限状態']) await expect(d.searchModal).toContainText(h);
-    await expect(page.getByText('立候補制限中です')).toHaveCount(0);
+    await expect(s.layout.message('立候補制限中です')).toHaveCount(0);
     await d.pickWorker(data.worker.loginId);
     await expect(d.statusModal).toContainText(data.worker.companyName);
     await d.saveStatus();
@@ -692,7 +689,7 @@ tc('P007-TC-028', '#29 · 1706-01 · Enter repeatedly in 見積名 → 1 estimat
     await openTrouble(T1);
     await d.openQuickAction();
     await d.setFlow('見積承認待ち');
-    await expect(valueOf(d.statusModal, '見積もり').locator('xpath=..')).toContainText('必須');
+    await expect(d.statusRow('見積もり')).toContainText('必須');
     await d.openEstimateFromStatus();
     await d.startNewEstimate();
   });
@@ -724,7 +721,7 @@ for (const [n, k] of [[29, 'part'], [30, 'fee']] as const) {
       await openTrouble(T1);
       await openEstimates('見積承認待ち');
       await d.startNewEstimate();
-      await expect(d.estimateForm.locator('input[name="companyName"]')).toHaveValue(data.chain.name);
+      await expect(d.estimateCompanyName).toHaveValue(data.chain.name);
     });
     await step(`2. ${e.name}: 追加 → ${type}, ${e.item}, ${e.price}`, async () => {
       await d.fillEstimateName(e.name);
@@ -768,7 +765,7 @@ tc('P007-TC-031', '#32 · 1771-03 · Typing 作業 then picking 作業項目選�
     await expect(d.itemModal).toBeHidden();
   });
   await step(`Expected: only '${e.item}' added (no '${e.typed}')`, async () => {
-    const labels = await d.estimateForm.locator('textarea[name$=".label"]').evaluateAll((ts) => ts.map((t) => (t as HTMLTextAreaElement).value));
+    const labels = await d.estimateItemLabels.evaluateAll((ts) => ts.map((t) => (t as HTMLTextAreaElement).value));
     const tdText = await d.estimateItemsBody.innerText();
     expect.soft(labels.includes(e.typed) || tdText.includes(e.typed), `BUG 1771-03: có dòng '${e.typed}'`).toBe(false);
     expect(tdText).toContain(e.item);
@@ -803,7 +800,7 @@ tc('P007-TC-032', '#33 · Create 見積 Test (Autotest 99,999) and 提示', '99'
     await d.headerButton('見積もり');
     const box = modal(page, '見積もり管理');
     await expect(box).toContainText(e.name);
-    await expect(estimationRow(box, e.name)).toContainText('承認待ち');
+    await expect(s.detail.estimateRowIn(box, e.name)).toContainText('承認待ち');
     await click(box, '閉じる');
   });
 });
@@ -820,9 +817,8 @@ tc('P007-TC-033', '#34 · 取り下げ申請 → 取り下げ承認 → 提示 �
   });
   await step('3. 取り下げ申請 → Request cancel → 申請を送信 → 決定 → 取り下げ申請中', async () => {
     await d.estimateAction('worker', '取り下げ申請').click();
-    const req = modal(page, '申請を送信');
-    await req.locator('textarea[name="reason"]').fill(e.cancelReason);
-    await click(req, '申請を送信');
+    await d.cancelRequestReason.fill(e.cancelReason);
+    await click(d.cancelRequestModal, '申請を送信');
     await d.decide(e.cancelReason);
     await d.expectEstimateStatus(e.name, '取り下げ申請中');
   });
@@ -838,7 +834,7 @@ tc('P007-TC-033', '#34 · 取り下げ申請 → 取り下げ承認 → 提示 �
     await d.estimateAction('manager', '承認する').click();
     await d.decide(/この見積を承認しますか/);
     await d.expectEstimateStatus(e.name, '承認済み');
-    await expect(d.estimateModal.locator('.group-manager')).toContainText(M.approvedCard);
+    await expect(d.managerCard).toContainText(M.approvedCard);
   });
   await step('7. 閉じる, reload, minimize chat', async () => {
     await d.closeEstimateModal();
@@ -861,7 +857,7 @@ for (const [n, target, msg] of [[34, '見積承認待ち', M.blockNewEstimateWai
       await d.expectNoConfirm();
     });
     await step(`Expected: '${msg}', badge stays 作業中`, async () => {
-      await expect(page.getByText(msg).first()).toBeVisible();
+      await expect(s.layout.message(msg).first()).toBeVisible();
       await click(d.statusModal, 'キャンセル');
       await d.expectBadges('対応中', '作業中');
     });
@@ -875,10 +871,9 @@ tc('P007-TC-036', '#37 · 605-07 · Each asset has its own 対応 dropdown', '99
     for (const f of ['開始', '終了', '原因と発生起因', '作業前の写真', '作業後の写真', 'PDFファイル', '修理対象資産選択']) await expect(s.detail.reportModal).toContainText(f);
   });
   await step('Expected: each asset row has its own dropdown', async () => {
-    const rows = s.detail.assetRows;
-    const n = await rows.count();
+    const n = await s.detail.assetRows.count();
     expect(n).toBeGreaterThanOrEqual(1);
-    for (let i = 0; i < n; i++) await expect(rows.nth(i).locator('select[name^="types."]')).toHaveCount(1);
+    for (let i = 0; i < n; i++) await expect(s.detail.assetRowSelects(i)).toHaveCount(1);
     // Mỗi dòng 1 select; số name (types.<assetId>) khác nhau = số dòng.
     const names = new Set(await s.detail.assetTypeSelects.evaluateAll((ss) => ss.map((e) => (e as HTMLSelectElement).name)));
     expect(names.size).toBe(n);
@@ -895,7 +890,7 @@ tc('P007-TC-037', '#38 · 605-08 · Changing row A does not affect row B', '99',
     for (const v of ['修理', '入れ替え', '清掃']) await sel(0).selectOption({ label: v });
   });
   await step('Expected: row 1 = 清掃, row 2 = b0', async () => {
-    await expect(sel(0).locator('option:checked')).toHaveText('清掃');
+    await expect(checkedOption(sel(0))).toHaveText('清掃');
     await expect(sel(1)).toHaveValue(b0);
   });
   await step('3. キャンセル', () => cancelReportForm());
@@ -928,7 +923,7 @@ tc('P007-TC-039', '#40 · 1846-02 · Upload 6 PDF → only 5 accepted', '99', as
   await step('1. Open 報告書 form', async () => { await openTrouble(T1); await openReportForm(); });
   const box = await step('2. Choose pdf1–pdf6 at once', () => d.choosePdf(data.report.pdfs));
   await step(`Expected: '${M.pdfLimit}', '5 / 5', no pdf6.pdf`, async () => {
-    await expect(page.getByText(M.pdfLimit).first()).toBeVisible();
+    await expect(s.layout.message(M.pdfLimit).first()).toBeVisible();
     await expect(box).toContainText(/5\s*\/\s*5/);
     await expect(box).not.toContainText('pdf6.pdf');
   });
@@ -941,12 +936,11 @@ tc('P007-TC-040', '#41 · 1846-03 · Non-PDF file → error', '99', async () => 
   await step('1. Open 報告書 form', async () => { await openTrouble(T1); await openReportForm(); });
   await step(`2. Choose ${data.report.notPdf}`, () => d.choosePdf([data.report.notPdf]));
   await step(`Expected: '${M.pdfType}', no card`, async () => {
-    await expect(page.getByText(M.pdfType).first()).toBeVisible();
+    await expect(s.layout.message(M.pdfType).first()).toBeVisible();
     await expect(d.pdfCard(data.report.notPdf)).toHaveCount(0);
   });
   await step('3. キャンセル ×2', async () => {
-    const box = page.locator('.modal.show').filter({ hasText: /\d+\s*\/\s*5/ }).filter({ hasNotText: '施工業者' }).last();
-    await d.cancelBox(box);
+    await d.cancelBox(d.pdfUploadBox);
     await cancelReportForm();
   });
 });
@@ -966,11 +960,11 @@ tc('P007-TC-042', '#43 · 報告済 + 報告書 (1846-04, 605-09)', '99', async 
   await step('2. 開始 day 1, 終了 day 2', async () => {
     await d.pickDay('start', 1);
     await d.pickDay('end', 2);
-    await expect(d.reportModal.locator('input[name="start"]')).toHaveValue(`${Y}/${Mo}/01 00:00`);
-    await expect(d.reportModal.locator('input[name="end"]')).toHaveValue(`${Y}/${Mo}/02 00:00`);
+    await expect(d.reportDate('start')).toHaveValue(`${Y}/${Mo}/01 00:00`);
+    await expect(d.reportDate('end')).toHaveValue(`${Y}/${Mo}/02 00:00`);
   });
   await step('3. 原因と発生起因 automation, 状態 提出済', async () => {
-    await d.reportModal.locator('textarea[name="reason"]').fill(data.report.cause);
+    await d.reportCause.fill(data.report.cause);
     await d.setReportStatus('提出済');
   });
   await step('4. Upload 作業前 / 作業後 / PDF', async () => {
@@ -1005,8 +999,8 @@ tc('P007-TC-043', '#44 · Admin views 報告書 (136-01, 605-10, 1846-04)', '99'
     await expect(r).toBeVisible();
     for (const [k, v] of [['店舗名', data.store.name], ['施工業者', data.worker.companyName], ['施工担当者', data.worker.staffName], ['原因と発生起因', data.report.cause]] as const) await d.expectInfo(k, v).catch(async () => expect(valueOf(r, k)).toContainText(v));
     for (const v of [data.report.pdf, '提出済', '対応区分', '資産名', 'メーカー名', '型式', '製造番号']) await expect(r).toContainText(v);
-    await expect(valueOf(r, '作業前の写真').locator('img').first()).toBeVisible();
-    await expect(valueOf(r, '作業後の写真').locator('img').first()).toBeVisible();
+    await expect(d.reportPhotos('作業前の写真').first()).toBeVisible();
+    await expect(d.reportPhotos('作業後の写真').first()).toBeVisible();
   });
   let x1 = ''; let x2 = '';
   await step('2. Excelダウンロード', async () => { x1 = await d.downloadFrom('Excelダウンロード'); });
@@ -1047,10 +1041,10 @@ tc('P007-TC-045', '#46 · 136-03 · Download 報告書 from 作業依頼情報 l
   await step('3. Search by 依頼番号', () => s.list.searchNumber(T1.number!));
   let pdf = ''; let xl = '';
   await step('4. 報告書PDF / 報告書Excel on row T1', async () => {
-    const pdfCell = await s.list.cellOf(T1.number!, '報告書PDF');
-    pdf = await downloadName(() => pdfCell.locator('a, button').first().click());
-    const xlCell = await s.list.cellOf(T1.number!, '報告書Excel');
-    xl = await downloadName(() => xlCell.locator('a, button').first().click());
+    const pdfLink = await s.list.downloadLink(T1.number!, '報告書PDF');
+    pdf = await downloadName(() => pdfLink.click());
+    const xlLink = await s.list.downloadLink(T1.number!, '報告書Excel');
+    xl = await downloadName(() => xlLink.click());
   });
   await step("Expected: '.pdf' and '.xlsx' downloaded from row T1", () => {
     expect(pdf).toMatch(/\.pdf$/i);
@@ -1138,7 +1132,7 @@ tc('P007-TC-050', '#51 · SETUP-T3 · Create urgent T3 (至急)', '99', async ()
   });
   await step("3-5. 次へ, 至急 (giờ làm việc) → 決定して問合わせ → 決定 → OK", async () => {
     await c.next('故障詳細');
-    await expect(c.content.locator('button', { hasText: /^\s*至急\s*$/ }).first(), '至急 bị khoá: chạy trong giờ làm việc (P7)').toBeEnabled();
+    await expect(c.urgentButton, '至急 bị khoá: chạy trong giờ làm việc (P7)').toBeEnabled();
     const created = await finishCreateAfterNext(data.fault.text, true);
     await record(T3, created);
   });
@@ -1173,8 +1167,8 @@ tc('P007-TC-051', '#52 · 2285-01 · 資産チェック ON with 0 asset → erro
   });
   await step('3. 保存', () => click(box, '保存'));
   await step(`Expected: '${M.assetRequired}' once, no '${M.assetOld}', checkbox stays ticked`, async () => {
-    await expect(page.getByText(M.assetRequired)).toHaveCount(1, { timeout: 15_000 });
-    await expect(page.getByText(M.assetOld)).toHaveCount(0);
+    await expect(s.layout.message(M.assetRequired)).toHaveCount(1, { timeout: 15_000 });
+    await expect(s.layout.message(M.assetOld)).toHaveCount(0);
     await expect(assetCheck()).toBeChecked();
     await click(box, 'キャンセル'); // không lưu: T3 giữ nguyên tài sản
   });
@@ -1220,7 +1214,7 @@ tc('P007-TC-053', '#54 · 1786-01 (+1765-01) · Urgent 稟議: approve all steps
   await step("3. 閉じる → 作業中 → 保存 → 見積もり '任意', '対応中' / '作業中'", async () => {
     await d.closeEstimateModal();
     await d.setFlow('作業中');
-    await expect(valueOf(d.statusModal, '見積もり').locator('xpath=..')).toContainText('任意');
+    await expect(d.statusRow('見積もり')).toContainText('任意');
     await d.saveStatus();
     await d.expectBadges('対応中', '作業中');
   });
@@ -1229,7 +1223,7 @@ tc('P007-TC-053', '#54 · 1786-01 (+1765-01) · Urgent 稟議: approve all steps
       await page.reload(); await waitApisIdle(page, 'F5');
       await d.expectOpened(T5.id);
       await openEstimates();
-      const status = (await d.estimateRow(name).locator('.badge').innerText()).trim();
+      const status = (await d.estimateBadge(name).innerText()).trim();
       if (status === '承認済み') { await d.closeEstimateModal(); await d.closeStatus(); break; }
       await d.openEstimateMenu(name);
       await d.estimateAction('manager', '承認する').click();
@@ -1349,7 +1343,7 @@ tc('P007-TC-056', '#57 · 2267-04 · 継続: 作業中 → 見積承認待ち bl
     await d.expectNoConfirm();
   });
   await step(`Expected: '${M.blockContEstimateWait}' (no '到着'), badge stays 作業中`, async () => {
-    const msg = page.getByText(M.blockContEstimateWait).first();
+    const msg = s.layout.message(M.blockContEstimateWait).first();
     await expect(msg).toBeVisible();
     await expect(msg).not.toContainText('到着');
     await click(d.statusModal, 'キャンセル');
@@ -1383,8 +1377,8 @@ tc('P007-TC-058', '#59 · Logout admin → login manager', null, async () => {
     markLoggedIn(page, '01');
   });
   await step(N("Expected: sidebar 'LINKSYS MANAGER00001', no menu '作業依頼情報'"), async () => {
-    await expect(page.locator('.account')).toContainText(account('01')?.displayName || N('LINKSYS MANAGER00001'));
-    await expect(s.layout.sidebar.getByText('作業依頼情報', { exact: true })).toHaveCount(0);
+    await expect(s.layout.accountName).toContainText(account('01')?.displayName || N('LINKSYS MANAGER00001'));
+    await expect(s.layout.menuItem('作業依頼情報')).toHaveCount(0);
   });
 });
 
@@ -1393,7 +1387,7 @@ tc('P007-TC-059', '#60 · 1388-09 · Manager does not see 症状一覧DL', '01',
     await s.layout.menu('チェーンシステム情報');
     await expect(s.chain.content).toContainText('チェーン店舗一覧', { timeout: 20_000 });
   });
-  await step("Expected: no '症状一覧DL'", () => expect(s.chain.content.locator('button', { hasText: '症状一覧DL' })).toHaveCount(0));
+  await step("Expected: no '症状一覧DL'", () => expect(s.chain.symptomDownloadButton).toHaveCount(0));
 });
 
 tc('P007-TC-060', '#61 · Manager views 見積 and history (605-44)', '01', async () => {
@@ -1404,16 +1398,16 @@ tc('P007-TC-060', '#61 · Manager views 見積 and history (605-44)', '01', asyn
     await openTrouble(T1);
     await d.expectBadges('対応中', '報告済');
     await d.expectInfo('業者', data.worker.companyName);
-    await expect(d.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ }).first()).toBeVisible({ timeout: 15_000 });
-    await expect(d.content.locator('button', { hasText: 'クイック操作' })).toHaveCount(0);
+    await expect(d.workCompleteConfirmButton.first()).toBeVisible({ timeout: 15_000 });
+    await expect(d.quickActionButton).toHaveCount(0);
   });
   await step('2. Minimize chat', () => minimizeChat(page));
   await step('3. 見積もり → amounts, Test 承認済み, no 下書き', async () => {
     await d.headerButton('見積もり');
     const box = modal(page, '見積もり管理');
     for (const v of [data.chain.name, E.main.total, E.main.totalTax]) await expect(box).toContainText(v);
-    await expect(estimationRow(box, E.main.name)).toContainText('承認済み');
-    await expect(box.locator('tr.estimation-row', { hasText: '下書き' })).toHaveCount(0);
+    await expect(s.detail.estimateRowIn(box, E.main.name)).toContainText('承認済み');
+    await expect(s.detail.estimateRowsWithText(box, '下書き')).toHaveCount(0);
   });
   await step('4. 履歴を見る → 取り下げ申請中 / Request cancel → 閉じる ×2', async () => {
     const box = modal(page, '見積もり管理');
@@ -1427,36 +1421,36 @@ tc('P007-TC-060', '#61 · Manager views 見積 and history (605-44)', '01', asyn
   await step("Expected: 資産 has '変更' (opens 対象資産), 作業項目（大） has no '変更'", async () => {
     const box = await s.edit.openAssetPopup();
     await closeModal(box);
-    await expect(s.edit.content.locator('tr', { hasText: '作業項目（大）' }).first().locator('button', { hasText: '変更' })).toHaveCount(0);
+    await expect(s.edit.changeButtonOf('作業項目（大）')).toHaveCount(0);
   });
 });
 
 tc('P007-TC-061', '#62 · Manager 作業完了確認', '01', async () => {
   need(T1, 'T1');
   const d = s.detail;
-  const box = modal(page, '支払情報');
+  const box = d.paymentModal;
   await step('1. Open T1 → 作業完了確認 → 支払情報', async () => {
     await openTrouble(T1);
     await minimizeChat(page);
     await d.headerButton('作業完了確認');
     for (const v of ['上記金額で決済いたします', `故障内容 : ${data.categories.large}`, `故障個所 : ${data.categories.medium}`, `故障症状 : ${data.categories.small}`, E.main.totalTax, E.main.item]) await expect(box).toContainText(v);
-    await expect(box.locator('.rating-star')).toHaveCount(5);
+    await expect(d.ratingStars).toHaveCount(5);
   });
   await step('2. 感動 → 5 stars filled', async () => {
-    const stars = box.locator('.rating-star img');
+    const stars = d.ratingStarImages;
     const empty = await stars.first().getAttribute('src');
-    await box.locator('.rating-star', { hasText: '感動' }).locator('[data-index] img').click();
+    await d.rate('感動');
     for (let k = 0; k < 5; k++) await expect(stars.nth(k)).not.toHaveAttribute('src', empty ?? '');
   });
   await step('3. Comment → 作業完了確認 → 決定 → OK', async () => {
-    await box.locator('textarea[name="description"]').fill('Automation test');
+    await d.paymentComment.fill('Automation test');
     await click(box, '作業完了確認');
     await d.decide('作業依頼の決済状態を保存します');
     await d.ok(M.payOk);
   });
   await step(N("Expected: '完了' / '報告済', no 作業完了確認, 決済状況 'LINKSYS MANAGER00001'"), async () => {
     await d.expectBadges('完了', '報告済');
-    await expect(d.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
+    await expect(d.workCompleteConfirmButton).toHaveCount(0);
     await expect(d.content).toContainText(account('01')?.displayName || N('LINKSYS MANAGER00001'));
   });
 });
@@ -1487,8 +1481,8 @@ tc('P007-TC-063', '#64 · Logout manager → login subadmin', null, async () => 
     await dashboard;
     await s.login.waitAfterLogin();
     markLoggedIn(page, '98');
-    await expect(page.locator('.account')).toContainText(data.subadmin.displayName);
-    await expect(s.layout.sidebar.getByText('資産情報', { exact: true })).toHaveCount(0);
+    await expect(s.layout.accountName).toContainText(data.subadmin.displayName);
+    await expect(s.layout.menuItem('資産情報')).toHaveCount(0);
   });
   await step('3. Menu 作業依頼情報', () => s.layout.menu('作業依頼情報'));
   await step('Expected: SubAdmin sees troubles of STORE00001', () =>

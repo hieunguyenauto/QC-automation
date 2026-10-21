@@ -1,0 +1,26 @@
+411
+[[9,[{
+  "targetChange": {
+    "targetChangeType": "ADD",
+    "targetIds": [
+      4
+    ]
+  }
+}
+]],[10,[{
+  "targetChange": {
+    "targetChangeType": "CURRENT",
+    "targetIds": [
+      4
+    ],
+    "resumeToken": "CgkI/L+gtZq+lwM=",
+    "readTime": "2026-10-16T09:18:44.801532Z"
+  }
+}
+]],[11,[{
+  "targetChange": {
+    "resumeToken": "CgkI/L+gtZq+lwM=",
+    "readTime": "2026-10-16T09:18:44.801532Z"
+  }
+}
+]]]

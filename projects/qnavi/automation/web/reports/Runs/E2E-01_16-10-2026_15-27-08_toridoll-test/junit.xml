@@ -1,0 +1,127 @@
+<testsuites id="" name="" tests="15" failures="0" skipped="0" errors="0" time="339.261661">
+<testsuite name="tests/cms/e2e-suite/E2E-01.spec.ts" timestamp="2026-10-16T08:27:08.074Z" hostname="e2e" tests="15" failures="0" skipped="0" time="337.714" errors="0">
+<testcase name="E2E01-TC-001 SETUP · LINKSYS STORE00006; 限度額 read" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="19.752">
+<properties>
+<property name="trouble" value="FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-002 NEW · chainstore creates trouble (トラブルナビ)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="52.98">
+<properties>
+<property name="trouble-created" value="223470136 (id 44008)">
+</property>
+<property name="webview-done" value="作業依頼
+AIアシスタント
+2026/10/16(金) 17:28
+連絡先担当者を選択してください。
+連絡先担当者を選択
+LINKSYS STORE00006 (APPROVE TYPE 1) [5]
+2026/10/16(金) 17:28
+【連絡先担当者】
+Hieu
+AIアシスタント
+2026/10/16(金) 17:28
+最低３枚
+写真撮影にご協力ください！
+トラブルの事象を早期に把握するために、写真は非常に重要です。
+・故障箇所の全体写真
+・故障箇所のアップ写真
+・機器の全体が見える写真
+・機器の型番シール
+・その他角度を変えた写真
+写真が撮れない
+写真を撮影する
+LINKSYS STO">
+</property>
+<property name="trouble" value="NEW 223470136 (id 44008) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-003 NEW · Admin: 対応中 + assign worker" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="19.786">
+<properties>
+<property name="perf" value="Dashboard GET /api/home: trả về sau 56.9s (ngưỡng 30s)">
+</property>
+<property name="trouble" value="NEW 223470136 (id 44008) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-004 NEW · 受注 → 移動中 → 到着 (02-04)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="15.673">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-005 NEW · Create 1 estimate (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="14.762">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-006 NEW · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="6.357">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-007 NEW · 作業完了 → 報告済 (02-08 → 02-09)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="15.151">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-008 NEW · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="37.987">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-009 CONTINUE · subadmin creates 継続依頼 &apos;_2&apos;" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="42.609">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-010 CONTINUE · 作業スタッフ kept (linksysworker)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="3.375">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-011 CONTINUE · Create 1 estimate (total = FIX − 1) and 提示" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="24.592">
+<properties>
+<property name="perf" value="Dashboard GET /api/home: trả về sau 87.9s (ngưỡng 30s)">
+</property>
+<property name="perf" value="Dashboard GET /api/home: trả về sau 49.7s (ngưỡng 30s)">
+</property>
+<property name="trouble" value="NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-012 CONTINUE · ≤ FIX → auto approve (no approver)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="6.281">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-013 CONTINUE · 日程確定 → 移動中 → 到着 → 作業中 → 作業完了" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="24.572">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-014 CONTINUE · 報告済 (02-90)" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="11.313">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000">
+</property>
+</properties>
+</testcase>
+<testcase name="E2E01-TC-015 CONTINUE · Chain Store 確認・決済 → 完了" classname="tests/cms/e2e-suite/E2E-01.spec.ts" time="42.524">
+<properties>
+<property name="trouble" value="NEW 223470136 (id 44008) · CONT 223470136_2 (id 44009) · FIX 20000">
+</property>
+<property name="perf" value="Dashboard GET /api/home: không trả về trong 120s (ngưỡng 30s)">
+</property>
+</properties>
+</testcase>
+</testsuite>
+</testsuites>

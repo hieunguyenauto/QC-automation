@@ -1,0 +1,215 @@
+- text: Develop TORIDOLL Environment (4.0)
+- navigation:
+  - list:
+    - listitem:
+      - button ""
+  - list:
+    - listitem:
+      - text: 
+      - textbox "依頼番号 または 店舗名でEnter"
+      - button ""
+    - listitem:
+      - button ""
+    - listitem:
+      - button "フィルタ"
+    - listitem:
+      - button "パスワード変更"
+    - listitem:
+      - button "ログアウト"
+- complementary:
+  - link "Qnavi管理画面":
+    - /url: /
+  - navigation:
+    - menu:
+      - listitem: メニュー
+      - listitem:
+        - link " ホーム":
+          - text: 
+          - paragraph: ホーム
+      - listitem:
+        - link " 作業依頼登録":
+          - text: 
+          - paragraph: 作業依頼登録
+      - listitem:
+        - link " 進行中のトラブル一覧":
+          - text: 
+          - paragraph: 進行中のトラブル一覧
+      - listitem:
+        - link " グループ管理":
+          - text: 
+          - paragraph: グループ管理
+      - listitem:
+        - link " チェーンシステム情報":
+          - text: 
+          - paragraph: チェーンシステム情報
+      - listitem:
+        - link " チャット一覧":
+          - text: 
+          - paragraph: チャット一覧
+      - listitem:
+        - link " タスク管理":
+          - text: 
+          - paragraph: タスク管理
+      - listitem:
+        - link " Q&A管理":
+          - text: 
+          - paragraph: Q&A管理
+      - listitem:
+        - link " お知らせ管理":
+          - text: 
+          - paragraph: お知らせ管理
+  - paragraph: LINKSYS MANAGER00004 （Linksys Chain System）
+- paragraph: "関連案件:"
+- text: 223470114 対応中 到着
+- button " 戻る"
+- button " 編集"
+- paragraph: "店舗名:"
+- text: LINKSYS STORE00008 (APPROVE TYPE 3) [4] [5]
+- paragraph: "依頼内容確認:"
+- text: 受付
+- paragraph: "業者:"
+- text: LINKSYS WORKER
+- paragraph: "訪問日時:"
+- text: 未確定
+- paragraph: "見積書:"
+- text: 未提出
+- paragraph: "報告書有無:"
+- text: 未提出
+- button " 立候補"
+- button " 有料キャンセル（請求書払い）"
+- button " タスク"
+- table:
+  - rowgroup:
+    - row "作業項目（大） 操作テスト":
+      - cell "作業項目（大）"
+      - cell "操作テスト"
+    - row "作業項目（中） トイレ（テスト）":
+      - cell "作業項目（中）"
+      - cell "トイレ（テスト）"
+    - row "作業項目（小） つまり：大便器（テスト）":
+      - cell "作業項目（小）"
+      - cell "つまり：大便器（テスト）"
+    - row "番号 223470114":
+      - cell "番号"
+      - cell "223470114"
+    - row "次回番号":
+      - cell "次回番号"
+      - cell:
+        - link:
+          - /url: /admin/troubles//detail
+    - row "詳細 Automation E2E 14":
+      - cell "詳細"
+      - cell "Automation E2E 14"
+    - row "画像":
+      - cell "画像"
+      - cell
+    - row "案件区分 通常案件":
+      - cell "案件区分"
+      - cell "通常案件"
+    - row "緊急フラグ 緊急":
+      - cell "緊急フラグ"
+      - cell "緊急"
+    - row "要望の日付 2026年10月16日 緊急":
+      - cell "要望の日付"
+      - cell "2026年10月16日 緊急"
+    - row "訪問確定日時":
+      - cell "訪問確定日時"
+      - cell
+    - row "作業者 LINKSYS WORKER":
+      - cell "作業者"
+      - cell "LINKSYS WORKER"
+    - row "登録日時 2026年10月16日 13:36:02":
+      - cell "登録日時"
+      - cell "2026年10月16日 13:36:02"
+    - row "更新日時 2026年10月16日 13:38:13":
+      - cell "更新日時"
+      - cell "2026年10月16日 13:38:13"
+- table:
+  - rowgroup:
+    - row "全体状態 対応中":
+      - cell "全体状態"
+      - cell "対応中"
+    - row "依頼種類 新規依頼":
+      - cell "依頼種類"
+      - cell "新規依頼"
+    - row "対応状態 到着":
+      - cell "対応状態"
+      - cell "到着"
+    - row "自動マッチング automatching":
+      - cell "自動マッチング"
+      - cell "automatching":
+        - img "automatching"
+    - row "報告書確認状況":
+      - cell "報告書確認状況"
+      - cell
+    - row "決済状況":
+      - cell "決済状況"
+      - cell
+- table:
+  - rowgroup:
+    - row "請求状態 未請求":
+      - cell "請求状態"
+      - cell "未請求"
+    - row "店舗名 LINKSYS STORE00008 (APPROVE TYPE 3) [4] [5]":
+      - cell "店舗名"
+      - cell "LINKSYS STORE00008 (APPROVE TYPE 3) [4] [5]"
+    - row "住所 〒123-1443 大阪府 15 Le Quang Hoa":
+      - cell "住所"
+      - cell "〒123-1443 大阪府 15 Le Quang Hoa"
+    - row "電話番号(店舗) 0935678278":
+      - cell "電話番号(店舗)"
+      - cell "0935678278"
+    - row "担当者 Hieu":
+      - cell "担当者"
+      - cell "Hieu"
+    - row "電話番号(担当者) 08057882712":
+      - cell "電話番号(担当者)"
+      - cell "08057882712"
+    - row "依頼登録者 Qナビ担当者（株式会社グローバー）":
+      - cell "依頼登録者"
+      - cell "Qナビ担当者（株式会社グローバー）"
+    - row "店舗決済者 店舗決済者を表示":
+      - cell "店舗決済者"
+      - cell "店舗決済者を表示":
+        - button "店舗決済者を表示"
+- table:
+  - rowgroup:
+    - row "請求月":
+      - cell "請求月"
+      - cell
+    - row "支払月":
+      - cell "支払月"
+      - cell
+    - row "BM番号":
+      - cell "BM番号"
+      - cell
+    - row "メモ欄（店舗）":
+      - cell "メモ欄（店舗）"
+      - cell
+- img
+- paragraph: チャット
+- text: 
+- list:
+  - listitem:
+    - heading "Qナビ担当者（株式会社グローバー）" [level=2]
+    - heading "2026/10/16 (金) 13:37" [level=3]
+    - text: 見積書取り下げのお知らせ Qナビ担当者（株式会社グローバー）から、見積書の取り下げ申請が発行されました。取り下げに対する処理をお願いします。 取り下げ申請理由： Request cancel
+  - listitem:
+    - text: 
+    - heading "LINKSYS MANAGER00004 (Linksys Chain System)" [level=2]
+    - heading "2026/10/16 (金) 13:38" [level=3]
+    - text: TO linksys worker (作業者) LINKYSYS WORKER COMPANY (作業会社) LINKSYS SUBADMIN (サブアドミン) 見積書取り下げ却下のお知らせ LINKSYS MANAGER00004から、取り下げ却下となりました。内容を確認し、見積書の再提出をお願いします。 Automation reject cancel
+- paragraph: 宛先
+- text: 宛先を選択してください
+- combobox
+- textbox "メッセージを入力してください。"
+- button ""
+- button "" [disabled]
+- contentinfo:
+  - strong: Copyright © 2026 Globar.
+  - text: All rights reserved.
+  - list:
+    - listitem:
+      - button "利用規約"
+    - listitem:
+      - button "プライバシーポリシー"

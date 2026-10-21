@@ -1,0 +1,121 @@
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="status"
+
+02
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="newFlowStatus"
+
+09
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="continuationFlowStatus"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="doneStatus"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="oldStatus"
+
+02
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="oldNewFlowStatus"
+
+08
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="oldContinuationFlowStatus"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="oldDoneStatus"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="autoApproved"
+
+0
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="worker[id]"
+
+3044
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="estimation[selectedId]"
+
+10028
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[start]"
+
+2026/10/01 00:00
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[end]"
+
+2026/10/02 00:00
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[reason]"
+
+Automation E2E 04
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[content]"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[symptom]"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[notice]"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[status]"
+
+01
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[isContinue]"
+
+0
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newBeforeImages][0][id]"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newBeforeImages][0][path]"
+
+modules/troubles/files/dest/2026/1016/1792142203_IsdfT_1792142203745-k2be61lt.jpg
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newBeforeImages][0][description]"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newBeforeImages][0][orderNumber]"
+
+1
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newBeforeImages][0][pathPreupload]"
+
+modules/troubles/files/dest/2026/1016/1792142203_IsdfT_1792142203745-k2be61lt.jpg
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newAfterImages][0][id]"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newAfterImages][0][path]"
+
+modules/troubles/files/dest/2026/1016/1792142205_MGQGu_1792142204928-hk8zde59.jpg
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newAfterImages][0][description]"
+
+
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newAfterImages][0][orderNumber]"
+
+1
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="report[newAfterImages][0][pathPreupload]"
+
+modules/troubles/files/dest/2026/1016/1792142205_MGQGu_1792142204928-hk8zde59.jpg
+------WebKitFormBoundaryYqGLILINTGZ66dRO
+Content-Disposition: form-data; name="_method"
+
+PUT
+------WebKitFormBoundaryYqGLILINTGZ66dRO--

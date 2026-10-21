@@ -144,7 +144,7 @@ tc(`${P}-TC-008`, 'NEW · Chain Store 確認・決済 → 完了', '02', async (
   await step(`3. '感動' → '${e.note}' → '作業完了確認' → '決定' → Verify: '${data.messages.paymentSaved}' → 'OK'`, () => e.paymentSubmit());
   await step("Expected: '完了' / '報告済', '作業完了確認' disappears", async () => {
     await e.detail.expectBadges('完了', '報告済');
-    await expect(e.detail.content.locator('button', { hasText: /^\s*作業完了確認\s*$/ })).toHaveCount(0);
+    await expect(e.detail.workCompleteConfirmButton).toHaveCount(0);
   });
 });
 

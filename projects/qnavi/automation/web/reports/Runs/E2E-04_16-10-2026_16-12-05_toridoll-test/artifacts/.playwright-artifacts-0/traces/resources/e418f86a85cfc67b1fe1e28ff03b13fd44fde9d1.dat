@@ -1,0 +1,49 @@
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="status"
+
+02
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="newFlowStatus"
+
+
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="continuationFlowStatus"
+
+60
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="doneStatus"
+
+
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="oldStatus"
+
+02
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="oldNewFlowStatus"
+
+
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="oldContinuationFlowStatus"
+
+50
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="oldDoneStatus"
+
+
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="autoApproved"
+
+1
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="worker[id]"
+
+3044
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="estimation[selectedId]"
+
+10029
+------WebKitFormBoundary0xA7UaxD3rXbtyn9
+Content-Disposition: form-data; name="_method"
+
+PUT
+------WebKitFormBoundary0xA7UaxD3rXbtyn9--

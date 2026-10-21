@@ -1,0 +1,70 @@
+   0.0 ---- login 99
+   0.1 REQ  GET document https://cms-test.estimation.qnavi.picontechnology.com/login
+   0.2 NAV  https://cms-test.estimation.qnavi.picontechnology.com/login
+   1.6 NAV  https://cms-test.estimation.qnavi.picontechnology.com/login
+   5.3 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   5.4 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   5.5 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   5.5 RESP 401 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   5.5 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   5.5 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   5.5 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   6.0 RESP 200 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+   6.1 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin
+   6.1 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/home
+   6.1 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/home
+   6.1 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/home
+   7.2 RESP 200 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/home
+   8.9 ---- TC-001 steps
+  10.0 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin/chain-systems
+  11.3 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin/chain-systems/1856/stores
+  11.7 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin/chain-systems/1856/edit
+  11.7 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  11.7 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1
+  11.7 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  11.8 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  11.8 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  11.8 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1
+  11.8 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1
+  11.8 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  11.8 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  11.9 RESP 200 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  11.9 RESP 200 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856
+  12.1 RESP 200 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1
+  13.1 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin/chain-systems
+  14.6 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin/chain-systems/1856/stores
+  15.0 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin/chain-systems/1856/stores/73586/detail
+  15.2 STORAGE sau login 99: {"now":1792050008579,"exp":"1792053600187","tok":"_-2LJGU6jqBw","admin":"{\"id\":82649,\"loginId\":\"adminTest1\",\"name\":\"Qナビ担当者（株式会社グローバー）\",\"phone\":null,\"emai"}
+  15.2 ---- login 02
+  15.2 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  15.2 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  15.3 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  15.3 REQ  POST xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  15.3 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  15.3 REQ  POST xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  15.9 RESP 200 POST https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  15.9 RESP 200 POST https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/signout
+  16.2 NAV  https://cms-test.estimation.qnavi.picontechnology.com/login
+  18.3 REQ  GET document https://cms-test.estimation.qnavi.picontechnology.com/login
+  18.3 NAV  https://cms-test.estimation.qnavi.picontechnology.com/login
+  24.2 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.2 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.2 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.2 RESP 401 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.2 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.3 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.3 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.3 RESP 200 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/auth/info
+  24.3 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin
+  42.4 STORAGE sau login 02: {"now":1792050035803,"exp":"1792053618579","tok":"PAF-aRMKSqXA","admin":"{\"id\":98327,\"loginId\":\"linksysstore00006\",\"name\":\"LINKSYS STORE00006 (APPROVE TY"}
+  43.5 NAV  https://cms-test.estimation.qnavi.picontechnology.com/admin/trouble/create
+  46.0 STORAGE trước click: {"now":1792050039392,"exp":"1792053618579","tok":"PAF-aRMKSqXA","admin":"{\"id\":98327,\"loginId\":\"linksysstore00006\",\"name\":\"LINKSYS STORE00006 (APPROVE TY"}
+  46.0 ---- click 故障内容 選択
+  46.0 REQ  OPTIONS other https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856&isShow=01&chainStoreId=73586
+  46.0 REQ  OPTIONS other https://trouble-be-test.estimation.qnavi.picontechnology.com/qa_data/get_qa_category?chain_system_id=1856
+  46.0 RESP 204 OPTIONS https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856&isShow=01&chainStoreId=73586
+  46.0 REQ  GET xhr https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856&isShow=01&chainStoreId=73586
+  46.1 RESP 200 OPTIONS https://trouble-be-test.estimation.qnavi.picontechnology.com/qa_data/get_qa_category?chain_system_id=1856
+  46.1 REQ  GET xhr https://trouble-be-test.estimation.qnavi.picontechnology.com/qa_data/get_qa_category?chain_system_id=1856
+  46.4 RESP 200 GET https://trouble-be-test.estimation.qnavi.picontechnology.com/qa_data/get_qa_category?chain_system_id=1856
+  46.4 RESP 200 GET https://cms-be-test.estimation.qnavi.picontechnology.com/api/largecategories?chainSystemId=1856&isShow=01&chainStoreId=73586

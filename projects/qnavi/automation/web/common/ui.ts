@@ -178,3 +178,8 @@ export function today(fmt: 'ymd' | 'ym' = 'ymd'): string {
   return fmt === 'ym' ? `${d.getFullYear()}/${p(d.getMonth() + 1)}` : `${d.getFullYear()}/${p(d.getMonth() + 1)}/${p(d.getDate())}`;
 }
 export const pickRandom = (n: number) => Math.floor(Math.random() * n);
+
+/** Option đang chọn của 1 <select> (đọc chữ hiển thị — lesson R07). */
+export function checkedOption(select: Locator): Locator {
+  return select.locator('option:checked');
+}

@@ -1,0 +1,256 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - generic [ref=e3]: Develop TORIDOLL Environment (4.0)
+  - navigation [ref=e4]:
+    - list [ref=e5]:
+      - listitem [ref=e6]:
+        - button "" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]: 
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - generic [ref=e11]:
+          - generic [ref=e13] [cursor=pointer]: 
+          - textbox "依頼番号 または 店舗名でEnter" [ref=e14]
+          - button "" [ref=e16] [cursor=pointer]:
+            - generic [ref=e17]: 
+      - listitem [ref=e18]:
+        - button "" [ref=e19] [cursor=pointer]:
+          - generic [ref=e20]: 
+      - listitem [ref=e22]:
+        - button "フィルタ" [ref=e23] [cursor=pointer]:
+          - generic [ref=e25]: フィルタ
+      - listitem [ref=e26]:
+        - button "パスワード変更" [ref=e27] [cursor=pointer]
+      - listitem [ref=e28]:
+        - button "ログアウト" [ref=e29] [cursor=pointer]
+  - complementary [ref=e30]:
+    - link "Qnavi管理画面" [ref=e31] [cursor=pointer]:
+      - /url: /
+    - navigation [ref=e33]:
+      - menu [ref=e34]:
+        - listitem [ref=e35]: メニュー
+        - listitem [ref=e36]:
+          - link " ホーム" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]: 
+            - paragraph [ref=e39]: ホーム
+        - listitem [ref=e40]:
+          - link " 作業依頼情報" [ref=e41] [cursor=pointer]:
+            - generic [ref=e42]: 
+            - paragraph [ref=e43]: 作業依頼情報
+        - listitem [ref=e44]:
+          - link " 作業依頼登録" [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: 
+            - paragraph [ref=e47]: 作業依頼登録
+        - listitem [ref=e48]:
+          - link " チャット一覧" [ref=e49] [cursor=pointer]:
+            - generic [ref=e50]: 
+            - paragraph [ref=e51]: チャット一覧
+        - listitem [ref=e53]:
+          - link " タスク管理" [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 
+            - paragraph [ref=e56]: タスク管理
+        - listitem [ref=e57]:
+          - link " サブアドミン情報" [ref=e58] [cursor=pointer]:
+            - generic [ref=e59]: 
+            - paragraph [ref=e60]: サブアドミン情報
+    - paragraph [ref=e62]: LINKSYS SUBADMIN
+  - generic [ref=e65]:
+    - generic [ref=e66]:
+      - generic [ref=e68]:
+        - button " 戻る" [ref=e69] [cursor=pointer]:
+          - generic [ref=e70]: 
+          - text: 戻る
+        - button " クイック操作" [disabled] [ref=e71]:
+          - generic [ref=e72]: 
+          - text: クイック操作
+        - button " 編集" [ref=e73] [cursor=pointer]:
+          - generic [ref=e74]: 
+          - text: 編集
+      - paragraph [ref=e77]: "店舗名:"
+      - generic [ref=e78]:
+        - paragraph [ref=e80]: "依頼内容確認:"
+        - generic [ref=e81]:
+          - paragraph [ref=e82]: "業者:"
+          - generic [ref=e83]: 未確定
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: "訪問日時:"
+          - generic [ref=e86]: 未確定
+        - paragraph [ref=e88]: "見積書:"
+        - paragraph [ref=e90]: "報告書有無:"
+      - generic [ref=e91]:
+        - button " 履歴" [ref=e92] [cursor=pointer]:
+          - generic [ref=e93]: 
+          - text: 履歴
+        - button " 立候補" [ref=e94] [cursor=pointer]:
+          - generic [ref=e95]: 
+          - text: 立候補
+        - button " 報告書" [ref=e96] [cursor=pointer]:
+          - generic [ref=e97]: 
+          - text: 報告書
+        - button " タスク" [ref=e98] [cursor=pointer]:
+          - generic [ref=e99]: 
+          - text: タスク
+    - generic [ref=e101]:
+      - table [ref=e103]:
+        - rowgroup [ref=e104]:
+          - row "作業項目（大）" [ref=e105]:
+            - cell "作業項目（大）" [ref=e106]:
+              - generic [ref=e108]: 作業項目（大）
+            - cell [ref=e109]
+          - row "作業項目（中）" [ref=e110]:
+            - cell "作業項目（中）" [ref=e111]:
+              - generic [ref=e113]: 作業項目（中）
+            - cell [ref=e114]
+          - row "作業項目（小）" [ref=e115]:
+            - cell "作業項目（小）" [ref=e116]:
+              - generic [ref=e118]: 作業項目（小）
+            - cell [ref=e119]
+          - row "番号" [ref=e120]:
+            - cell "番号" [ref=e121]:
+              - generic [ref=e123]: 番号
+            - cell [ref=e124]
+          - row "詳細" [ref=e125]:
+            - cell "詳細" [ref=e126]:
+              - generic [ref=e128]: 詳細
+            - cell [ref=e129]
+          - row "画像" [ref=e130]:
+            - cell "画像" [ref=e131]:
+              - generic [ref=e133]: 画像
+            - cell [ref=e134]
+          - row "案件区分 通常案件" [ref=e135]:
+            - cell "案件区分" [ref=e136]:
+              - generic [ref=e138]: 案件区分
+            - cell "通常案件" [ref=e139]:
+              - generic [ref=e140]: 通常案件
+          - row "緊急フラグ 不緊急" [ref=e141]:
+            - cell "緊急フラグ" [ref=e142]:
+              - generic [ref=e144]: 緊急フラグ
+            - cell "不緊急" [ref=e145]:
+              - generic [ref=e146]: 不緊急
+          - row "要望の日付" [ref=e147]:
+            - cell "要望の日付" [ref=e148]:
+              - generic [ref=e150]: 要望の日付
+            - cell [ref=e151]
+          - row "訪問確定日時" [ref=e152]:
+            - cell "訪問確定日時" [ref=e153]:
+              - generic [ref=e155]: 訪問確定日時
+            - cell [ref=e156]
+          - row "作業者" [ref=e157]:
+            - cell "作業者" [ref=e158]:
+              - generic [ref=e160]: 作業者
+            - cell [ref=e161]
+          - row "登録日時" [ref=e162]:
+            - cell "登録日時" [ref=e163]:
+              - generic [ref=e165]: 登録日時
+            - cell [ref=e166]
+          - row "更新日時" [ref=e167]:
+            - cell "更新日時" [ref=e168]:
+              - generic [ref=e170]: 更新日時
+            - cell [ref=e171]
+          - row "依頼内容確認 依頼の内容を確認しました" [ref=e172]:
+            - cell "依頼内容確認" [ref=e173]:
+              - generic [ref=e175]: 依頼内容確認
+            - cell "依頼の内容を確認しました" [ref=e176]:
+              - generic [ref=e177]:
+                - checkbox "依頼の内容を確認しました" [ref=e178]
+                - generic [ref=e179]: 依頼の内容を確認しました
+      - table [ref=e181]:
+        - rowgroup [ref=e182]:
+          - row "全体状態" [ref=e183]:
+            - cell "全体状態" [ref=e184]:
+              - generic [ref=e186]: 全体状態
+            - cell [ref=e187]
+          - row "依頼種類" [ref=e188]:
+            - cell "依頼種類" [ref=e189]:
+              - generic [ref=e191]: 依頼種類
+            - cell [ref=e192]
+          - row "対応状態" [ref=e193]:
+            - cell "対応状態" [ref=e194]:
+              - generic [ref=e196]: 対応状態
+            - cell [ref=e197]
+          - row "自動マッチング" [ref=e198]:
+            - cell "自動マッチング" [ref=e199]:
+              - generic [ref=e201]: 自動マッチング
+            - cell [ref=e202]
+          - row "報告書確認状況" [ref=e203]:
+            - cell "報告書確認状況" [ref=e204]:
+              - generic [ref=e206]: 報告書確認状況
+            - cell [ref=e207]
+          - row "決済状況" [ref=e208]:
+            - cell "決済状況" [ref=e209]:
+              - generic [ref=e211]: 決済状況
+            - cell [ref=e212]
+      - table [ref=e214]:
+        - rowgroup [ref=e215]:
+          - row "請求状態" [ref=e216]:
+            - cell "請求状態" [ref=e217]:
+              - generic [ref=e219]: 請求状態
+            - cell [ref=e220]
+          - row "社名" [ref=e221]:
+            - cell "社名" [ref=e222]:
+              - generic [ref=e224]: 社名
+            - cell [ref=e225]
+          - row "店舗名" [ref=e226]:
+            - cell "店舗名" [ref=e227]:
+              - generic [ref=e229]: 店舗名
+            - cell [ref=e230]
+          - row "住所" [ref=e231]:
+            - cell "住所" [ref=e232]:
+              - generic [ref=e234]: 住所
+            - cell [ref=e235]
+          - row "電話番号(店舗)" [ref=e236]:
+            - cell "電話番号(店舗)" [ref=e237]:
+              - generic [ref=e239]: 電話番号(店舗)
+            - cell [ref=e240]
+          - row "担当者" [ref=e241]:
+            - cell "担当者" [ref=e242]:
+              - generic [ref=e244]: 担当者
+            - cell [ref=e245]
+          - row "電話番号(担当者)" [ref=e246]:
+            - cell "電話番号(担当者)" [ref=e247]:
+              - generic [ref=e249]: 電話番号(担当者)
+            - cell [ref=e250]
+          - row "依頼登録者" [ref=e251]:
+            - cell "依頼登録者" [ref=e252]:
+              - generic [ref=e254]: 依頼登録者
+            - cell [ref=e255]
+          - row "店舗決済者 店舗決済者を表示" [ref=e256]:
+            - cell "店舗決済者" [ref=e257]:
+              - generic [ref=e259]: 店舗決済者
+            - cell "店舗決済者を表示" [ref=e260]:
+              - button "店舗決済者を表示" [ref=e261] [cursor=pointer]
+      - table [ref=e263]:
+        - rowgroup [ref=e264]:
+          - row "請求月" [ref=e265]:
+            - cell "請求月" [ref=e266]:
+              - generic [ref=e268]: 請求月
+            - cell [ref=e269]
+          - row "支払月" [ref=e270]:
+            - cell "支払月" [ref=e271]:
+              - generic [ref=e273]: 支払月
+            - cell [ref=e274]
+          - row "BM番号" [ref=e275]:
+            - cell "BM番号" [ref=e276]:
+              - generic [ref=e278]: BM番号
+            - cell [ref=e279]
+          - row "メモ欄（店舗）" [ref=e280]:
+            - cell "メモ欄（店舗）" [ref=e281]:
+              - generic [ref=e283]: メモ欄（店舗）
+            - cell [ref=e284]
+          - row "メモ欄" [ref=e285]:
+            - cell "メモ欄" [ref=e286]:
+              - generic [ref=e288]: メモ欄
+            - cell [ref=e289]
+  - contentinfo [ref=e290]:
+    - generic [ref=e291]:
+      - strong [ref=e292]: Copyright © 2026 Globar.
+      - text: All rights reserved.
+    - list [ref=e294]:
+      - listitem [ref=e295]:
+        - button "利用規約" [ref=e296] [cursor=pointer]
+      - listitem [ref=e297]:
+        - button "プライバシーポリシー" [ref=e298] [cursor=pointer]
+  - text: 
+```
